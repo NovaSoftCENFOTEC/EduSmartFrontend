@@ -14,6 +14,7 @@ import { GamesComponent } from "./pages/games/games.component";
 import { OrdersComponent } from "./pages/orders/orders.component";
 import { PreferenceListPageComponent } from "./pages/preferenceList/preference-list.component";
 import { PabloComponent } from "./pages/pablo/pablo.component";
+import { AndresComponent } from "./pages/andres/andres.component";
 import { FabianComponent } from "./pages/fabian/fabian.component";
 
 export const routes: Routes = [
@@ -41,6 +42,11 @@ export const routes: Routes = [
   {
     path: "access-denied",
     component: AccessDeniedComponent,
+  },
+  {
+    path: "andres",
+    component: AndresComponent,
+    canActivate: [GuestGuard],
   },
   {
     path: "",
