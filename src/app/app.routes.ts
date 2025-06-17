@@ -1,20 +1,22 @@
-import { Routes } from '@angular/router';
-import { LoginComponent } from './pages/auth/login/login.component';
-import { AppLayoutComponent } from './components/app-layout/app-layout.component';
-import { SigUpComponent } from './pages/auth/sign-up/signup.component';
-import { UsersComponent } from './pages/users/users.component';
-import { AuthGuard } from './guards/auth.guard';
-import { AccessDeniedComponent } from './pages/access-denied/access-denied.component';
-import { AdminRoleGuard } from './guards/admin-role.guard';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { GuestGuard } from './guards/guest.guard';
-import { IRoleType } from './interfaces';
-import { ProfileComponent } from './pages/profile/profile.component';
-import { GamesComponent } from './pages/games/games.component';
-import { OrdersComponent } from './pages/orders/orders.component';
-import { PreferenceListPageComponent } from './pages/preferenceList/preference-list.component';
-import { PabloComponent } from './pages/pablo/pablo.component';
+import { Routes } from "@angular/router";
+import { LoginComponent } from "./pages/auth/login/login.component";
+import { AppLayoutComponent } from "./components/app-layout/app-layout.component";
+import { SigUpComponent } from "./pages/auth/sign-up/signup.component";
+import { UsersComponent } from "./pages/users/users.component";
+import { AuthGuard } from "./guards/auth.guard";
+import { AccessDeniedComponent } from "./pages/access-denied/access-denied.component";
+import { AdminRoleGuard } from "./guards/admin-role.guard";
+import { DashboardComponent } from "./pages/dashboard/dashboard.component";
+import { GuestGuard } from "./guards/guest.guard";
+import { IRoleType } from "./interfaces";
+import { ProfileComponent } from "./pages/profile/profile.component";
+import { GamesComponent } from "./pages/games/games.component";
+import { OrdersComponent } from "./pages/orders/orders.component";
+import { PreferenceListPageComponent } from "./pages/preferenceList/preference-list.component";
+import { PabloComponent } from "./pages/pablo/pablo.component";
 import { AndresComponent } from "./pages/andres/andres.component";
+import { FabianComponent } from "./pages/fabian/fabian.component";
+
 export const routes: Routes = [
   {
     path: "login",
@@ -27,19 +29,24 @@ export const routes: Routes = [
     canActivate: [GuestGuard],
   },
   {
-    path: 'pablo',
+    path: "pablo",
     component: PabloComponent,
+    canActivate: [GuestGuard],
+  },
+  {
+    path: "fabian",
+    component: FabianComponent,
     canActivate: [GuestGuard],
   },
 
   {
-    path: 'access-denied',
+    path: "access-denied",
     component: AccessDeniedComponent,
   },
   {
-        path: "andres",
-        component: AndresComponent,
-        canActivate: [GuestGuard],
+    path: "andres",
+    component: AndresComponent,
+    canActivate: [GuestGuard],
   },
   {
     path: "",
@@ -99,15 +106,6 @@ export const routes: Routes = [
         data: {
           authorities: [IRoleType.admin, IRoleType.superAdmin, IRoleType.user],
           name: "orders",
-          showInSidebar: true,
-        },
-      },
-      {
-        path: "preference-list",
-        component: PreferenceListPageComponent,
-        data: {
-          authorities: [IRoleType.admin, IRoleType.superAdmin, IRoleType.user],
-          name: "preference list",
           showInSidebar: true,
         },
       },
