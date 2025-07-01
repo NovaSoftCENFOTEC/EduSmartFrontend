@@ -5,5 +5,10 @@ nvm use 20.12.2
 # install node modules
 npm install
 
-# install node modules
+# run the app locally
 npm start
+
+# to test CI locally, run this
+npm ci
+npm run test -- --watch=false --browsers=ChromeHeadless
+npm run build -- --configuration production
