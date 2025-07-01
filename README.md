@@ -5,11 +5,8 @@ nvm use 20.12.2
 # install node modules
 npm install
 
-# install node modules
+# run the app locally
 npm start
-
-# install node modules
-If you are cloning the repository, run: npm install
 
 # to test CI locally, run this
 npm ci
