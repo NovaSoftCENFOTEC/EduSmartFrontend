@@ -10,12 +10,6 @@ import { DashboardComponent } from "./pages/dashboard/dashboard.component";
 import { GuestGuard } from "./guards/guest.guard";
 import { IRoleType } from "./interfaces";
 import { ProfileComponent } from "./pages/profile/profile.component";
-import { GamesComponent } from "./pages/games/games.component";
-import { OrdersComponent } from "./pages/orders/orders.component";
-import { PreferenceListPageComponent } from "./pages/preferenceList/preference-list.component";
-import { PabloComponent } from "./pages/pablo/pablo.component";
-import { AndresComponent } from "./pages/andres/andres.component";
-import { FabianComponent } from "./pages/fabian/fabian.component";
 
 export const routes: Routes = [
   {
@@ -29,24 +23,8 @@ export const routes: Routes = [
     canActivate: [GuestGuard],
   },
   {
-    path: "pablo",
-    component: PabloComponent,
-    canActivate: [GuestGuard],
-  },
-  {
-    path: "fabian",
-    component: FabianComponent,
-    canActivate: [GuestGuard],
-  },
-
-  {
     path: "access-denied",
     component: AccessDeniedComponent,
-  },
-  {
-    path: "andres",
-    component: AndresComponent,
-    canActivate: [GuestGuard],
   },
   {
     path: "",
@@ -89,33 +67,6 @@ export const routes: Routes = [
           authorities: [IRoleType.admin, IRoleType.superAdmin, IRoleType.user],
           name: "profile",
           showInSidebar: false,
-        },
-      },
-      {
-        path: "games",
-        component: GamesComponent,
-        data: {
-          authorities: [IRoleType.admin, IRoleType.superAdmin, IRoleType.user],
-          name: "games",
-          showInSidebar: true,
-        },
-      },
-      {
-        path: "orders",
-        component: OrdersComponent,
-        data: {
-          authorities: [IRoleType.admin, IRoleType.superAdmin, IRoleType.user],
-          name: "orders",
-          showInSidebar: true,
-        },
-      },
-      {
-        path: "preference-list",
-        component: PreferenceListPageComponent,
-        data: {
-          authorities: [IRoleType.admin, IRoleType.superAdmin, IRoleType.user],
-          name: "preference list",
-          showInSidebar: true,
         },
       },
     ],
