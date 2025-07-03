@@ -1,7 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { BaseService } from './base-service';
-import { ISearch, IUser } from '../interfaces';
-import { Observable, catchError, tap, throwError } from 'rxjs';
+import { IUser, ISearch } from '../interfaces';
 import { AlertService } from './alert.service';
 
 @Injectable({

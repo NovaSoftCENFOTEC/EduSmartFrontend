@@ -11,16 +11,78 @@ import { GuestGuard } from "./guards/guest.guard";
 import { IRoleType } from "./interfaces";
 import { ProfileComponent } from "./pages/profile/profile.component";
 
+// Existing protected routes (commented out)
+// export const routes: Routes = [
+//   {
+//     path: "login",
+//     component: LoginComponent,
+//     canActivate: [GuestGuard],
+//   },
+//   {
+//     path: "signup",
+//     component: SigUpComponent,
+//     canActivate: [GuestGuard],
+//   },
+//   {
+//     path: "access-denied",
+//     component: AccessDeniedComponent,
+//   },
+//   {
+//     path: "",
+//     redirectTo: "login",
+//     pathMatch: "full",
+//   },
+//   {
+//     path: "app",
+//     component: AppLayoutComponent,
+//     canActivate: [AuthGuard],
+//     children: [
+//       {
+//         path: "app",
+//         redirectTo: "users",
+//         pathMatch: "full",
+//       },
+//       {
+//         path: "users",
+//         component: UsersComponent,
+//         canActivate: [AdminRoleGuard],
+//         data: {
+//           authorities: [IRoleType.admin, IRoleType.superAdmin],
+//           name: "Users",
+//           showInSidebar: true,
+//         },
+//       },
+//       {
+//         path: "dashboard",
+//         component: DashboardComponent,
+//         data: {
+//           authorities: [IRoleType.admin, IRoleType.superAdmin, IRoleType.user],
+//           name: "Dashboard",
+//           showInSidebar: true,
+//         },
+//       },
+//       {
+//         path: "profile",
+//         component: ProfileComponent,
+//         data: {
+//           authorities: [IRoleType.admin, IRoleType.superAdmin, IRoleType.user],
+//           name: "profile",
+//           showInSidebar: false,
+//         },
+//       },
+//     ],
+//   },
+// ];
+
+// Unprotected routes (all pages accessible without guards)
 export const routes: Routes = [
   {
     path: "login",
     component: LoginComponent,
-    canActivate: [GuestGuard],
   },
   {
     path: "signup",
     component: SigUpComponent,
-    canActivate: [GuestGuard],
   },
   {
     path: "access-denied",
@@ -34,7 +96,6 @@ export const routes: Routes = [
   {
     path: "app",
     component: AppLayoutComponent,
-    canActivate: [AuthGuard],
     children: [
       {
         path: "app",
@@ -44,30 +105,14 @@ export const routes: Routes = [
       {
         path: "users",
         component: UsersComponent,
-        canActivate: [AdminRoleGuard],
-        data: {
-          authorities: [IRoleType.admin, IRoleType.superAdmin],
-          name: "Users",
-          showInSidebar: true,
-        },
       },
       {
         path: "dashboard",
         component: DashboardComponent,
-        data: {
-          authorities: [IRoleType.admin, IRoleType.superAdmin, IRoleType.user],
-          name: "Dashboard",
-          showInSidebar: true,
-        },
       },
       {
         path: "profile",
         component: ProfileComponent,
-        data: {
-          authorities: [IRoleType.admin, IRoleType.superAdmin, IRoleType.user],
-          name: "profile",
-          showInSidebar: false,
-        },
       },
     ],
   },
