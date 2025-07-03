@@ -22,6 +22,12 @@
   --font-footer-text: 12px;
 }
 
+body {
+  font-family: var(--font-family-roboto);
+  font-size: var(--font-base-size);
+  font-weight: var(--font-base-weight);
+}
+
 .btn {
   font-family: var(--font-family-roboto);
   font-size: var(--font-button-size);
