@@ -47,6 +47,14 @@ export interface IRole {
   createdAt: string;
   description: string;
   id: number;
-  name : string;
+  name: string;
   updatedAt: string;
+}
+export interface ISearch {
+  page?: number;
+  size?: number;
+  pageNumber?: number;
+  pageSize?: number;
+  totalElements?: number;
+  totalPages?: number;
 }
