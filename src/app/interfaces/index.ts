@@ -1,3 +1,5 @@
+import {inject} from "@angular/core";
+
 export interface ILoginResponse {
   accessToken: string;
   expiresIn: number
@@ -15,11 +17,12 @@ export interface IUser {
   lastname?: string;
   email?: string;
   password?: string;
-  active?: boolean;
   createdAt?: string;
   updatedAt?: string;
+  profilePicture?: string;
   authorities?: IAuthority[];
   role?: IRole
+  schoolId?: ISchool;
 }
 
 export interface IAuthority {
@@ -44,10 +47,10 @@ export enum IRoleType {
 }
 
 export interface IRole {
-  createdAt: string;
-  description: string;
   id: number;
-  name: string;
+  name : string;
+  description: string;
+  createdAt: string;
   updatedAt: string;
 }
 export interface ISearch {
@@ -57,4 +60,11 @@ export interface ISearch {
   pageSize?: number;
   totalElements?: number;
   totalPages?: number;
+}
+
+export interface ISchool {
+    id?: number;
+    name?: string;
+    domain?: string;
+    createdAt?: string;
 }
