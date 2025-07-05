@@ -5,41 +5,63 @@
     <div class="card-body">
         <div class="table-container table-responsive">
             <table class="table custom-full-bordered-table">
-                <thead class="table-header-gray"> <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Lastname</th>
-                    <th scope="col">email</th>
-                    <th scope="col">Created</th>
-                    <th scope="col">Updated</th>
-                    <th class="text-center" scope="col">Actions</th>
+                <thead class="table-header-gray">
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Correo electrónico</th>
+                    <th scope="col">Creado</th>
+                    <th scope="col">Actualizado</th>
+                    <th class="text-center" scope="col">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
                     @for (item of users; track item.id) {
                         <tr>
-                            <th scope="row">{{item.id}}</th>
-                            <td>{{item.name}}</td>
-                            <td>{{item.lastname}}</td>
-                            <td>{{item.email}}</td>
-                            <td>{{item.createdAt | date: 'dd/MM/yyyy HH:mm'}}</td>
-                            <td>{{item.updatedAt | date: 'dd/MM/yyyy HH:mm'}}</td>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.lastname }}</td>
+                            <td>{{ item.email }}</td>
+                            <td>{{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+                            <td>{{ item.updatedAt | date: 'dd/MM/yyyy HH:mm' }}</td>
                             <td>
-                                <button (click)="callModalAction.emit(item);" class="btn border-0 me-2 icon-gray-color" type="button"><i class="fas fa-pen"></i></button>
-                                <button (click)="callDeleteAction.emit(item)" class="btn border-0 icon-gray-color" type="button"><i class="fas fa-trash"></i></button>
+                                <button disabled (click)="callModalAction.emit(item);" class="btn border-0 me-2 icon-gray-color" type="button">
+                                    <i class="fas fa-pen"></i>
+                                </button>
+                                <button (click)="abrirModalConfirmacion(item)" class="btn border-0 icon-gray-color" type="button">
+                                    <i class="fas fa-trash"></i>
+                                </button>
                             </td>
                         </tr>
                     } @empty {
                         <tr>
                             <td colspan="7">
                                 <div class="d-flex justify-content-center align-items-center w-100">
-                                    <p class="mb-0">There are no users</p>
+                                    <p class="mb-0">No hay usuarios</p>
                                 </div>
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de confirmación -->
+<div class="modal fade" id="modalConfirmacion" tabindex="-1" aria-labelledby="modalConfirmacionLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalConfirmacionLabel">Confirmar eliminación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de que deseas eliminar al usuario <strong>{{ usuarioAEliminar?.name }} {{ usuarioAEliminar?.lastname }}</strong>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" (click)="confirmarEliminacion()">Eliminar</button>
+            </div>
         </div>
     </div>
 </div>
