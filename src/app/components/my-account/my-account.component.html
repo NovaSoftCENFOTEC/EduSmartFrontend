@@ -1,10 +1,10 @@
 @if(userName) {
 <div class="dropdown">
-  <a class="d-flex align-items-center text-decoration-none dropdown-toggle px-3 py-2" href="#" id="accountDropdown"
-    data-bs-toggle="dropdown" aria-expanded="false"
-    style="cursor:pointer; font-size: 1.1rem; color: var(--color-indigo-dye); border-radius: 20px;">
-    <i class="fa-regular fa-user me-2" style="font-size: 1.3rem;"></i>
-    <span class="fw-semibold">{{ userName }}</span>
+  <a class="d-flex align-items-center text-decoration-none dropdown-toggle px-2 px-md-3 py-1 py-md-2" href="#"
+    id="accountDropdown" data-bs-toggle="dropdown" aria-expanded="false"
+    style="cursor:pointer; font-size: 1rem; color: var(--color-indigo-dye); border-radius: 16px; min-width: 0; height: 40px;">
+    <i class="fa-regular fa-user me-2" style="font-size: 1.1rem;"></i>
+    <span class="fw-semibold text-truncate" style="max-width: 90px;">{{ userName }}</span>
   </a>
   <ul class="dropdown-menu dropdown-menu-end mt-2 shadow" aria-labelledby="accountDropdown">
     <li>
@@ -23,9 +23,9 @@
 </div>
 }
 @else {
-<a class="btn btn-primary d-flex align-items-center px-3 py-2" routerLink="/login"
-  style="font-size: 1.1rem; border-radius: 20px;">
-  <i class="fa-regular fa-user me-2" style="font-size: 1.3rem;"></i>
-  Iniciar sesión
+<a class="btn btn-primary d-flex align-items-center px-2 px-md-3 py-1 py-md-2" routerLink="/login"
+  style="font-size: 1rem; border-radius: 16px; min-width: 0; height: 40px;  overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+  <i class="fa-regular fa-user me-2" style="font-size: 1.1rem;"></i>
+  <span class="text-truncate">Iniciar sesión</span>
 </a>
 }

@@ -19,6 +19,7 @@ export class MyAccountComponent implements OnInit {
     if (user) {
       this.userName = JSON.parse(user)?.name;
     }
+
   }
 
   ngOnInit() { }

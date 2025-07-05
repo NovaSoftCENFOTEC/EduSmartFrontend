@@ -30,6 +30,22 @@ body {
   padding: 0;
   overflow-x: hidden;
 }
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.navbar, .navbar .container-fluid {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin: 0 !important;
+  min-height: 56px;
+}
+
+.btn, .dropdown-toggle {
+  box-sizing: border-box;
+}
 
 .btn {
   font-family: var(--font-family-roboto);
