@@ -1,86 +1,90 @@
-<div class="login-container">
-  <div class="d-flex align-items-center justify-content-center h-100">
-    <div class="login-card">
-      <div class="w-100">
-        <div class="text-center">
-          <a class="logo text-center" routerLink="/">
-            <img
-              width="250"
-              class="img-fluid mb-4"
-              src="../../../../assets/icons/logo@2x.png"
-              alt="Logo"
-            />
-          </a>
+<app-topbar></app-topbar>
+<div class="container min-vh-100 d-flex align-items-center justify-content-center">
+  <main class="d-flex flex-column align-items-center justify-content-center">
+    <div class="login-card my-5 p-4 shadow rounded-4" style="max-width: 400px; width: 100%; background: #fff;">
+      <form (ngSubmit)="handleLogin($event)" autocomplete="off" #frm="ngForm">
+        <h2 class="fw-bold mb-2" style="font-size: 2.2rem;">Iniciar Sesión</h2>
+        <p class="mb-4" style="color: #555; font-size: 1.1rem;">
+          Inicie sesión ingresando su dirección de correo electrónico y contraseña.
+        </p>
+
+        <div class="mb-3">
+          <label for="email" class="form-label fw-semibold">Correo Electrónico</label>
+          <div class="input-group">
+            <span class="input-group-text bg-white border-end-0">
+              <i class="bi bi-envelope"></i>
+            </span>
+            <input #email="ngModel" type="email" class="form-control border-start-0" id="email" name="email"
+              placeholder="email@address.com" [(ngModel)]="loginForm.email" required email
+              style="font-size: 1.15rem;" />
+          </div>
+          @if (email.invalid && (email.dirty || email.touched)) {
+          <div class="text-danger mt-1" style="font-size: 0.95rem;">
+            @if (email.errors?.['required']) {
+            <div>El correo electrónico es obligatorio.</div>
+            }
+            @if (email.errors?.['email']) {
+            <div>El correo electrónico no es válido.</div>
+            }
+          </div>
+          }
         </div>
-        <div class="login-main">
-          <form
-            (ngSubmit)="handleLogin($event)"
-            autocomplete="off"
-            #frm="ngForm"
-          >
-            <div class="mb-3">
-              <h4>Sign in to account</h4>
-              <small style="color: #4f4f4f">
-                Enter your email & password to login
-              </small>
-            </div>
 
-            <div class="form-group mb-3">
-              <label for="email" class="form-label mb-2"> Email Address </label>
-              <input
-                #email="ngModel"
-                type="text"
-                class="form-control"
-                id="email"
-                name="email"
-                placeholder="agent@gmail.com"
-                [(ngModel)]="loginForm.email"
-                [ngClass]="{
-                  'is-invalid': email.invalid && email.touched,
-                  'is-valid': email.valid && email.touched
-                }"
-                required
-              />
-              <div *ngIf="email.invalid" class="invalid-feedback">
-                Please add a valid email
-              </div>
-            </div>
-
-            <div class="form-group mb-4">
-              <label for="password" class="form-label mb-2">Password</label>
-              <div class="form-input position-relative">
-                <input
-                  #password="ngModel"
-                  type="password"
-                  class="form-control"
-                  id="password"
-                  name="password"
-                  placeholder="*****"
-                  [(ngModel)]="loginForm.password"
-                  [ngClass]="{
-                    'is-invalid': password.invalid && password.touched,
-                    'is-valid': password.valid && password.touched
-                  }"
-                  required
-                />
-                <div *ngIf="password.invalid" class="invalid-feedback">
-                  Please add a valid password
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group mb-0">
-              <button class="btn btn-primary btn-block w-100" type="submit">
-                Sign in
-              </button>
-              @if(loginError) {
-              <p class="text-danger">{{ loginError }}</p>
-              }
-            </div>
-            <a href="/signup">Go SignUp</a>
-          </form>
+        <div class="mb-2">
+          <label for="password" class="form-label fw-semibold">Contraseña</label>
+          <div class="input-group">
+            <span class="input-group-text bg-white border-end-0">
+              <i class="bi bi-lock"></i>
+            </span>
+            <input #password="ngModel" [type]="showPassword ? 'text' : 'password'" class="form-control border-start-0"
+              id="password" name="password" placeholder="********" [(ngModel)]="loginForm.password" required
+              minlength="6" style="font-size: 1.15rem;" />
+            <button type="button" class="input-group-text bg-white border-start-0"
+              (click)="showPassword = !showPassword" tabindex="-1">
+              <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+            </button>
+          </div>
+          @if (password.invalid && (password.dirty || password.touched)) {
+          <div class="text-danger mt-1" style="font-size: 0.95rem;">
+            @if (password.errors?.['required']) {
+            <div>La contraseña es obligatoria.</div>
+            }
+            @if (password.errors?.['minlength']) {
+            <div>Contraseña debe tener al menos 6 caracteres.</div>
+            }
+          </div>
+          }
         </div>
-      </div>
+
+        <div class="mb-3 text-end">
+          <a href="/forgot-password" class="text-decoration-underline" style="font-size: 0.98rem;">¿Olvidaste tu
+            contraseña?</a>
+        </div>
+
+        <button class="btn btn-primary w-100 py-2 mb-3" style="font-size: 1.2rem; font-weight: 700;" type="submit"
+          [disabled]="frm.invalid">
+          Iniciar Sesión
+        </button>
+
+        <div class="d-flex align-items-center my-3">
+          <hr class="flex-grow-1" />
+          <span class="mx-2 text-muted">o</span>
+          <hr class="flex-grow-1" />
+        </div>
+
+        <button type="button"
+          class="btn btn-outline-dark w-100 py-2 mb-3 d-flex align-items-center justify-content-center"
+          style="font-size: 1.1rem;">
+          <i class="bi bi-google me-2"></i>
+          Iniciar Sesión con Google
+        </button>
+
+        <div class="text-center mt-2" style="font-size: 1rem;">
+          ¿No tienes una cuenta?
+          <a routerLink="/signup" class="text-decoration-underline">Regístrate aquí</a>
+        </div>
+      </form>
     </div>
-  </div>
+  </main>
 </div>
+<app-footer></app-footer>

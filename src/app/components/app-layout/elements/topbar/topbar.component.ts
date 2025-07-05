@@ -11,6 +11,7 @@ import { MyAccountComponent } from '../../../my-account/my-account.component';
   standalone: true,
   imports: [CommonModule, RouterLink, MyAccountComponent],
   templateUrl: './topbar.component.html',
+  styleUrls: ['./topbar.component.scss']
 })
 export class TopbarComponent implements OnInit {
   public user?: IUser;
@@ -19,7 +20,7 @@ export class TopbarComponent implements OnInit {
     public router: Router,
     public layoutService: LayoutService,
     public authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.user = this.authService.getUser();
