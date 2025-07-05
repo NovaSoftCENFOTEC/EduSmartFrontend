@@ -26,6 +26,9 @@ body {
   font-family: var(--font-family-roboto);
   font-size: var(--font-base-size);
   font-weight: var(--font-base-weight);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 
 .btn {

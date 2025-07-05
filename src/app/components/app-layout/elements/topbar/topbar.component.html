@@ -1,25 +1,25 @@
-<div class="page-header" [ngClass]="{ close_icon: !layoutService.sidebarOpen }">
-  <div class="header-wrapper row m-0">
-    <div class="header-logo-wrapper col-auto p-0">
-      <div class="logo-wrapper">
-        <a routerLink="/">
-          <img class="img-fluid" src="../../../../../assets/icons/logo@2x.png" alt="Logo" />
-        </a>
-      </div>
+<!-- Responsive Navbar / Topbar -->
+<nav class="navbar navbar-expand bg-white px-3 py-2 shadow-sm align-items-center">
+  <div class="container-fluid">
+    <!-- Logo -->
+    <a class="navbar-brand d-flex align-items-center justify-content-center py-2" routerLink="/" style="gap: 20px;">
+      <img src="assets/icons/EduSmartIcon.png" alt="Logo" class="img-fluid"
+        style="height: 56px; width: auto; max-width: 120px;" />
+      <span style="font-size: 2.2rem; font-weight: 800; color: var(--color-indigo-dye); letter-spacing: 1px;">
+        EduSmart
+      </span>
+    </a>
 
-      <div class="toggle-sidebar" (click)="layoutService.toggleSidebar()">
-        <i class="fa-solid fa-bars"></i>
-      </div>
-    </div>
 
-    <div
-      class="nav-right col-xxl-7 col-xl-6 col-md-7 col-8 pull-right right-header p-0 ms-auto"
-    >
-      <ul class="nav-menus mb-0">
-        <li class="profile-nav onhover-dropdown pe-0 py-0">
-          <app-my-account></app-my-account>
-        </li>
-      </ul>
+    <!-- Sidebar Toggle (visible on small screens) -->
+    <button class="btn d-md-none ms-2" type="button" (click)="layoutService.toggleSidebar()"
+      aria-label="Toggle sidebar">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <!-- Right side: Profile/Account -->
+    <div class="d-flex align-items-center ms-auto">
+      <app-my-account></app-my-account>
     </div>
   </div>
-</div>
+</nav>
