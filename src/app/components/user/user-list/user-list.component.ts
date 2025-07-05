@@ -1,37 +1,34 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { IUser } from '../../../interfaces';
 import { CommonModule } from '@angular/common';
-
-declare var bootstrap: any; // permite usar Bootstrap modal
+import { ConfirmModalComponent } from '../../confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-user-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ConfirmModalComponent],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.scss'
 })
 export class UserListComponent {
-  @Input() title: string = '';
   @Input() users: IUser[] = [];
-  @Output() callModalAction = new EventEmitter<IUser>();
   @Output() callDeleteAction = new EventEmitter<IUser>();
+  @Output() callModalAction = new EventEmitter<IUser>();
 
   usuarioAEliminar: IUser | null = null;
 
+  @ViewChild('confirmDeleteModal') confirmDeleteModal!: ConfirmModalComponent;
+
   abrirModalConfirmacion(usuario: IUser): void {
     this.usuarioAEliminar = usuario;
-    const modal = new bootstrap.Modal(document.getElementById('modalConfirmacion'));
-    modal.show();
+    this.confirmDeleteModal.show();
   }
 
   confirmarEliminacion(): void {
     if (this.usuarioAEliminar) {
       this.callDeleteAction.emit(this.usuarioAEliminar);
+      this.usuarioAEliminar = null;
     }
-
-    const modalElement = document.getElementById('modalConfirmacion');
-    const modal = bootstrap.Modal.getInstance(modalElement);
-    modal.hide();
   }
 }
+
