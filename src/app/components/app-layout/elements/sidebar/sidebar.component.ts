@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { Route, RouterLink, RouterLinkActive } from '@angular/router';
 import { LayoutService } from '../../../../services/layout.service';
 import { AuthService } from '../../../../services/auth.service';
-import { SvgIconComponent } from '../../../svg-icon/svg-icon.component';
 import { routes } from '../../../../app.routes';
 
 @Component({
@@ -12,8 +11,7 @@ import { routes } from '../../../../app.routes';
   imports: [
     CommonModule,
     RouterLink,
-    RouterLinkActive,
-    SvgIconComponent
+    RouterLinkActive, 
   ],
   templateUrl: './sidebar.component.html',
 })
