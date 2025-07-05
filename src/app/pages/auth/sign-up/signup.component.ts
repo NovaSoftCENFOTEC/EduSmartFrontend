@@ -118,4 +118,18 @@ export class SigUpComponent {
       this.user.profilePicture = '';
     }
   }
+
+  removeProfilePhoto(): void {
+    this.selectedFile = null;
+    this.profilePhotoPreview = null;
+    this.user.profilePicture = '';
+    this.profilePhotoError = '';
+    this.profilePhotoTouched = false;
+
+    // Limpiar el input file
+    const fileInput = document.getElementById('profilePhoto') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
+  }
 }
