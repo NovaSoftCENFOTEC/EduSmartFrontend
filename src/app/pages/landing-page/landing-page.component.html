@@ -1,31 +1,26 @@
-<!-- Header -->
 <app-topbar></app-topbar>
 
-<!-- Hero / Banner -->
-<section class="text-center py-4 py-md-5" style="background: #FFEFD8; position: relative;">
-    <!-- Imagen de fondo/banner -->
-    <!-- Próximamente: <img src="assets/img/tu-banner.jpg" alt="Banner" class="img-fluid w-100 position-absolute top-0 start-0" style="z-index:0; opacity:0.2;"> -->
-    <div class="container position-relative" style="z-index:1;">
-        <h1 class="fw-bold mb-3"
-            style="color: var(--color-indigo-dye); font-size:2.2rem; font-size:clamp(2rem,6vw,3.5rem);">EduSmart</h1>
-        <p class="lead mb-4 px-2 px-md-0" style="font-size:1.1rem;">Descubre, aprende y explora el fascinante mundo de
-            la Historia de Costa Rica con nuestra plataforma educativa interactiva.</p>
-        <a href="#" class="btn btn-primary btn-lg w-100 w-md-auto" style="max-width:260px;">Regístrate</a>
+<section class="landing-hero d-flex align-items-center justify-content-center text-center py-4 py-md-5">
+    <div class="container-banner position-relative">
+        <h1 class=" fw-bold mb-3 banner-title">
+            EduSmart
+        </h1>
+        <p class="lead mb-4 banner-text">
+            Descubre, aprende y explora el fascinante mundo de la Historia de Costa Rica con nuestra plataforma
+            educativa interactiva.
+        </p>
+        <a href=" #" class="btn btn-primary btn-lg px-5 py-3 btn-register">
+            Regístrate
+        </a>
     </div>
 </section>
 
-<!-- Beneficios / Características -->
-<section class="py-4 py-md-5 bg-white">
-    <div class="container">
+<section class="py-4 py-md-5 ">
+    <div class="container var">
         <h2 class="fw-bold text-center mb-4 mb-md-5"
             style="color: var(--color-indigo-dye); font-size:clamp(1.3rem,4vw,2.2rem);">¡La historia de Costa Rica,
             narrada como nunca antes!</h2>
         <app-benefits></app-benefits>
     </div>
 </section>
-
-<!-- Footer -->
-<footer class="text-white text-center py-3 mt-5"
-    style="background: var(--color-indigo-dye); font-size:clamp(0.9rem,2vw,1.1rem);">
-    <small>EduSmart® 2025</small>
-</footer>
+<app-footer></app-footer>
