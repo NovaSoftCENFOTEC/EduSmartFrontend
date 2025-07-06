@@ -7,7 +7,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {SchoolService} from '../../services/school.service';
 import {ModalService} from '../../services/modal.service';
 import {AuthService} from '../../services/auth.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {SchoolFormComponent} from '../../components/schools/schools-form/school-form.component';
 import {SchoolListComponent} from '../../components/schools/school-list/school-list.component';
 import {LoaderComponent} from '../../components/loader/loader.component';
@@ -115,14 +115,4 @@ export class SchoolsComponent {
         }
     }
 
-    // Metodo para navegar a la página de profesores
-    public router: Router = inject(Router);
-
-    goToProfessors(school: ISchool) {
-        // Guardar el id de la escuela en sessionStorage
-        sessionStorage.setItem('selectedSchoolId', school.id?.toString() ?? '');
-
-        // Navegar a la página de profesores
-        this.router.navigate(['/professors']);
-    }
 }

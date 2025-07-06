@@ -16,11 +16,7 @@
                 <tbody>
                     @for (item of schools; track item.id) {
                         <tr>
-                            <td>
-                                <a href="#" (click)="goToProfessors(item)">
-                                    {{ item.name }}
-                                </a>
-                            </td>
+                            <td>{{ item.name }}</td>
                             <td>{{ item.domain }}</td>
                             <td>{{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
                             <td class="text-center">
@@ -42,7 +38,6 @@
                         </tr>
                     }
                 </tbody>
-
             </table>
         </div>
     </div>
