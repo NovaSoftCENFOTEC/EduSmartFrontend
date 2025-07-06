@@ -1,33 +1,29 @@
+<form [formGroup]="form" class="row mb-4">
+    <div class="col-12 mb-3">
+        <h2 class="mb-0" style="font-size: var(--font-h2-size); font-weight: var(--font-h2-weight); color: var(--color-indigo-dye);">
+            Registrar Escuela
+        </h2>
+    </div>
 
-    <form [formGroup]="form" class="row mb-4">
-        <div class="col-12 mb-3">
-            <h2 class="mb-0" style="font-size: var(--font-h2-size); font-weight: var(--font-h2-weight); color: var(--color-indigo-dye);">
-                Registrar Escuela
-            </h2>
+    <div class="mb-2 col-md-6">
+        <label class="mb-1" for="name">Nombre de la escuela<span class="required-asterisk">*</span></label>
+        <input id="name" formControlName="name" type="text" class="form-control normal" placeholder="Ej: Colegio Nacional">
+        <div *ngIf="form.controls['name'].invalid && (form.controls['name'].dirty || form.controls['name'].touched)" class="form-error-message">
+            El nombre es obligatorio.
         </div>
+    </div>
 
-        <!-- Nombre de la escuela -->
-        <div class="mb-2 col-md-6">
-            <label class="mb-1" for="name">Nombre de la escuela<span class="required-asterisk">*</span></label>
-            <input id="name" formControlName="name" type="text" class="form-control normal" placeholder="Ej: Colegio Nacional">
-            @if (form.controls['name'].invalid && (form.controls['name'].dirty || form.controls['name'].touched)) {
-                <p class="form-error-message">El nombre es obligatorio.</p>
-            }
+    <div class="mb-2 col-md-6">
+        <label class="mb-1" for="domain">Dominio institucional<span class="required-asterisk">*</span></label>
+        <input id="domain" formControlName="domain" type="text" class="form-control normal" placeholder="Ej: colegio.edu.cr">
+        <div *ngIf="form.controls['domain'].invalid && (form.controls['domain'].dirty || form.controls['domain'].touched)" class="form-error-message">
+            El dominio es obligatorio y debe tener formato válido (ej: universidad.ac.cr).
         </div>
+    </div>
 
-        <!-- Dominio de la escuela -->
-        <div class="mb-2 col-md-6">
-            <label class="mb-1" for="domain">Dominio institucional<span class="required-asterisk">*</span></label>
-            <input id="domain" formControlName="domain" type="text" class="form-control normal" placeholder="Ej: colegio.edu.cr">
-            @if (form.controls['domain'].invalid && (form.controls['domain'].dirty || form.controls['domain'].touched)) {
-                <p class="form-error-message">El dominio es obligatorio.</p>
-            }
-        </div>
-
-        <div class="col-12 mt-3">
-            <button (click)="callSave()" [disabled]="form.invalid" class="btn btn-primary" type="button">
-                Guardar
-            </button>
-        </div>
-    </form>
-
+    <div class="col-12 mt-3">
+        <button (click)="callSave()" [disabled]="form.invalid" class="btn btn-primary" type="button">
+            Guardar
+        </button>
+    </div>
+</form>

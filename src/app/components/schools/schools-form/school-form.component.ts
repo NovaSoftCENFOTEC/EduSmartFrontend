@@ -33,6 +33,8 @@ export class SchoolFormComponent {
   }
 
   callSave() {
+    if (this.form.invalid) return;
+
     let item: ISchool = {
       name: this.form.controls["name"].value,
       domain: this.form.controls["domain"].value
