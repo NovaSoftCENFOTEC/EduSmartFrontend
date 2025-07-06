@@ -1,1 +1,53 @@
-<p>school-list works!</p>
+<div class="card">
+    <div class="card-header card-header-indigo">
+        <h2 class="mb-0">Lista de Escuelas</h2>
+    </div>
+    <div class="card-body">
+        <div class="table-container table-responsive">
+            <table class="table custom-full-bordered-table">
+                <thead class="table-header-gray">
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Dominio</th>
+                    <th scope="col">Fecha de creación</th>
+                    <th class="text-center" scope="col">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                    @for (item of schools; track item.id) {
+                        <tr>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.domain }}</td>
+                            <td>{{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+                            <td class="text-center">
+                                <button (click)="callModalAction.emit(item);" class="btn border-0 me-2 icon-gray-color" type="button">
+                                    <i class="fas fa-pen"></i>
+                                </button>
+                                <button (click)="openConfirmationModal(item)" class="btn border-0 icon-gray-color" type="button">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    } @empty {
+                        <tr>
+                            <td colspan="4">
+                                <div class="d-flex justify-content-center align-items-center w-100">
+                                    <p class="mb-0">No hay escuelas</p>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Componente modal reutilizable -->
+<app-confirm-modal
+    #confirmDeleteModal
+    [message]="'¿Estás seguro de que deseas eliminar la escuela ' + deleteSchool?.name + '?'"
+    [confirmText]="'Eliminar'"
+    [cancelText]="'Cancelar'"
+    (confirmed)="deleteConfirmation()">
+</app-confirm-modal>
