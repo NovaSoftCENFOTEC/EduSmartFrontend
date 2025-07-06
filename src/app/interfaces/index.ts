@@ -23,6 +23,7 @@ export interface IUser {
   authorities?: IAuthority[];
   role?: IRole
   schoolId?: ISchool;
+  active?: boolean;
 }
 
 export interface IAuthority {

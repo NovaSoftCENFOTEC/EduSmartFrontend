@@ -5,20 +5,19 @@
   --color-butterscotch: #E38B3A;
   --color-rust: #A83A15;
 
-  /* Typography - Roboto */
   --font-family-roboto: 'Roboto', Arial, sans-serif;
   --font-h1-size: 32px;
-  --font-h1-weight: 700; /* Bold */
+  --font-h1-weight: 700;
   --font-h2-size: 24px;
-  --font-h2-weight: 600; /* Semibold */
+  --font-h2-weight: 600;
   --font-h3-size: 20px;
-  --font-h3-weight: 600; /* Semibold */
+  --font-h3-weight: 600;
   --font-base-size: 16px;
-  --font-base-weight: 400; /* Regular */
+  --font-base-weight: 400;
   --font-secondary-size: 14px;
-  --font-secondary-weight: 400; /* Regular */
+  --font-secondary-weight: 400;
   --font-button-size: 16px;
-  --font-button-weight: 600; /* Semibold */
+  --font-button-weight: 600;
   --font-footer-text: 12px;
 }
 
@@ -49,13 +48,14 @@ body {
 }
 
 .btn-secondary {
-  background: #FFF;
-  color: var(--color-blue-munsell);
-  border: 1px solid var(--color-blue-munsell);
+  background: #fff;
+  color: #1e8b9b;
+  border: 1px solid #1e8b9b;
 }
 .btn-secondary:hover {
-  border: 1px solid var(--color-indigo-dye);
-  color: var(--color-indigo-dye);
+  border: 1px solid #003e6b;
+  color: #003e6b;
+  background: #fff;
 }
 
 .btn-warning {
@@ -121,30 +121,6 @@ body {
   background: #FFF;
 }
 
-.tbl {
-  width: 80%;
-  border-collapse: collapse;
-  font-family: inherit;
-}
-.tbl th {
-  background: var(--color-indigo-dye);
-  color: #FFF;
-  font-size: 16px;
-  font-weight: 600;
-  padding: 10px;
-  border: 2px solid var(--color-indigo-dye);
-}
-.tbl td {
-  background: #FFF;
-  color: var(--color-indigo-dye);
-  font-size: 16px;
-  padding: 10px;
-  border: 2px solid var(--color-indigo-dye);
-}
-.tbl tr:hover {
-  background: rgba(30, 139, 155, 0.1);
-}
-
 .lst {
   background: #FFF;
   color: var(--color-indigo-dye);
@@ -154,7 +130,8 @@ body {
   padding: 8px;
   width: 130px;
 }
-.lst option:checked, .lst option[selected] {
+.lst option:checked,
+.lst option[selected] {
   background: var(--color-blue-munsell);
   color: #FFF;
 }
@@ -219,6 +196,13 @@ body {
   font-size: 16px;
   color: var(--color-indigo-dye);
 }
+.card-header {
+  background-color: #FFF;
+  color: var(--color-indigo-dye);
+  border-radius: 12px 12px 0 0;
+  padding: 16px 20px;
+}
+
 
 .form-group {
   display: flex;
@@ -233,7 +217,8 @@ body {
   border-radius: 20px;
   padding: 10px;
 }
-.form-control[required]::after, .required-asterisk {
+.form-control[required]::after,
+.required-asterisk {
   content: '*';
   color: #A83A15;
   margin-left: 4px;
@@ -263,7 +248,6 @@ body {
   gap: 4px;
 }
 
-// CUSTOM TABLE STYLES
 .custom-full-bordered-table {
   border-collapse: separate;
   border-spacing: 0;

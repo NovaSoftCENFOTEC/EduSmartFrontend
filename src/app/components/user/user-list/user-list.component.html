@@ -1,6 +1,6 @@
 <div class="card">
-    <div class="card-header">
-        Lista de Usuarios
+    <div class="card-header card-header-indigo">
+        <h2 class="mb-0">Lista de Usuarios</h2>
     </div>
     <div class="card-body">
         <div class="table-container table-responsive">
@@ -23,7 +23,7 @@
                             <td>{{ item.email }}</td>
                             <td>{{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
                             <td>{{ item.updatedAt | date: 'dd/MM/yyyy HH:mm' }}</td>
-                            <td>
+                            <td class="text-center">
                                 <button disabled (click)="callModalAction.emit(item);" class="btn border-0 me-2 icon-gray-color" type="button">
                                     <i class="fas fa-pen"></i>
                                 </button>
@@ -46,7 +46,6 @@
         </div>
     </div>
 </div>
-
 <!-- Componente modal reutilizable -->
 <app-confirm-modal
     #confirmDeleteModal
