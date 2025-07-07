@@ -7,10 +7,10 @@ import { TeacherService } from '../../services/teacher.service';
 import { ModalService } from '../../services/modal.service';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
-import { TeachersFormComponent } from "../../components/teachers/teacher-form/teachers-form.component";
-import { TeachersListComponent } from "../../components/teachers/teacher-list/teachers-list.component";
-import { NgIf } from "@angular/common";
-import { UserService } from "../../services/user.service";
+import { TeachersFormComponent } from '../../components/teachers/teacher-form/teachers-form.component';
+import { TeachersListComponent } from '../../components/teachers/teacher-list/teachers-list.component';
+import { NgIf } from '@angular/common';
+import { UserService } from '../../services/user.service';
 import { WritableSignal } from '@angular/core';
 
 @Component({
@@ -27,9 +27,7 @@ import { WritableSignal } from '@angular/core';
   styleUrls: ['./teachers.component.scss']
 })
 export class TeachersComponent implements OnInit {
-
   public teacherList!: WritableSignal<IUser[]>;
-
   public teacherService: TeacherService = inject(TeacherService);
   public userService: UserService = inject(UserService);
   public fb: FormBuilder = inject(FormBuilder);
@@ -43,7 +41,6 @@ export class TeachersComponent implements OnInit {
 
   public areActionsAvailable: boolean = false;
   private schoolId: number | null = null;
-
   private originalTeacher: IUser | null = null;
   private pendingEditItem: IUser | null = null;
 
@@ -61,7 +58,6 @@ export class TeachersComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.getUserAuthorities();
-
     this.route.queryParams.subscribe(params => {
       const id = Number(params['schoolId']);
       if (id) {
@@ -76,7 +72,6 @@ export class TeachersComponent implements OnInit {
         }
       }
     });
-
     this.route.data.subscribe(data => {
       this.areActionsAvailable = this.authService.areActionsAvailable(data['authorities'] ?? []);
     });
@@ -103,7 +98,7 @@ export class TeachersComponent implements OnInit {
       ...this.originalTeacher,
       name: this.teacherForm.controls['name'].value || '',
       lastname: this.teacherForm.controls['lastname'].value || '',
-      email: this.teacherForm.controls['email'].value || '',
+      email: this.teacherForm.controls['email'].value || ''
     };
     this.userService.update(updatedTeacher);
     this.modalService.closeAll();
@@ -118,7 +113,6 @@ export class TeachersComponent implements OnInit {
 
   openEditTeacherModal(teacher: IUser) {
     this.originalTeacher = teacher;
-
     this.teacherForm.patchValue({
       id: JSON.stringify(teacher.id),
       name: teacher.name,
@@ -126,7 +120,6 @@ export class TeachersComponent implements OnInit {
       email: teacher.email,
       createdAt: teacher.createdAt
     });
-
     this.modalService.displayModal('lg', this.editTeacherModal);
   }
 
