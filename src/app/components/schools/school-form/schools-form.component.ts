@@ -6,16 +6,16 @@ import { AuthService } from '../../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-school-form',
+  selector: 'app-schools-form',
   standalone: true,
   imports: [
     ReactiveFormsModule,
     CommonModule
   ],
-  templateUrl: './school-form.component.html',
-  styleUrl: './school-form.component.scss'
+  templateUrl: './schools-form.component.html',
+  styleUrl: './schools-form.component.scss'
 })
-export class SchoolFormComponent {
+export class SchoolsFormComponent {
   public fb: FormBuilder = inject(FormBuilder);
   @Input() form!: FormGroup;
   @Output() callSaveMethod: EventEmitter<ISchool> = new EventEmitter<ISchool>();

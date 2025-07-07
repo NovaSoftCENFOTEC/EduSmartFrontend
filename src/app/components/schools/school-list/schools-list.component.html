@@ -3,6 +3,8 @@
         <h2 class="mb-0">Lista de Escuelas</h2>
     </div>
     <div class="card-body">
+        <p class="text-muted mb-3">Si deseas ver o agregar profesores para una escuela, selecciona su nombre en la tabla.</p>
+
         <div class="table-container table-responsive">
             <table class="table custom-full-bordered-table">
                 <thead class="table-header-gray">
@@ -16,7 +18,9 @@
                 <tbody>
                     @for (item of schools; track item.id) {
                         <tr>
-                            <td>{{ item.name }}</td>
+                            <td>
+                                <a [routerLink]="['../teachers']" [queryParams]="{ schoolId: item.id }" class="no-link-style">{{ item.name }}</a>
+                            </td>
                             <td>{{ item.domain }}</td>
                             <td>{{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
                             <td class="text-center">
@@ -43,7 +47,6 @@
     </div>
 </div>
 
-<!-- Componente modal reutilizable -->
 <app-confirm-modal
     #confirmDeleteModal
     [message]="'¿Estás seguro de que deseas eliminar la escuela ' + deleteSchool?.name + '?'"

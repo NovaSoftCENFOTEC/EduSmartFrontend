@@ -2,18 +2,20 @@ import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {ISchool, IUser} from "../../../interfaces";
 import {ConfirmModalComponent} from "../../confirm-modal/confirm-modal.component";
 import {DatePipe} from "@angular/common";
+import {RouterLink, RouterModule} from "@angular/router";
 
 @Component({
-  selector: 'app-school-list',
+  selector: 'app-schools-list',
   standalone: true,
   imports: [
     ConfirmModalComponent,
-    DatePipe
+    DatePipe,
+    RouterModule
   ],
-  templateUrl: './school-list.component.html',
-  styleUrl: './school-list.component.scss'
+  templateUrl: './schools-list.component.html',
+  styleUrl: './schools-list.component.scss'
 })
-export class SchoolListComponent {
+export class SchoolsListComponent {
   @Input() schools: ISchool[] = [];
   @Output() callUpdateModalMethod: EventEmitter<ISchool> = new EventEmitter<ISchool>();
   @Output() callDeleteAction = new EventEmitter<IUser>();

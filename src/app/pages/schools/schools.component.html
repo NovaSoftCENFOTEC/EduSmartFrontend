@@ -11,11 +11,11 @@
     <div class="col-12 mt-3">
         <div class="card">
             <div class="card-body">
-                <app-school-list
+                <app-schools-list
                         [schools]="schoolService.schools$()"
                         (callModalAction)="openEditSchoolModal($event)"
                         (callDeleteAction)="deleteSchool($event)"
-                ></app-school-list>
+                ></app-schools-list>
                 <app-pagination *ngIf="schoolService.schools$().length" [service]="schoolService"></app-pagination>
             </div>
         </div>
@@ -24,19 +24,19 @@
 
 <ng-template #addSchoolModal>
     <app-modal [hideFooter]="true">
-        <app-school-form
+        <app-schools-form
                 [form]="schoolForm"
                 (callSaveMethod)="handleAddSchool($event)"
-        ></app-school-form>
+        ></app-schools-form>
     </app-modal>
 </ng-template>
 
 <ng-template #editSchoolModal>
     <app-modal [hideFooter]="true">
-        <app-school-form
+        <app-schools-form
                 [form]="schoolForm"
                 (callUpdateMethod)="confirmEdit($event)"
-        ></app-school-form>
+        ></app-schools-form>
     </app-modal>
 </ng-template>
 

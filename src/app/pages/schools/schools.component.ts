@@ -8,19 +8,20 @@ import {SchoolService} from '../../services/school.service';
 import {ModalService} from '../../services/modal.service';
 import {AuthService} from '../../services/auth.service';
 import {ActivatedRoute} from '@angular/router';
-import {SchoolFormComponent} from '../../components/schools/schools-form/school-form.component';
-import {SchoolListComponent} from '../../components/schools/school-list/school-list.component';
-import {LoaderComponent} from '../../components/loader/loader.component';
+import {SchoolsFormComponent} from "../../components/schools/school-form/schools-form.component";
+import {SchoolsListComponent} from "../../components/schools/school-list/schools-list.component";
+import {NgIf} from "@angular/common";
 
 @Component({
     selector: 'app-schools',
     standalone: true,
     imports: [
-        SchoolFormComponent,
-        SchoolListComponent,
+
         PaginationComponent,
         ModalComponent,
-        LoaderComponent
+        SchoolsFormComponent,
+        SchoolsListComponent,
+        NgIf
     ],
     templateUrl: './schools.component.html',
     styleUrl: './schools.component.scss'

@@ -3,8 +3,8 @@
         <ul class="pagination custom-pagination-buttons mb-0">
             <li class="page-item">
                 <button
-                        (click)="onPage(service.search.pageNumber - 1)"
-                        [disabled]="service.search.pageNumber === 1"
+                        (click)="onPage((service?.pageNumber || 1) - 1)"
+                        [disabled]="(service?.pageNumber || 1) === 1"
                         class="page-link"
                 >
                     <i class="fas fa-arrow-left"></i>&nbsp;Atrás </button>
@@ -16,8 +16,8 @@
         <ul class="pagination custom-pagination-buttons mb-0">
             <li class="page-item">
                 <button
-                        (click)="onPage(service.search.pageNumber + 1)"
-                        [disabled]="service.search.pageNumber === service.totalItems.length"
+                        (click)="onPage((service?.pageNumber || 1) + 1)"
+                        [disabled]="(service?.pageNumber || 1) === (service?.totalPages || 1)"
                         class="page-link"
                 >
                     Siguiente&nbsp;<i class="fas fa-arrow-right"></i> </button>
