@@ -1,5 +1,3 @@
-// teachers.component.ts
-
 import { Component, ViewChild, inject, OnInit } from '@angular/core';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
 import { ModalComponent } from '../../components/modal/modal.component';
@@ -94,20 +92,9 @@ export class TeachersComponent implements OnInit {
 
   handleAddTeacher(item: IUser) {
     if (!this.schoolId) return;
-    // Call the teacher service to save the teacher
-    this.teacherService.saveTeacher(this.schoolId, item).subscribe({
-      next: () => {
-        // After successful save, refresh the list in UserService
-        this.userService.refreshList();
-        // Close the modal and reset the form
-        this.modalService.closeAll();
-        this.teacherForm.reset();
-      },
-      error: (err) => {
-        console.error('Error al agregar profesor:', err);
-        // Handle error, e.g., show an alert
-      }
-    });
+    this.teacherService.saveTeacher(this.schoolId, item);
+    this.modalService.closeAll();
+    this.teacherForm.reset();
   }
 
   updateTeacher() {
