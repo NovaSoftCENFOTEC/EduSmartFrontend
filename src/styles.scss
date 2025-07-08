@@ -4,6 +4,7 @@
   --color-papaya-whip: #FFEFD8;
   --color-butterscotch: #E38B3A;
   --color-rust: #A83A15;
+  --color-rust-light: #e7836f;
 
   --font-family-roboto: 'Roboto', Arial, sans-serif;
   --font-h1-size: 32px;
@@ -25,6 +26,25 @@ body {
   font-family: var(--font-family-roboto);
   font-size: var(--font-base-size);
   font-weight: var(--font-base-weight);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.navbar, .navbar .container-fluid {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin: 0 !important;
+  min-height: 56px;
+}
+
+.btn, .dropdown-toggle {
+  box-sizing: border-box;
 }
 
 .btn {

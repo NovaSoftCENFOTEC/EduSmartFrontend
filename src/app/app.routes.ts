@@ -12,6 +12,7 @@ import { IRoleType } from "./interfaces";
 import { ProfileComponent } from "./pages/profile/profile.component";
 import {TeachersComponent} from "./pages/teachers/teachers.component";
 import {SchoolsComponent} from "./pages/schools/schools.component";
+import { LandingPageComponent } from "./pages/landing-page/landing-page.component";
 
 // Existing protected routes (commented out)
 // export const routes: Routes = [
@@ -83,17 +84,22 @@ export const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: "signup",
+    path: "teacher/signup-student",
     component: SigUpComponent,
   },
+  //signup student
   {
     path: "access-denied",
     component: AccessDeniedComponent,
   },
   {
     path: "",
-    redirectTo: "login",
+    redirectTo: "",
     pathMatch: "full",
+  },
+  {
+    path: "",
+    component: LandingPageComponent,
   },
   {
     path: "app",

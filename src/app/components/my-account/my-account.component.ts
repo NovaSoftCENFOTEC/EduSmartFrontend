@@ -12,16 +12,23 @@ import { AuthService } from "../../services/auth.service";
 })
 export class MyAccountComponent implements OnInit {
   public userName: string = '';
+  public isLoginRoute: boolean = false;
   private service = inject(AuthService);
 
   constructor(public router: Router) {
     let user = localStorage.getItem('auth_user');
-    if(user) {
+    if (user) {
       this.userName = JSON.parse(user)?.name;
-    } 
+    }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.checkCurrentRoute();
+  }
+
+  private checkCurrentRoute() {
+    this.isLoginRoute = this.router.url === '/login';
+  }
 
   logout() {
     this.service.logout();

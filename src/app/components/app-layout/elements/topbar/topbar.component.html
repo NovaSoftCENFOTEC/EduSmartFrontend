@@ -1,25 +1,14 @@
-<div class="page-header" [ngClass]="{ close_icon: !layoutService.sidebarOpen }">
-  <div class="header-wrapper row m-0">
-    <div class="header-logo-wrapper col-auto p-0">
-      <div class="logo-wrapper">
-        <a routerLink="/">
-          <img class="img-fluid" src="../../../../../assets/icons/logo@2x.png" alt="Logo" />
-        </a>
-      </div>
-
-      <div class="toggle-sidebar" (click)="layoutService.toggleSidebar()">
-        <i class="fa-solid fa-bars"></i>
-      </div>
-    </div>
-
-    <div
-      class="nav-right col-xxl-7 col-xl-6 col-md-7 col-8 pull-right right-header p-0 ms-auto"
-    >
-      <ul class="nav-menus mb-0">
-        <li class="profile-nav onhover-dropdown pe-0 py-0">
-          <app-my-account></app-my-account>
-        </li>
-      </ul>
+<nav class="navbar navbar-expand bg-white shadow-sm align-items-center d-block">
+  <div class="container-fluid px-2 px-md-5">
+    <a class="navbar-brand d-flex align-items-center py-1" routerLink="/"
+      style="gap: 12px; min-width: 0; cursor: pointer;">
+      <img src="assets/icons/EduSmartIcon.png" alt="Logo" class="img-fluid" />
+      <span>
+        EduSmart
+      </span>
+    </a>
+    <div class="d-flex align-items-center ms-auto">
+      <app-my-account></app-my-account>
     </div>
   </div>
-</div>
+</nav>
