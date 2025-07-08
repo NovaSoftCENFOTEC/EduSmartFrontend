@@ -4,9 +4,9 @@
   <div class="flex-grow-1 d-flex align-items-center justify-content-center">
     <div class="login-card p-4 shadow rounded-4" style="max-width: 430px; width: 100%; background: #fff;">
       <form (ngSubmit)="handleSignup($event)" autocomplete="off" #frm="ngForm">
-        <h2 class="fw-bold mb-2" style="font-size: 2.2rem;">Crea tu cuenta</h2>
-        <p class="mb-4" style="color: #555; font-size: 1.1rem;">
-          Complete el formulario para crear su cuenta en EduSmart.
+        <h2 class="fw-bold mb-2 text-center" style="font-size: 2.2rem;">Crea cuenta de estudiante</h2>
+        <p class="mb-4 text-center" style="color: #555; font-size: 1.1rem;">
+          Complete el formulario para crear la cuenta de estudiante en EduSmart.
         </p>
 
         <div class="d-flex align-items-center my-3">
@@ -21,31 +21,6 @@
           <i class="bi bi-google me-2"></i>
           Continuar con Google
         </button>
-
-        <div class="mb-3">
-          <label for="profilePhoto" class="form-label fw-semibold">Foto de perfil</label>
-          <input type="file" class="form-control" id="profilePhoto" (change)="onFileChange($event)"
-            accept=".png,.jpg,.jpeg" required style="font-size: 1.15rem;" />
-
-          @if (profilePhotoPreview) {
-          <div class="mt-3 text-center">
-            <div class="position-relative d-inline-block">
-              <img [src]="profilePhotoPreview" alt="Vista previa de la foto de perfil" class="rounded-circle border"
-                style="width: 120px; height: 120px; object-fit: cover; border: 2px solid #dee2e6 !important;" />
-              <button type="button" class="btn btn-sm btn-outline-danger position-absolute top-0 end-0 rounded-circle"
-                style="width: 30px; height: 30px; padding: 0;" (click)="removeProfilePhoto()" title="Eliminar foto">
-                <i class="bi bi-x"></i>
-              </button>
-            </div>
-          </div>
-          }
-
-          @if (profilePhotoError && profilePhotoTouched) {
-          <div class="text-danger mt-1" style="font-size: 0.95rem;">
-            {{ profilePhotoError }}
-          </div>
-          }
-        </div>
 
         <div class="mb-3">
           <label for="name" class="form-label fw-semibold">Nombre</label>
@@ -101,32 +76,6 @@
           }
         </div>
 
-        <div class="mb-3">
-          <label for="password" class="form-label fw-semibold">Contraseña</label>
-          <div class="input-group">
-            <span class="input-group-text bg-white border-end-0">
-              <i class="bi bi-lock"></i>
-            </span>
-            <input #password="ngModel" [type]="showPassword ? 'text' : 'password'" class="form-control border-start-0"
-              id="password" name="password" placeholder="********" [(ngModel)]="user.password" required minlength="6"
-              style="font-size: 1.15rem;" />
-            <button type="button" class="input-group-text bg-white border-start-0"
-              (click)="showPassword = !showPassword" tabindex="-1">
-              <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
-            </button>
-          </div>
-          @if (password.invalid && (password.dirty || password.touched)) {
-          <div class="text-danger mt-1" style="font-size: 0.95rem;">
-            @if (password.errors?.['required']) {
-            <div>La contraseña es obligatoria.</div>
-            }
-            @if (password.errors?.['minlength']) {
-            <div>La contraseña debe tener al menos 6 caracteres.</div>
-            }
-          </div>
-          }
-        </div>
-
         <button class="btn btn-primary w-100 py-2 mb-3" style="font-size: 1.2rem; font-weight: 700;" type="submit"
           [disabled]="frm.invalid || profilePhotoError">
           Crear cuenta
@@ -142,10 +91,6 @@
           Usuario registrado exitosamente, por favor inicia sesión
         </div>
         }
-        <div class="text-center mt-2" style="font-size: 1rem;">
-          ¿Ya tienes una cuenta?
-          <a routerLink="/login" class="text-decoration-underline">Inicia sesión aquí</a>
-        </div>
       </form>
     </div>
   </div>

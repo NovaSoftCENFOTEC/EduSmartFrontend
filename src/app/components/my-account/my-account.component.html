@@ -24,9 +24,11 @@
 </div>
 }
 @else {
+@if (!isLoginRoute) {
 <a class="btn btn-primary d-flex align-items-center cursor-pointer" routerLink="/login"
   style="font-size: 1rem; border-radius: 16px; min-width: 0; height: 40px;  overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
   <i class="fa-regular fa-user me-2" style="font-size: 1.1rem;"></i>
   <span class="text-truncate">Iniciar sesión</span>
 </a>
+}
 }

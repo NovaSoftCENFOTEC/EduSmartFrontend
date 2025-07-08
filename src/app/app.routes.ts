@@ -82,9 +82,10 @@ export const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: "signup",
+    path: "teacher/signup-student",
     component: SigUpComponent,
   },
+  //signup student
   {
     path: "access-denied",
     component: AccessDeniedComponent,

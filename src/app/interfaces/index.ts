@@ -20,7 +20,7 @@ export interface IUser {
   updatedAt?: string;
   authorities?: IAuthority[];
   role?: IRole;
-  grade?: string;
+  school?: string;
   profilePicture?: string;
 }
 
