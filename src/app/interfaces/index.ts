@@ -19,7 +19,9 @@ export interface IUser {
   createdAt?: string;
   updatedAt?: string;
   authorities?: IAuthority[];
-  role?: IRole
+  role?: IRole;
+  school?: string;
+  profilePicture?: string;
 }
 
 export interface IAuthority {

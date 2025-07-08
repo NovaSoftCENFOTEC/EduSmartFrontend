@@ -3,11 +3,13 @@ import { Component, ViewChild } from '@angular/core';
 import { FormsModule, NgModel } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import { FooterComponent } from '../../../components/app-layout/elements/footer/footer.component';
+import { TopbarComponent } from '../../../components/app-layout/elements/topbar/topbar.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, TopbarComponent, FooterComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -21,10 +23,12 @@ export class LoginComponent {
     password: '',
   };
 
+  public showPassword = false;
+
   constructor(
-    private router: Router, 
+    private router: Router,
     private authService: AuthService
-  ) {}
+  ) { }
 
   public handleLogin(event: Event) {
     event.preventDefault();
