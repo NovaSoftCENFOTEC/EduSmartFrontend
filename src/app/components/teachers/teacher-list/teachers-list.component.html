@@ -23,10 +23,12 @@
                                 <td>{{ item.lastname }}</td>
                                 <td>{{ item.email }}</td>
                                 <td class="text-center">
-                                    <button (click)="callModalAction.emit(item);" class="btn border-0 me-2 icon-gray-color" type="button">
+                                    <button (click)="callModalAction.emit(item);"
+                                            class="btn border-0 me-2 icon-gray-color" type="button" disabled>
                                         <i class="fas fa-pen"></i>
                                     </button>
-                                    <button (click)="openConfirmationModal(item)" class="btn border-0 icon-gray-color" type="button">
+                                    <button (click)="openConfirmationModal(item)" class="btn border-0 icon-gray-color"
+                                            type="button">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </td>

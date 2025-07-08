@@ -1,7 +1,12 @@
 <div class="row p-4">
+    <div class="col-12 mb-3">
+        <h2 class="title-highlight">Escuelas</h2>
+    </div>
     <div class="col-12">
         <div class="d-flex justify-content-between align-items-center">
-            <h2>Escuelas</h2>
+            <button (click)="goBack()" type="button" class="btn custom-add-full-btn">
+                <i class="fas fa-arrow-left me-2"></i> Volver
+            </button>
             <button (click)="openAddSchoolModal()" type="button" class="btn custom-add-full-btn">
                 <i class="fas fa-plus me-2"></i> Agregar
             </button>
@@ -14,8 +19,8 @@
                 <app-schools-list
                         [schools]="schoolService.schools$()"
                         (callModalAction)="openEditSchoolModal($event)"
-                        (callDeleteAction)="deleteSchool($event)"
-                ></app-schools-list>
+                        (callDeleteAction)="deleteSchool($event)">
+                </app-schools-list>
                 <app-pagination *ngIf="schoolService.schools$().length" [service]="schoolService"></app-pagination>
             </div>
         </div>
@@ -26,8 +31,8 @@
     <app-modal [hideFooter]="true">
         <app-schools-form
                 [form]="schoolForm"
-                (callSaveMethod)="handleAddSchool($event)"
-        ></app-schools-form>
+                (callSaveMethod)="handleAddSchool($event)">
+        </app-schools-form>
     </app-modal>
 </ng-template>
 
@@ -35,8 +40,8 @@
     <app-modal [hideFooter]="true">
         <app-schools-form
                 [form]="schoolForm"
-                (callUpdateMethod)="confirmEdit($event)"
-        ></app-schools-form>
+                (callUpdateMethod)="confirmEdit($event)">
+        </app-schools-form>
     </app-modal>
 </ng-template>
 
@@ -52,4 +57,3 @@
         </div>
     </app-modal>
 </ng-template>
-

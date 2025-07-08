@@ -116,4 +116,9 @@ export class SchoolsComponent {
         }
     }
 
+    goBack() {
+        window.history.back();
+    }
+
+
 }
