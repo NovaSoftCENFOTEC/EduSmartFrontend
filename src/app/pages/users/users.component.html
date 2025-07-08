@@ -1,13 +1,20 @@
 @defer {
     <div class="row p-4">
+        <div class="col-12 mb-3">
+            <h2 class="title-highlight">Usuarios</h2>
+        </div>
+
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
-                <h2>Users</h2>
+                <button (click)="goBack()" class="btn custom-add-full-btn">
+                    <i class="fas fa-arrow-left me-2"></i> Volver
+                </button>
                 <button disabled (click)="modalService.displayModal('md', addUsersModal)" type="button" class="btn custom-add-full-btn">
                     <i class="fas fa-plus me-2"></i> Agregar
                 </button>
             </div>
         </div>
+
         <div class="col-12 mt-3">
             <div class="card">
                 <div class="card-body">
@@ -15,30 +22,27 @@
                             (callModalAction)="callEdition($event)"
                             (callDeleteAction)="userService.delete($event)"
                             [users]="userService.users$()"
-                    />
-                    @if(userService.users$().length) {
-                        <app-pagination
-                                [service]="userService"
-                        />
+                    ></app-user-list>
+
+                    @if (userService.users$().length) {
+                        <app-pagination [service]="userService"></app-pagination>
                     }
                 </div>
             </div>
         </div>
     </div>
-} @loading (minimum 1.5s){
+} @loading (minimum 1.5s) {
     <app-loader></app-loader>
 }
 
 <ng-template #addUsersModal>
-    <app-modal
-            [hideFooter]="true"
-    >
+    <app-modal [hideFooter]="true">
         <div>
             <app-user-form
                     [userForm]="userForm"
                     (callSaveMethod)="saveUser($event)"
                     (callUpdateMethod)="updateUser($event)"
-            />
+            ></app-user-form>
         </div>
     </app-modal>
 </ng-template>
