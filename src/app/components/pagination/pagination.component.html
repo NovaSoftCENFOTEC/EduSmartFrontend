@@ -1,33 +1,27 @@
-<div class="d-flex align-items-center justify-content-center my-3">
-  <nav aria-label="pagination">
-    <ul class="pagination">
-      <li class="page-item">
-        <button (click)="onPage(1)" [disabled]="service.search.pageNumber === 1" class="page-link" >
-          <i class="fas fa-angles-left"></i>
-        </button>
-      </li>
-      <li class="page-item">
-        <button (click)="onPage(service.search.pageNumber - 1)" [disabled]="service.search.pageNumber === 1" class="page-link">
-          <i class="fas fa-angle-left"></i>
-        </button>
-      </li>
-      @for (item of service.totalItems; track $index) {
-        @if (service.search.pageNumber - 2 <= item && item <= service.search.pageNumber + 2) {
-          <li class="page-item">
-            <button [disabled]="service.search.pageNumber === item" (click)="onPage(item)" class="page-link">{{item}}</button>
-          </li>
-        }
-      }
-      <li class="page-item">
-        <button (click)="onPage(service.search.pageNumber + 1)" [disabled]="service.search.pageNumber === service.totalItems.length" class="page-link">
-          <i class="fas fa-angle-right"></i>
-        </button>
-      </li>
-      <li class="page-item">
-        <button (click)="onPage(service.totalItems.length)" [disabled]="service.search.pageNumber === service.totalItems.length" class="page-link">
-          <i class="fas fa-angles-right"></i>
-        </button>
-      </li>
-    </ul>
-  </nav>
+<div class="d-flex align-items-center justify-content-between my-3">
+    <nav aria-label="pagination-prev" class="ms-0">
+        <ul class="pagination custom-pagination-buttons mb-0">
+            <li class="page-item">
+                <button
+                        (click)="onPage((service?.pageNumber || 1) - 1)"
+                        [disabled]="(service?.pageNumber || 1) === 1"
+                        class="page-link"
+                >
+                    <i class="fas fa-arrow-left"></i>&nbsp;Atrás </button>
+            </li>
+        </ul>
+    </nav>
+
+    <nav aria-label="pagination-next" class="me-0">
+        <ul class="pagination custom-pagination-buttons mb-0">
+            <li class="page-item">
+                <button
+                        (click)="onPage((service?.pageNumber || 1) + 1)"
+                        [disabled]="(service?.pageNumber || 1) === (service?.totalPages || 1)"
+                        class="page-link"
+                >
+                    Siguiente&nbsp;<i class="fas fa-arrow-right"></i> </button>
+            </li>
+        </ul>
+    </nav>
 </div>

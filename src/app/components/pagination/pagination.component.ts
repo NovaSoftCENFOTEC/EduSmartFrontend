@@ -1,23 +1,22 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-pagination',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './pagination.component.html',
   styleUrl: './pagination.component.scss'
 })
 export class PaginationComponent {
-  @Input() service: any;
-  @Output() callCustomPaginationMethod = new EventEmitter();
-  @Input() customCall: boolean = false;
+  @Input() service: any; // Este 'service' es el objeto ISearch directamente
+  @Input() loadFunction: (() => void) | undefined;
+
   onPage(pPage: number) {
-		this.service.search.page = pPage;
-    if (this.customCall) {
-      this.callCustomPaginationMethod.emit();
-    } else {
-      this.service.getAll();
+    this.service.pageNumber = pPage; // Accede directamente a pageNumber
+
+    if (this.loadFunction) {
+      this.loadFunction();
     }
-	}
+  }
 }

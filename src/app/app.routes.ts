@@ -10,6 +10,8 @@ import { DashboardComponent } from "./pages/dashboard/dashboard.component";
 import { GuestGuard } from "./guards/guest.guard";
 import { IRoleType } from "./interfaces";
 import { ProfileComponent } from "./pages/profile/profile.component";
+import {TeachersComponent} from "./pages/teachers/teachers.component";
+import {SchoolsComponent} from "./pages/schools/schools.component";
 import { LandingPageComponent } from "./pages/landing-page/landing-page.component";
 
 // Existing protected routes (commented out)
@@ -120,6 +122,15 @@ export const routes: Routes = [
         path: "profile",
         component: ProfileComponent,
       },
+      {
+        path: "schools",
+        component: SchoolsComponent,
+      }
+        ,
+        {
+          path: "teachers",
+          component: TeachersComponent,
+        }
     ],
   },
 ];
