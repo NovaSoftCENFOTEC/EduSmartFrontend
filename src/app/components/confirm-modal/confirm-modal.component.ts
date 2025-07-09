@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-declare var bootstrap: any; // Importante para que TypeScript reconozca la variable global
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-confirm-modal',
