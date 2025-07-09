@@ -11,6 +11,7 @@ import {ActivatedRoute} from '@angular/router';
 import {SchoolsFormComponent} from "../../components/schools/school-form/schools-form.component";
 import {SchoolsListComponent} from "../../components/schools/school-list/schools-list.component";
 import {NgIf} from "@angular/common";
+import {FooterComponent} from "../../components/app-layout/elements/footer/footer.component";
 
 @Component({
     selector: 'app-schools',
@@ -21,7 +22,8 @@ import {NgIf} from "@angular/common";
         ModalComponent,
         SchoolsFormComponent,
         SchoolsListComponent,
-        NgIf
+        NgIf,
+        FooterComponent
     ],
     templateUrl: './schools.component.html',
     styleUrl: './schools.component.scss'

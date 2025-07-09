@@ -1,3 +1,32 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: var(--font-family-roboto);
+  font-size: var(--font-base-size);
+  font-weight: var(--font-base-weight);
+  overflow-x: hidden;
+}
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page-body-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.page-body {
+  flex-grow: 1;
+}
+
+.footer {
+  flex-shrink: 0;
+}
+
 :root {
   --color-indigo-dye: #003E6B;
   --color-blue-munsell: #1E8B9B;
@@ -20,20 +49,6 @@
   --font-button-size: 16px;
   --font-button-weight: 600;
   --font-footer-text: 12px;
-}
-
-body {
-  font-family: var(--font-family-roboto);
-  font-size: var(--font-base-size);
-  font-weight: var(--font-base-weight);
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-}
-body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
 }
 
 .navbar, .navbar .container-fluid {
@@ -327,11 +342,3 @@ body {
   letter-spacing: 1.2px !important;
   text-transform: uppercase !important;
 }
-
-
-
-
-
-
-
-

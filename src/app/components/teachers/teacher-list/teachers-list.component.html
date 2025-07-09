@@ -1,9 +1,9 @@
 <div class="card">
     <div class="card-header card-header-indigo">
-        <h2 class="mb-0">Lista de Profesores</h2>
+        <h2 class="mb-0">Lista de Docentes</h2>
     </div>
     <div class="card-body">
-        <p class="text-muted mb-3">Lista de profesores para la escuela seleccionada.</p>
+        <p class="text-muted mb-3">Lista de docentes para la escuela seleccionada.</p>
 
         <div class="table-container table-responsive">
             <table class="table custom-full-bordered-table">
@@ -38,7 +38,7 @@
                         <tr>
                             <td colspan="4">
                                 <div class="d-flex justify-content-center align-items-center w-100">
-                                    <p class="mb-0">No hay profesores</p>
+                                    <p class="mb-0">No hay docentes</p>
                                 </div>
                             </td>
                         </tr>
@@ -50,7 +50,7 @@
 
     <app-confirm-modal
         #confirmDeleteModal
-        [message]="'¿Estás seguro de que deseas eliminar al profesor ' + deleteTeacher?.name + '?'"
+        [message]="'¿Estás seguro(a) de que deseas eliminar el/la docente ' + deleteTeacher?.name + '?'"
         [confirmText]="'Eliminar'"
         [cancelText]="'Cancelar'"
         (confirmed)="deleteConfirmation()"

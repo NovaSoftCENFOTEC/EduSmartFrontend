@@ -21,7 +21,10 @@
                         (callModalAction)="openEditSchoolModal($event)"
                         (callDeleteAction)="deleteSchool($event)">
                 </app-schools-list>
-                <app-pagination *ngIf="schoolService.schools$().length" [service]="schoolService"></app-pagination>
+
+                @if (schoolService.schools$().length) {
+                    <app-pagination [service]="schoolService"></app-pagination>
+                }
             </div>
         </div>
     </div>

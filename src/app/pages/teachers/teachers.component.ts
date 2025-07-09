@@ -11,6 +11,7 @@ import {TeachersFormComponent} from '../../components/teachers/teacher-form/teac
 import {TeachersListComponent} from '../../components/teachers/teacher-list/teachers-list.component';
 import {NgIf} from '@angular/common';
 import {UserService} from '../../services/user.service';
+import {FooterComponent} from "../../components/app-layout/elements/footer/footer.component";
 
 @Component({
     selector: 'app-teachers',
@@ -20,7 +21,8 @@ import {UserService} from '../../services/user.service';
         ModalComponent,
         TeachersFormComponent,
         TeachersListComponent,
-        NgIf
+        NgIf,
+        FooterComponent
     ],
     templateUrl: './teachers.component.html',
     styleUrls: ['./teachers.component.scss']
@@ -57,8 +59,6 @@ export class TeachersComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        //Se inicializa el servicio de profesores y se obtiene la lista de profesores
-        //Ya que se usa el servicio de usuarios para obtener la lista de profesores
         this.authService.getUserAuthorities();
         this.route.queryParams.subscribe(params => {
             const id = Number(params['schoolId']);

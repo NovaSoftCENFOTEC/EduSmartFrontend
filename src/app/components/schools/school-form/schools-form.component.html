@@ -8,17 +8,23 @@
     <div class="mb-3">
         <label class="mb-1" for="name">Nombre de la escuela<span class="required-asterisk">*</span></label>
         <input id="name" formControlName="name" type="text" class="form-control normal" placeholder="Ej: Colegio Nacional" />
-        <div *ngIf="form.controls['name'].invalid && (form.controls['name'].dirty || form.controls['name'].touched)" class="form-error-message">
-            El nombre es obligatorio.
-        </div>
+
+        @if (form.controls['name'].invalid && (form.controls['name'].dirty || form.controls['name'].touched)) {
+            <div class="form-error-message">
+                El nombre es obligatorio.
+            </div>
+        }
     </div>
 
     <div class="mb-3">
         <label class="mb-1" for="domain">Dominio institucional<span class="required-asterisk">*</span></label>
         <input id="domain" formControlName="domain" type="text" class="form-control normal" placeholder="Ej: colegio.edu.cr" />
-        <div *ngIf="form.controls['domain'].invalid && (form.controls['domain'].dirty || form.controls['domain'].touched)" class="form-error-message">
-            El dominio es obligatorio y debe tener formato válido (ej: universidad.ac.cr).
-        </div>
+
+        @if (form.controls['domain'].invalid && (form.controls['domain'].dirty || form.controls['domain'].touched)) {
+            <div class="form-error-message">
+                El dominio es obligatorio y debe tener formato válido (ej: universidad.ac.cr).
+            </div>
+        }
     </div>
 
     <div class="text-center mt-4">
