@@ -69,3 +69,10 @@ export interface ISchool {
     domain?: string;
     createdAt?: string;
 }
+export interface ICourse {
+    id?: number;
+    code?: string;
+    title?: string;
+    description?: string;
+    createdAt?: string;
+}
