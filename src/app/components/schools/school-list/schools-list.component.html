@@ -43,6 +43,8 @@
                             <td>{{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
                             <td class="text-center">
                                 <button
+                                        [disabled]="item.domain === 'DEFAULT'"
+                                        [attr.title]="item.domain === 'DEFAULT' ? 'Esta escuela no se puede editar' : null"
                                         (click)="callModalAction.emit(item);"
                                         class="btn border-0 me-2 icon-gray-color"
                                         type="button"

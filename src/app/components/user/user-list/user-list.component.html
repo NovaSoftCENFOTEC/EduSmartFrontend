@@ -36,9 +36,11 @@
                                 <td>{{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
                                 <td>{{ item.updatedAt | date: 'dd/MM/yyyy HH:mm' }}</td>
                                 <td class="text-center">
+                                    <!-- Edit button - temporarily disabled for all users -->
+                                    <!-- Edit button - implement the same as edit button -->
                                     <button
                                             disabled
-                                            (click)="callModalAction.emit(item)"
+                                            title="Edit function is temporarily disabled"
                                             class="btn border-0 me-2 icon-gray-color"
                                             type="button"
                                     >
@@ -46,7 +48,7 @@
                                     </button>
                                     <button
                                             [disabled]="item.email === 'super.admin@gmail.com'"
-                                            [attr.title]="item.email === 'super.admin@gmail.com' ? 'Este usuario no se puede eliminar' : null"
+                                            [attr.title]="item.email === 'super.admin@gmail.com' ? 'This user cannot be deleted' : null"
                                             (click)="abrirModalConfirmacion(item)"
                                             class="btn border-0 icon-gray-color"
                                             type="button"
