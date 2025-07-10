@@ -5,6 +5,16 @@
     <div class="card-body">
         <p class="text-muted mb-3">Lista de docentes para la escuela seleccionada.</p>
 
+
+        <div class="mb-4 mt-2">
+            <input
+                    type="text"
+                    class="input-txt input-filter"
+                    placeholder="Filtrar por nombre, apellido o correo..."
+                    [(ngModel)]="searchText"
+            />
+        </div>
+
         <div class="table-container table-responsive">
             <table class="table custom-full-bordered-table">
                 <thead class="table-header-gray">
@@ -16,19 +26,26 @@
                 </tr>
                 </thead>
                 <tbody>
-                    @if (teachers.length > 0) {
-                        @for (item of teachers; track item.id) {
+                    @if (filteredTeachers.length > 0) {
+                        @for (item of filteredTeachers; track item.id) {
                             <tr>
                                 <td>{{ item.name }}</td>
                                 <td>{{ item.lastname }}</td>
                                 <td>{{ item.email }}</td>
                                 <td class="text-center">
-                                    <button (click)="callModalAction.emit(item);"
-                                            class="btn border-0 me-2 icon-gray-color" type="button" disabled>
+                                    <button
+                                            (click)="callModalAction.emit(item);"
+                                            class="btn border-0 me-2 icon-gray-color"
+                                            type="button"
+                                            disabled
+                                    >
                                         <i class="fas fa-pen"></i>
                                     </button>
-                                    <button (click)="openConfirmationModal(item)" class="btn border-0 icon-gray-color"
-                                            type="button">
+                                    <button
+                                            (click)="openConfirmationModal(item)"
+                                            class="btn border-0 icon-gray-color"
+                                            type="button"
+                                    >
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </td>

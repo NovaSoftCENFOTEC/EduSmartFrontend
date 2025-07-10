@@ -3,6 +3,17 @@
         <h2 class="mb-0">Lista de Usuarios</h2>
     </div>
     <div class="card-body">
+
+
+        <div class="mb-4 mt-2">
+            <input
+                    type="text"
+                    class="input-txt input-filter"
+                    placeholder="Filtrar por nombre, apellido o correo..."
+                    [(ngModel)]="searchText"
+            />
+        </div>
+
         <div class="table-container table-responsive">
             <table class="table custom-full-bordered-table">
                 <thead class="table-header-gray">
@@ -16,23 +27,36 @@
                 </tr>
                 </thead>
                 <tbody>
-                    @for (item of users; track item.id) {
-                        <tr>
-                            <td>{{ item.name }}</td>
-                            <td>{{ item.lastname }}</td>
-                            <td>{{ item.email }}</td>
-                            <td>{{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
-                            <td>{{ item.updatedAt | date: 'dd/MM/yyyy HH:mm' }}</td>
-                            <td class="text-center">
-                                <button disabled (click)="callModalAction.emit(item);" class="btn border-0 me-2 icon-gray-color" type="button">
-                                    <i class="fas fa-pen"></i>
-                                </button>
-                                <button (click)="abrirModalConfirmacion(item)" class="btn border-0 icon-gray-color" type="button">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    } @empty {
+                    @if (filteredUsers.length > 0) {
+                        @for (item of filteredUsers; track item.id) {
+                            <tr>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.lastname }}</td>
+                                <td>{{ item.email }}</td>
+                                <td>{{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+                                <td>{{ item.updatedAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+                                <td class="text-center">
+                                    <button
+                                            disabled
+                                            (click)="callModalAction.emit(item)"
+                                            class="btn border-0 me-2 icon-gray-color"
+                                            type="button"
+                                    >
+                                        <i class="fas fa-pen"></i>
+                                    </button>
+                                    <button
+                                            [disabled]="item.email === 'super.admin@gmail.com'"
+                                            [attr.title]="item.email === 'super.admin@gmail.com' ? 'Este usuario no se puede eliminar' : null"
+                                            (click)="abrirModalConfirmacion(item)"
+                                            class="btn border-0 icon-gray-color"
+                                            type="button"
+                                    >
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    } @else {
                         <tr>
                             <td colspan="7">
                                 <div class="d-flex justify-content-center align-items-center w-100">
@@ -46,10 +70,11 @@
         </div>
     </div>
 </div>
+
 <app-confirm-modal
     #confirmDeleteModal
     [message]="'¿Estás seguro de que deseas eliminar al usuario ' + usuarioAEliminar?.name + ' ' + usuarioAEliminar?.lastname + '?'"
     [confirmText]="'Eliminar'"
     [cancelText]="'Cancelar'"
-    (confirmed)="confirmarEliminacion()">
-</app-confirm-modal>
+    (confirmed)="confirmarEliminacion()"
+></app-confirm-modal>
