@@ -1,0 +1,78 @@
+.custom-add-full-btn {
+  background-color: #003E6B;
+  color: #fff;
+  border: 1px solid #003E6B;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  font-weight: bold;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-add-full-btn:hover {
+  background-color: #002e50;
+  border-color: #002e50;
+}
+
+.custom-add-full-btn:focus {
+  box-shadow: 0 0 0 0.25rem rgba(0, 62, 107, 0.5);
+}
+
+
+.custom-full-bordered-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid #e9ecef;
+}
+
+
+.custom-full-bordered-table thead th {
+  border-bottom: 1px solid #e9ecef;
+  border-right: 1px solid #e9ecef;
+  color: #495057;
+}
+
+.custom-full-bordered-table thead th:last-child {
+  border-right: none;
+}
+
+.table-header-gray {
+  background-color: #f8f9fa;
+}
+
+
+.custom-full-bordered-table tbody tr td,
+.custom-full-bordered-table tbody tr th {
+  color: #212529;
+  border-bottom: 1px solid #e9ecef;
+  border-right: 1px solid #e9ecef;
+}
+
+
+.custom-full-bordered-table tbody tr:last-child td,
+.custom-full-bordered-table tbody tr:last-child th {
+  border-bottom: none;
+}
+
+
+.custom-full-bordered-table tbody tr td:last-child,
+.custom-full-bordered-table tbody tr th:last-child {
+  border-right: none;
+}
+
+
+.btn.border-0 {
+  border: 0 !important;
+}
+
+
+.icon-gray-color {
+  color: #6c757d;
+}
+
+.icon-gray-color:hover {
+  color: #495057;
+}

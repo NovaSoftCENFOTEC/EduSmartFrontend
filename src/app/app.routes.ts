@@ -15,6 +15,7 @@ import {SchoolsComponent} from "./pages/schools/schools.component";
 
 import { LandingPageComponent } from "./pages/landing-page/landing-page.component";
 import { CoursesComponent } from "./pages/courses/courses.component";
+import { GroupsComponent } from "./pages/groups/groups.component";
 
 // Existing protected routes (commented out)
 // export const routes: Routes = [
@@ -143,6 +144,7 @@ export const routes: Routes = [
           showInSidebar: true,
          },
          }
+         
     ],
   },
 ];
