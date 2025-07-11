@@ -6,6 +6,14 @@
         <p class="text-muted mb-3">
             Si deseas ver o agregar historias para una escuela, selecciona su título en la tabla.
         </p>
+        <div class="mb-4 mt-2">
+            <input
+                    type="text"
+                    class="input-txt w-25"
+                    placeholder="Filtrar cursos por código o título..."
+                    [(ngModel)]="searchText"
+            />
+        </div>
 
         <div class="table-container table-responsive">
             <table class="table custom-full-bordered-table">
@@ -19,22 +27,35 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @for (item of courses; track item.code) {
+                    @for (item of filteredCourses; track item.code) {
                     <tr>
                         <td>
                             <a [routerLink]="['../courses']" [queryParams]="{ courseCode: item.code }"
-                                class="no-link-style">{{ item.title }}</a>
+                                class="no-link-style">{{ item.title }}
+                            </a>
                         </td>
                         <td>{{ item.code }}</td>
                         <td>{{ item.description }}</td>
                         <td>{{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
                         <td class="text-center">
-                            <button (click)="callModalAction.emit(item);" class="btn border-0 me-2 icon-gray-color" type="button">
-                                <i class="fas fa-pen"></i>
-                            </button>
-                            <button (click)="openConfirmationModal(item)" class="btn border-0 icon-gray-color" type="button">
-                                <i class="fas fa-trash"></i>
-                            </button>
+                            <button
+                                        [disabled]="item.code === 'DEFAULT'"
+                                        [attr.title]="item.code === 'DEFAULT' ? 'Este curso no se puede editar' : null"
+                                        (click)="callModalAction.emit(item);"
+                                        class="btn border-0 me-2 icon-gray-color"
+                                        type="button"
+                                >
+                                    <i class="fas fa-pen"></i>
+                                </button>
+                                <button
+                                        [disabled]="item.code === 'DEFAULT'"
+                                        [attr.title]="item.code === 'DEFAULT' ? 'Este curso no se puede eliminar' : null"
+                                        (click)="openConfirmationModal(item)"
+                                        class="btn border-0 icon-gray-color"
+                                        type="button"
+                                >
+                                    <i class="fas fa-trash"></i>
+                                </button>
                         </td>
                     </tr>
                     } @empty {
@@ -58,3 +79,9 @@
     [cancelText]="'Cancelar'" 
     (confirmed)="deleteConfirmation()">
 </app-confirm-modal>
+
+
+
+
+
+

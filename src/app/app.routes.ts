@@ -133,10 +133,16 @@ export const routes: Routes = [
           path: "teachers",
           component: TeachersComponent,
         },
-        {
+
+         {
           path: "courses",
           component: CoursesComponent,
-        },
+          data: {
+          authorities: [IRoleType.admin, IRoleType.superAdmin],
+          name: "Dashboard",
+          showInSidebar: true,
+         },
+         }
     ],
   },
 ];

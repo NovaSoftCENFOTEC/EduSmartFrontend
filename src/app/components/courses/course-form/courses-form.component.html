@@ -7,7 +7,7 @@
 
     <div class="mb-3">
         <label class="mb-1" for="code">Código del curso<span class="required-asterisk">*</span></label>
-        <input id="code" formControlName="code" type="text" class="form-control normal" placeholder="Ej: CR-INP" />
+        <input id="code" formControlName="code" type="text" class="form-control normal" placeholder="Ej: CRINP" />
         @if (form.controls['code'].invalid && (form.controls['code'].dirty || form.controls['code'].touched)) {
             <div class="form-error-message">
                 El código es obligatorio.
