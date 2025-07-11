@@ -13,6 +13,7 @@ import { ProfileComponent } from "./pages/profile/profile.component";
 import {TeachersComponent} from "./pages/teachers/teachers.component";
 import {SchoolsComponent} from "./pages/schools/schools.component";
 import { LandingPageComponent } from "./pages/landing-page/landing-page.component";
+import { GroupsComponent } from "./pages/groups/groups.component";
 
 // Existing protected routes (commented out)
 // export const routes: Routes = [
@@ -131,6 +132,11 @@ export const routes: Routes = [
           path: "teachers",
           component: TeachersComponent,
         }
+        ,
+        {
+        path: "groups",
+        component: GroupsComponent,
+      }
     ],
   },
 ];
