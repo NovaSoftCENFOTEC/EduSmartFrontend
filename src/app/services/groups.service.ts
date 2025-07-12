@@ -27,7 +27,7 @@ export class GroupsService extends BaseService<IGroup> {
       next: (response: IResponse<IGroup[]>) => {
         this.search = { ...this.search, ...response.meta };
         this.totalItems = Array.from({ length: this.search.totalPages ? this.search.totalPages : 0 }, (_, i) => i + 1);
-        console.log("Datos recibidos de la API:", response.data);
+      
         this.groupListSignal.set(response.data);
       },
       error: (err: any) => {
@@ -81,7 +81,7 @@ export class GroupsService extends BaseService<IGroup> {
   }
 
   update(item: IGroup) {
-  console.log('🔄 Item a actualizar:', item);
+  
   
   if (!item.id) {
     this.alertService.displayAlert('error', 'No se puede actualizar un grupo sin ID.', 'center', 'top', ['error-snackbar']);
@@ -134,4 +134,9 @@ export class GroupsService extends BaseService<IGroup> {
       }
     });
   }
+
+
+
+
+
 }

@@ -10,13 +10,11 @@ import {AlertService} from './alert.service';
 export class StudentService extends BaseService<IUser> {
     protected override source = 'students';
 
-
     private studentListSignal = signal<IUser[]>([]);
 
     get students$() {
         return this.studentListSignal;
     }
-
 
     public search: ISearch = {
         page: 1,
@@ -24,7 +22,6 @@ export class StudentService extends BaseService<IUser> {
         pageNumber: 1,
         totalPages: 1
     };
-
 
     public totalItems: number[] = [];
     private alertService: AlertService = inject(AlertService);
@@ -68,27 +65,12 @@ export class StudentService extends BaseService<IUser> {
     }
 
 
-    saveStudent(schoolId: number, student: IUser) {
-        this.addCustomSource(`school/${schoolId}`, student).subscribe({
-            next: (res: IResponse<IUser>) => {
-                this.alertService.displayAlert(
-                    'success',
-                    res.message || 'Estudiante agregado correctamente.',
-                    'center', 'top',
-                    ['success-snackbar']
-                );
-                this.getStudentsBySchool(schoolId);
-            },
-            error: (err) => {
-                this.alertService.displayAlert(
-                    'error',
-                    'Ocurrió un error al agregar el estudiante.',
-                    'center', 'top',
-                    ['error-snackbar']
-                );
-                console.error('Error al guardar estudiante:', err);
-            }
-        });
-    }
+saveStudent(groupId: number, student: IUser) {
+    console.log('🔥 StudentService.saveStudentToGroup ejecutado');
+    console.log('👥 groupId:', groupId);
+    console.log('👨‍🎓 student:', student);
+    
+    
+}
 }
 

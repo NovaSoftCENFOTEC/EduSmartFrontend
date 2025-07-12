@@ -34,21 +34,21 @@
 </div>
 
 <ng-template #addStudentModal> 
-    <app-modal [hideFooter]="true">
-        <app-students-form >
-                [form]="studentForm"
-                (callSaveMethod)="handleAddStudent($event)"> 
-        </app-students-form>
-    </app-modal>
+  <app-modal [hideFooter]="true">
+    <app-students-form 
+      [form]="studentForm"
+      (callSaveMethod)="handleAddStudent($event)">
+    </app-students-form>
+  </app-modal>
 </ng-template>
 
 <ng-template #editStudentModal> 
-    <app-modal [hideFooter]="true">
-        <app-students-form >
-                [form]="studentForm" 
-                (callUpdateMethod)="confirmEdit($event)">
-        </app-students-form>
-    </app-modal>
+  <app-modal [hideFooter]="true">
+    <app-students-form 
+      [form]="studentForm"
+      (callUpdateMethod)="confirmEdit($event)">
+    </app-students-form>
+  </app-modal>
 </ng-template>
 
 <ng-template #editConfirmationModal>

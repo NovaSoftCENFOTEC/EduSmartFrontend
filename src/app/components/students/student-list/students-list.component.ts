@@ -26,22 +26,22 @@ export class StudentsListComponent {
   get filteredStudents(): IUser[] {
     if (!this.searchText) return this.students;
     const lower = this.searchText.toLowerCase();
-    return this.students.filter(s =>
-        (s.name?.toLowerCase() ?? '').includes(lower) ||
-        (s.lastname?.toLowerCase() ?? '').includes(lower) ||
-        (s.email?.toLowerCase() ?? '').includes(lower)
+    return this.students.filter(t =>
+        (t.name?.toLowerCase() ?? '').includes(lower) ||
+        (t.lastname?.toLowerCase() ?? '').includes(lower) ||
+        (t.email?.toLowerCase() ?? '').includes(lower)
     );
   }
 
-  openConfirmationModal(student: IUser): void {
-    this.deleteStudent = student;
+  openConfirmationModal(teacher: IUser): void {
+    this.deleteStudent = teacher;
     this.confirmDeleteModal.show();
   }
 
   deleteConfirmation(): void {
-    if (this.deleteStudent) {
-      this.callDeleteAction.emit(this.deleteStudent);
-      this.deleteStudent = null;
+    if (this.deleteStudent ) {
+      this.callDeleteAction.emit(this.deleteStudent );
+      this.deleteStudent  = null;
     }
   }
 }
