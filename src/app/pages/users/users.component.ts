@@ -78,7 +78,7 @@ export class UsersComponent implements OnInit {
             this.modalService.closeAll();
             this.userForm.reset();
             this.originalUser = null;
-            this.userService.getAll(); // refrescar la lista
+            this.userService.getAll();
         });
     }
 
@@ -86,7 +86,7 @@ export class UsersComponent implements OnInit {
         if (!user.id) return;
 
         this.userService.delete(user, () => {
-            this.userService.getAll(); // refrescar la lista
+            this.userService.getAll();
         });
     }
 
