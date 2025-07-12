@@ -84,12 +84,13 @@ export class GroupsComponent {
     }
 
     openEditGroupModal(group: IGroup) {
+        console.log(group.course?.title);
         this.groupForm.patchValue({
             id: group.id !== undefined && group.id !== null ? String(group.id) : null,
             name: group.name,
-            course: group.course ?? null,
+            course: group.course,
             students: group.students ?? [],
-            teacher: group.teacher ?? null
+            teacher: group.teacher 
         });
         this.modalService.displayModal('lg', this.editGroupModal);
     }

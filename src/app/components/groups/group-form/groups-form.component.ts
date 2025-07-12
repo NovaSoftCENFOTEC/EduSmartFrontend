@@ -54,7 +54,7 @@ export class GroupsFormComponent {
       );
     });
 
-    const schoolId = 1;
+    const schoolId = 1;  //REVISAR MANANA
 
     this.teachersService.getTeachersBySchool(schoolId);
     this.courseService.getAll(); 
@@ -91,4 +91,11 @@ export class GroupsFormComponent {
   trackByTeacherId(index: number, item: any): number {
     return item.id ?? index;
   }
+
+  compareCourses(c1: ICourse, c2: ICourse): boolean {
+    return c1 && c2 ? c1.id === c2.id : c1 === c2;
+  }
+compareTeachers(t1: any, t2: any): boolean {
+  return t1 && t2 ? t1.id === t2.id : t1 === t2;
+}
 }

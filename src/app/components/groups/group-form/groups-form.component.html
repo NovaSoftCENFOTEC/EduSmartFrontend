@@ -22,31 +22,45 @@
       class="form-control normal"
       placeholder="Ej: M13"
     />
-    <div *ngIf="form.controls['name'].invalid && (form.controls['name'].dirty || form.controls['name'].touched)" class="form-error-message">
-      El nombre es obligatorio.
-    </div>
+  @if (form.controls['name'].invalid && (form.controls['name'].dirty || form.controls['name'].touched)) {
+            <div class="form-error-message">
+                El nombre es obligatorio.
+            </div>
+        }
   </div>
 
   <div class="mb-3">
     <label class="mb-1" for="course">
       Curso<span class="required-asterisk">*</span>
     </label>
-    <select id="course" formControlName="course" class="ddl">
+    <select id="course" formControlName="course" class="ddl"  [compareWith]="compareCourses">
       <option [ngValue]="null">-- Seleccione un curso --</option>
       <option *ngFor="let c of courses; trackBy: trackById" [ngValue]="c">
         {{ c.title }}
       </option>
     </select>
+     @if (form.controls['course'].invalid && (form.controls['course'].dirty || form.controls['course'].touched)) {
+            <div class="form-error-message">
+                El curso es obligatorio.
+            </div>
+        }
   </div>
 
   <div class="mb-3">
-    <label class="mb-1" for="teacher">Profesor</label>
-    <select id="teacher" formControlName="teacher" class="ddl">
+    <label class="mb-1" for="teacher">
+      Profesor<span class="required-asterisk">*</span>
+    </label>
+    <select id="teacher" formControlName="teacher" class="ddl" [compareWith]="compareTeachers">
       <option [ngValue]="null">-- Seleccione un profesor --</option>
       <option *ngFor="let t of teachers; trackBy: trackByTeacherId" [ngValue]="t">
         {{ t.name }}
       </option>
     </select>
+      @if (form.controls['teacher'].invalid && (form.controls['teacher'].dirty || form.controls['teacher'].touched)) {
+            <div class="form-error-message">
+                El profesor es obligatorio.
+            </div>
+        }
   </div>
 
   <div class="text-center mt-4">

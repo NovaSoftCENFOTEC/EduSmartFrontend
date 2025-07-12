@@ -37,7 +37,6 @@ export class GroupsService extends BaseService<IGroup> {
   }
 
   save(item: IGroup) {
-    console.log('🚀 Item a enviar:', item);
     
     // Extraer los IDs del curso y profesor
     const courseId = item.course?.id;
@@ -57,8 +56,6 @@ export class GroupsService extends BaseService<IGroup> {
       name: item.name
     };
     
-    console.log('📦 Payload a enviar:', payload);
-    console.log('🔗 Custom source:', `course/${courseId}/teacher/${teacherId}`);
     
     this.addCustomSource(`course/${courseId}/teacher/${teacherId}`, payload).subscribe({
       next: (response: IResponse<IGroup>) => {
@@ -83,6 +80,8 @@ export class GroupsService extends BaseService<IGroup> {
   }
 
   update(item: IGroup) {
+
+  console.log('🔄 Item a actualizar:', item);
     this.edit(item.id!, item).subscribe({
       next: (response: IResponse<IGroup>) => {
         this.alertService.displayAlert('success', response.message || 'Grupo actualizado correctamente.', 'center', 'top', ['success-snackbar']);
