@@ -19,14 +19,16 @@
 
     <div class="mb-3">
         <label class="mb-1" for="course">Curso<span class="required-asterisk">*</span></label>
-        <select id="course" formControlName="course" class="form-control normal">
+        <select id="course" formControlName="course" class="ddl" [compareWith]="compareCourses">
+            <option value="">Seleccione un curso</option>
             <option *ngFor="let c of courses" [ngValue]="c">{{ c.title }}</option>
         </select>
     </div>
 
     <div class="mb-3">
         <label class="mb-1" for="teacher">Profesor</label>
-        <select id="teacher" formControlName="teacher" class="form-control normal">
+        <select id="teacher" formControlName="teacher" class="ddl" [compareWith]="compareTeachers">
+            <option value="">Seleccione un profesor</option>
             <option *ngFor="let t of teachers" [ngValue]="t">{{ t.name }}</option>
         </select>
     </div>

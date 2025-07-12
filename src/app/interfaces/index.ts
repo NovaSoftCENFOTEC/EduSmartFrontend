@@ -22,7 +22,7 @@ export interface IUser {
   profilePicture?: string;
   authorities?: IAuthority[];
   role?: IRole
-  schoolId?: ISchool;
+  school?: ISchool;
   active?: boolean;
 }
 

@@ -37,7 +37,6 @@ export class GroupsComponent {
         id: [''],
         name: ['', Validators.required],
         course: [null as ICourse | null, Validators.required],
-        students: [[] as IUser[], Validators.required],
         teacher: [null as IUser | null, Validators.required]
     });
 
@@ -84,11 +83,11 @@ export class GroupsComponent {
     }
 
     openEditGroupModal(group: IGroup) {
+
         this.groupForm.patchValue({
             id: group.id !== undefined && group.id !== null ? String(group.id) : null,
             name: group.name,
             course: group.course ?? null,
-            students: group.students ?? [],
             teacher: group.teacher ?? null
         });
         this.modalService.displayModal('lg', this.editGroupModal);
@@ -96,7 +95,6 @@ export class GroupsComponent {
 
     openAddGroupModal() {
         this.groupForm.reset();
-        this.groupForm.patchValue({ students: [] });
         this.modalService.displayModal('md', this.addGroupModal);
     }
 
