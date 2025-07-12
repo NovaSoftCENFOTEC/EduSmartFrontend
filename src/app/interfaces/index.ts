@@ -85,3 +85,18 @@ export interface IGroup {
   students?: IUser[];
   teacher?: IUser;
 }
+
+export interface IStudent {
+  id?: number;
+  name?: string;
+  lastname?: string;
+  email?: string;
+  password?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  profilePicture?: string;
+  authorities?: IAuthority[];
+  role?: IRole
+  schoolId?: ISchool;
+  active?: boolean;
+}
