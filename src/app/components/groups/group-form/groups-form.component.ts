@@ -61,6 +61,7 @@ export class GroupsFormComponent {
   }
 
   callSave() {
+    
     if (this.form.invalid) return;
 
     const selectedCourse = this.form.controls["course"].value as ICourse;
@@ -70,6 +71,7 @@ export class GroupsFormComponent {
       name: this.form.controls["name"].value,
       course: selectedCourse,
       teacher: selectedTeacher,
+      students:[]
     };
 
     if (this.form.controls["id"].value) {

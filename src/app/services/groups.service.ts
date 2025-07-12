@@ -37,14 +37,47 @@ export class GroupsService extends BaseService<IGroup> {
   }
 
   save(item: IGroup) {
-    this.add(item).subscribe({
+    console.log('🚀 Item a enviar:', item);
+    
+    // Extraer los IDs del curso y profesor
+    const courseId = item.course?.id;
+    const teacherId = item.teacher?.id;
+    
+    if (!courseId) {
+      this.alertService.displayAlert('error', 'Debe seleccionar un curso.', 'center', 'top', ['error-snackbar']);
+      return;
+    }
+    
+    if (!teacherId) {
+      this.alertService.displayAlert('error', 'Debe seleccionar un profesor.', 'center', 'top', ['error-snackbar']);
+      return;
+    }
+
+    const payload = {
+      name: item.name
+    };
+    
+    console.log('📦 Payload a enviar:', payload);
+    console.log('🔗 Custom source:', `course/${courseId}/teacher/${teacherId}`);
+    
+    this.addCustomSource(`course/${courseId}/teacher/${teacherId}`, payload).subscribe({
       next: (response: IResponse<IGroup>) => {
-        this.alertService.displayAlert('success', response.message || 'Grupo agregado correctamente.', 'center', 'top', ['success-snackbar']);
+        this.alertService.displayAlert(
+          'success', 
+          response.message || 'Grupo agregado correctamente.', 
+          'center', 'top', 
+          ['success-snackbar']
+        );
         this.getAll();
       },
-      error: (err: any) => {
-        this.alertService.displayAlert('error', 'Ocurrió un error al agregar el grupo.', 'center', 'top', ['error-snackbar']);
-        console.error('Error al guardar el grupo', err);
+      error: (err) => {
+        this.alertService.displayAlert(
+          'error', 
+          'Ocurrió un error al agregar el grupo.', 
+          'center', 'top', 
+          ['error-snackbar']
+        );
+        console.error('Error al guardar grupo:', err);
       }
     });
   }

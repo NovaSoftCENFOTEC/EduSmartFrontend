@@ -41,7 +41,7 @@
 
   <div class="mb-3">
     <label class="mb-1" for="teacher">Profesor</label>
-    <select id="teacher" formControlName="teacher" class="form-control normal">
+    <select id="teacher" formControlName="teacher" class="ddl">
       <option [ngValue]="null">-- Seleccione un profesor --</option>
       <option *ngFor="let t of teachers; trackBy: trackByTeacherId" [ngValue]="t">
         {{ t.name }}

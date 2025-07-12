@@ -37,7 +37,7 @@ export class GroupsComponent {
         id: [''],
         name: ['', Validators.required],
         course: [null as ICourse | null, Validators.required],
-        students: [[] as IUser[], Validators.required],
+        students: [[] as IUser[]],
         teacher: [null as IUser | null, Validators.required]
     });
 
