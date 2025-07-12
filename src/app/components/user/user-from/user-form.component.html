@@ -12,24 +12,6 @@
     </div>
 
     <div class="mb-3">
-        <label class="mb-1" for="email">
-            Correo electrónico<span class="required-asterisk">*</span>
-        </label>
-        <input
-                id="email"
-                formControlName="email"
-                type="email"
-                class="form-control normal"
-                placeholder="Ej: correo@ejemplo.com"
-        />
-        @if (userForm.controls['email'].invalid && (userForm.controls['email'].dirty || userForm.controls['email'].touched)) {
-            <div class="form-error-message">
-                El correo es obligatorio y debe ser válido.
-            </div>
-        }
-    </div>
-
-    <div class="mb-3">
         <label class="mb-1" for="name">
             Nombre<span class="required-asterisk">*</span>
         </label>
@@ -61,6 +43,24 @@
         @if (userForm.controls['lastname'].invalid && (userForm.controls['lastname'].dirty || userForm.controls['lastname'].touched)) {
             <div class="form-error-message">
                 El apellido es obligatorio.
+            </div>
+        }
+    </div>
+
+    <div class="mb-3">
+        <label class="mb-1" for="email">
+            Correo electrónico<span class="required-asterisk">*</span>
+        </label>
+        <input
+                id="email"
+                formControlName="email"
+                type="email"
+                class="form-control normal"
+                placeholder="Ej: correo@ejemplo.com"
+        />
+        @if (userForm.controls['email'].invalid && (userForm.controls['email'].dirty || userForm.controls['email'].touched)) {
+            <div class="form-error-message">
+                El correo es obligatorio y debe ser válido.
             </div>
         }
     </div>

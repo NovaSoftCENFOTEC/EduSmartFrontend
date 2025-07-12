@@ -44,7 +44,10 @@ export enum IFeedbackStatus {
 export enum IRoleType {
   admin = "ROLE_ADMIN",
   user = "ROLE_USER",
-  superAdmin = 'ROLE_SUPER_ADMIN'
+  superAdmin = 'ROLE_SUPER_ADMIN',
+  student = 'ROLE_STUDENT',
+  teacher = 'ROLE_TEACHER',
+
 }
 
 export interface IRole {

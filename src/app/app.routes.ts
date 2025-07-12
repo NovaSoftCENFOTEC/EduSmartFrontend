@@ -14,6 +14,7 @@ import {TeachersComponent} from "./pages/teachers/teachers.component";
 import {SchoolsComponent} from "./pages/schools/schools.component";
 import {LandingPageComponent} from "./pages/landing-page/landing-page.component";
 import {StudentsComponent} from "./pages/students/students.component";
+import {TeacherRoleGuard} from "./guards/teacher-role.guard";
 
 // Existing protected routes (commented out)
 // export const routes: Routes = [
@@ -136,6 +137,8 @@ export const routes: Routes = [
             {
                 path: "students",
                 component: StudentsComponent,
+                //Use this guard if you want to restrict access to teachers only :)
+                //canActivate: [TeacherRoleGuard],
             }
         ],
     },
