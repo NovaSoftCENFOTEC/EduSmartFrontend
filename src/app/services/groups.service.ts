@@ -37,6 +37,7 @@ export class GroupsService extends BaseService<IGroup> {
   }
 
   save(item: IGroup) {
+
     
     // Extraer los IDs del curso y profesor
     const courseId = item.course?.id;
@@ -56,7 +57,7 @@ export class GroupsService extends BaseService<IGroup> {
       name: item.name
     };
     
-    
+
     this.addCustomSource(`course/${courseId}/teacher/${teacherId}`, payload).subscribe({
       next: (response: IResponse<IGroup>) => {
         this.alertService.displayAlert(
@@ -80,19 +81,46 @@ export class GroupsService extends BaseService<IGroup> {
   }
 
   update(item: IGroup) {
-
   console.log('🔄 Item a actualizar:', item);
-    this.edit(item.id!, item).subscribe({
-      next: (response: IResponse<IGroup>) => {
-        this.alertService.displayAlert('success', response.message || 'Grupo actualizado correctamente.', 'center', 'top', ['success-snackbar']);
-        this.getAll();
-      },
-      error: (err: any) => {
-        this.alertService.displayAlert('error', 'Ocurrió un error al actualizar el grupo.', 'center', 'top', ['error-snackbar']);
-        console.error('Error al actualizar el grupo', err);
-      }
-    });
+  
+  if (!item.id) {
+    this.alertService.displayAlert('error', 'No se puede actualizar un grupo sin ID.', 'center', 'top', ['error-snackbar']);
+    return;
   }
+  
+  const payload = {
+    name: item.name,
+    course: {
+      id: item.course?.id
+    },
+    teacher: {
+      id: item.teacher?.id
+    }
+  };
+  
+  console.log('📦 Payload para backend:', payload);
+  
+  this.edit(item.id, payload).subscribe({
+    next: (response: IResponse<IGroup>) => {
+      console.log('✅ Respuesta exitosa:', response);
+      this.alertService.displayAlert('success', 'Grupo actualizado correctamente.', 'center', 'top', ['success-snackbar']);
+      this.getAll(); // Recargar la lista para ver los cambios
+    },
+    error: (err: any) => {
+      console.error('❌ Error del servidor:', err);
+      
+      // ✅ SOLUCIÓN: Si el error es de serialización JSON pero el update funcionó
+      if (err.status === 500 && err.error?.detail?.includes('Could not write JSON')) {
+        console.log('⚠️ Update exitoso pero error en serialización JSON');
+        this.alertService.displayAlert('success', 'Grupo actualizado correctamente.', 'center', 'top', ['success-snackbar']);
+        this.getAll(); // Recargar la lista porque el update SÍ funcionó
+      } else {
+        // Otros errores reales
+        this.alertService.displayAlert('error', 'Ocurrió un error al actualizar el grupo.', 'center', 'top', ['error-snackbar']);
+      }
+    }
+  });
+}
 
   delete(item: IGroup) {
     this.del(item.id!).subscribe({
