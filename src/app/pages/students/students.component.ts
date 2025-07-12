@@ -117,15 +117,18 @@ export class StudentsComponent implements OnInit {
       lastname: this.studentForm.controls['lastname'].value || ''
     };
 
-    this.userService.update(payloadToSend as IUser);
-    this.modalService.closeAll();
-    this.studentForm.reset();
-    this.originalStudent = null;
-    this.studentService.getStudentsBySchool(this.schoolId!);
+    this.userService.update(payloadToSend as IUser, () => {
+      this.modalService.closeAll();
+      this.studentForm.reset();
+      this.originalStudent = null;
+      this.studentService.getStudentsBySchool(this.schoolId!);
+    });
   }
 
   deleteStudent(item: IUser) {
-    this.userService.delete(item);
+    this.userService.delete(item, () => {
+      this.studentService.getStudentsBySchool(this.schoolId!);
+    });
   }
 
   openEditStudentModal(student: IUser) {

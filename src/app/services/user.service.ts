@@ -3,6 +3,8 @@ import {BaseService} from './base-service';
 import {IUser, ISearch, IResponse} from '../interfaces';
 import {AlertService} from './alert.service';
 import {TeacherService} from "./teacher.service";
+import {AuthService} from "./auth.service";
+import {StudentService} from "./student.service";
 
 @Injectable({
     providedIn: 'root',
@@ -10,6 +12,7 @@ import {TeacherService} from "./teacher.service";
 export class UserService extends BaseService<IUser> {
     protected override source = 'users';
     private teacherService: TeacherService = inject(TeacherService);
+    private studentService: StudentService = inject(StudentService);
 
 
     private userListSignal: WritableSignal<IUser[]> = signal<IUser[]>([]);
@@ -78,7 +81,7 @@ export class UserService extends BaseService<IUser> {
         });
     }
 
-    public update(user: IUser) {
+    public update(user: IUser, onSuccess?: () => void) {
         this.http.put<IResponse<IUser>>(`${this.source}/administrative/${user.id}`, user).subscribe({
             next: (response: IResponse<IUser>) => {
                 this.alertService.displayAlert(
@@ -87,6 +90,9 @@ export class UserService extends BaseService<IUser> {
                     'center', 'top',
                     ['success-snackbar']
                 );
+                if (onSuccess) {
+                    onSuccess();
+                }
             },
             error: (err) => {
                 console.error('Error al actualizar usuario:', err);
@@ -101,7 +107,7 @@ export class UserService extends BaseService<IUser> {
     }
 
 
-    public delete(user: IUser) {
+    public delete(user: IUser, onSuccess?: () => void) {
         this.delCustomSource(`${user.id}`).subscribe({
             next: (response: IResponse<IUser>) => {
                 this.alertService.displayAlert(
@@ -110,14 +116,8 @@ export class UserService extends BaseService<IUser> {
                     'center', 'top',
                     ['success-snackbar']
                 );
-
-                // Si hay schoolId activo, refresca los profesores
-                const schoolId = sessionStorage.getItem('schoolId');
-                if (schoolId) {
-                    this.teacherService.getTeachersBySchool(Number(schoolId));
-                } else {
-                    // Si no, refresca la lista completa de usuarios
-                    this.getAll();
+                if (onSuccess) {
+                    onSuccess();
                 }
             },
             error: (err) => {

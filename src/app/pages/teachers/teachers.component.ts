@@ -111,16 +111,20 @@ export class TeachersComponent implements OnInit {
             lastname: this.teacherForm.controls['lastname'].value || ''
         };
 
-        this.userService.update(payloadToSend as IUser);
-        this.modalService.closeAll();
-        this.teacherForm.reset();
-        this.originalTeacher = null;
-        this.teacherService.getTeachersBySchool(this.schoolId!);
+        this.userService.update(payloadToSend as IUser, () => {
+            this.modalService.closeAll();
+            this.teacherForm.reset();
+            this.originalTeacher = null;
+            this.teacherService.getTeachersBySchool(this.schoolId!);
+        });
     }
 
     deleteTeacher(item: IUser) {
         if (!this.schoolId || !item.id) return;
-        this.userService.delete(item);
+
+        this.userService.delete(item, () => {
+            this.teacherService.getTeachersBySchool(this.schoolId!);
+        });
     }
 
     openEditTeacherModal(teacher: IUser) {
