@@ -27,7 +27,7 @@ export class GroupsService extends BaseService<IGroup> {
       next: (response: IResponse<IGroup[]>) => {
         this.search = { ...this.search, ...response.meta };
         this.totalItems = Array.from({ length: this.search.totalPages ? this.search.totalPages : 0 }, (_, i) => i + 1);
-        console.log("Datos recibidos de la API:", response.data);
+
         this.groupListSignal.set(response.data);
       },
       error: (err: any) => {
@@ -37,14 +37,44 @@ export class GroupsService extends BaseService<IGroup> {
   }
 
   save(item: IGroup) {
-    this.add(item).subscribe({
+    console.log('🚀 Item a enviar:', item);
+    
+    // Construir la URL con los parámetros de curso y profesor
+    const courseId = item.course?.id;
+    const teacherId = item.teacher?.id;
+    
+    if (!courseId) {
+      this.alertService.displayAlert('error', 'Debe seleccionar un curso.', 'center', 'top', ['error-snackbar']);
+      return;
+    }
+    
+    if (!teacherId) {
+      this.alertService.displayAlert('error', 'Debe seleccionar un profesor.', 'center', 'top', ['error-snackbar']);
+      return;
+    }
+
+    // Construir la URL específica que espera el backend
+    const customUrl = `${this.source}/course/${courseId}/teacher/${teacherId}`;
+    console.log('🔗 URL personalizada:', customUrl);
+    
+    // Crear el payload simplificado (solo el nombre, sin objetos anidados)
+    const payload = {
+      name: item.name
+    };
+    
+    console.log('📦 Payload a enviar:', payload);
+    
+    // Usar el método HTTP directamente con la URL personalizada
+    this.http.post<IResponse<IGroup>>(`${this.baseUrl}/${customUrl}`, payload).subscribe({
       next: (response: IResponse<IGroup>) => {
+        console.log('✅ Respuesta exitosa:', response);
         this.alertService.displayAlert('success', response.message || 'Grupo agregado correctamente.', 'center', 'top', ['success-snackbar']);
         this.getAll();
       },
       error: (err: any) => {
+        console.error('❌ Error completo:', err);
+        console.error('❌ URL que falló:', err.url);
         this.alertService.displayAlert('error', 'Ocurrió un error al agregar el grupo.', 'center', 'top', ['error-snackbar']);
-        console.error('Error al guardar el grupo', err);
       }
     });
   }

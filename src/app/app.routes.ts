@@ -134,6 +134,11 @@ export const routes: Routes = [
           path: "teachers",
           component: TeachersComponent,
         },
+        {
+          path: 'groups',
+          component: GroupsComponent,
+      
+        },
 
          {
           path: "courses",

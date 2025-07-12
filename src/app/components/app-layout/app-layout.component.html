@@ -3,6 +3,15 @@
         <app-topbar></app-topbar>
 
         <div class="page-body-wrapper">
+            <div 
+                class="sidebar-wrapper" 
+                sidebar-layout="default-sidebar" 
+                icon="stroke-svg"
+                [ngClass]="{ close_icon: !layoutService.sidebarOpen }"
+            >
+                <app-sidebar></app-sidebar>
+            </div>
+
             <div class="page-body">
                 <main class="container-fluid">
                     <router-outlet></router-outlet>
@@ -15,3 +24,10 @@
         </div>
     </div>
 </div>
+
+<!-- Overlay para móviles -->
+<div 
+    class="bg-overlay" 
+    [ngClass]="{ active: layoutService.sidebarOpen }"
+    (click)="layoutService.toggleSidebar()"
+></div>
