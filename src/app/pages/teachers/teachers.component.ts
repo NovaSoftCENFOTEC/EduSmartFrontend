@@ -103,17 +103,19 @@ export class TeachersComponent implements OnInit {
     }
 
     updateTeacher() {
-        if (!this.schoolId || !this.originalTeacher) return;
-        const updatedTeacher: IUser = {
-            ...this.originalTeacher,
+        if (!this.originalTeacher) return;
+
+        const payloadToSend: Partial<IUser> = {
+            id: this.originalTeacher.id,
             name: this.teacherForm.controls['name'].value || '',
-            lastname: this.teacherForm.controls['lastname'].value || '',
-            email: this.teacherForm.controls['email'].value || ''
+            lastname: this.teacherForm.controls['lastname'].value || ''
         };
-        this.userService.update(updatedTeacher);
+
+        this.userService.update(payloadToSend as IUser);
         this.modalService.closeAll();
         this.teacherForm.reset();
         this.originalTeacher = null;
+        this.teacherService.getTeachersBySchool(this.schoolId!);
     }
 
     deleteTeacher(item: IUser) {
@@ -130,11 +132,13 @@ export class TeachersComponent implements OnInit {
             email: teacher.email,
             createdAt: teacher.createdAt
         });
+        this.teacherForm.controls['email'].disable();
         this.modalService.displayModal('lg', this.editTeacherModal);
     }
 
     openAddTeacherModal() {
         this.teacherForm.reset();
+        this.teacherForm.controls['email'].enable(); //
         this.modalService.displayModal('md', this.addTeacherModal);
     }
 

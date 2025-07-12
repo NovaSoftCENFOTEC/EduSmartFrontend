@@ -79,7 +79,7 @@ export class UserService extends BaseService<IUser> {
     }
 
     public update(user: IUser) {
-        this.editCustomSource(`${user.id}`, user).subscribe({
+        this.http.put<IResponse<IUser>>(`${this.source}/administrative/${user.id}`, user).subscribe({
             next: (response: IResponse<IUser>) => {
                 this.alertService.displayAlert(
                     'success',
@@ -87,7 +87,6 @@ export class UserService extends BaseService<IUser> {
                     'center', 'top',
                     ['success-snackbar']
                 );
-                this.getAll();
             },
             error: (err) => {
                 console.error('Error al actualizar usuario:', err);
@@ -100,6 +99,7 @@ export class UserService extends BaseService<IUser> {
             }
         });
     }
+
 
     public delete(user: IUser) {
         this.delCustomSource(`${user.id}`).subscribe({
