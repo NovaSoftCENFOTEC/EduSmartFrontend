@@ -12,7 +12,9 @@ import { IRoleType } from "./interfaces";
 import { ProfileComponent } from "./pages/profile/profile.component";
 import {TeachersComponent} from "./pages/teachers/teachers.component";
 import {SchoolsComponent} from "./pages/schools/schools.component";
+
 import { LandingPageComponent } from "./pages/landing-page/landing-page.component";
+import { CoursesComponent } from "./pages/courses/courses.component";
 import { GroupsComponent } from "./pages/groups/groups.component";
 
 // Existing protected routes (commented out)
@@ -131,12 +133,18 @@ export const routes: Routes = [
         {
           path: "teachers",
           component: TeachersComponent,
-        }
-        ,
-        {
-        path: "groups",
-        component: GroupsComponent,
-      }
+        },
+
+         {
+          path: "courses",
+          component: CoursesComponent,
+          data: {
+          authorities: [IRoleType.admin, IRoleType.superAdmin],
+          name: "Dashboard",
+          showInSidebar: true,
+         },
+         }
+         
     ],
   },
 ];
