@@ -1,20 +1,25 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { IGroup, ICourse, IUser } from '../../../interfaces';
-import { AuthService } from '../../../services/auth.service';
-import { ActivatedRoute } from '@angular/router';
-import { TeacherService } from '../../../services/teacher.service';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  inject,
+  effect,
+} from "@angular/core";
+import { FormBuilder, FormGroup, ReactiveFormsModule } from "@angular/forms";
+import { CommonModule } from "@angular/common";
+import { IGroup, ICourse } from "../../../interfaces";
+import { AuthService } from "../../../services/auth.service";
+import { ActivatedRoute } from "@angular/router";
+import { TeacherService } from "../../../services/teacher.service";
+import { CourseService } from "../../../services/course.service";
 
 @Component({
-  selector: 'app-groups-form',
+  selector: "app-groups-form",
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    CommonModule
-  ],
-  templateUrl: './groups-form.component.html',
-  styleUrl: './groups-form.component.scss'
+  imports: [ReactiveFormsModule, CommonModule],
+  templateUrl: "./groups-form.component.html",
+  styleUrls: ["./groups-form.component.scss"],
 })
 export class GroupsFormComponent {
   public fb: FormBuilder = inject(FormBuilder);
@@ -26,42 +31,49 @@ export class GroupsFormComponent {
   public areActionsAvailable: boolean = false;
   public route: ActivatedRoute = inject(ActivatedRoute);
 
-  public courses: ICourse[] = []; 
+  public courses: ICourse[] = [];
   public teachers: any[] = [];
-  private teachersService: TeacherService = inject(TeacherService);
 
+  private teachersService = inject(TeacherService);
+  private courseService = inject(CourseService);
+
+  public teachersEffect = effect(() => {
+    this.teachers = this.teachersService.teachers$();
+  });
+
+  public coursesEffect = effect(() => {
+    this.courses = this.courseService.courses$();
+  });
 
   ngOnInit(): void {
     this.authService.getUserAuthorities();
-    this.route.data.subscribe(data => {
-      this.areActionsAvailable = this.authService.areActionsAvailable(data['authorities'] ?? []);
+
+    this.route.data.subscribe((data) => {
+      this.areActionsAvailable = this.authService.areActionsAvailable(
+        data["authorities"] ?? []
+      );
     });
 
-    
-    const schoolId = 1; 
+    const schoolId = 1;
+
     this.teachersService.getTeachersBySchool(schoolId);
-
-    this.teachers = this.teachersService.teachers$();
-    
-   
-    this.courses = [
-      { id: 1, title: 'Matemáticas' },
-      { id: 2, title: 'Historia' }
-
-    ];
+    this.courseService.getAll(); 
   }
 
   callSave() {
     if (this.form.invalid) return;
 
-    let item: IGroup = {
+    const selectedCourse = this.form.controls["course"].value as ICourse;
+    const selectedTeacher = this.form.controls["teacher"].value;
+
+    const item: IGroup = {
       name: this.form.controls["name"].value,
-      course: this.form.controls["course"].value,
-      teacher: this.form.controls["teacher"].value 
+      course: selectedCourse,
+      teacher: selectedTeacher,
     };
 
-    if (this.form.controls['id'].value) {
-      item.id = this.form.controls['id'].value;
+    if (this.form.controls["id"].value) {
+      item.id = this.form.controls["id"].value;
     }
 
     if (item.id) {
@@ -69,5 +81,12 @@ export class GroupsFormComponent {
     } else {
       this.callSaveMethod.emit(item);
     }
+  }
+  trackById(index: number, item: ICourse): number {
+    return item.id ?? index;
+  }
+
+  trackByTeacherId(index: number, item: any): number {
+    return item.id ?? index;
   }
 }

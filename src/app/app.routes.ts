@@ -136,15 +136,23 @@ export const routes: Routes = [
         },
 
          {
-          path: "courses",
-          component: CoursesComponent,
-          data: {
+        path: "courses",
+        component: CoursesComponent,
+        data: {
           authorities: [IRoleType.admin, IRoleType.superAdmin],
           name: "Dashboard",
           showInSidebar: true,
-         },
-         }
-         
+        },
+      },
+      {
+        path: "groups",
+        component: GroupsComponent,
+        data: {
+          authorities: [IRoleType.admin, IRoleType.superAdmin],
+          name: "Groups",
+          showInSidebar: true,
+        },
+      },
     ],
   },
 ];
