@@ -1,9 +1,16 @@
-
-<div class="contaniner h-100">
-  <div class="d-flex align-items-center justify-content-center">
-    <div class="w-100 text-center">
-      <p class="text-warning">Access denied to resource</p>
-      <a href="/app/dashboard">volver</a>
+<div class="container h-100 d-flex align-items-center justify-content-center">
+    <div class="card text-center shadow-lg" style="max-width: 500px; width: 100%;">
+        <div class="card-header d-flex flex-column align-items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="var(--color-butterscotch)" class="mb-3" viewBox="0 0 24 24">
+                <path d="M12 2C8.134 2 5 5.134 5 9v3H4a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1h-1V9c0-3.866-3.134-7-7-7Zm0 2c2.757 0 5 2.243 5 5v3H7V9c0-2.757 2.243-5 5-5Zm-1 9h2v4h-2v-4Zm0 6h2v2h-2v-2Z"/>
+            </svg>
+            <h2 class="title-highlight">Acceso Denegado</h2>
+        </div>
+        <div class="card-content px-4 pb-4">
+            <p class="text-warning mt-3" style="font-size: 18px; font-weight: 500;">
+                No tienes permiso para acceder a este recurso.
+            </p>
+            <a href="/app/dashboard" class="btn btn-primary mt-3">Volver al inicio</a>
+        </div>
     </div>
-  </div>
 </div>

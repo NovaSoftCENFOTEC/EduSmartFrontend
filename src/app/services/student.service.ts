@@ -1,0 +1,97 @@
+import { inject, Injectable, signal } from '@angular/core';
+import { BaseService } from './base-service';
+import { IUser, ISearch, IResponse } from '../interfaces';
+import { AlertService } from './alert.service';
+
+@Injectable({
+    providedIn: 'root'
+})
+export class StudentService extends BaseService<IUser> {
+    protected override source = 'students';
+
+    private studentListSignal = signal<IUser[]>([]);
+    get students$() {
+        return this.studentListSignal;
+    }
+
+    public search: ISearch = {
+        page: 1,
+        size: 10,
+        pageNumber: 1,
+        totalPages: 1
+    };
+    public totalItems: number[] = [];
+
+    private alertService = inject(AlertService);
+    private currentSchoolId: number | null = null;
+
+    setCurrentSchoolId(schoolId: number | null) {
+        this.currentSchoolId = schoolId;
+        console.log('DEBUG [StudentService]: schoolId seteado =', schoolId);
+    }
+
+    getStudentsBySchool(schoolId: number) {
+        this.setCurrentSchoolId(schoolId);
+        const params = {
+            page: this.search.pageNumber ?? 1,
+            size: this.search.size ?? 10
+        };
+
+        this.findAllWithParamsAndCustomSource(`school/${schoolId}/students`, params)
+            .subscribe({
+                next: (response: any) => {
+                    console.log('DEBUG [API response]:', response);
+                    this.search = {
+                        ...this.search,
+                        pageNumber: response.meta.page ?? 1,
+                        totalPages: response.meta.totalPages ?? 1,
+                        size: response.meta.size ?? 10
+                    };
+                    this.totalItems = Array.from(
+                        { length: this.search.totalPages ?? 0 },
+                        (_, i) => i + 1
+                    );
+                    this.studentListSignal.set(response.data);
+                    console.log('DEBUG [Signal set]:', response.data);
+                },
+                error: (err) => {
+                    this.alertService.displayAlert(
+                        'error',
+                        'Ocurrió un error al obtener los estudiantes.',
+                        'center',
+                        'top',
+                        ['error-snackbar']
+                    );
+                    console.error('Error al obtener estudiantes:', err);
+                }
+            });
+    }
+
+    saveStudent(schoolId: number, student: IUser) {
+        console.log('DEBUG [Saving student] schoolId=', schoolId, 'data=', student);
+        this.addCustomSource(`school/${schoolId}`, student)
+            .subscribe({
+                next: (res: IResponse<IUser>) => {
+                    console.log('DEBUG [Saved]:', res);
+                    this.alertService.displayAlert(
+                        'success',
+                        res.message || 'Estudiante agregado correctamente.',
+                        'center',
+                        'top',
+                        ['success-snackbar']
+                    );
+                    this.getStudentsBySchool(schoolId);
+                },
+                error: (err) => {
+                    console.error('Error al guardar estudiante:', err);
+                    this.alertService.displayAlert(
+                        'error',
+                        'Ocurrió un error al agregar el estudiante.',
+                        'center',
+                        'top',
+                        ['error-snackbar']
+                    );
+                }
+            });
+    }
+}
