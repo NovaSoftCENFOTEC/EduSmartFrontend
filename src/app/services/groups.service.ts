@@ -27,7 +27,7 @@ export class GroupsService extends BaseService<IGroup> {
       next: (response: IResponse<IGroup[]>) => {
         this.search = { ...this.search, ...response.meta };
         this.totalItems = Array.from({ length: this.search.totalPages ? this.search.totalPages : 0 }, (_, i) => i + 1);
-        console.log("Datos recibidos de la API:", response.data);
+       
         this.groupListSignal.set(response.data);
       },
       error: (err: any) => {
@@ -88,6 +88,9 @@ export class GroupsService extends BaseService<IGroup> {
     return;
   }
   
+  // ✅ Convertir ID a number si es string
+  const groupId = typeof item.id === 'string' ? parseInt(item.id, 10) : item.id;
+  
   const payload = {
     name: item.name,
     course: {
@@ -95,12 +98,14 @@ export class GroupsService extends BaseService<IGroup> {
     },
     teacher: {
       id: item.teacher?.id
-    }
+    },
+    students: item.students || [] // ✅ AGREGAR STUDENTS AL PAYLOAD
   };
   
   console.log('📦 Payload para backend:', payload);
+  console.log('🔢 ID convertido:', groupId, typeof groupId);
   
-  this.edit(item.id, payload).subscribe({
+  this.edit(groupId, payload).subscribe({ // ✅ Usar groupId convertido
     next: (response: IResponse<IGroup>) => {
       console.log('✅ Respuesta exitosa:', response);
       this.alertService.displayAlert('success', 'Grupo actualizado correctamente.', 'center', 'top', ['success-snackbar']);
