@@ -2,7 +2,7 @@ import {inject, Injectable, signal} from '@angular/core';
 import {BaseService} from './base-service';
 import {IUser, ISearch, IResponse} from '../interfaces';
 import {AlertService} from './alert.service';
-
+import {GroupsService} from './groups.service';
 
 @Injectable({
     providedIn: 'root'
@@ -25,6 +25,7 @@ export class StudentService extends BaseService<IUser> {
 
     public totalItems: number[] = [];
     private alertService: AlertService = inject(AlertService);
+    private groupsService: GroupsService = inject(GroupsService);
     private currentSchoolId: number | null = null;
 
 
@@ -66,11 +67,31 @@ export class StudentService extends BaseService<IUser> {
 
 
 saveStudent(groupId: number, student: IUser) {
-    console.log('🔥 StudentService.saveStudentToGroup ejecutado');
+    console.log('🔥 StudentService.saveStudentDirectlyToGroup ejecutado');
     console.log('👥 groupId:', groupId);
     console.log('👨‍🎓 student:', student);
     
     
+    this.addCustomSource(`groups/${groupId}/students`, {student}).subscribe({
+        next: (response: IResponse<IUser>) => {
+            console.log('✅ Estudiante creado y agregado al grupo:', response);
+            this.alertService.displayAlert(
+                'success',
+                response.message || 'Estudiante agregado al grupo correctamente.',
+                'center', 'top',
+                ['success-snackbar']
+            );
+        },
+        error: (err) => {
+            console.error('❌ Error al crear estudiante en el grupo:', err);
+            this.alertService.displayAlert(
+                'error',
+                'Ocurrió un error al agregar el estudiante al grupo.',
+                'center', 'top',
+                ['error-snackbar']
+            );
+        }
+    });
 }
 }
 

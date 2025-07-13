@@ -16,7 +16,7 @@
     <div class="col-12 mt-3">
         <div class="card">
             <div class="card-body">
-                <app-students-list >
+                <app-students-list 
                         [students]="studentList()" 
                         (callModalAction)="openEditStudentModal($event)" 
                         (callDeleteAction)="deleteStudent($event)"> 

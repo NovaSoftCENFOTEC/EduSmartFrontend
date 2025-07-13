@@ -16,7 +16,7 @@ import {SchoolsComponent} from "./pages/schools/schools.component";
 import { LandingPageComponent } from "./pages/landing-page/landing-page.component";
 import { CoursesComponent } from "./pages/courses/courses.component";
 import { GroupsComponent } from "./pages/groups/groups.component";
-import { StudentsComponent } from "./pages/students/students.component";
+import { StudentsComponent } from "./pages/groupstudents/students.component";
 
 // Existing protected routes (commented out)
 // export const routes: Routes = [

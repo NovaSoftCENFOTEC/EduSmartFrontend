@@ -1,14 +1,15 @@
-import {Component, inject, OnInit, ViewChild, WritableSignal} from '@angular/core';
+import {Component, inject, OnInit, ViewChild, WritableSignal, signal} from '@angular/core';
 import {PaginationComponent} from '../../components/pagination/pagination.component';
 import {ModalComponent} from '../../components/modal/modal.component';
-import {IUser} from '../../interfaces';
+import {IUser, IGroup} from '../../interfaces';
 import {FormBuilder, Validators} from '@angular/forms';
-import {StudentService} from '../../services/student.service'; 
+import {StudentService} from '../../services/groupstudent.service'; 
+import {GroupsService} from '../../services/groups.service';
 import {ModalService} from '../../services/modal.service';
 import {AuthService} from '../../services/auth.service';
 import {ActivatedRoute} from '@angular/router';
-import {StudentsFormComponent} from '../../components/students/student-form/students-form.component';
-import {StudentsListComponent} from '../../components/students/student-list/students-list.component'; 
+import {StudentsFormComponent} from '../../components/groupstudents/student-form/students-form.component';
+import {StudentsListComponent} from '../../components/groupstudents/student-list/students-list.component'; 
 import {NgIf} from '@angular/common';
 import {UserService} from '../../services/user.service';
 import {FooterComponent} from "../../components/app-layout/elements/footer/footer.component";
@@ -29,9 +30,11 @@ import {FooterComponent} from "../../components/app-layout/elements/footer/foote
 })
 export class StudentsComponent implements OnInit { 
     public studentList!: WritableSignal<IUser[]>; 
+    private studentListSignal = signal<IUser[]>([]);
 
     public studentService: StudentService = inject(StudentService); 
-     public userService: UserService = inject(UserService);
+    public groupsService: GroupsService = inject(GroupsService);
+    public userService: UserService = inject(UserService);
     public fb: FormBuilder = inject(FormBuilder);
     public modalService: ModalService = inject(ModalService);
     public authService: AuthService = inject(AuthService);
@@ -42,10 +45,10 @@ export class StudentsComponent implements OnInit {
     @ViewChild('editConfirmationModal') public editConfirmationModal: any;
 
     public areActionsAvailable: boolean = false;
-    private schoolId: number | null = null;
     private originalStudent: IUser | null = null; 
     private pendingEditItem: IUser | null = null;
-     private groupId: number | null = null; 
+    private groupId: number | null = null; 
+    private currentGroup: IGroup | null = null;
 
     studentForm = this.fb.group({ 
         id: [''],
@@ -56,39 +59,81 @@ export class StudentsComponent implements OnInit {
     });
 
     constructor() {
-        this.studentList = this.userService.users$; 
+        this.studentList = this.studentListSignal;
     }
 
- ngOnInit(): void {
+    ngOnInit(): void {
         this.authService.getUserAuthorities();
         this.route.queryParams.subscribe(params => {
             const groupId = Number(params['groupId']);
+     
+            console.log('🔍 Params recibidos - groupId:', groupId);
             if (groupId && !isNaN(groupId)) {
                 this.groupId = groupId;
-                this.schoolId = null;
+                this.loadGroupAndStudents(groupId);
             } 
+        });
+
+        this.route.data.subscribe(data => {
+            this.areActionsAvailable = this.authService.areActionsAvailable(data['authorities'] ?? []);
         });
     }
 
-    loadStudents(): void { 
-        if (this.schoolId) {
-            this.studentService.getStudentsBySchool(this.schoolId); 
+    // ✅ CORREGIDO: Método mejorado con tipos correctos
+    loadGroupAndStudents(groupId: number): void {
+        console.log('🔍 Cargando todos los grupos para filtrar por ID:', groupId);
+        
+        this.groupsService.getAll();
+        
+        // ✅ CORREGIDO: groups$() es un signal, no un observable
+        const groups: IGroup[] = this.groupsService.groups$();
+        console.log('📋 Todos los grupos recibidos:', groups);
+        
+        // ✅ CORREGIDO: Tipos explícitos para evitar 'any'
+        const foundGroup: IGroup | undefined = groups.find((group: IGroup) => group.id === groupId);
+        
+        if (foundGroup) {
+            this.currentGroup = foundGroup;
+            console.log('🎯 Grupo encontrado:', this.currentGroup);
+            
+            // ✅ CORREGIDO: Verificar que currentGroup no es null
+            if (this.currentGroup) {
+                console.log('📊 Información del grupo:');
+                console.log('  - ID:', this.currentGroup.id);
+                console.log('  - Nombre:', this.currentGroup.name);
+                console.log('  - Curso:', this.currentGroup.course);
+                console.log('  - Profesor:', this.currentGroup.teacher);
+                console.log('  - Estudiantes:', this.currentGroup.students);
+                
+                this.studentListSignal.set(this.currentGroup.students || []);
+            }
         } else {
-            this.userService.getAll();
+            console.log('❌ Grupo no encontrado con ID:', groupId);
+            this.studentListSignal.set([]);
+        }
+    }
+
+    // ✅ AGREGADO: Método que faltaba para pagination
+    loadStudents(): void {
+        if (this.groupId) {
+            this.loadGroupAndStudents(this.groupId);
         }
     }
 
     handleAddStudent(item: IUser) { 
+        console.log('🎯 handleAddStudent ejecutado:', item);
+        console.log('📋 Grupo actual completo:', this.currentGroup);
 
         if (this.groupId) {
-        this.studentService.saveStudent(this.groupId, item);
-    }
+            this.studentService.saveStudent(this.groupId, item);
+        }
+        
         this.modalService.closeAll();
         this.studentForm.reset(); 
     }
 
     updateStudent() { 
-        if (!this.schoolId || !this.originalStudent) return; 
+        if (!this.originalStudent) return;
         const updatedStudent: IUser = { 
             ...this.originalStudent, 
             name: this.studentForm.controls['name'].value || '', 
@@ -102,7 +147,7 @@ export class StudentsComponent implements OnInit {
     }
 
     deleteStudent(item: IUser) { 
-        if (!this.schoolId || !item.id) return;
+        if (!item.id) return;
         this.userService.delete(item);
     }
 
