@@ -39,7 +39,7 @@ export class GroupsService extends BaseService<IGroup> {
   save(item: IGroup) {
 
     
-    // Extraer los IDs del curso y profesor
+
     const courseId = item.course?.id;
     const teacherId = item.teacher?.id;
     
@@ -81,14 +81,14 @@ export class GroupsService extends BaseService<IGroup> {
   }
 
   update(item: IGroup) {
-  console.log('🔄 Item a actualizar:', item);
+ 
   
   if (!item.id) {
     this.alertService.displayAlert('error', 'No se puede actualizar un grupo sin ID.', 'center', 'top', ['error-snackbar']);
     return;
   }
   
-  // ✅ Convertir ID a number si es string
+
   const groupId = typeof item.id === 'string' ? parseInt(item.id, 10) : item.id;
   
   const payload = {
@@ -99,28 +99,26 @@ export class GroupsService extends BaseService<IGroup> {
     teacher: {
       id: item.teacher?.id
     },
-    students: item.students || [] // ✅ AGREGAR STUDENTS AL PAYLOAD
+    students: item.students || [] 
   };
   
-  console.log('📦 Payload para backend:', payload);
-  console.log('🔢 ID convertido:', groupId, typeof groupId);
-  
-  this.edit(groupId, payload).subscribe({ // ✅ Usar groupId convertido
+
+  this.edit(groupId, payload).subscribe({ 
     next: (response: IResponse<IGroup>) => {
-      console.log('✅ Respuesta exitosa:', response);
+   
       this.alertService.displayAlert('success', 'Grupo actualizado correctamente.', 'center', 'top', ['success-snackbar']);
-      this.getAll(); // Recargar la lista para ver los cambios
+      this.getAll(); 
     },
     error: (err: any) => {
       console.error('❌ Error del servidor:', err);
       
-      // ✅ SOLUCIÓN: Si el error es de serialización JSON pero el update funcionó
+      
       if (err.status === 500 && err.error?.detail?.includes('Could not write JSON')) {
         console.log('⚠️ Update exitoso pero error en serialización JSON');
         this.alertService.displayAlert('success', 'Grupo actualizado correctamente.', 'center', 'top', ['success-snackbar']);
-        this.getAll(); // Recargar la lista porque el update SÍ funcionó
+        this.getAll(); 
       } else {
-        // Otros errores reales
+        
         this.alertService.displayAlert('error', 'Ocurrió un error al actualizar el grupo.', 'center', 'top', ['error-snackbar']);
       }
     }
