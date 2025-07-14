@@ -180,7 +180,7 @@ export class StudentsComponent implements OnInit {
     openAddStudentModal() {
         
         this.studentForm.reset(); 
-        
+    
         setTimeout(() => {
         this.modalService.displayModal('md', this.addStudentModal);
     }, 200);
