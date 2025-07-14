@@ -25,6 +25,8 @@ export class GroupsService extends BaseService<IGroup> {
   getAll() {
     this.findAllWithParams({ page: this.search.page, size: this.search.size }).subscribe({
       next: (response: IResponse<IGroup[]>) => {
+
+    
         this.search = { ...this.search, ...response.meta };
         this.totalItems = Array.from({ length: this.search.totalPages ? this.search.totalPages : 0 }, (_, i) => i + 1);
       
@@ -41,7 +43,7 @@ export class GroupsService extends BaseService<IGroup> {
   save(item: IGroup) {
 
     
-    // Extraer los IDs del curso y profesor
+    
     const courseId = item.course?.id;
     const teacherId = item.teacher?.id;
     
@@ -100,24 +102,24 @@ export class GroupsService extends BaseService<IGroup> {
     }
   };
   
-  console.log('📦 Payload para backend:', payload);
+  
   
   this.edit(item.id, payload).subscribe({
     next: (response: IResponse<IGroup>) => {
-      console.log('✅ Respuesta exitosa:', response);
+     
       this.alertService.displayAlert('success', 'Grupo actualizado correctamente.', 'center', 'top', ['success-snackbar']);
-      this.getAll(); // Recargar la lista para ver los cambios
+      this.getAll(); 
     },
     error: (err: any) => {
       console.error('❌ Error del servidor:', err);
       
-      // ✅ SOLUCIÓN: Si el error es de serialización JSON pero el update funcionó
+     
       if (err.status === 500 && err.error?.detail?.includes('Could not write JSON')) {
-        console.log('⚠️ Update exitoso pero error en serialización JSON');
+     
         this.alertService.displayAlert('success', 'Grupo actualizado correctamente.', 'center', 'top', ['success-snackbar']);
-        this.getAll(); // Recargar la lista porque el update SÍ funcionó
+        this.getAll(); 
       } else {
-        // Otros errores reales
+        
         this.alertService.displayAlert('error', 'Ocurrió un error al actualizar el grupo.', 'center', 'top', ['error-snackbar']);
       }
     }
@@ -138,32 +140,29 @@ export class GroupsService extends BaseService<IGroup> {
   }
 
 
-addStudentToGroupByEndpoint(groupId: number, studentId: number) {
-    console.log('🔥 GroupsService.addStudentToGroupByEndpoint ejecutado');
-    console.log('👥 groupId:', groupId);
-    console.log('👨‍🎓 studentId:', studentId);
-    
-    
-    this.addCustomSource(`groups/${groupId}/students/${studentId}`, {}).subscribe({
+
+
+deleteStudentFromGroup(groupId: number, studentId: number) {
+      this.delCustomSource(`${groupId}/students/${studentId}`).subscribe({
         next: (response: IResponse<any>) => {
-            console.log('✅ Estudiante agregado al grupo:', response);
             this.alertService.displayAlert(
-                'success',
-                response.message || 'Estudiante agregado al grupo correctamente.',
-                'center', 'top',
+                'success', 
+                response.message || 'Estudiante eliminado del grupo correctamente.', 
+                'center', 'top', 
                 ['success-snackbar']
             );
             this.getAll(); 
         },
         error: (err: any) => {
-            console.error('❌ Error al agregar estudiante al grupo:', err);
             this.alertService.displayAlert(
-                'error',
-                'Ocurrió un error al agregar el estudiante al grupo.',
-                'center', 'top',
+                'error', 
+                'Ocurrió un error al eliminar el estudiante del grupo.', 
+                'center', 'top', 
                 ['error-snackbar']
             );
+            console.error('Error al eliminar estudiante del grupo', err);
         }
     });
-}
+    }
+
 }

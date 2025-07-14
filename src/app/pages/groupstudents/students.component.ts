@@ -52,9 +52,10 @@ export class StudentsComponent implements OnInit {
 
     studentForm = this.fb.group({ 
         id: [''],
-        name: ['', Validators.required],
-        lastname: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
+        name: [''],
+        lastname: [''],
+        email: ['',],
+        student: ['', Validators.required],
         createdAt: ['']
     });
 
@@ -67,7 +68,7 @@ export class StudentsComponent implements OnInit {
         this.route.queryParams.subscribe(params => {
             const groupId = Number(params['groupId']);
      
-            console.log('🔍 Params recibidos - groupId:', groupId);
+        
             if (groupId && !isNaN(groupId)) {
                 this.groupId = groupId;
                 this.loadGroupAndStudents(groupId);
@@ -79,41 +80,36 @@ export class StudentsComponent implements OnInit {
         });
     }
 
-    // ✅ CORREGIDO: Método mejorado con tipos correctos
+  
     loadGroupAndStudents(groupId: number): void {
-        console.log('🔍 Cargando todos los grupos para filtrar por ID:', groupId);
+
         
         this.groupsService.getAll();
         
-        // ✅ CORREGIDO: groups$() es un signal, no un observable
+    
         const groups: IGroup[] = this.groupsService.groups$();
-        console.log('📋 Todos los grupos recibidos:', groups);
+
         
-        // ✅ CORREGIDO: Tipos explícitos para evitar 'any'
+
         const foundGroup: IGroup | undefined = groups.find((group: IGroup) => group.id === groupId);
         
         if (foundGroup) {
             this.currentGroup = foundGroup;
-            console.log('🎯 Grupo encontrado:', this.currentGroup);
+  
             
-            // ✅ CORREGIDO: Verificar que currentGroup no es null
+      
             if (this.currentGroup) {
-                console.log('📊 Información del grupo:');
-                console.log('  - ID:', this.currentGroup.id);
-                console.log('  - Nombre:', this.currentGroup.name);
-                console.log('  - Curso:', this.currentGroup.course);
-                console.log('  - Profesor:', this.currentGroup.teacher);
-                console.log('  - Estudiantes:', this.currentGroup.students);
+
                 
                 this.studentListSignal.set(this.currentGroup.students || []);
             }
         } else {
-            console.log('❌ Grupo no encontrado con ID:', groupId);
+         
             this.studentListSignal.set([]);
         }
     }
 
-    // ✅ AGREGADO: Método que faltaba para pagination
+    
     loadStudents(): void {
         if (this.groupId) {
             this.loadGroupAndStudents(this.groupId);
@@ -121,15 +117,21 @@ export class StudentsComponent implements OnInit {
     }
 
     handleAddStudent(item: IUser) { 
-        console.log('🎯 handleAddStudent ejecutado:', item);
-        console.log('📋 Grupo actual completo:', this.currentGroup);
+
 
         if (this.groupId) {
             this.studentService.saveStudent(this.groupId, item);
+        
         }
         
         this.modalService.closeAll();
         this.studentForm.reset(); 
+        setTimeout(() => {
+        if (this.groupId) {
+            
+            this.loadGroupAndStudents(this.groupId);
+        }
+    }, 1000);
     }
 
     updateStudent() { 
@@ -147,8 +149,20 @@ export class StudentsComponent implements OnInit {
     }
 
     deleteStudent(item: IUser) { 
-        if (!item.id) return;
-        this.userService.delete(item);
+       
+   
+    if (!item.id || !this.groupId) {
+        console.error('❌ Faltan datos: item.id =', item.id, 'groupId =', this.groupId);
+        return;
+    }
+    
+   
+    this.groupsService.deleteStudentFromGroup(this.groupId, item.id);
+    
+    
+    setTimeout(() => {
+        this.loadGroupAndStudents(this.groupId!);
+    }, 1000);
     }
 
     openEditStudentModal(student: IUser) { 
@@ -164,8 +178,12 @@ export class StudentsComponent implements OnInit {
     }
 
     openAddStudentModal() {
+        
         this.studentForm.reset(); 
-        this.modalService.displayModal('md', this.addStudentModal); 
+        
+        setTimeout(() => {
+        this.modalService.displayModal('md', this.addStudentModal);
+    }, 200);
     }
 
     confirmEdit(item: IUser) {

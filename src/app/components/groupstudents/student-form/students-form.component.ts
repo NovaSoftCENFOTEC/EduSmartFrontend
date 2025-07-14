@@ -1,52 +1,66 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { IUser } from '../../../interfaces';
 import { AuthService } from '../../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
+import { UserService } from '../../../services/user.service'; 
+import { NgForOf, NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-students-form', 
+  selector: 'app-students-form',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './students-form.component.html', 
-  styleUrl: './students-form.component.scss' 
+  imports: [ReactiveFormsModule, CommonModule, NgIf, NgForOf],
+  templateUrl: './students-form.component.html',
+  styleUrls: ['./students-form.component.scss']
 })
-export class StudentsFormComponent { 
+export class StudentsFormComponent implements OnInit {
   public fb: FormBuilder = inject(FormBuilder);
   @Input() form!: FormGroup;
+  @Input() availableStudents = signal<IUser[]>([]); 
+  
   @Output() callSaveMethod: EventEmitter<IUser> = new EventEmitter<IUser>();
   @Output() callUpdateMethod: EventEmitter<IUser> = new EventEmitter<IUser>();
 
   public authService: AuthService = inject(AuthService);
   public areActionsAvailable: boolean = false;
   public route: ActivatedRoute = inject(ActivatedRoute);
+  private userService: UserService = inject(UserService); 
 
   ngOnInit(): void {
     this.authService.getUserAuthorities();
     this.route.data.subscribe(data => {
       this.areActionsAvailable = this.authService.areActionsAvailable(data['authorities'] ?? []);
     });
+    
+    this.loadAvailableStudents();
+  }
+
+  
+  loadAvailableStudents(): void {
+    this.userService.getAll();
+    
+    const allUsers = this.userService.users$();
+    this.availableStudents.set(allUsers);
   }
 
   callSave() {
-     
-    if (this.form.invalid) return;
 
-    let item: IUser = {
-      name: this.form.controls["name"].value,
-      lastname: this.form.controls["lastname"].value,
-      email: this.form.controls["email"].value,
-    };
-
-    if (this.form.controls['id'].value) {
-      item.id = this.form.controls['id'].value;
+    const selectedStudentId = this.form.controls["student"].value;
+    const selectedStudent = this.availableStudents().find(student => student.id == selectedStudentId);
+    
+    if (!selectedStudent) {
+      console.log('❌ Estudiante no encontrado');
+      return;
     }
 
-    if (item.id) {
-      this.callUpdateMethod.emit(item);
+    console.log('📦 Estudiante completo a enviar:', selectedStudent);
+
+    if (this.form.controls['id'].value) {
+      selectedStudent.id = this.form.controls['id'].value;
+      this.callUpdateMethod.emit(selectedStudent);
     } else {
-      this.callSaveMethod.emit(item);
+      this.callSaveMethod.emit(selectedStudent);
     }
   }
 }
