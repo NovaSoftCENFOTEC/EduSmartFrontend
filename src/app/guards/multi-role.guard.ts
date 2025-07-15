@@ -12,7 +12,6 @@ export class MultiRoleGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const hasValidRole =
-      this.authService.hasRole(IRoleType.admin) ||
       this.authService.hasRole(IRoleType.superAdmin) ||
       this.authService.hasRole(IRoleType.teacher);
 
