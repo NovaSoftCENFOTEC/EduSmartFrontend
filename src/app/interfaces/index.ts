@@ -88,3 +88,13 @@ export interface IGroup {
   students?: IUser[];
   teacher?: IUser;
 }
+
+export interface IStory {
+    id?: number;
+    title: string;
+    content: string;
+    createdAt?: Date;
+    courseId?: number;
+}
+
+
