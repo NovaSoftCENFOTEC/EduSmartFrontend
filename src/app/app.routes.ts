@@ -10,12 +10,16 @@ import { DashboardComponent } from "./pages/dashboard/dashboard.component";
 import { GuestGuard } from "./guards/guest.guard";
 import { IRoleType } from "./interfaces";
 import { ProfileComponent } from "./pages/profile/profile.component";
-import {TeachersComponent} from "./pages/teachers/teachers.component";
-import {SchoolsComponent} from "./pages/schools/schools.component";
-
+import { TeachersComponent } from "./pages/teachers/teachers.component";
+import { SchoolsComponent } from "./pages/schools/schools.component";
 import { LandingPageComponent } from "./pages/landing-page/landing-page.component";
+import { StudentsComponent } from "./pages/students/students.component";
+import { TeacherRoleGuard } from "./guards/teacher-role.guard";
 import { CoursesComponent } from "./pages/courses/courses.component";
 import { GroupsComponent } from "./pages/groups/groups.component";
+import { MultiRoleGuard } from "./guards/multi-role.guard";
+import { StoriesComponent } from "./pages/stories/stories.component";
+
 
 // Existing protected routes (commented out)
 // export const routes: Routes = [
@@ -87,10 +91,10 @@ export const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: "teacher/signup-student",
+    path: "teacher/signup-students",
     component: SigUpComponent,
   },
-  //signup student
+  //signup students
   {
     path: "access-denied",
     component: AccessDeniedComponent,
@@ -128,30 +132,34 @@ export const routes: Routes = [
       {
         path: "schools",
         component: SchoolsComponent,
-      }
-        ,
-        {
-          path: "teachers",
-          component: TeachersComponent,
-        },
-
-         {
+      },
+      {
+        path: "teachers",
+        component: TeachersComponent,
+      },
+      {
         path: "courses",
         component: CoursesComponent,
+        canActivate: [MultiRoleGuard ],
+      },
+      { 
+        path: "students",
+        component: StudentsComponent,
         data: {
-          authorities: [IRoleType.admin, IRoleType.superAdmin],
-          name: "Dashboard",
+          authorities: [IRoleType.superAdmin, IRoleType.superAdmin],
+          name: "Students",
           showInSidebar: true,
         },
       },
       {
         path: "groups",
         component: GroupsComponent,
-        data: {
-          authorities: [IRoleType.admin, IRoleType.superAdmin],
-          name: "Groups",
-          showInSidebar: true,
-        },
+        canActivate: [MultiRoleGuard ],
+      },
+      {
+        path: "stories",
+        component: StoriesComponent,
+        canActivate: [MultiRoleGuard ],
       },
     ],
   },

@@ -6,20 +6,20 @@ import { IRoleType } from "../interfaces";
 @Injectable({
   providedIn: 'root',
 })
-export class AdminRoleGuard implements CanActivate {
+export class MultiRoleGuard implements CanActivate {
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): boolean {
-    const hasRole = this.authService.hasRole(IRoleType.superAdmin);
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    const hasValidRole =
+      this.authService.hasRole(IRoleType.superAdmin) ||
+      this.authService.hasRole(IRoleType.teacher);
 
-    if (!hasRole) {
+    if (!hasValidRole) {
       this.router.navigate(['access-denied']);
       return false;
     }
+
     return true;
   }
 }

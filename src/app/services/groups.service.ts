@@ -25,21 +25,25 @@ export class GroupsService extends BaseService<IGroup> {
   getAll() {
     this.findAllWithParams({ page: this.search.page, size: this.search.size }).subscribe({
       next: (response: IResponse<IGroup[]>) => {
+
+    
         this.search = { ...this.search, ...response.meta };
         this.totalItems = Array.from({ length: this.search.totalPages ? this.search.totalPages : 0 }, (_, i) => i + 1);
-       
+      
         this.groupListSignal.set(response.data);
+        
       },
       error: (err: any) => {
         console.error('Error al obtener los grupos', err);
       }
     });
+
   }
 
   save(item: IGroup) {
 
     
-
+    
     const courseId = item.course?.id;
     const teacherId = item.teacher?.id;
     
@@ -102,19 +106,20 @@ export class GroupsService extends BaseService<IGroup> {
     students: item.students || [] 
   };
   
-
-  this.edit(groupId, payload).subscribe({ 
+  
+  
+  this.edit(item.id, payload).subscribe({
     next: (response: IResponse<IGroup>) => {
-   
+     
       this.alertService.displayAlert('success', 'Grupo actualizado correctamente.', 'center', 'top', ['success-snackbar']);
       this.getAll(); 
     },
     error: (err: any) => {
       console.error('❌ Error del servidor:', err);
       
-      
+     
       if (err.status === 500 && err.error?.detail?.includes('Could not write JSON')) {
-        console.log('⚠️ Update exitoso pero error en serialización JSON');
+     
         this.alertService.displayAlert('success', 'Grupo actualizado correctamente.', 'center', 'top', ['success-snackbar']);
         this.getAll(); 
       } else {
@@ -137,4 +142,31 @@ export class GroupsService extends BaseService<IGroup> {
       }
     });
   }
+
+
+
+
+deleteStudentFromGroup(groupId: number, studentId: number) {
+      this.delCustomSource(`${groupId}/students/${studentId}`).subscribe({
+        next: (response: IResponse<any>) => {
+            this.alertService.displayAlert(
+                'success', 
+                response.message || 'Estudiante eliminado del grupo correctamente.', 
+                'center', 'top', 
+                ['success-snackbar']
+            );
+            this.getAll(); 
+        },
+        error: (err: any) => {
+            this.alertService.displayAlert(
+                'error', 
+                'Ocurrió un error al eliminar el estudiante del grupo.', 
+                'center', 'top', 
+                ['error-snackbar']
+            );
+            console.error('Error al eliminar estudiante del grupo', err);
+        }
+    });
+    }
+
 }

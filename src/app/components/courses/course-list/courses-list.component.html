@@ -1,87 +1,100 @@
 <div class="card">
-    <div class="card-header card-header-indigo">
-        <h2 class="mb-0">Lista de Cursos</h2>
+  <div class="card-header card-header-indigo">
+    <h2 class="mb-0">Lista de Cursos</h2>
+  </div>
+  <div class="card-body">
+    <p class="text-muted mb-3">
+      Si deseas ver o agregar historias para una escuela, selecciona su título
+      en la tabla.
+    </p>
+    <div class="mb-4 mt-2">
+      <input
+        type="text"
+        class="input-txt w-25"
+        placeholder="Filtrar cursos por código o título..."
+        [(ngModel)]="searchText"
+      />
     </div>
-    <div class="card-body">
-        <p class="text-muted mb-3">
-            Si deseas ver o agregar historias para una escuela, selecciona su título en la tabla.
-        </p>
-        <div class="mb-4 mt-2">
-            <input
-                    type="text"
-                    class="input-txt w-25"
-                    placeholder="Filtrar cursos por código o título..."
-                    [(ngModel)]="searchText"
-            />
-        </div>
 
-        <div class="table-container table-responsive">
-            <table class="table custom-full-bordered-table">
-                <thead class="table-header-gray">
-                    <tr>
-                        <th scope="col">Título</th>
-                        <th scope="col">Código</th>
-                        <th scope="col">Descripción</th>
-                        <th scope="col">Fecha de creación</th>
-                        <th class="text-center" scope="col">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (item of filteredCourses; track item.code) {
-                    <tr>
-                        <td>
-                            <a [routerLink]="['../courses']" [queryParams]="{ courseCode: item.code }"
-                                class="no-link-style">{{ item.title }}
-                            </a>
-                        </td>
-                        <td>{{ item.code }}</td>
-                        <td>{{ item.description }}</td>
-                        <td>{{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
-                        <td class="text-center">
-                            <button
-                                        [disabled]="item.code === 'DEFAULT'"
-                                        [attr.title]="item.code === 'DEFAULT' ? 'Este curso no se puede editar' : null"
-                                        (click)="callModalAction.emit(item);"
-                                        class="btn border-0 me-2 icon-gray-color"
-                                        type="button"
-                                >
-                                    <i class="fas fa-pen"></i>
-                                </button>
-                                <button
-                                        [disabled]="item.code === 'DEFAULT'"
-                                        [attr.title]="item.code === 'DEFAULT' ? 'Este curso no se puede eliminar' : null"
-                                        (click)="openConfirmationModal(item)"
-                                        class="btn border-0 icon-gray-color"
-                                        type="button"
-                                >
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                        </td>
-                    </tr>
-                    } @empty {
-                    <tr>
-                        <td colspan="4">
-                            <div class="d-flex justify-content-center align-items-center w-100">
-                                <p class="mb-0">No hay cursos registrados</p>
-                            </div>
-                        </td>
-                    </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+    <div class="table-container table-responsive">
+      <table class="table custom-full-bordered-table">
+        <thead class="table-header-gray">
+          <tr>
+            <th scope="col">Título</th>
+            <th scope="col">Código</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Fecha de creación</th>
+            <th class="text-center" scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of filteredCourses; track item.code) {
+          <tr>
+            <td>
+              <a
+                [routerLink]="['/app/stories']"
+                [queryParams]="{ courseId: item.id }"
+                class="no-link-style"
+              >
+                {{ item.title }}
+              </a>
+            </td>
+            <td>{{ item.code }}</td>
+            <td>{{ item.description }}</td>
+            <td>{{ item.createdAt | date : "dd/MM/yyyy HH:mm" }}</td>
+            <td class="text-center">
+              <button
+                [disabled]="item.code === 'DEFAULT'"
+                [attr.title]="
+                  item.code === 'DEFAULT'
+                    ? 'Este curso no se puede editar'
+                    : null
+                "
+                (click)="callModalAction.emit(item)"
+                class="btn border-0 me-2 icon-gray-color"
+                type="button"
+              >
+                <i class="fas fa-pen"></i>
+              </button>
+              <button
+                [disabled]="item.code === 'DEFAULT'"
+                [attr.title]="
+                  item.code === 'DEFAULT'
+                    ? 'Este curso no se puede eliminar'
+                    : null
+                "
+                (click)="openConfirmationModal(item)"
+                class="btn border-0 icon-gray-color"
+                type="button"
+              >
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+          } @empty {
+          <tr>
+            <td colspan="4">
+              <div
+                class="d-flex justify-content-center align-items-center w-100"
+              >
+                <p class="mb-0">No hay cursos registrados</p>
+              </div>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
     </div>
+  </div>
 </div>
 
-<app-confirm-modal #confirmDeleteModal
-    [message]="'¿Estás seguro de que deseas eliminar el curso ' + deleteCourse?.title + '?'" 
-    [confirmText]="'Eliminar'"
-    [cancelText]="'Cancelar'" 
-    (confirmed)="deleteConfirmation()">
+<app-confirm-modal
+  #confirmDeleteModal
+  [message]="
+    '¿Estás seguro de que deseas eliminar el curso ' + deleteCourse?.title + '?'
+  "
+  [confirmText]="'Eliminar'"
+  [cancelText]="'Cancelar'"
+  (confirmed)="deleteConfirmation()"
+>
 </app-confirm-modal>
-
-
-
-
-
-

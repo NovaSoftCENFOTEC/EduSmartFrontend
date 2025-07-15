@@ -1,8 +1,10 @@
 <div class="card">
     <div class="card-header card-header-indigo">
-        <h2 class="mb-0">Lista de Usuarios</h2>
+        <h2 class="mb-0">Lista de Estudiantes</h2> 
     </div>
     <div class="card-body">
+        <p class="text-muted mb-3">Lista de estudiantes para la escuela seleccionada.</p> 
+
 
         <div class="mb-4 mt-2">
             <input
@@ -19,35 +21,28 @@
                 <tr>
                     <th scope="col">Nombre</th>
                     <th scope="col">Apellido</th>
-                    <th scope="col">Correo electrónico</th>
-                    <th scope="col">Creado</th>
-                    <th scope="col">Actualizado</th>
+                    <th scope="col">Correo</th>
                     <th class="text-center" scope="col">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
-                    @if (filteredUsers.length > 0) {
-                        @for (item of filteredUsers; track item.id) {
+                    @if (filteredStudents.length > 0) { 
+                        @for (item of filteredStudents; track item.id) { 
                             <tr>
                                 <td>{{ item.name }}</td>
                                 <td>{{ item.lastname }}</td>
                                 <td>{{ item.email }}</td>
-                                <td>{{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
-                                <td>{{ item.updatedAt | date: 'dd/MM/yyyy HH:mm' }}</td>
                                 <td class="text-center">
                                     <button
-                                            [disabled]="item.email === 'super.admin@gmail.com'"
-                                            [attr.title]="item.email === 'super.admin@gmail.com' ? 'Este usuario no puede ser editado' : 'Editar usuario'"
-                                            (click)="callModalAction.emit(item)"
+                                            (click)="callModalAction.emit(item);"
                                             class="btn border-0 me-2 icon-gray-color"
                                             type="button"
+                                            disabled
                                     >
                                         <i class="fas fa-pen"></i>
                                     </button>
                                     <button
-                                            [disabled]="item.email === 'super.admin@gmail.com'"
-                                            [attr.title]="item.email === 'super.admin@gmail.com' ? 'Este usuario no puede ser eliminado' : null"
-                                            (click)="abrirModalConfirmacion(item)"
+                                            (click)="openConfirmationModal(item)"
                                             class="btn border-0 icon-gray-color"
                                             type="button"
                                     >
@@ -58,9 +53,9 @@
                         }
                     } @else {
                         <tr>
-                            <td colspan="7">
+                            <td colspan="4">
                                 <div class="d-flex justify-content-center align-items-center w-100">
-                                    <p class="mb-0">No hay usuarios(as)</p>
+                                    <p class="mb-0">No hay estudiantes</p> 
                                 </div>
                             </td>
                         </tr>
@@ -69,12 +64,12 @@
             </table>
         </div>
     </div>
-</div>
 
-<app-confirm-modal
-    #confirmDeleteModal
-    [message]="'¿Estás seguro de que deseas eliminar al usuario ' + usuarioAEliminar?.name + ' ' + usuarioAEliminar?.lastname + '?'"
-    [confirmText]="'Eliminar'"
-    [cancelText]="'Cancelar'"
-    (confirmed)="confirmarEliminacion()"
-></app-confirm-modal>
+    <app-confirm-modal
+        #confirmDeleteModal
+        [message]="'¿Estás seguro(a) de que deseas eliminar el/la estudiante ' + deleteStudent?.name + '?'" 
+        [confirmText]="'Eliminar'"
+        [cancelText]="'Cancelar'"
+        (confirmed)="deleteConfirmation()"
+    ></app-confirm-modal>
+</div>
