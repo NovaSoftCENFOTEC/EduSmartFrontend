@@ -20,6 +20,7 @@ import { GroupsComponent } from "./pages/groups/groups.component";
 import { MultiRoleGuard } from "./guards/multi-role.guard";
 import { StoriesComponent } from "./pages/stories/stories.component";
 
+
 // Existing protected routes (commented out)
 // export const routes: Routes = [
 //   {
@@ -137,15 +138,18 @@ export const routes: Routes = [
         component: TeachersComponent,
       },
       {
-        path: "students",
-        component: StudentsComponent,
-        //Use this guard if you want to restrict access to teachers only :)
-        //canActivate: [TeacherRoleGuard],
-      },
-      {
         path: "courses",
         component: CoursesComponent,
         canActivate: [MultiRoleGuard ],
+      },
+      { 
+        path: "students",
+        component: StudentsComponent,
+        data: {
+          authorities: [IRoleType.superAdmin, IRoleType.superAdmin],
+          name: "Students",
+          showInSidebar: true,
+        },
       },
       {
         path: "groups",

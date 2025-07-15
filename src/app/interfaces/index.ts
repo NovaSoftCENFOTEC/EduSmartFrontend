@@ -1,13 +1,13 @@
-import {inject} from "@angular/core";
+import { inject } from "@angular/core";
 
 export interface ILoginResponse {
   accessToken: string;
-  expiresIn: number
+  expiresIn: number;
 }
 
 export interface IResponse<T> {
   data: T;
-  message: string,
+  message: string;
   meta: T;
 }
 
@@ -21,7 +21,7 @@ export interface IUser {
   updatedAt?: string;
   profilePicture?: string;
   authorities?: IAuthority[];
-  role?: IRole
+  role?: IRole;
   school?: ISchool;
   active?: boolean;
 }
@@ -38,21 +38,18 @@ export interface IFeedBackMessage {
 export enum IFeedbackStatus {
   success = "SUCCESS",
   error = "ERROR",
-  default = ''
+  default = "",
 }
 
 export enum IRoleType {
-  admin = "ROLE_ADMIN",
-  user = "ROLE_USER",
-  superAdmin = 'ROLE_SUPER_ADMIN',
-  student = 'ROLE_STUDENT',
-  teacher = 'ROLE_TEACHER',
-
+  superAdmin = "ROLE_SUPER_ADMIN",
+  student = "ROLE_STUDENT",
+  teacher = "ROLE_TEACHER",
 }
 
 export interface IRole {
   id: number;
-  name : string;
+  name: string;
   description: string;
   createdAt: string;
   updatedAt: string;
@@ -67,10 +64,10 @@ export interface ISearch {
 }
 
 export interface ISchool {
-    id?: number;
-    name?: string;
-    domain?: string;
-    createdAt?: string;
+  id?: number;
+  name?: string;
+  domain?: string;
+  createdAt?: string;
 }
 
 export interface ICourse {
@@ -90,11 +87,24 @@ export interface IGroup {
 }
 
 export interface IStory {
-    id?: number;
-    title: string;
-    content: string;
-    createdAt?: Date;
-    courseId?: number;
+  id?: number;
+  title: string;
+  content: string;
+  createdAt?: Date;
+  courseId?: number;
 }
 
-
+export interface IStudent {
+  id?: number;
+  name?: string;
+  lastname?: string;
+  email?: string;
+  password?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  profilePicture?: string;
+  authorities?: IAuthority[];
+  role?: IRole;
+  schoolId?: ISchool;
+  active?: boolean;
+}
