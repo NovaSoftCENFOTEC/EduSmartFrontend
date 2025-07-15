@@ -168,5 +168,32 @@ deleteStudentFromGroup(groupId: number, studentId: number) {
         }
     });
     }
-
+addStudentToGroupByEndpoint(groupId: number, studentId: number) {
+    console.log('🔥 GroupsService.addStudentToGroupByEndpoint ejecutado');
+    console.log('👥 groupId:', groupId);
+    console.log('👨‍🎓 studentId:', studentId);
+    
+    
+    this.addCustomSource(`groups/${groupId}/students/${studentId}`, {}).subscribe({
+        next: (response: IResponse<any>) => {
+            console.log('✅ Estudiante agregado al grupo:', response);
+            this.alertService.displayAlert(
+                'success',
+                response.message || 'Estudiante agregado al grupo correctamente.',
+                'center', 'top',
+                ['success-snackbar']
+            );
+            this.getAll(); 
+        },
+        error: (err: any) => {
+            console.error('❌ Error al agregar estudiante al grupo:', err);
+            this.alertService.displayAlert(
+                'error',
+                'Ocurrió un error al agregar el estudiante al grupo.',
+                'center', 'top',
+                ['error-snackbar']
+            );
+        }
+    });
+}
 }

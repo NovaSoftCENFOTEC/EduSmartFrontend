@@ -5,6 +5,7 @@ import {AlertService} from './alert.service';
 import {GroupsService} from './groups.service';
 import {HttpClient} from '@angular/common/http';
 
+
 @Injectable({
     providedIn: 'root'
 })
@@ -56,32 +57,29 @@ saveStudent(groupId: number, student: IUser) {
         email: student.email
     }; 
 
-    const correctUrl = `groups/${groupId}/students/${student.id}`;
+        const correctUrl = `groups/${groupId}/students/${student.id}`;
     this.http.post<IResponse<any>>(correctUrl, payload).subscribe({
         next: (response: IResponse<any>) => {
-            
+            console.log('✅ Estudiante creado y agregado al grupo:', response);
             this.alertService.displayAlert(
                 'success',
                 response.message || 'Estudiante agregado al grupo correctamente.',
                 'center', 'top',
                 ['success-snackbar']
             );
-        console.log(this.currentSchoolId);
-        this.groupsService.getAll();
+            this.groupsService.getAll();
         },
         error: (err) => {
-            console.error('❌ Error al agregar estudiante al grupo:', err);
-           
-            console.error('❌ Detalles del error:', err.error);
-            
+            console.error('❌ Error al crear estudiante en el grupo:', err);
             this.alertService.displayAlert(
                 'error',
-                err.error?.message || 'Ocurrió un error al agregar el estudiante al grupo.',
+                'Ocurrió un error al agregar el estudiante al grupo.',
                 'center', 'top',
                 ['error-snackbar']
             );
         }
-    });
+    });          
+
 }
 
 }

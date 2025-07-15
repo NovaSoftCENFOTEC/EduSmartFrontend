@@ -28,7 +28,7 @@ import {FooterComponent} from "../../components/app-layout/elements/footer/foote
     templateUrl: './students.component.html', 
     styleUrls: ['./students.component.scss'] 
 })
-export class StudentsComponent implements OnInit { 
+export class GroupStudentsComponent implements OnInit { 
     public studentList!: WritableSignal<IUser[]>; 
     private studentListSignal = signal<IUser[]>([]);
 
@@ -71,6 +71,7 @@ export class StudentsComponent implements OnInit {
         
             if (groupId && !isNaN(groupId)) {
                 this.groupId = groupId;
+                
                 this.loadGroupAndStudents(groupId);
             } 
         });
@@ -81,38 +82,36 @@ export class StudentsComponent implements OnInit {
     }
 
   
-    loadGroupAndStudents(groupId: number): void {
-
+   loadGroupAndStudents(groupId: number): void {
+    
         
         this.groupsService.getAll();
         
-    
+      
         const groups: IGroup[] = this.groupsService.groups$();
-
+      
         
 
         const foundGroup: IGroup | undefined = groups.find((group: IGroup) => group.id === groupId);
         
         if (foundGroup) {
             this.currentGroup = foundGroup;
-  
-            
-      
-            if (this.currentGroup) {
 
+            if (this.currentGroup) {
                 
                 this.studentListSignal.set(this.currentGroup.students || []);
             }
         } else {
-         
+            
             this.studentListSignal.set([]);
         }
     }
 
-    
+  
     loadStudents(): void {
         if (this.groupId) {
-            this.loadGroupAndStudents(this.groupId);
+            this.loadGroupAndStudents(this.groupId);            
+            
         }
     }
 
@@ -178,12 +177,11 @@ export class StudentsComponent implements OnInit {
     }
 
     openAddStudentModal() {
-        
+
         this.studentForm.reset(); 
-    
-        setTimeout(() => {
+        this.studentForm.patchValue({ student: '' });
         this.modalService.displayModal('md', this.addStudentModal);
-    }, 200);
+   
     }
 
     confirmEdit(item: IUser) {

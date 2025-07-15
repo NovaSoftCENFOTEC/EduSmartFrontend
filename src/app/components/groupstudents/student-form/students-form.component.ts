@@ -39,9 +39,12 @@ export class StudentsFormComponent implements OnInit {
   
   loadAvailableStudents(): void {
     this.userService.getAll();
+    setTimeout(() => {
+        const allUsers = this.userService.users$();
+       
+        this.availableStudents.set(allUsers);
     
-    const allUsers = this.userService.users$();
-    this.availableStudents.set(allUsers);
+    }, 300); 
   }
 
   callSave() {

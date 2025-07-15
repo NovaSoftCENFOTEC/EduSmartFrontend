@@ -19,6 +19,9 @@ import { CoursesComponent } from "./pages/courses/courses.component";
 import { GroupsComponent } from "./pages/groups/groups.component";
 import { MultiRoleGuard } from "./guards/multi-role.guard";
 import { StoriesComponent } from "./pages/stories/stories.component";
+import { GroupStudentsComponent } from "./pages/groupstudents/students.component";
+
+
 
 
 // Existing protected routes (commented out)
@@ -155,6 +158,15 @@ export const routes: Routes = [
         path: "groups",
         component: GroupsComponent,
         canActivate: [MultiRoleGuard ],
+      },
+         { 
+        path: "groupstudents",
+        component: GroupStudentsComponent,
+        data: {
+          authorities: [IRoleType.superAdmin, IRoleType.superAdmin],
+          name: "Students",
+          showInSidebar: true,
+        },
       },
       {
         path: "stories",

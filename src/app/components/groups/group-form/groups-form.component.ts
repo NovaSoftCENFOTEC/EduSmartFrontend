@@ -53,9 +53,10 @@ export class GroupsFormComponent {
         data["authorities"] ?? []
       );
     });
-
-    const schoolId = 1;  //REVISAR MANANA
-
+    
+    const currentUser = this.authService.getUser(); 
+    const schoolId = currentUser?.school?.id || 1
+    console.log('👤 Usuario actual completo:', currentUser)
     this.teachersService.getTeachersBySchool(schoolId);
     this.courseService.getAll(); 
   }
