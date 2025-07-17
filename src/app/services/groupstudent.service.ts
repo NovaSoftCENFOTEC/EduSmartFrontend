@@ -40,7 +40,7 @@ export class StudentService extends BaseService<IUser> {
 saveStudent(groupId: number, student: IUser) {
 
     if (!student.id) {
-      
+
         this.alertService.displayAlert(
             'error',
             'El estudiante debe tener un ID válido.',
@@ -49,18 +49,18 @@ saveStudent(groupId: number, student: IUser) {
         );
         return;
     }
-    
+
     const payload = {
         studentId: student.id,
         name: student.name,
         lastname: student.lastname,
         email: student.email
-    }; 
+    };
 
         const correctUrl = `groups/${groupId}/students/${student.id}`;
     this.http.post<IResponse<any>>(correctUrl, payload).subscribe({
         next: (response: IResponse<any>) => {
-            console.log('✅ Estudiante creado y agregado al grupo:', response);
+            console.log('Estudiante creado y agregado al grupo:', response);
             this.alertService.displayAlert(
                 'success',
                 response.message || 'Estudiante agregado al grupo correctamente.',
@@ -70,7 +70,7 @@ saveStudent(groupId: number, student: IUser) {
             this.groupsService.getAll();
         },
         error: (err) => {
-            console.error('❌ Error al crear estudiante en el grupo:', err);
+            console.error('Error al crear estudiante en el grupo:', err);
             this.alertService.displayAlert(
                 'error',
                 'Ocurrió un error al agregar el estudiante al grupo.',
@@ -78,7 +78,7 @@ saveStudent(groupId: number, student: IUser) {
                 ['error-snackbar']
             );
         }
-    });          
+    });
 
 }
 

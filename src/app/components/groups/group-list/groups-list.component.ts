@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {IGroup, IUser} from '../../../interfaces';
 import {ConfirmModalComponent} from '../../confirm-modal/confirm-modal.component';
-import {DatePipe} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 
@@ -10,7 +9,6 @@ import {FormsModule} from '@angular/forms';
     standalone: true,
     imports: [
         ConfirmModalComponent,
-        DatePipe,
         RouterModule,
         FormsModule
     ],

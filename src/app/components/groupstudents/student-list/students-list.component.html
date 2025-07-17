@@ -1,17 +1,17 @@
 <div class="card">
     <div class="card-header card-header-indigo">
-        <h2 class="mb-0">Lista de Estudiantes</h2> 
+        <h2 class="mb-0">Lista de Estudiantes</h2>
     </div>
     <div class="card-body">
-        <p class="text-muted mb-3">Lista de estudiantes por grupo.</p> 
+        <p class="text-muted mb-3">Lista de estudiantes por grupo.</p>
 
 
         <div class="mb-4 mt-2">
             <input
-                    type="text"
+                    [(ngModel)]="searchText"
                     class="input-txt input-filter"
                     placeholder="Filtrar por nombre, apellido o correo..."
-                    [(ngModel)]="searchText"
+                    type="text"
             />
         </div>
 
@@ -26,8 +26,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                    @if (filteredStudents.length > 0) { 
-                        @for (item of filteredStudents; track item.id) { 
+                    @if (filteredStudents.length > 0) {
+                        @for (item of filteredStudents; track item.id) {
                             <tr>
                                 <td>{{ item.name }}</td>
                                 <td>{{ item.lastname }}</td>
@@ -55,7 +55,7 @@
                         <tr>
                             <td colspan="4">
                                 <div class="d-flex justify-content-center align-items-center w-100">
-                                    <p class="mb-0">No hay estudiantes</p> 
+                                    <p class="mb-0">No hay estudiantes</p>
                                 </div>
                             </td>
                         </tr>
@@ -67,9 +67,9 @@
 
     <app-confirm-modal
         #confirmDeleteModal
-        [message]="'¿Estás seguro(a) de que deseas eliminar el/la estudiante ' + deleteStudent?.name + '?'" 
-        [confirmText]="'Eliminar'"
-        [cancelText]="'Cancelar'"
         (confirmed)="deleteConfirmation()"
+        [cancelText]="'Cancelar'"
+        [confirmText]="'Eliminar'"
+        [message]="'¿Estás seguro(a) de que deseas eliminar el/la estudiante ' + deleteStudent?.name + '?'"
     ></app-confirm-modal>
 </div>

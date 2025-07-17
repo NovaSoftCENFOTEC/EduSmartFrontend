@@ -9,10 +9,10 @@
 
         <div class="mb-4 mt-2">
             <input
-                    type="text"
+                    [(ngModel)]="searchText"
                     class="input-txt input-filter"
                     placeholder="Filtrar grupos por nombre o dominio..."
-                    [(ngModel)]="searchText"
+                    type="text"
             />
         </div>
 
@@ -43,21 +43,21 @@
                             <td>{{ item.teacher?.name }}</td>
                             <td class="text-center">
                                 <button
-                                 
-                                      
+
+
                                         (click)="callModalAction.emit(item);"
                                         class="btn border-0 me-2 icon-gray-color"
                                         type="button"
                                 >
                                     <i class="fas fa-pen"></i>
                                 </button>
-<button
-    (click)="openConfirmationModal(item)"
-    class="btn border-0 icon-gray-color"
-    type="button"
->
-    <i class="fas fa-trash"></i>
-</button>
+                                <button
+                                        (click)="openConfirmationModal(item)"
+                                        class="btn border-0 icon-gray-color"
+                                        type="button"
+                                >
+                                    <i class="fas fa-trash"></i>
+                                </button>
                             </td>
                         </tr>
                     } @empty {
@@ -77,9 +77,9 @@
 
 <app-confirm-modal
     #confirmDeleteModal
-    [message]="'¿Estás seguro de que deseas eliminar el grupo ' + deleteGroup?.name + '?'"
-    [confirmText]="'Eliminar'"
-    [cancelText]="'Cancelar'"
     (confirmed)="deleteConfirmation()"
+    [cancelText]="'Cancelar'"
+    [confirmText]="'Eliminar'"
+    [message]="'¿Estás seguro de que deseas eliminar el grupo ' + deleteGroup?.name + '?'"
 >
 </app-confirm-modal>

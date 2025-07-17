@@ -1,49 +1,53 @@
 <form [formGroup]="form" class="mb-4" style="max-width: 400px; margin: 0 auto">
-  <div class="mb-3 text-center">
-    <h2
-      style="
+    <div class="mb-3 text-center">
+        <h2
+                style="
         font-size: var(--font-h2-size);
         font-weight: var(--font-h2-weight);
         color: var(--color-indigo-dye);
       "
-    >
-      Asignar Estudiante
-    </h2>
-  </div>
+        >
+            Asignar Estudiante
+        </h2>
+    </div>
 
+    <div class="mb-3">
+        <label class="mb-1" for="student"
+        >Seleccionar Estudiante<span class="required-asterisk">*</span></label
+        >
+        <select
+                [disabled]="availableStudents().length === 0"
+                class="form-control normal"
+                formControlName="student"
+                id="student"
+        >
+            <option value="">-- Seleccionar Estudiante --</option>
+            @if (availableStudents().length > 0) {
+                @for (student of availableStudents(); track student.id) {
+                    <option [value]="student.id">
+                        {{ student.name }} {{ student.lastname }} - {{ student.email }}
+                    </option>
+                }
+            } @else {
+                <option disabled selected>No hay estudiantes por asignar</option>
+            }
+        </select>
 
-  <div class="mb-3">
-    <label class="mb-1" for="student"
-      >Seleccionar Estudiante<span class="required-asterisk">*</span></label
-    >
-    <select
-      id="student"
-      formControlName="student"
-      class="form-control normal"
-    >
-      <option value="">-- Seleccionar Estudiante --</option>
-      @for (student of availableStudents(); track student.id) {
-        <option [value]="student.id">
-          {{ student.name }} {{ student.lastname }} - {{ student.email }}
-        </option>
-      }
-    </select>
+        @if (form.controls['student'].invalid && (form.controls['student'].dirty || form.controls['student'].touched)) {
+            <div class="form-error-message">
+                Debe seleccionar un estudiante.
+            </div>
+        }
+    </div>
 
-    @if (form.controls['student'].invalid && (form.controls['student'].dirty || form.controls['student'].touched)) {
-      <div class="form-error-message">
-        Debe seleccionar un estudiante.
-      </div>
-    }
-  </div>
-
-  <div class="text-center mt-4">
-    <button
-      (click)="callSave()"
-      [disabled]="form.invalid"
-      class="btn btn-primary"
-      type="button"
-    >
-      Asignar Estudiante
-    </button>
-  </div>
+    <div class="text-center mt-4">
+        <button
+                (click)="callSave()"
+                [disabled]="form.invalid || availableStudents().length === 0"
+                class="btn btn-primary"
+                type="button"
+        >
+            Asignar Estudiante
+        </button>
+    </div>
 </form>
