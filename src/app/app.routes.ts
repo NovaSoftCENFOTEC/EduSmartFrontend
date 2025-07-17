@@ -14,6 +14,8 @@ import { SchoolsComponent } from "./pages/schools/schools.component";
 import { LandingPageComponent } from "./pages/landing-page/landing-page.component";
 import { PasswordRecoveryComponent } from "./pages/auth/password-recovery/password-recovery.component";
 import { PasswordChangeComponent } from "./pages/auth/password-change/password-change.component";
+import { StudentsComponent } from "./pages/students/students.component";
+import { TeacherRoleGuard } from "./guards/teacher-role.guard";
 
 export const routes: Routes = [
   {
@@ -104,6 +106,15 @@ export const routes: Routes = [
         data: {
           authorities: [IRoleType.superAdmin],
           name: "Teachers",
+        },
+      },
+      {
+        path: "students",
+        component: StudentsComponent,
+        canActivate: [AdminRoleGuard, TeacherRoleGuard],
+        data: {
+          authorities: [IRoleType.superAdmin, IRoleType.teacher],
+          name: "Students",
         },
       },
     ],
