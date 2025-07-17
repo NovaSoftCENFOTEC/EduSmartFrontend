@@ -13,6 +13,7 @@ import { TeachersComponent } from "./pages/teachers/teachers.component";
 import { SchoolsComponent } from "./pages/schools/schools.component";
 import { LandingPageComponent } from "./pages/landing-page/landing-page.component";
 import { PasswordRecoveryComponent } from "./pages/auth/password-recovery/password-recovery.component";
+import { PasswordChangeComponent } from "./pages/auth/password-change/password-change.component";
 
 export const routes: Routes = [
   {
@@ -38,6 +39,11 @@ export const routes: Routes = [
     path: "",
     component: LandingPageComponent,
     canActivate: [GuestGuard],
+  },
+  {
+    path: "password-change",
+    component: PasswordChangeComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: "app",

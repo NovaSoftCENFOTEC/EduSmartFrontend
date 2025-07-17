@@ -155,4 +155,28 @@ export class UserService extends BaseService<IUser> {
       },
     });
   }
+
+  public changePassword(userId: string, password: string) {
+    return this.editCustomSource(`password/${userId}`, { password }).subscribe({
+      next: (response: IResponse<IUser>) => {
+        this.alertService.displayAlert(
+          "success",
+          response.message || "Contraseña cambiada correctamente.",
+          "center",
+          "top",
+          ["success-snackbar"]
+        );
+      },
+      error: (err) => {
+        console.error("Error al cambiar contraseña:", err);
+        this.alertService.displayAlert(
+          "error",
+          "Ocurrió un error al cambiar la contraseña.",
+          "center",
+          "top",
+          ["error-snackbar"]
+        );
+      },
+    });
+  }
 }

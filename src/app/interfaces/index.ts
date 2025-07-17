@@ -2,6 +2,7 @@ import { inject } from "@angular/core";
 
 export interface ILoginResponse {
   accessToken: string;
+  authUser: IUser;
   expiresIn: number;
 }
 
@@ -24,6 +25,7 @@ export interface IUser {
   role?: IRole;
   schoolId?: ISchool;
   active?: boolean;
+  needsPasswordChange?: boolean;
 }
 
 export interface IAuthority {

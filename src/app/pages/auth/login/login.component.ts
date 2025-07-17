@@ -5,6 +5,7 @@ import { Router, RouterLink } from "@angular/router";
 import { AuthService } from "../../../services/auth.service";
 import { FooterComponent } from "../../../components/app-layout/elements/footer/footer.component";
 import { TopbarComponent } from "../../../components/app-layout/elements/topbar/topbar.component";
+import { ILoginResponse } from "../../../interfaces";
 
 @Component({
   selector: "app-login",
@@ -43,7 +44,15 @@ export class LoginComponent {
     }
     if (this.emailModel.valid && this.passwordModel.valid) {
       this.authService.login(this.loginForm).subscribe({
-        next: () => this.router.navigateByUrl("/app/dashboard"),
+        next: (loggedUser: ILoginResponse) => {
+          if (loggedUser && loggedUser.authUser.needsPasswordChange) {
+            this.router.navigateByUrl("/password-change", {
+              state: { userId: loggedUser.authUser.id },
+            });
+          } else {
+            this.router.navigateByUrl("/app/dashboard");
+          }
+        },
         error: (err: any) => (this.loginError = err.error.description),
       });
     }
