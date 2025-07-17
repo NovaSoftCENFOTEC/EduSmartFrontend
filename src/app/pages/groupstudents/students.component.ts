@@ -177,7 +177,7 @@ export class GroupStudentsComponent implements OnInit {
     }
 
     openAddStudentModal() {
-
+        
         this.studentForm.reset(); 
         this.studentForm.patchValue({ student: '' });
         this.modalService.displayModal('md', this.addStudentModal);

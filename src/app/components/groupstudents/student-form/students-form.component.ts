@@ -6,6 +6,7 @@ import { AuthService } from '../../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../../../services/user.service'; 
 import { NgForOf, NgIf } from '@angular/common';
+import { StudentService } from '../../../services/student.service';
 
 @Component({
   selector: 'app-students-form',
@@ -25,7 +26,8 @@ export class StudentsFormComponent implements OnInit {
   public authService: AuthService = inject(AuthService);
   public areActionsAvailable: boolean = false;
   public route: ActivatedRoute = inject(ActivatedRoute);
-  private userService: UserService = inject(UserService); 
+
+  private studentService = inject(StudentService);
 
   ngOnInit(): void {
     this.authService.getUserAuthorities();
@@ -37,15 +39,27 @@ export class StudentsFormComponent implements OnInit {
   }
 
   
-  loadAvailableStudents(): void {
-    this.userService.getAll();
-    setTimeout(() => {
-        const allUsers = this.userService.users$();
-       
-        this.availableStudents.set(allUsers);
+ loadAvailableStudents(): void {
+    const currentUser = this.authService.getUser();
+    const userSchoolId = currentUser?.school?.id;
     
-    }, 300); 
-  }
+    console.log('🏫 School ID del usuario:', userSchoolId);
+    
+    if (userSchoolId) {
+   
+     
+        this.studentService.getStudentsBySchool(userSchoolId);
+        
+        setTimeout(() => {
+            const schoolStudents = this.studentService.students$();
+   
+            this.availableStudents.set(schoolStudents);
+        }, 500);
+    } else {
+        console.warn('⚠️ No se encontró school ID del usuario');
+        this.availableStudents.set([]);
+    }
+}
 
   callSave() {
 
@@ -53,11 +67,11 @@ export class StudentsFormComponent implements OnInit {
     const selectedStudent = this.availableStudents().find(student => student.id == selectedStudentId);
     
     if (!selectedStudent) {
-      console.log('❌ Estudiante no encontrado');
+   
       return;
     }
 
-    console.log('📦 Estudiante completo a enviar:', selectedStudent);
+  
 
     if (this.form.controls['id'].value) {
       selectedStudent.id = this.form.controls['id'].value;
