@@ -1,37 +1,42 @@
-import {Component, ViewChild, inject} from '@angular/core';
-
-import {PaginationComponent} from '../../components/pagination/pagination.component';
-import {ModalComponent} from '../../components/modal/modal.component';
-import {ICourse, IGroup, IUser} from '../../interfaces';
-import {FormBuilder, Validators} from '@angular/forms';
-import {GroupsService} from '../../services/groups.service';
-import {ModalService} from '../../services/modal.service';
-import {AuthService} from '../../services/auth.service';
-import {ActivatedRoute} from '@angular/router';
-import {GroupsFormComponent} from "../../components/groups/group-form/groups-form.component";
-import {GroupsListComponent} from "../../components/groups/group-list/groups-list.component";
-import {NgIf} from "@angular/common";
-import {FooterComponent} from "../../components/app-layout/elements/footer/footer.component";
+import { Component, ViewChild, inject, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { ICourse, IGroup, IUser } from '../../interfaces';
+import { GroupsService } from '../../services/groups.service';
+import { ModalService } from '../../services/modal.service';
+import { AuthService } from '../../services/auth.service';
+import { PaginationComponent } from '../../components/pagination/pagination.component';
+import { ModalComponent } from '../../components/modal/modal.component';
+import { GroupsFormComponent } from '../../components/groups/group-form/groups-form.component';
+import { GroupsListComponent } from '../../components/groups/group-list/groups-list.component';
 
 @Component({
     selector: 'app-groups',
     standalone: true,
     imports: [
-
         PaginationComponent,
         ModalComponent,
         GroupsFormComponent,
-        GroupsListComponent,
-        NgIf,
-        FooterComponent
+        GroupsListComponent
     ],
     templateUrl: './groups.component.html',
     styleUrl: './groups.component.scss'
 })
-export class GroupsComponent {
+export class GroupsComponent implements OnInit {
     public groupList: IGroup[] = [];
-    public groupsService: GroupsService = inject(GroupsService);
-    public fb: FormBuilder = inject(FormBuilder);
+    public areActionsAvailable: boolean = false;
+    private pendingEditItem: IGroup | null = null;
+    public schoolName: string | null = null;
+
+    public groupsService = inject(GroupsService);
+    public fb = inject(FormBuilder);
+    public modalService = inject(ModalService);
+    public authService = inject(AuthService);
+    public route = inject(ActivatedRoute);
+
+    @ViewChild('editGroupModal') public editGroupModal: any;
+    @ViewChild('addGroupModal') public addGroupModal: any;
+    @ViewChild('editConfirmationModal') public editConfirmationModal: any;
 
     public groupForm = this.fb.group({
         id: [''],
@@ -41,26 +46,18 @@ export class GroupsComponent {
         teacher: [null as IUser | null, Validators.required]
     });
 
-    public modalService: ModalService = inject(ModalService);
-    @ViewChild('editGroupModal') public editGroupModal: any;
-    @ViewChild('addGroupModal') public addGroupModal: any;
-    @ViewChild('editConfirmationModal') public editConfirmationModal: any;
-
-    public authService: AuthService = inject(AuthService);
-    public areActionsAvailable: boolean = false;
-    public route: ActivatedRoute = inject(ActivatedRoute);
-
-    private pendingEditItem: IGroup | null = null;
-
     ngOnInit(): void {
-        this.authService.getUserAuthorities();
+        const user = this.authService.getUser();
+        const teacherId = user?.id;
+
+        if (teacherId) {
+            this.groupsService.getGroupsByTeacher(teacherId);
+            this.schoolName = user.school?.name || null;
+        }
+
         this.route.data.subscribe(data => {
             this.areActionsAvailable = this.authService.areActionsAvailable(data['authorities'] ?? []);
         });
-    }
-
-    constructor() {
-        this.groupsService.getAll();
     }
 
     saveGroup(item: IGroup) {
@@ -84,13 +81,12 @@ export class GroupsComponent {
     }
 
     openEditGroupModal(group: IGroup) {
-        console.log(group.course?.title);
         this.groupForm.patchValue({
             id: group.id !== undefined && group.id !== null ? String(group.id) : null,
             name: group.name,
             course: group.course,
             students: group.students ?? [],
-            teacher: group.teacher 
+            teacher: group.teacher
         });
         this.modalService.displayModal('lg', this.editGroupModal);
     }
@@ -119,11 +115,8 @@ export class GroupsComponent {
             this.pendingEditItem = null;
         }
     }
-    
 
     goBack() {
         window.history.back();
     }
-
-
 }

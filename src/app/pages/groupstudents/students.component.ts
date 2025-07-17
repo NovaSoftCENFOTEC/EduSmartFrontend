@@ -39,6 +39,7 @@ export class GroupStudentsComponent implements OnInit {
     public modalService: ModalService = inject(ModalService);
     public authService: AuthService = inject(AuthService);
     public route: ActivatedRoute = inject(ActivatedRoute);
+    public schoolName: string | null = null;
 
     @ViewChild('editStudentModal') public editStudentModal: any; 
     @ViewChild('addStudentModal') public addStudentModal: any; 
@@ -78,6 +79,7 @@ export class GroupStudentsComponent implements OnInit {
 
         this.route.data.subscribe(data => {
             this.areActionsAvailable = this.authService.areActionsAvailable(data['authorities'] ?? []);
+            this.schoolName = this.authService.getUser()?.school?.name || null;
         });
     }
 
