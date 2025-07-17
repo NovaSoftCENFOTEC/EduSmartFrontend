@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../../../services/user.service'; 
 import { NgForOf, NgIf } from '@angular/common';
 import { StudentService } from '../../../services/student.service';
+import { GroupsService } from '../../../services/groups.service'; 
 
 @Component({
   selector: 'app-students-form',
@@ -28,6 +29,7 @@ export class StudentsFormComponent implements OnInit {
   public route: ActivatedRoute = inject(ActivatedRoute);
 
   private studentService = inject(StudentService);
+   private groupsService = inject(GroupsService);
 
   ngOnInit(): void {
     this.authService.getUserAuthorities();
@@ -39,26 +41,47 @@ export class StudentsFormComponent implements OnInit {
   }
 
   
- loadAvailableStudents(): void {
+loadAvailableStudents(): void {
     const currentUser = this.authService.getUser();
     const userSchoolId = currentUser?.school?.id;
     
- 
+
     
     if (userSchoolId) {
-   
-     
         this.studentService.getStudentsBySchool(userSchoolId);
         
         setTimeout(() => {
             const schoolStudents = this.studentService.students$();
+          
+            
    
-            this.availableStudents.set(schoolStudents);
+            const studentsNotInGroup = schoolStudents.filter(student => {
+              
+                const isAlreadyInGroup = this.isStudentInCurrentGroup(student);
+               
+                return !isAlreadyInGroup;
+            });
+           
+            this.availableStudents.set(studentsNotInGroup);
         }, 500);
     } else {
         console.warn('⚠️ No se encontró school ID del usuario');
         this.availableStudents.set([]);
     }
+}
+
+
+private isStudentInCurrentGroup(student: IUser): boolean {
+   
+   
+    const groups = this.groupsService.groups$();
+    
+   
+    const groupId = Number(this.route.snapshot.queryParams['groupId']);
+    const currentGroup = groups.find(group => group.id === groupId);
+    
+  
+    return currentGroup?.students?.some(groupStudent => groupStudent.id === student.id) || false;
 }
 
   callSave() {
