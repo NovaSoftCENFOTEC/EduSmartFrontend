@@ -1,34 +1,37 @@
-import { CommonModule } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
-import { FormsModule, NgModel } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../../services/auth.service';
-import { FooterComponent } from '../../../components/app-layout/elements/footer/footer.component';
-import { TopbarComponent } from '../../../components/app-layout/elements/topbar/topbar.component';
+import { CommonModule } from "@angular/common";
+import { Component, ViewChild } from "@angular/core";
+import { FormsModule, NgModel } from "@angular/forms";
+import { Router, RouterLink } from "@angular/router";
+import { AuthService } from "../../../services/auth.service";
+import { FooterComponent } from "../../../components/app-layout/elements/footer/footer.component";
+import { TopbarComponent } from "../../../components/app-layout/elements/topbar/topbar.component";
 
 @Component({
-  selector: 'app-login',
+  selector: "app-login",
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, TopbarComponent, FooterComponent],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterLink,
+    TopbarComponent,
+    FooterComponent,
+  ],
+  templateUrl: "./login.component.html",
+  styleUrl: "./login.component.scss",
 })
 export class LoginComponent {
   public loginError!: string;
-  @ViewChild('email') emailModel!: NgModel;
-  @ViewChild('password') passwordModel!: NgModel;
+  @ViewChild("email") emailModel!: NgModel;
+  @ViewChild("password") passwordModel!: NgModel;
 
   public loginForm: { email: string; password: string } = {
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   };
 
   public showPassword = false;
 
-  constructor(
-    private router: Router,
-    private authService: AuthService
-  ) { }
+  constructor(private router: Router, private authService: AuthService) {}
 
   public handleLogin(event: Event) {
     event.preventDefault();
@@ -40,7 +43,7 @@ export class LoginComponent {
     }
     if (this.emailModel.valid && this.passwordModel.valid) {
       this.authService.login(this.loginForm).subscribe({
-        next: () => this.router.navigateByUrl('/app/dashboard'),
+        next: () => this.router.navigateByUrl("/app/dashboard"),
         error: (err: any) => (this.loginError = err.error.description),
       });
     }

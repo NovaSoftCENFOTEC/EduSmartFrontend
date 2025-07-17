@@ -1,29 +1,47 @@
 <app-topbar></app-topbar>
-<div class="container min-vh-100 d-flex align-items-center justify-content-center py-4">
+<div
+  class="container min-vh-100 d-flex align-items-center justify-content-center py-4"
+>
   <main class="d-flex flex-column align-items-center justify-content-center">
-    <div class="login-card p-4 shadow rounded-4" style="max-width: 400px; width: 100%; background: #fff;">
+    <div
+      class="login-card p-4 shadow rounded-4"
+      style="max-width: 400px; width: 100%; background: #fff"
+    >
       <form (ngSubmit)="handleLogin($event)" autocomplete="off" #frm="ngForm">
-        <h2 class="fw-bold mb-2 text-center" style="font-size: 2.2rem;">Iniciar Sesión</h2>
-        <p class="mb-4 text-center" style="color: #555; font-size: 1.1rem;">
-          Inicie sesión ingresando su dirección de correo electrónico y contraseña.
+        <h2 class="fw-bold mb-2 text-center" style="font-size: 2.2rem">
+          Iniciar Sesión
+        </h2>
+        <p class="mb-4 text-center" style="color: #555; font-size: 1.1rem">
+          Inicie sesión ingresando su dirección de correo electrónico y
+          contraseña.
         </p>
 
         <div class="mb-3">
-          <label for="email" class="form-label fw-semibold">Correo Electrónico</label>
+          <label for="email" class="form-label fw-semibold"
+            >Correo Electrónico</label
+          >
           <div class="input-group">
             <span class="input-group-text bg-white border-end-0">
               <i class="bi bi-envelope"></i>
             </span>
-            <input #email="ngModel" type="email" class="form-control border-start-0" id="email" name="email"
-              placeholder="email@address.com" [(ngModel)]="loginForm.email" required email
-              style="font-size: 1.15rem;" />
+            <input
+              #email="ngModel"
+              type="email"
+              class="form-control border-start-0"
+              id="email"
+              name="email"
+              placeholder="email@address.com"
+              [(ngModel)]="loginForm.email"
+              required
+              email
+              style="font-size: 1.15rem"
+            />
           </div>
           @if (email.invalid && (email.dirty || email.touched)) {
-          <div class="text-danger mt-1" style="font-size: 0.95rem;">
+          <div class="text-danger mt-1" style="font-size: 0.95rem">
             @if (email.errors?.['required']) {
             <div>El correo electrónico es obligatorio.</div>
-            }
-            @if (email.errors?.['email']) {
+            } @if (email.errors?.['email']) {
             <div>El correo electrónico no es válido.</div>
             }
           </div>
@@ -31,25 +49,42 @@
         </div>
 
         <div class="mb-2">
-          <label for="password" class="form-label fw-semibold">Contraseña</label>
+          <label for="password" class="form-label fw-semibold"
+            >Contraseña</label
+          >
           <div class="input-group">
             <span class="input-group-text bg-white border-end-0">
               <i class="bi bi-lock"></i>
             </span>
-            <input #password="ngModel" [type]="showPassword ? 'text' : 'password'" class="form-control border-start-0"
-              id="password" name="password" placeholder="********" [(ngModel)]="loginForm.password" required
-              minlength="6" style="font-size: 1.15rem;" />
-            <button type="button" class="input-group-text bg-white border-start-0"
-              (click)="showPassword = !showPassword" tabindex="-1">
-              <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+            <input
+              #password="ngModel"
+              [type]="showPassword ? 'text' : 'password'"
+              class="form-control border-start-0"
+              id="password"
+              name="password"
+              placeholder="********"
+              [(ngModel)]="loginForm.password"
+              required
+              minlength="6"
+              style="font-size: 1.15rem"
+            />
+            <button
+              type="button"
+              class="input-group-text bg-white border-start-0"
+              (click)="showPassword = !showPassword"
+              tabindex="-1"
+            >
+              <i
+                class="bi"
+                [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"
+              ></i>
             </button>
           </div>
           @if (password.invalid && (password.dirty || password.touched)) {
-          <div class="text-danger mt-1" style="font-size: 0.95rem;">
+          <div class="text-danger mt-1" style="font-size: 0.95rem">
             @if (password.errors?.['required']) {
             <div>La contraseña es obligatoria.</div>
-            }
-            @if (password.errors?.['minlength']) {
+            } @if (password.errors?.['minlength']) {
             <div>Contraseña debe tener al menos 6 caracteres.</div>
             }
           </div>
@@ -57,12 +92,20 @@
         </div>
 
         <div class="mb-3 text-end">
-          <a href="/forgot-password" class="text-decoration-underline" style="font-size: 0.98rem;">¿Olvidaste tu
-            contraseña?</a>
+          <a
+            href="/password-recovery"
+            class="text-decoration-underline"
+            style="font-size: 0.98rem"
+            >¿Olvidaste tu contraseña?</a
+          >
         </div>
 
-        <button class="btn btn-primary w-100 py-2 mb-3" style="font-size: 1.2rem; font-weight: 700;" type="submit"
-          [disabled]="frm.invalid">
+        <button
+          class="btn btn-primary w-100 py-2 mb-3"
+          style="font-size: 1.2rem; font-weight: 700"
+          type="submit"
+          [disabled]="frm.invalid"
+        >
           Iniciar Sesión
         </button>
 
@@ -72,17 +115,14 @@
           <hr class="flex-grow-1" />
         </div>
 
-        <button type="button"
+        <button
+          type="button"
           class="btn btn-outline-dark w-100 py-2 mb-3 d-flex align-items-center justify-content-center"
-          style="font-size: 1.1rem;">
+          style="font-size: 1.1rem"
+        >
           <i class="bi bi-google me-2"></i>
           Iniciar Sesión con Google
         </button>
-
-        <div class="text-center mt-2" style="font-size: 1rem;">
-          ¿No tienes una cuenta?
-          <a routerLink="/signup" class="text-decoration-underline">Regístrate aquí</a>
-        </div>
       </form>
     </div>
   </main>

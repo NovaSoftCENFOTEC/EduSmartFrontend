@@ -1,13 +1,13 @@
-import {inject} from "@angular/core";
+import { inject } from "@angular/core";
 
 export interface ILoginResponse {
   accessToken: string;
-  expiresIn: number
+  expiresIn: number;
 }
 
 export interface IResponse<T> {
   data: T;
-  message: string,
+  message: string;
   meta: T;
 }
 
@@ -21,7 +21,7 @@ export interface IUser {
   updatedAt?: string;
   profilePicture?: string;
   authorities?: IAuthority[];
-  role?: IRole
+  role?: IRole;
   schoolId?: ISchool;
   active?: boolean;
 }
@@ -38,18 +38,18 @@ export interface IFeedBackMessage {
 export enum IFeedbackStatus {
   success = "SUCCESS",
   error = "ERROR",
-  default = ''
+  default = "",
 }
 
 export enum IRoleType {
-  admin = "ROLE_ADMIN",
-  user = "ROLE_USER",
-  superAdmin = 'ROLE_SUPER_ADMIN'
+  teacher = "ROLE_TEACHER",
+  student = "ROLE_STUDENT",
+  superAdmin = "ROLE_SUPER_ADMIN",
 }
 
 export interface IRole {
   id: number;
-  name : string;
+  name: string;
   description: string;
   createdAt: string;
   updatedAt: string;
@@ -64,8 +64,8 @@ export interface ISearch {
 }
 
 export interface ISchool {
-    id?: number;
-    name?: string;
-    domain?: string;
-    createdAt?: string;
+  id?: number;
+  name?: string;
+  domain?: string;
+  createdAt?: string;
 }
