@@ -43,7 +43,7 @@ export class StudentsFormComponent implements OnInit {
     const currentUser = this.authService.getUser();
     const userSchoolId = currentUser?.school?.id;
     
-    console.log('🏫 School ID del usuario:', userSchoolId);
+ 
     
     if (userSchoolId) {
    
