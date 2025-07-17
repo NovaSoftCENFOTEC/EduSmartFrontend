@@ -24,19 +24,18 @@
                         (callDeleteAction)="deleteBadge($event)">
                 </app-badge-list>
 
-                <ng-container *ngIf="badgeService.badges$()?.length || 0 > 0">
+                @if ((badgeService.badges$()?.length ?? 0) > 0) {
                     <app-pagination
                             [service]="badgeService.search"
                             [loadFunction]="badgeService.getAll.bind(badgeService)">
                     </app-pagination>
-                </ng-container>
+                }
 
             </div>
         </div>
     </div>
 </div>
 
-<!-- MODAL PARA AGREGAR -->
 <ng-template #addBadgeModal>
     <app-modal [hideFooter]="true">
         <app-badge-form
@@ -47,7 +46,6 @@
     </app-modal>
 </ng-template>
 
-<!-- MODAL PARA EDITAR -->
 <ng-template #editBadgeModal>
     <app-modal [hideFooter]="true">
         <app-badge-form
@@ -57,7 +55,6 @@
         </app-badge-form>
     </app-modal>
 </ng-template>
-
 
 <ng-template #editConfirmationModal>
     <app-modal [hideFooter]="true">

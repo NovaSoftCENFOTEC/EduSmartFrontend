@@ -31,7 +31,13 @@
                     <td>{{ badge.title }}</td>
                     <td>{{ badge.description }}</td>
                     <td>
-                        <img [src]="badge.iconUrl" alt="Icono" class="badge-icon" />
+                        <img
+                                [src]="badge.iconUrl"
+                                alt="Icono"
+                                class="badge-icon"
+                                (click)="badge.iconUrl && openImageModal(badge.iconUrl)"
+                                style="cursor: pointer;"
+                        />
                     </td>
                     <td class="text-center">
                         <button
@@ -68,3 +74,15 @@
     [cancelText]="'Cancelar'"
     (confirmed)="deleteConfirmation()"
 ></app-confirm-modal>
+
+<!-- Modal para imagen ampliada -->
+<div
+        class="image-modal-backdrop"
+        *ngIf="enlargedImageUrl"
+        (click)="closeImageModal()"
+>
+    <div class="image-modal-content" (click)="$event.stopPropagation()">
+        <img [src]="enlargedImageUrl" alt="Imagen ampliada" />
+        <button class="close-btn" (click)="closeImageModal()">×</button>
+    </div>
+</div>

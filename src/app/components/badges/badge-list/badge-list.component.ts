@@ -21,6 +21,8 @@ export class BadgeListComponent {
 
   @ViewChild('confirmDeleteModal') confirmDeleteModal!: ConfirmModalComponent;
 
+  enlargedImageUrl: string | null = null;
+
   get filteredBadges(): IBadge[] {
     if (!this.searchText) return this.badges;
     const lower = this.searchText.toLowerCase();
@@ -45,5 +47,13 @@ export class BadgeListComponent {
 
   trackById(index: number, item: IBadge) {
     return item.id;
+  }
+
+  openImageModal(url: string) {
+    this.enlargedImageUrl = url;
+  }
+
+  closeImageModal() {
+    this.enlargedImageUrl = null;
   }
 }

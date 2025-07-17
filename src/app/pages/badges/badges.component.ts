@@ -8,7 +8,6 @@ import { ModalService } from '../../services/modal.service';
 import { BadgeFormComponent } from '../../components/badges/badge-form/badge-form.component';
 import { BadgeListComponent } from '../../components/badges/badge-list/badge-list.component';
 import { NgIf } from '@angular/common';
-import { FooterComponent } from '../../components/app-layout/elements/footer/footer.component';
 
 @Component({
   selector: 'app-badges',
@@ -18,7 +17,6 @@ import { FooterComponent } from '../../components/app-layout/elements/footer/foo
     ModalComponent,
     BadgeFormComponent,
     BadgeListComponent,
-    NgIf,
   ],
   templateUrl: './badges.component.html',
   styleUrls: ['./badges.component.scss']
@@ -107,18 +105,4 @@ export class BadgesComponent {
     window.history.back();
   }
 
-  openUploadWidget(): void {
-    const widget = (window as any).cloudinary.createUploadWidget(
-        {
-          cloudName: 'dghnoosr7', // Pon tu cloudName real aquí
-          uploadPreset: 'EduSmart' // Pon tu uploadPreset real aquí
-        },
-        (error: any, result: any) => {
-          if (!error && result && result.event === 'success') {
-            this.form.controls['iconUrl'].setValue(result.info.secure_url);
-          }
-        }
-    );
-    widget.open();
-  }
 }
