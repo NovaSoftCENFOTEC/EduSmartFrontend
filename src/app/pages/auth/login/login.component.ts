@@ -1,11 +1,12 @@
 import { CommonModule } from "@angular/common";
-import { Component, ViewChild } from "@angular/core";
+import { Component, inject, ViewChild } from "@angular/core";
 import { FormsModule, NgModel } from "@angular/forms";
 import { Router, RouterLink } from "@angular/router";
 import { AuthService } from "../../../services/auth.service";
 import { FooterComponent } from "../../../components/app-layout/elements/footer/footer.component";
 import { TopbarComponent } from "../../../components/app-layout/elements/topbar/topbar.component";
 import { ILoginResponse } from "../../../interfaces";
+import { AlertService } from "../../../services/alert.service";
 
 @Component({
   selector: "app-login",
@@ -21,6 +22,7 @@ import { ILoginResponse } from "../../../interfaces";
   styleUrl: "./login.component.scss",
 })
 export class LoginComponent {
+  private alertService = inject(AlertService);
   public loginError!: string;
   @ViewChild("email") emailModel!: NgModel;
   @ViewChild("password") passwordModel!: NgModel;
@@ -53,7 +55,14 @@ export class LoginComponent {
             this.router.navigateByUrl("/app/dashboard");
           }
         },
-        error: (err: any) => (this.loginError = err.error.description),
+        error: (err: any) =>
+          this.alertService.displayAlert(
+            "error",
+            "Usuario o contraseña incorrectos",
+            "center",
+            "top",
+            ["error-snackbar"]
+          ),
       });
     }
   }

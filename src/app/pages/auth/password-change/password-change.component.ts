@@ -56,11 +56,15 @@ export class PasswordChangeComponent {
         );
         return;
       } else {
-        this.userService.changePassword(
-          this.userId,
-          this.recoveryForm.password
-        );
-        this.router.navigateByUrl("/app/dashboard");
+        this.userService
+          .changePassword(this.userId, this.recoveryForm.password)
+          .add(() => {
+            this.router
+              .navigateByUrl("/", { skipLocationChange: true })
+              .then(() => {
+                this.router.navigate(["/app/dashboard"]);
+              });
+          });
       }
     }
   }

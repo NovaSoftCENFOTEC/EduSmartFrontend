@@ -16,6 +16,7 @@ import { PasswordRecoveryComponent } from "./pages/auth/password-recovery/passwo
 import { PasswordChangeComponent } from "./pages/auth/password-change/password-change.component";
 import { StudentsComponent } from "./pages/students/students.component";
 import { TeacherRoleGuard } from "./guards/teacher-role.guard";
+import { PasswordChangeGuard } from "./guards/password-change.guard";
 
 export const routes: Routes = [
   {
@@ -50,7 +51,7 @@ export const routes: Routes = [
   {
     path: "app",
     component: AppLayoutComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, PasswordChangeGuard],
     children: [
       {
         path: "app",

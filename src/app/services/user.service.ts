@@ -13,6 +13,7 @@ export class UserService extends BaseService<IUser> {
   protected override source = "users";
   private teacherService: TeacherService = inject(TeacherService);
   private studentService: StudentService = inject(StudentService);
+  private authService: AuthService = inject(AuthService);
 
   private userListSignal: WritableSignal<IUser[]> = signal<IUser[]>([]);
 
@@ -115,14 +116,7 @@ export class UserService extends BaseService<IUser> {
   public passwordRecovery(email: string) {
     return this.editCustomSource(`password-recovery/${email}`, {}).subscribe({
       next: (response: IResponse<any>) => {
-        this.alertService.displayAlert(
-          "success",
-          response.message ||
-            "Si existe un usuario asociado a este correo, se enviará un correo con instrucciones de reestablecimiento de contraseña.",
-          "center",
-          "top",
-          ["success-snackbar"]
-        );
+        console.log("Contraseña reestablecida:", response);
       },
       error: (err) => {
         console.error("Error al reestablecer contraseña:", err);
@@ -160,6 +154,8 @@ export class UserService extends BaseService<IUser> {
   public changePassword(userId: string, password: string) {
     return this.editCustomSource(`password/${userId}`, { password }).subscribe({
       next: (response: IResponse<IUser>) => {
+        localStorage.setItem("auth_user", JSON.stringify(response.data));
+        this.authService["user"] = response.data;
         this.alertService.displayAlert(
           "success",
           response.message || "Contraseña cambiada correctamente.",
