@@ -72,3 +72,11 @@ export interface ISchool {
     domain?: string;
     createdAt?: string;
 }
+
+export interface IBadge {
+  id?: number;
+  title?: string;
+  description?: string;
+  iconUrl?: string;
+  students?: IUser[];
+}

@@ -1,0 +1,45 @@
+<form [formGroup]="form" (ngSubmit)="submitForm()" class="space-y-4">
+
+    <!-- Título -->
+    <div class="form-group">
+        <label for="title">Título</label>
+        <input id="title" type="text" class="form-control" formControlName="title" />
+        <div class="text-danger" *ngIf="form.get('title')?.invalid && form.get('title')?.touched">
+            El título es obligatorio.
+        </div>
+    </div>
+
+    <!-- Descripción -->
+    <div class="form-group">
+        <label for="description">Descripción</label>
+        <textarea id="description" rows="3" class="form-control" formControlName="description"></textarea>
+        <div class="text-danger" *ngIf="form.get('description')?.invalid && form.get('description')?.touched">
+            La descripción es obligatoria.
+        </div>
+    </div>
+
+    <!-- Ícono (URL con upload) -->
+    <div class="form-group">
+        <label for="iconUrl">Ícono</label>
+        <div class="d-flex gap-2 align-items-center">
+            <input id="iconUrl" type="text" class="form-control" formControlName="iconUrl" readonly />
+            <button type="button" class="btn btn-secondary" (click)="openUploadWidget()">Subir Imagen</button>
+        </div>
+        <div class="text-danger" *ngIf="form.get('iconUrl')?.invalid && form.get('iconUrl')?.touched">
+            El ícono es obligatorio.
+        </div>
+
+        <!-- Imagen de previsualización -->
+        <div *ngIf="form.get('iconUrl')?.value" class="mt-2">
+            <img [src]="form.get('iconUrl')?.value" alt="Vista previa" class="img-thumbnail" style="max-width: 150px;" />
+        </div>
+    </div>
+
+    <!-- Botón -->
+    <div class="text-end">
+        <button type="submit" class="btn btn-primary">
+            {{ isEditMode ? 'Actualizar' : 'Guardar' }}
+        </button>
+    </div>
+
+</form>

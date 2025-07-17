@@ -15,6 +15,7 @@ import {SchoolsComponent} from "./pages/schools/schools.component";
 import {LandingPageComponent} from "./pages/landing-page/landing-page.component";
 import {StudentsComponent} from "./pages/students/students.component";
 import {TeacherRoleGuard} from "./guards/teacher-role.guard";
+import {BadgesComponent} from "./pages/badges/badges.component";
 
 // Existing protected routes (commented out)
 // export const routes: Routes = [
@@ -139,6 +140,10 @@ export const routes: Routes = [
                 component: StudentsComponent,
                 //Use this guard if you want to restrict access to teachers only :)
                 //canActivate: [TeacherRoleGuard],
+            },
+            {
+                path: "badges",
+                component: BadgesComponent,
             }
         ],
     },
