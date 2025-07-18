@@ -3,7 +3,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mx-auto">
         
-        <!-- DASHBOARD - Siempre visible -->
+       
         <li class="nav-item">
           <a class="nav-link" routerLink="/app/dashboard" routerLinkActive="active">
             <i class="fas fa-chart-pie me-1"></i>
@@ -11,7 +11,6 @@
           </a>
         </li>
 
-        <!-- ✅ RECORRER: Solo rutas permitidas -->
         @for (route of allowedRoutes; track route.path) {
           @if (route.data?.showInSidebar && route.path !== 'dashboard') {
             <li class="nav-item">

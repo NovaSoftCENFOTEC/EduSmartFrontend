@@ -45,7 +45,7 @@ export class NavbarComponent implements OnInit {
       return false;
     });
 
-    console.log('📋 Allowed routes:', this.allowedRoutes);
+    
   }
 
   
