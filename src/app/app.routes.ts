@@ -17,6 +17,11 @@ import { PasswordChangeComponent } from "./pages/auth/password-change/password-c
 import { StudentsComponent } from "./pages/students/students.component";
 import { TeacherRoleGuard } from "./guards/teacher-role.guard";
 import { PasswordChangeGuard } from "./guards/password-change.guard";
+import { CoursesComponent } from "./pages/courses/courses.component";
+import { GroupsComponent } from "./pages/groups/groups.component";
+import { AdminTeacherRoleGuard } from "./guards/admin-teacher-role.guard";
+import { StoriesComponent } from "./pages/stories/stories.component";
+import { GroupStudentsComponent } from "./pages/groupstudents/students.component";
 
 export const routes: Routes = [
   {
@@ -112,10 +117,46 @@ export const routes: Routes = [
       {
         path: "students",
         component: StudentsComponent,
-        canActivate: [AdminRoleGuard, TeacherRoleGuard],
+        canActivate: [AdminTeacherRoleGuard],
         data: {
           authorities: [IRoleType.superAdmin, IRoleType.teacher],
           name: "Students",
+        },
+      },
+      {
+        path: "courses",
+        component: CoursesComponent,
+        canActivate: [AdminTeacherRoleGuard],
+        data: {
+          authorities: [IRoleType.superAdmin, IRoleType.teacher],
+          name: "Courses",
+        },
+      },
+      {
+        path: "groups",
+        component: GroupsComponent,
+        canActivate: [AdminTeacherRoleGuard],
+        data: {
+          authorities: [IRoleType.superAdmin, IRoleType.teacher],
+          name: "Groups",
+        },
+      },
+      {
+        path: "group-students",
+        component: GroupStudentsComponent,
+        canActivate: [AdminTeacherRoleGuard],
+        data: {
+          authorities: [IRoleType.superAdmin, IRoleType.teacher],
+          name: "Students",
+        },
+      },
+      {
+        path: "stories",
+        component: StoriesComponent,
+        canActivate: [AdminTeacherRoleGuard],
+        data: {
+          authorities: [IRoleType.superAdmin, IRoleType.teacher],
+          name: "Stories",
         },
       },
     ],

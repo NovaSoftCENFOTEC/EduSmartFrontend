@@ -71,3 +71,42 @@ export interface ISchool {
   domain?: string;
   createdAt?: string;
 }
+
+export interface ICourse {
+  id?: number;
+  code?: string;
+  title?: string;
+  description?: string;
+  createdAt?: string;
+}
+
+export interface IGroup {
+  id?: number;
+  name?: string;
+  course?: ICourse;
+  students?: IUser[];
+  teacher?: IUser;
+}
+
+export interface IStory {
+  id?: number;
+  title: string;
+  content: string;
+  createdAt?: Date;
+  courseId?: number;
+}
+
+export interface IStudent {
+  id?: number;
+  name?: string;
+  lastname?: string;
+  email?: string;
+  password?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  profilePicture?: string;
+  authorities?: IAuthority[];
+  role?: IRole;
+  schoolId?: ISchool;
+  active?: boolean;
+}

@@ -1,0 +1,63 @@
+<div class="row p-4">
+    <div class="col-12 mb-3">
+        <h2 class="title-highlight">Cursos</h2>
+    </div>
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center">
+            <button (click)="goBack()" type="button" class="btn custom-add-full-btn">
+                <i class="fas fa-arrow-left me-2"></i> Volver
+            </button>
+            <button (click)="openAddCourseModal()" type="button" class="btn custom-add-full-btn">
+                <i class="fas fa-plus me-2"></i> Agregar
+            </button>
+        </div>
+    </div>
+
+    <div class="col-12 mt-3">
+        <div class="card">
+            <div class="card-body">
+                <app-courses-list
+                    [courses]="courseService.courses$()"
+                    (callModalAction)="openEditCourseModal($event)"
+                    (callDeleteAction)="deleteCourse($event)">
+                </app-courses-list>
+
+                <ng-container *ngIf="courseService.courses$().length > 0">
+
+                    <app-pagination [service]="courseService"></app-pagination>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #addCourseModal>
+    <app-modal [hideFooter]="true">
+        <app-courses-form
+            [form]="courseForm"
+            (callSaveMethod)="handleAddCourse($event)">
+        </app-courses-form>
+    </app-modal>
+</ng-template>
+
+<ng-template #editCourseModal>
+    <app-modal [hideFooter]="true">
+        <app-courses-form
+            [form]="courseForm"
+            (callUpdateMethod)="confirmEdit($event)">
+        </app-courses-form>
+    </app-modal>
+</ng-template>
+
+<ng-template #editConfirmationModal>
+    <app-modal [hideFooter]="true">
+        <div class="text-center p-4">
+            <h2>Confirmación</h2>
+            <p>¿Está seguro que desea modificar el curso?</p>
+            <div class="d-flex justify-content-center mt-4">
+                <button class="btn btn-secondary me-2" (click)="cancelEdit()">Cancelar</button>
+                <button class="btn btn-primary" (click)="confirmEditFinal()">Sí, modificar</button>
+            </div>
+        </div>
+    </app-modal>
+</ng-template>
