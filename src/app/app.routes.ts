@@ -97,7 +97,6 @@ export const routes: Routes = [
     path: "teacher/signup-students",
     component: SigUpComponent,
   },
-  //signup students
   {
     path: "access-denied",
     component: AccessDeniedComponent,
@@ -117,39 +116,69 @@ export const routes: Routes = [
     children: [
       {
         path: "app",
-        redirectTo: "users",
+        redirectTo: "dashboard", 
         pathMatch: "full",
-      },
-      {
-        path: "users",
-        component: UsersComponent,
       },
       {
         path: "dashboard",
         component: DashboardComponent,
+        data: {
+          authorities: [IRoleType.superAdmin, IRoleType.teacher], 
+          name: "Dashboard",
+          showInSidebar: true,
+        },
       },
       {
         path: "profile",
         component: ProfileComponent,
+        data: {
+          authorities: [IRoleType.superAdmin, IRoleType.teacher], 
+          name: "Profile",
+          showInSidebar: false,
+        },
+      },
+      {
+        path: "users",
+        component: UsersComponent,
+        data: {
+          authorities: [IRoleType.superAdmin], 
+          name: "Users",
+          showInSidebar: true,
+        },
       },
       {
         path: "schools",
         component: SchoolsComponent,
+        data: {
+          authorities: [IRoleType.superAdmin], 
+          name: "Schools",
+          showInSidebar: true,
+        },
       },
       {
         path: "teachers",
+        data: {
+          authorities: [IRoleType.superAdmin, IRoleType.teacher],
+          name: "Teachers", // 
+          showInSidebar: true,
+        },
         component: TeachersComponent,
       },
       {
         path: "courses",
         component: CoursesComponent,
-        canActivate: [MultiRoleGuard ],
+        canActivate: [MultiRoleGuard],
+        data: {
+          authorities: [IRoleType.teacher],
+          name: "Courses",
+          showInSidebar: true,
+        },
       },
-      { 
+      {
         path: "students",
         component: StudentsComponent,
         data: {
-          authorities: [IRoleType.superAdmin, IRoleType.superAdmin],
+          authorities: [IRoleType.superAdmin,], 
           name: "Students",
           showInSidebar: true,
         },
@@ -157,21 +186,31 @@ export const routes: Routes = [
       {
         path: "groups",
         component: GroupsComponent,
-        canActivate: [MultiRoleGuard ],
+        canActivate: [MultiRoleGuard],
+        data: {
+          authorities: [IRoleType.superAdmin], 
+          name: "Groups",
+          showInSidebar: true,
+        },
       },
-         { 
+      {
         path: "groupstudents",
         component: GroupStudentsComponent,
         data: {
-          authorities: [IRoleType.superAdmin, IRoleType.superAdmin],
-          name: "Students",
+          authorities: [IRoleType.superAdmin], 
+          name: "Group Students",
           showInSidebar: true,
         },
       },
       {
         path: "stories",
         component: StoriesComponent,
-        canActivate: [MultiRoleGuard ],
+        canActivate: [MultiRoleGuard],
+        data: {
+          authorities: [IRoleType.teacher], 
+          name: "Stories",
+          showInSidebar: true,
+        },
       },
     ],
   },

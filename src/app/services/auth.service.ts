@@ -7,6 +7,9 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class AuthService {
+  getUserRoles() {
+    throw new Error("Method not implemented.");
+  }
   private accessToken!: string;
   private expiresIn! : number;
   private user: IUser = {email: '', authorities: []};
@@ -105,19 +108,20 @@ export class AuthService {
     return this.getUser()?.authorities ? this.getUser()?.authorities : [];
   }
 
-  public areActionsAvailable(routeAuthorities: string[]): boolean  {
+   public areActionsAvailable(routeAuthorities: string[]): boolean  {
+    
     let allowedUser: boolean = false;
-    let isAdmin: boolean = false;
+    
+    
     let userAuthorities = this.getUserAuthorities();
+ 
     for (const authority of routeAuthorities) {
       if (userAuthorities?.some(item => item.authority == authority) ) {
         allowedUser = userAuthorities?.some(item => item.authority == authority)
       }
       if (allowedUser) break;
     }
-    if (userAuthorities?.some(item => item.authority == IRoleType.superAdmin)) {
-      isAdmin = userAuthorities?.some(item => item.authority == IRoleType.superAdmin);
-    }          
-    return allowedUser && isAdmin;
+    
+    return allowedUser;
   }
 }
