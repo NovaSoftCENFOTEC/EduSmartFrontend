@@ -160,7 +160,7 @@ export const routes: Routes = [
         canActivate: [MultiRoleGuard ],
       },
          { 
-        path: "groupstudents",
+        path: "group-students",
         component: GroupStudentsComponent,
         data: {
           authorities: [IRoleType.superAdmin, IRoleType.superAdmin],
