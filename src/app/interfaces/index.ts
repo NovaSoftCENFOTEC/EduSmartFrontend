@@ -2,6 +2,7 @@ import { inject } from "@angular/core";
 
 export interface ILoginResponse {
   accessToken: string;
+  authUser: IUser;
   expiresIn: number;
 }
 
@@ -24,6 +25,7 @@ export interface IUser {
   role?: IRole;
   school?: ISchool;
   active?: boolean;
+  needsPasswordChange?: boolean;
 }
 
 export interface IAuthority {
@@ -42,9 +44,9 @@ export enum IFeedbackStatus {
 }
 
 export enum IRoleType {
-  superAdmin = "ROLE_SUPER_ADMIN",
-  student = "ROLE_STUDENT",
   teacher = "ROLE_TEACHER",
+  student = "ROLE_STUDENT",
+  superAdmin = "ROLE_SUPER_ADMIN",
 }
 
 export interface IRole {
@@ -54,6 +56,7 @@ export interface IRole {
   createdAt: string;
   updatedAt: string;
 }
+
 export interface ISearch {
   page?: number;
   size?: number;
@@ -68,6 +71,14 @@ export interface ISchool {
   name?: string;
   domain?: string;
   createdAt?: string;
+}
+
+export interface IBadge {
+  id?: number;
+  title?: string;
+  description?: string;
+  iconUrl?: string;
+  students?: IUser[];
 }
 
 export interface ICourse {
