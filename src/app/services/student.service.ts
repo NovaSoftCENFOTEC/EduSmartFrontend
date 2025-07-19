@@ -27,7 +27,7 @@ export class StudentService extends BaseService<IUser> {
 
     setCurrentSchoolId(schoolId: number | null) {
         this.currentSchoolId = schoolId;
-        console.log('DEBUG [StudentService]: schoolId seteado =', schoolId);
+
     }
 
     getStudentsBySchool(schoolId: number) {
@@ -40,7 +40,7 @@ export class StudentService extends BaseService<IUser> {
         this.findAllWithParamsAndCustomSource(`school/${schoolId}/students`, params)
             .subscribe({
                 next: (response: any) => {
-                    console.log('DEBUG [API response]:', response);
+                
                     this.search = {
                         ...this.search,
                         pageNumber: response.meta.page ?? 1,
@@ -52,7 +52,7 @@ export class StudentService extends BaseService<IUser> {
                         (_, i) => i + 1
                     );
                     this.studentListSignal.set(response.data);
-                    console.log('DEBUG [Signal set]:', response.data);
+              
                 },
                 error: (err) => {
                     this.alertService.displayAlert(
