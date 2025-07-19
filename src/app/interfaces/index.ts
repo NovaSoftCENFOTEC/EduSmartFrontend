@@ -56,6 +56,7 @@ export interface IRole {
   createdAt: string;
   updatedAt: string;
 }
+
 export interface ISearch {
   page?: number;
   size?: number;
@@ -70,6 +71,14 @@ export interface ISchool {
   name?: string;
   domain?: string;
   createdAt?: string;
+}
+
+export interface IBadge {
+  id?: number;
+  title?: string;
+  description?: string;
+  iconUrl?: string;
+  students?: IUser[];
 }
 
 export interface ICourse {

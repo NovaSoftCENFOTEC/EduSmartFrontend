@@ -17,6 +17,8 @@ import { PasswordChangeComponent } from "./pages/auth/password-change/password-c
 import { StudentsComponent } from "./pages/students/students.component";
 import { TeacherRoleGuard } from "./guards/teacher-role.guard";
 import { PasswordChangeGuard } from "./guards/password-change.guard";
+
+import { BadgesComponent } from "./pages/badges/badges.component";
 import { CoursesComponent } from "./pages/courses/courses.component";
 import { GroupsComponent } from "./pages/groups/groups.component";
 import { AdminTeacherRoleGuard } from "./guards/admin-teacher-role.guard";
@@ -121,6 +123,15 @@ export const routes: Routes = [
         data: {
           authorities: [IRoleType.superAdmin, IRoleType.teacher],
           name: "Students",
+        },
+      },
+      {
+        path: "badges",
+        component: BadgesComponent,
+        canActivate: [AdminTeacherRoleGuard],
+        data: {
+          authorities: [IRoleType.superAdmin, IRoleType.teacher],
+          name: "Badges",
         },
       },
       {
