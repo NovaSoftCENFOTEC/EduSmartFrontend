@@ -128,9 +128,9 @@ export const routes: Routes = [
       {
         path: "badges",
         component: BadgesComponent,
-        canActivate: [AdminRoleGuard],
+        canActivate: [AdminTeacherRoleGuard],
         data: {
-          authorities: [IRoleType.superAdmin],
+          authorities: [IRoleType.superAdmin, IRoleType.teacher],
           name: "Badges",
         },
       },
