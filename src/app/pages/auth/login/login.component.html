@@ -114,14 +114,13 @@
           <hr class="flex-grow-1" />
         </div>
 
-        <button
-          type="button"
-          class="btn btn-outline-dark w-100 py-2 mb-3 d-flex align-items-center justify-content-center"
-          style="font-size: 1.1rem"
-        >
-          <i class="bi bi-google me-2"></i>
-          Iniciar Sesión con Google
-        </button>
+        <div class="google-login-button-container">
+          <asl-google-signin-button
+            type="standard"
+            size="large"
+            text="signin_with"
+          ></asl-google-signin-button>
+        </div>
       </form>
     </div>
   </main>

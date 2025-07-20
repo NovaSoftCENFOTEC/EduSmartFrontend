@@ -72,6 +72,19 @@ export class AuthService {
     );
   }
 
+  public googleLogin(idToken: string): Observable<ILoginResponse> {
+    return this.http
+      .post<ILoginResponse>("auth/google-login", { idToken })
+      .pipe(
+        tap((response: any) => {
+          this.accessToken = response.token;
+          this.expiresIn = response.expiresIn;
+          this.user = response.authUser;
+          this.save();
+        })
+      );
+  }
+
   public hasRole(role: string): boolean {
     return this.user.authorities
       ? this.user?.authorities.some((authority) => authority.authority == role)
