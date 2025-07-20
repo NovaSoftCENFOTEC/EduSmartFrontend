@@ -8,6 +8,7 @@ import {
 } from "../interfaces";
 import { Observable, firstValueFrom, of, tap } from "rxjs";
 import { HttpClient } from "@angular/common/http";
+import { SocialAuthService } from "@abacritt/angularx-social-login";
 
 @Injectable({
   providedIn: "root",
@@ -17,6 +18,7 @@ export class AuthService {
   private expiresIn!: number;
   private user: IUser = { email: "", authorities: [] };
   private http: HttpClient = inject(HttpClient);
+  private socialAuthService = inject(SocialAuthService);
 
   constructor() {
     this.load();
@@ -124,6 +126,7 @@ export class AuthService {
     localStorage.removeItem("access_token");
     localStorage.removeItem("expiresIn");
     localStorage.removeItem("auth_user");
+    this.socialAuthService.signOut();
   }
 
   public getUserAuthorities(): IAuthority[] | undefined {

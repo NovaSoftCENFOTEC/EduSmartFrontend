@@ -7,7 +7,11 @@ import { FooterComponent } from "../../../components/app-layout/elements/footer/
 import { TopbarComponent } from "../../../components/app-layout/elements/topbar/topbar.component";
 import { ILoginResponse } from "../../../interfaces";
 import { AlertService } from "../../../services/alert.service";
-import { SocialAuthService, SocialUser } from "@abacritt/angularx-social-login";
+import {
+  SocialAuthService,
+  SocialUser,
+  GoogleSigninButtonModule,
+} from "@abacritt/angularx-social-login";
 import { Subscription } from "rxjs";
 @Component({
   selector: "app-login",
@@ -18,6 +22,7 @@ import { Subscription } from "rxjs";
     RouterLink,
     TopbarComponent,
     FooterComponent,
+    GoogleSigninButtonModule,
   ],
   templateUrl: "./login.component.html",
   styleUrl: "./login.component.scss",
@@ -49,11 +54,13 @@ export class LoginComponent implements OnInit {
         this.loggedIn = user != null;
 
         if (this.loggedIn) {
-          console.log("Usuario de Google autenticado:", this.socialUser);
           this.authService.googleLogin(this.socialUser.idToken).subscribe({
             next: (loggedUser: ILoginResponse) => {
-              console.log("Respuesta del backend con JWT:", loggedUser);
               if (loggedUser && loggedUser.authUser.needsPasswordChange) {
+                localStorage.setItem(
+                  "passwordChangeUserId",
+                  String(loggedUser.authUser.id ?? "")
+                );
                 this.router.navigateByUrl("/password-change", {
                   state: { userId: loggedUser.authUser.id },
                 });
@@ -105,6 +112,10 @@ export class LoginComponent implements OnInit {
       this.authService.login(this.loginForm).subscribe({
         next: (loggedUser: ILoginResponse) => {
           if (loggedUser && loggedUser.authUser.needsPasswordChange) {
+            localStorage.setItem(
+              "passwordChangeUserId",
+              String(loggedUser.authUser.id ?? "")
+            );
             this.router.navigateByUrl("/password-change", {
               state: { userId: loggedUser.authUser.id },
             });
