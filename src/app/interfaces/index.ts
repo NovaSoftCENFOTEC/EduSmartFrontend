@@ -110,3 +110,14 @@ export interface IStudent {
   schoolId?: ISchool;
   active?: boolean;
 }
+
+export interface IAssignment {
+  id?: number;
+  title: string;
+  description: string;
+  type: string;
+  dueDate: Date;
+  createdAt?: Date;
+  groupId?: number;
+  group?: { id: number };
+}
