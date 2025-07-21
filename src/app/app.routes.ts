@@ -180,7 +180,6 @@ export const routes: Routes = [
           name: "Historias",
           showInSidebar: false,
         },
-        
       },
       {
         path: "assignments",
@@ -188,9 +187,8 @@ export const routes: Routes = [
         canActivate: [AdminTeacherRoleGuard],
         data: {
           authorities: [IRoleType.superAdmin, IRoleType.teacher],
-          name: "Assignments",
+          name: "Asignaciones",
         },
-        
       },
     ],
   },
