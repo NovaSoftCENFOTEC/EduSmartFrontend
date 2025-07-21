@@ -1,30 +1,30 @@
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom-green shadow">
-  <div class="container-fluid">
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav mx-auto">
-        
-       
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/app/dashboard" routerLinkActive="active">
-            <i class="fas fa-chart-pie me-1"></i>
-            Dashboard
-          </a>
-        </li>
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
 
-        @for (route of allowedRoutes; track route.path) {
-          @if (route.data?.showInSidebar && route.path !== 'dashboard') {
-            <li class="nav-item">
-              <a class="nav-link" [routerLink]="'/app/' + route.path" routerLinkActive="active">
-                
-                {{ route.data?.name || route.path }}
-              </a>
-            </li>
-          }
-        }
 
-      </ul>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/app/dashboard" routerLinkActive="active">
+                        <i class="fas fa-chart-pie me-1"></i>
+                        Inicio
+                    </a>
+                </li>
 
-     
+                @for (route of allowedRoutes; track route.path) {
+                    @if (route.data?.showInSidebar && route.path !== 'dashboard') {
+                        <li class="nav-item">
+                            <a class="nav-link" [routerLink]="'/app/' + route.path" routerLinkActive="active">
+
+                                {{ route.data?.name || route.path }}
+                            </a>
+                        </li>
+                    }
+                }
+
+            </ul>
+
+
+        </div>
     </div>
-  </div>
 </nav>

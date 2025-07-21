@@ -73,7 +73,7 @@ export const routes: Routes = [
             IRoleType.teacher,
             IRoleType.student,
           ],
-          name: "Dashboard",
+          name: "Inicio",
           showInSidebar: true,
         },
       },
@@ -83,7 +83,7 @@ export const routes: Routes = [
         canActivate: [AdminRoleGuard],
         data: {
           authorities: [IRoleType.superAdmin],
-          name: "Users",
+          name: "Usuarios",
           showInSidebar: true,
         },
       },
@@ -96,7 +96,7 @@ export const routes: Routes = [
             IRoleType.teacher,
             IRoleType.student,
           ],
-          name: "Profile",
+          name: "Perfil",
           showInSidebar: false,
         },
       },
@@ -106,7 +106,7 @@ export const routes: Routes = [
         canActivate: [AdminRoleGuard],
         data: {
           authorities: [IRoleType.superAdmin],
-          name: "Schools",
+          name: "Escuelas",
           showInSidebar: true,
         },
       },
@@ -116,8 +116,8 @@ export const routes: Routes = [
         canActivate: [AdminRoleGuard],
         data: {
           authorities: [IRoleType.superAdmin],
-          name: "Teachers",
-          showInSidebar: true,
+          name: "Docentes",
+          showInSidebar: false,
         },
       },
       {
@@ -126,7 +126,7 @@ export const routes: Routes = [
         canActivate: [AdminTeacherRoleGuard],
         data: {
           authorities: [IRoleType.superAdmin, IRoleType.teacher],
-          name: "Students",
+          name: "Estudiantes",
           showInSidebar: true,
         },
       },
@@ -136,7 +136,7 @@ export const routes: Routes = [
         canActivate: [AdminTeacherRoleGuard],
         data: {
           authorities: [IRoleType.superAdmin, IRoleType.teacher],
-          name: "Badges",
+          name: "Medallas",
           showInSidebar: true,
         },
       },
@@ -146,7 +146,7 @@ export const routes: Routes = [
         canActivate: [AdminTeacherRoleGuard],
         data: {
           authorities: [IRoleType.superAdmin, IRoleType.teacher],
-          name: "Courses",
+          name: "Cursos",
           showInSidebar: true,
         },
       },
@@ -156,7 +156,7 @@ export const routes: Routes = [
         canActivate: [AdminTeacherRoleGuard],
         data: {
           authorities: [IRoleType.superAdmin, IRoleType.teacher],
-          name: "Groups",
+          name: "Grupos",
           showInSidebar: true,
         },
       },
@@ -166,8 +166,8 @@ export const routes: Routes = [
         canActivate: [AdminTeacherRoleGuard],
         data: {
           authorities: [IRoleType.superAdmin, IRoleType.teacher],
-          name: "Group Students",
-          showInSidebar: true,
+          name: "Grupos de Estudiantes",
+          showInSidebar: false,
         },
       },
       {
@@ -176,8 +176,8 @@ export const routes: Routes = [
         canActivate: [AdminTeacherRoleGuard],
         data: {
           authorities: [IRoleType.superAdmin, IRoleType.teacher],
-          name: "Stories",
-          showInSidebar: true,
+          name: "Historias",
+          showInSidebar: false,
         },
       },
     ],
