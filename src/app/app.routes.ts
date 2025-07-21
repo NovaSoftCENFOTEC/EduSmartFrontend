@@ -23,6 +23,7 @@ import { GroupsComponent } from "./pages/groups/groups.component";
 import { AdminTeacherRoleGuard } from "./guards/admin-teacher-role.guard";
 import { StoriesComponent } from "./pages/stories/stories.component";
 import { GroupStudentsComponent } from "./pages/groupstudents/students.component";
+import { AssignmentsComponent } from "./pages/assignments/assignments.component";
 
 export const routes: Routes = [
   {
@@ -179,6 +180,17 @@ export const routes: Routes = [
           name: "Historias",
           showInSidebar: false,
         },
+        
+      },
+      {
+        path: "assignments",
+        component: AssignmentsComponent,
+        canActivate: [AdminTeacherRoleGuard],
+        data: {
+          authorities: [IRoleType.superAdmin, IRoleType.teacher],
+          name: "Assignments",
+        },
+        
       },
     ],
   },
