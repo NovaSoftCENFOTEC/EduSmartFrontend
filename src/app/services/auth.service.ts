@@ -8,6 +8,7 @@ import {
 } from "../interfaces";
 import { Observable, tap } from "rxjs";
 import { HttpClient } from "@angular/common/http";
+import { SocialAuthService } from "@abacritt/angularx-social-login";
 
 @Injectable({
   providedIn: "root",
@@ -20,6 +21,7 @@ export class AuthService {
   private expiresIn!: number;
   private user: IUser = { email: "", authorities: [] };
   private http: HttpClient = inject(HttpClient);
+  private socialAuthService = inject(SocialAuthService);
 
   constructor() {
     this.load();
@@ -75,6 +77,19 @@ export class AuthService {
     );
   }
 
+  public googleLogin(idToken: string): Observable<ILoginResponse> {
+    return this.http
+      .post<ILoginResponse>("auth/google-login", { idToken })
+      .pipe(
+        tap((response: any) => {
+          this.accessToken = response.token;
+          this.expiresIn = response.expiresIn;
+          this.user = response.authUser;
+          this.save();
+        })
+      );
+  }
+
   public hasRole(role: string): boolean {
     return this.user.authorities
       ? this.user?.authorities.some((authority) => authority.authority == role)
@@ -114,6 +129,7 @@ export class AuthService {
     localStorage.removeItem("access_token");
     localStorage.removeItem("expiresIn");
     localStorage.removeItem("auth_user");
+    this.socialAuthService.signOut();
   }
 
   public getUserAuthorities(): IAuthority[] | undefined {
