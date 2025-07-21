@@ -6,7 +6,7 @@ import {
   IRoleType,
   IUser,
 } from "../interfaces";
-import { Observable, firstValueFrom, of, tap } from "rxjs";
+import { Observable, tap } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { SocialAuthService } from "@abacritt/angularx-social-login";
 
@@ -14,6 +14,9 @@ import { SocialAuthService } from "@abacritt/angularx-social-login";
   providedIn: "root",
 })
 export class AuthService {
+  getUserRoles() {
+    throw new Error("Method not implemented.");
+  }
   private accessToken!: string;
   private expiresIn!: number;
   private user: IUser = { email: "", authorities: [] };
@@ -134,24 +137,22 @@ export class AuthService {
   }
 
   public areActionsAvailable(routeAuthorities: string[]): boolean {
-    let allowedUser: boolean = false;
-    let isAdmin: boolean = false;
+    let allowedUser = false;
+    let isAdmin = false;
+
     let userAuthorities = this.getUserAuthorities();
+
     for (const authority of routeAuthorities) {
       if (userAuthorities?.some((item) => item.authority == authority)) {
-        allowedUser = userAuthorities?.some(
-          (item) => item.authority == authority
-        );
+        allowedUser = true;
+        break;
       }
-      if (allowedUser) break;
     }
-    if (
-      userAuthorities?.some((item) => item.authority == IRoleType.superAdmin)
-    ) {
-      isAdmin = userAuthorities?.some(
-        (item) => item.authority == IRoleType.superAdmin
-      );
+
+    if (userAuthorities?.some((item) => item.authority == IRoleType.superAdmin)) {
+      isAdmin = true;
     }
-    return allowedUser && isAdmin;
+
+    return allowedUser || isAdmin;
   }
 }

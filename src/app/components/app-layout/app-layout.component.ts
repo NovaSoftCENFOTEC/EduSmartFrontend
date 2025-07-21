@@ -5,6 +5,7 @@ import { SidebarComponent } from './elements/sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
 import { LayoutService } from '../../services/layout.service';
 import {FooterComponent} from "./elements/footer/footer.component";
+import { NavbarComponent } from '../navbar/navbar.components';
 
 @Component({
   selector: 'app-layout',
@@ -15,6 +16,7 @@ import {FooterComponent} from "./elements/footer/footer.component";
         TopbarComponent,
         SidebarComponent,
         FooterComponent,
+        NavbarComponent
     ],
   templateUrl: './app-layout.component.html',
 })
