@@ -1,0 +1,62 @@
+<form [formGroup]="form" (ngSubmit)="submitForm()" class="mb-4" style="max-width: 400px; margin: 0 auto;">
+    <div class="mb-3 text-center">
+        <h2 style="font-size: var(--font-h2-size); font-weight: var(--font-h2-weight); color: var(--color-indigo-dye);">
+            {{ isEditMode ? 'Editar insignia' : 'Registrar insignia' }}
+        </h2>
+    </div>
+
+    <div class="mb-3">
+        <label class="mb-1" for="title">Título<span class="required-asterisk">*</span></label>
+        <input id="title" type="text" class="form-control normal" formControlName="title"/>
+        @if (form.get('title')?.invalid && form.get('title')?.touched) {
+            <div class="form-error-message">El título es obligatorio.</div>
+        }
+    </div>
+
+    <div class="mb-3">
+        <label class="mb-1" for="description">Descripción<span class="required-asterisk">*</span></label>
+        <textarea id="description" rows="3" class="form-control normal" formControlName="description"></textarea>
+        @if (form.get('description')?.invalid && form.get('description')?.touched) {
+            <div class="form-error-message">La descripción es obligatoria.</div>
+        }
+    </div>
+
+    <div class="mb-3">
+        <label class="mb-1" for="iconUrl">Ícono<span class="required-asterisk">*</span></label>
+        <div class="d-flex gap-2 align-items-center">
+            <input
+                    id="iconUrl"
+                    type="text"
+                    class="form-control disabled-field"
+                    formControlName="iconUrl"
+                    [readonly]="true"
+                    [disabled]="true"
+                    placeholder="Se llenará automáticamente al subir imagen"
+            />
+            <button type="button" class="btn btn-secondary" (click)="openUploadWidget()">Subir Imagen</button>
+        </div>
+
+        <small class="text-muted">Este campo no es editable manualmente.</small>
+
+        @if (form.get('iconUrl')?.invalid && form.get('iconUrl')?.touched) {
+            <div class="form-error-message">El ícono es obligatorio.</div>
+        }
+
+        @if (form.get('iconUrl')?.value) {
+            <div class="mt-2 text-center">
+                <img
+                        [src]="form.get('iconUrl')?.value"
+                        alt="Vista previa"
+                        class="img-thumbnail"
+                        style="max-width: 150px; cursor: pointer;"
+                />
+            </div>
+        }
+    </div>
+
+    <div class="text-center mt-4">
+        <button type="submit" class="btn btn-primary">
+            {{ isEditMode ? 'Actualizar' : 'Guardar' }}
+        </button>
+    </div>
+</form>
