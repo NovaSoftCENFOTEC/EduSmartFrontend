@@ -121,6 +121,7 @@ export interface IStudent {
 }
 
 export interface IAssignment {
+  group: { id: number; };
   id?: number;
   title: string;
   description: string;
@@ -128,5 +129,16 @@ export interface IAssignment {
   dueDate: Date;
   createdAt?: Date;
   groupId?: number;
-  group?: { id: number };
+  
+}
+
+export interface IQuiz {
+  story: { id: number; };
+  id?: number;
+  title: string;
+  description: string;
+  dueDate: Date;
+  numberOfQuestions: number;
+  generateWithAI: boolean;
+  
 }

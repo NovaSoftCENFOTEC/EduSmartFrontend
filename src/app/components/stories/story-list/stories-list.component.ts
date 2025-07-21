@@ -1,14 +1,14 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
 import { IStory } from '../../../interfaces';
 import { ConfirmModalComponent } from '../../confirm-modal/confirm-modal.component';
 import { DatePipe, NgForOf, NgIf } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-story-list',
   standalone: true,
-  imports: [ConfirmModalComponent, DatePipe, RouterModule, NgForOf, NgIf, FormsModule],
+  imports: [ConfirmModalComponent, DatePipe, NgForOf, NgIf, FormsModule],
   templateUrl: './stories-list.component.html',  
   styleUrls: ['./stories-list.component.scss']
 })
@@ -22,6 +22,9 @@ export class StoryListComponent {
   searchText: string = '';
 
   @ViewChild('confirmDeleteModal') confirmDeleteModal!: ConfirmModalComponent;
+
+  // Aquí sí estás inyectando correctamente Router:
+  router = inject(Router);
 
   get filteredStories(): IStory[] {
     if (!this.searchText) return this.stories;
@@ -41,6 +44,14 @@ export class StoryListComponent {
     if (this.deleteStory) {
       this.callDeleteAction.emit(this.deleteStory);
       this.deleteStory = null;
+    }
+  }
+
+  goToQuizStories(storyId: number | undefined): void {
+    if (storyId !== undefined) {
+      this.router.navigate(['/app/quizzes'], {
+        queryParams: { storyId: storyId.toString() },
+      });
     }
   }
 }

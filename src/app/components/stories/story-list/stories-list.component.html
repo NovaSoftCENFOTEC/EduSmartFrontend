@@ -3,7 +3,9 @@
     <h2 class="mb-0">Lista de Historias</h2>
   </div>
   <div class="card-body">
-    <p class="text-muted mb-3">Historias registradas para el curso seleccionado.</p>
+    <p class="text-muted mb-3">
+      Historias registradas para el curso seleccionado.
+    </p>
 
     <div class="mb-4 mt-2">
       <input
@@ -25,38 +27,45 @@
           </tr>
         </thead>
         <tbody>
-          @if (filteredStories.length > 0) {
-            @for (item of filteredStories; track item.id) {
-              <tr>
-                <td>{{ item.title }}</td>
-                <td>{{ item.content }}</td>
-                <td>{{ item.createdAt | date:'mediumDate' }}</td>
-                <td class="text-center">
-                  <button
-                    (click)="callModalAction.emit(item);"
-                    class="btn border-0 me-2 icon-gray-color"
-                    type="button"
-                  >
-                    <i class="fas fa-pen"></i>
-                  </button>
-                  <button
-                    (click)="openConfirmationModal(item)"
-                    class="btn border-0 icon-gray-color"
-                    type="button"
-                  >
-                    <i class="fas fa-trash"></i>
-                  </button>
-                </td>
-              </tr>
-            }
-          } @else {
-            <tr>
-              <td colspan="4">
-                <div class="d-flex justify-content-center align-items-center w-100">
-                  <p class="mb-0">No hay historias registradas</p>
-                </div>
-              </td>
-            </tr>
+          @if (filteredStories.length > 0) { @for (item of filteredStories;
+          track item.id) {
+          <tr>
+            <td>{{ item.title }}</td>
+            <td>{{ item.content }}</td>
+            <td>{{ item.createdAt | date : "mediumDate" }}</td>
+            <td class="text-center">
+              <button
+                (click)="callModalAction.emit(item)"
+                class="btn border-0 me-2 icon-gray-color"
+                type="button"
+              >
+                <i class="fas fa-pen"></i>
+              </button>
+              <button
+                (click)="openConfirmationModal(item)"
+                class="btn border-0 icon-gray-color"
+                type="button"
+              >
+                <i class="fas fa-trash"></i>
+              </button>
+               <button
+                (click)="goToQuizStories(item.id)"
+                class="btn btn-primary px-4 py-2"
+              >
+                Ver quices
+              </button>
+            </td>
+          </tr>
+          } } @else {
+          <tr>
+            <td colspan="4">
+              <div
+                class="d-flex justify-content-center align-items-center w-100"
+              >
+                <p class="mb-0">No hay historias registradas</p>
+              </div>
+            </td>
+          </tr>
           }
         </tbody>
       </table>
@@ -65,7 +74,11 @@
 
   <app-confirm-modal
     #confirmDeleteModal
-    [message]="'¿Estás seguro(a) de que deseas eliminar la historia ' + deleteStory?.title + '?'"
+    [message]="
+      '¿Estás seguro(a) de que deseas eliminar la historia ' +
+      deleteStory?.title +
+      '?'
+    "
     [confirmText]="'Eliminar'"
     [cancelText]="'Cancelar'"
     (confirmed)="deleteConfirmation()"

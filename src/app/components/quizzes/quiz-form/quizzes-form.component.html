@@ -1,0 +1,56 @@
+<form [formGroup]="form" class="mb-4 mx-auto" style="max-width: 400px;">
+  <div class="mb-3 text-center">
+    <h2 class="text-primary" style="font-weight: 600;">Registrar Quiz</h2>
+  </div>
+
+  <div class="mb-3">
+    <label class="mb-1">Título <span class="required-asterisk">*</span></label>
+    <input formControlName="title" type="text" class="form-control normal" placeholder="Ejemplo: Quiz sobre la conquista de Costa Rica" />
+    <div *ngIf="form.controls['title'].invalid && (form.controls['title'].dirty || form.controls['title'].touched)" class="form-error-message">
+      El título es obligatorio.
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label class="mb-1">Descripción <span class="required-asterisk">*</span></label>
+    <textarea formControlName="description" rows="3" class="form-control normal" placeholder="Breve descripción del Quiz."></textarea>
+    <div *ngIf="form.controls['description'].invalid && (form.controls['description'].dirty || form.controls['description'].touched)" class="form-error-message">
+      La descripción es obligatoria.
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label class="mb-1">Fecha de entrega <span class="required-asterisk">*</span></label>
+    <input formControlName="due_date" type="date" class="form-control normal" />
+    <div *ngIf="form.controls['due_date'].invalid && (form.controls['due_date'].dirty || form.controls['due_date'].touched)" class="form-error-message">
+      La fecha es obligatoria.
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label class="mb-1">Cantidad de preguntas <span class="required-asterisk">*</span></label>
+    <input formControlName="number_of_questions" type="number" min="1" class="form-control normal" placeholder="Número de preguntas" />
+    <div *ngIf="form.controls['number_of_questions'].invalid && (form.controls['number_of_questions'].dirty || form.controls['number_of_questions'].touched)" class="form-error-message">
+      La cantidad de preguntas es obligatoria.
+    </div>
+  </div>
+
+  <div class="mb-3 form-check">
+    <input type="checkbox" formControlName="generate_with_ai" class="form-check-input" id="generateAI">
+    <label class="form-check-label" for="generateAI">Generar automáticamente con IA</label>
+  </div>
+
+  <input formControlName="group_id" type="hidden" />
+
+  <div class="text-center mt-4">
+    <button (click)="callSave()" [disabled]="form.invalid" class="btn btn-primary" type="button">
+      Guardar
+    </button>
+  </div>
+</form>
+
+
+
+
+
+

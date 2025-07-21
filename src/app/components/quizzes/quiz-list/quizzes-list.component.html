@@ -1,0 +1,79 @@
+<div class="card">
+  <div class="card-header card-header-indigo">
+    <h2 class="mb-0">Lista de Quizzes</h2>
+  </div>
+
+  <div class="card-body">
+    <p class="text-muted mb-3">
+      Puedes ver, editar o eliminar un quiz desde esta tabla.
+    </p>
+
+    <div class="mb-4 mt-2">
+      <input
+        type="text"
+        class="input-txt w-25"
+        placeholder="Filtrar quiz por título o tipo..."
+        [(ngModel)]="searchText"
+      />
+    </div>
+
+    <div class="table-container table-responsive">
+      <table class="table custom-full-bordered-table">
+        <thead class="table-header-gray">
+          <tr>
+            <th scope="col">Título</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Fecha Entrega</th>
+            <th class="text-center" scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of filteredQuizzes; track item.id) {
+            <tr>
+              <td>{{ item.title }}</td>
+              <td>{{ item.description }}</td>
+              <td>{{ item.dueDate | date: 'dd/MM/yyyy' }}</td>
+
+              <td class="text-center">
+                <button
+                  (click)="callModalAction.emit(item)"
+                  class="btn border-0 me-2 icon-gray-color"
+                  type="button"
+                  title="Editar quiz"
+                >
+                  <i class="fas fa-pen"></i>
+                </button>
+                <button
+                  (click)="openConfirmationModal(item)"
+                  class="btn border-0 icon-gray-color"
+                  type="button"
+                  title="Eliminar quiz"
+                >
+                  <i class="fas fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="6">
+                <div class="d-flex justify-content-center align-items-center w-100">
+                  <p class="mb-0">No hay quizzes registrados</p>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<app-confirm-modal
+  #confirmDeleteModal
+  [message]="'¿Estás seguro de que deseas eliminar el quiz ' + deleteQuiz?.title + '?'"
+  [confirmText]="'Eliminar'"
+  [cancelText]="'Cancelar'"
+  (confirmed)="deleteConfirmation()"
+>
+</app-confirm-modal>
+

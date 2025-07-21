@@ -40,7 +40,9 @@ export class AssignmentsFormComponent {
       description: this.form.controls["description"].value,
       type: this.form.controls["type"].value,
       dueDate: this.form.controls["due_date"].value,
-    
+      group: {
+        id: 0
+      }
     };
 
     if (this.form.controls['id']?.value) {
