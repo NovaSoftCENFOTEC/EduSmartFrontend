@@ -26,7 +26,8 @@ export class PasswordChangeComponent {
   @ViewChild("password") passwordModel!: NgModel;
   @ViewChild("confirmPassword") confirmPasswordModel!: NgModel;
 
-  public userId: any = history.state.userId;
+  public userId: any =
+    history.state.userId || localStorage.getItem("passwordChangeUserId");
 
   public recoveryForm: { password: string; confirmPassword: string } = {
     password: "",
@@ -66,6 +67,8 @@ export class PasswordChangeComponent {
               });
           });
       }
+
+      localStorage.removeItem("passwordChangeUserId");
     }
   }
 }
