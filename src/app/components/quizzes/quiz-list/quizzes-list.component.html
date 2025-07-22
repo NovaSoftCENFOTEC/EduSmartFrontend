@@ -5,16 +5,12 @@
 
   <div class="card-body">
     <p class="text-muted mb-3">
-      Puedes ver, editar o eliminar un quiz desde esta tabla.
+      Puedes ver o editar un quiz desde esta tabla.
     </p>
 
     <div class="mb-4 mt-2">
-      <input
-        type="text"
-        class="input-txt w-25"
-        placeholder="Filtrar quiz por título o tipo..."
-        [(ngModel)]="searchText"
-      />
+      <input type="text" class="input-txt w-25" placeholder="Filtrar quiz por título o tipo..."
+        [(ngModel)]="searchText" />
     </div>
 
     <div class="table-container table-responsive">
@@ -23,57 +19,38 @@
           <tr>
             <th scope="col">Título</th>
             <th scope="col">Descripción</th>
-            <th scope="col">Fecha Entrega</th>
+            <th scope="col">Fecha de entrega</th>
             <th class="text-center" scope="col">Acciones</th>
           </tr>
         </thead>
         <tbody>
           @for (item of filteredQuizzes; track item.id) {
-            <tr>
-              <td>{{ item.title }}</td>
-              <td>{{ item.description }}</td>
-              <td>{{ item.dueDate | date: 'dd/MM/yyyy' }}</td>
+          <tr>
+            <td>{{ item.title }}</td>
+            <td>{{ item.description }}</td>
+            <td>{{ item.dueDate | date: 'dd/MM/yyyy' }}</td>
 
-              <td class="text-center">
-                <button
-                  (click)="callModalAction.emit(item)"
-                  class="btn border-0 me-2 icon-gray-color"
-                  type="button"
-                  title="Editar quiz"
-                >
-                  <i class="fas fa-pen"></i>
-                </button>
-                <button
-                  (click)="openConfirmationModal(item)"
-                  class="btn border-0 icon-gray-color"
-                  type="button"
-                  title="Eliminar quiz"
-                >
-                  <i class="fas fa-trash"></i>
-                </button>
-              </td>
-            </tr>
+            <td class="text-center">
+              <button (click)="callModalAction.emit(item)" class="btn border-0 me-2 icon-gray-color" type="button"
+                title="Editar quiz">
+                <i class="fas fa-pen"></i>
+              </button>
+              <button class="btn border-0 me-2 icon-gray-color" type="button" title="Ver quiz">
+                <i class="fas fa-eye"></i>
+              </button>
+            </td>
+          </tr>
           } @empty {
-            <tr>
-              <td colspan="6">
-                <div class="d-flex justify-content-center align-items-center w-100">
-                  <p class="mb-0">No hay quizzes registrados</p>
-                </div>
-              </td>
-            </tr>
+          <tr>
+            <td colspan="6">
+              <div class="d-flex justify-content-center align-items-center w-100">
+                <p class="mb-0">No hay quizzes registrados</p>
+              </div>
+            </td>
+          </tr>
           }
         </tbody>
       </table>
     </div>
   </div>
 </div>
-
-<app-confirm-modal
-  #confirmDeleteModal
-  [message]="'¿Estás seguro de que deseas eliminar el quiz ' + deleteQuiz?.title + '?'"
-  [confirmText]="'Eliminar'"
-  [cancelText]="'Cancelar'"
-  (confirmed)="deleteConfirmation()"
->
-</app-confirm-modal>
-

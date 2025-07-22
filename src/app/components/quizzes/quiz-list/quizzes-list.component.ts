@@ -23,6 +23,7 @@ export class QuizzesListComponent {
     new EventEmitter<IQuiz>();
   @Output() callDeleteAction = new EventEmitter<IQuiz>();
   @Output() callModalAction = new EventEmitter<IQuiz>();
+  @Output() callGenerateQuestions = new EventEmitter<{ quizId: number, numberOfQuestions: number }>();
 
   deleteQuiz: IQuiz | null = null;
   searchText: string = "";
@@ -49,6 +50,11 @@ export class QuizzesListComponent {
       this.deleteQuiz = null;
     }
   }
+
+  generateQuestions(quizId: number, numberOfQuestions: number = 5): void {
+    this.callGenerateQuestions.emit({ quizId, numberOfQuestions });
+  }
+
   goToQuizStories(storyId: number | undefined): void {
     if (storyId !== undefined) {
       this.router.navigate(["/app/quizzes"], {

@@ -33,17 +33,32 @@ export class QuizzesFormComponent implements OnInit {
     });
   }
 
+  getTodayDate(): string {
+    return new Date().toISOString().split('T')[0];
+  }
+
+  get isEditMode(): boolean {
+    return this.form?.controls['id']?.value ? true : false;
+  }
+
+  get formTitle(): string {
+    return this.isEditMode ? 'Editar Quiz' : 'Registrar Quiz';
+  }
+
+  get buttonText(): string {
+    return this.isEditMode ? 'Actualizar' : 'Guardar';
+  }
+
   callSave() {
     if (this.form.invalid) return;
-
     const item: IQuiz = {
       title: this.form.controls['title'].value,
       description: this.form.controls['description'].value,
-      dueDate: this.form.controls['due_date'].value,
-      numberOfQuestions: this.form.controls['number_of_questions'].value,
-      generateWithAI: this.form.controls['generate_with_ai'].value,
+      dueDate: this.form.controls['dueDate'].value,
+      numberOfQuestions: this.form.controls['numberOfQuestions'].value,
+      generateWithAI: this.form.controls['generateWithAI'].value,
       story: {
-        id: 0
+        id: this.form.controls['storyId'].value || 0
       }
     };
 

@@ -1,5 +1,3 @@
-import { inject } from "@angular/core";
-
 export interface ILoginResponse {
   accessToken: string;
   authUser: IUser;
@@ -129,7 +127,7 @@ export interface IAssignment {
   dueDate: Date;
   createdAt?: Date;
   groupId?: number;
-  
+
 }
 
 export interface IQuiz {
@@ -140,5 +138,5 @@ export interface IQuiz {
   dueDate: Date;
   numberOfQuestions: number;
   generateWithAI: boolean;
-  
+
 }

@@ -9,7 +9,7 @@
         <i class="fas fa-arrow-left me-2"></i> Volver
       </button>
       <button (click)="openAddQuizModal()" type="button" class="btn custom-add-full-btn">
-        <i class="fas fa-plus me-2"></i> Agregar
+        <i class="fas fa-plus me-2"></i> Generar Quiz
       </button>
     </div>
   </div>
@@ -17,10 +17,9 @@
   <div class="col-12 mt-3">
     <div class="card">
       <div class="card-body">
-        <app-quiz-list
-          [quizzes]="quizService.quizzes$()"
-          (callModalAction)="openEditQuizModal($event)"
-          (callDeleteAction)="deleteQuiz($event)">
+        <app-quiz-list [quizzes]="quizService.quizzes$()" (callModalAction)="openEditQuizModal($event)"
+          (callDeleteAction)="deleteQuiz($event)"
+          (callGenerateQuestions)="generateQuestionsForQuiz($event.quizId, $event.numberOfQuestions)">
         </app-quiz-list>
 
         <ng-container *ngIf="quizService.quizzes$().length > 0">
@@ -33,18 +32,14 @@
 
 <ng-template #addQuizModal>
   <app-modal [hideFooter]="true">
-    <app-quizzes-form
-      [form]="quizForm"
-      (callSaveMethod)="handleAddQuiz($event)">
+    <app-quizzes-form [form]="quizForm" (callSaveMethod)="handleAddQuiz($event)">
     </app-quizzes-form>
   </app-modal>
 </ng-template>
 
 <ng-template #editQuizModal>
   <app-modal [hideFooter]="true">
-    <app-quizzes-form
-      [form]="quizForm"
-      (callUpdateMethod)="confirmEdit($event)">
+    <app-quizzes-form [form]="quizForm" (callUpdateMethod)="confirmEdit($event)">
     </app-quizzes-form>
   </app-modal>
 </ng-template>
@@ -53,7 +48,7 @@
   <app-modal [hideFooter]="true">
     <div class="text-center p-4">
       <h2>Confirmación</h2>
-      <p>¿Está seguro que desea modificar el quiz?</p>
+      <p>¿Estás seguro(a) que desea modificar el quiz?</p>
       <div class="d-flex justify-content-center mt-4">
         <button class="btn btn-secondary me-2" (click)="cancelEdit()">Cancelar</button>
         <button class="btn btn-primary" (click)="confirmEditFinal()">Sí, modificar</button>

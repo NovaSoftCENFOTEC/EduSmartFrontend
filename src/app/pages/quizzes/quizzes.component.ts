@@ -1,11 +1,12 @@
 import { Component, ViewChild, inject, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder, Validators, AbstractControl, ValidationErrors } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { IQuiz } from "../../interfaces";
 import { ModalService } from "../../services/modal.service";
 import { AuthService } from "../../services/auth.service";
 import { QuizService } from "../../services/quiz.service";
+import { AlertService } from "../../services/alert.service";
 import { PaginationComponent } from "../../components/pagination/pagination.component";
 import { ModalComponent } from "../../components/modal/modal.component";
 import { QuizzesFormComponent } from "../../components/quizzes/quiz-form/quizzes-form.component";
@@ -34,14 +35,15 @@ export class QuizzesComponent implements OnInit {
   public authService = inject(AuthService);
   public route = inject(ActivatedRoute);
   public fb: FormBuilder = inject(FormBuilder);
+  private alertService = inject(AlertService);
 
   public quizForm = this.fb.group({
     id: [""],
     title: ["", Validators.required],
     description: ["", Validators.required],
-    due_date: ["", Validators.required],
-    story_id: ["", Validators.required],
-    generateWithAI: [false],
+    dueDate: ["", [Validators.required, this.futureDateValidator()]],
+    storyId: ["", Validators.required],
+    generateWithAI: true,
     numberOfQuestions: [5, [Validators.min(1), Validators.max(50)]],
   });
   @ViewChild("editQuizModal") public editQuizModal: any;
@@ -83,21 +85,36 @@ export class QuizzesComponent implements OnInit {
 
   async handleAddQuiz(item: IQuiz) {
     if (!this.storyId) return;
-    item.story = { id: this.storyId };
 
-    try {
-      await this.quizService.saveQuiz(item, this.storyId);
-      this.modalService.closeAll();
-      this.quizForm.reset();
-      this.loadQuizzes();
-    } catch (error) {
-      console.error("Error al registrar el quiz:", error);
+    if (!this.isValidDueDate(item.dueDate)) {
+      this.alertService.displayAlert(
+        "error",
+        "La fecha de entrega no puede ser anterior a la fecha actual.",
+        "center",
+        "top",
+        ["error-snackbar"]
+      );
+      return;
     }
+    this.quizService.createQuizForStory(item, this.storyId);
+    this.modalService.closeAll();
+    this.quizForm.reset();
   }
 
   async updateQuiz(item: IQuiz) {
     if (this.storyId) {
       item.story = { id: this.storyId };
+    }
+
+    if (!this.isValidDueDate(item.dueDate)) {
+      this.alertService.displayAlert(
+        "error",
+        "La fecha de entrega no puede ser anterior a la fecha actual.",
+        "center",
+        "top",
+        ["error-snackbar"]
+      );
+      return;
     }
 
     try {
@@ -119,17 +136,21 @@ export class QuizzesComponent implements OnInit {
     }
   }
 
+  generateQuestionsForQuiz(quizId: number, numberOfQuestions: number) {
+    this.quizService.generateQuestionsForQuiz(quizId, numberOfQuestions);
+  }
+
   openEditQuizModal(quiz: IQuiz) {
     this.quizForm.patchValue({
       id: quiz.id ? String(quiz.id) : "",
       title: quiz.title,
       description: quiz.description,
-      due_date: this.convertDateToString(quiz.dueDate ?? null),
-      story_id: quiz.story?.id
+      dueDate: this.convertDateToString(quiz.dueDate ?? null),
+      storyId: quiz.story?.id
         ? String(quiz.story.id)
         : this.storyId !== null
-        ? String(this.storyId)
-        : "",
+          ? String(this.storyId)
+          : "",
       generateWithAI: quiz.generateWithAI ?? false,
       numberOfQuestions: quiz.numberOfQuestions ?? 5,
     });
@@ -139,8 +160,10 @@ export class QuizzesComponent implements OnInit {
   openAddQuizModal() {
     this.quizForm.reset();
     if (this.storyId !== null) {
-      this.quizForm.patchValue({ story_id: this.storyId.toString() });
+      this.quizForm.patchValue({ storyId: this.storyId.toString() });
     }
+    const today = new Date().toISOString().split('T')[0];
+    this.quizForm.patchValue({ dueDate: today });
     this.modalService.displayModal("md", this.addQuizModal);
   }
 
@@ -171,5 +194,28 @@ export class QuizzesComponent implements OnInit {
     if (!date) return "";
     if (typeof date === "string") return date;
     return date.toISOString().split("T")[0];
+  }
+
+  private futureDateValidator() {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value) {
+        return null;
+      }
+      const selectedDate = new Date(control.value);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (selectedDate < today) {
+        return { pastDate: true };
+      }
+      return null;
+    };
+  }
+
+  private isValidDueDate(dueDate: Date | string | null): boolean {
+    if (!dueDate) return false;
+    const selectedDate = new Date(dueDate);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return selectedDate >= today;
   }
 }
