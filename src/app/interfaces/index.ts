@@ -138,5 +138,19 @@ export interface IQuiz {
   dueDate: Date;
   numberOfQuestions: number;
   generateWithAI: boolean;
+  questions?: IQuestion[];
+}
 
+export interface IQuestion {
+  id?: number;
+  text: string;
+  quiz?: IQuiz;
+  options?: IOption[];
+}
+
+export interface IOption {
+  id?: number;
+  text: string;
+  correct: boolean;
+  question?: IQuestion;
 }

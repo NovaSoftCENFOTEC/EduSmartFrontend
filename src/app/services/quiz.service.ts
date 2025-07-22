@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from "@angular/core";
 import { BaseService } from "./base-service";
-import { IQuiz, IResponse, ISearch } from "../interfaces";
+import { IQuiz, IResponse, ISearch, IQuestion, IOption } from "../interfaces";
 import { AlertService } from "./alert.service";
 import { Observable, Subject } from "rxjs";
 
@@ -103,6 +103,95 @@ export class QuizService extends BaseService<IQuiz> {
           ["error-snackbar"]
         );
       },
+    });
+  }
+
+  getQuestionsByQuiz(quizId: number): Observable<IResponse<IQuestion[]>> {
+    return this.http.get<IResponse<IQuestion[]>>(`questions/quiz/${quizId}`);
+  }
+
+  getOptionsByQuestion(questionId: number): Observable<IResponse<IOption[]>> {
+    return this.http.get<IResponse<IOption[]>>(`options/question/${questionId}`);
+  }
+
+  getQuizWithQuestionsAndOptions(quizId: number): Observable<IResponse<IQuiz>> {
+    return new Observable(observer => {
+      this.getQuizById(quizId).subscribe({
+        next: (quizResponse) => {
+          const quiz = quizResponse.data;
+
+          this.getQuestionsByQuiz(quizId).subscribe({
+            next: (questionsResponse) => {
+              const questions = questionsResponse.data;
+
+              const optionsObservables = questions.map(question =>
+                this.getOptionsByQuestion(question.id!)
+              );
+
+              if (optionsObservables.length === 0) {
+                quiz.questions = [];
+                observer.next({
+                  data: quiz,
+                  message: quizResponse.message,
+                  meta: quizResponse.meta
+                });
+                observer.complete();
+                return;
+              }
+
+              let completedOptions = 0;
+              const questionsWithOptions = [...questions];
+
+              optionsObservables.forEach((optionsObs, index) => {
+                optionsObs.subscribe({
+                  next: (optionsResponse) => {
+                    questionsWithOptions[index].options = optionsResponse.data;
+                    completedOptions++;
+
+                    if (completedOptions === optionsObservables.length) {
+                      quiz.questions = questionsWithOptions;
+                      observer.next({
+                        data: quiz,
+                        message: quizResponse.message,
+                        meta: quizResponse.meta
+                      });
+                      observer.complete();
+                    }
+                  },
+                  error: (err) => {
+                    console.error(`Error obteniendo opciones para pregunta ${questions[index].id}:`, err);
+                    questionsWithOptions[index].options = [];
+                    completedOptions++;
+
+                    if (completedOptions === optionsObservables.length) {
+                      quiz.questions = questionsWithOptions;
+                      observer.next({
+                        data: quiz,
+                        message: quizResponse.message,
+                        meta: quizResponse.meta
+                      });
+                      observer.complete();
+                    }
+                  }
+                });
+              });
+            },
+            error: (err) => {
+              console.error('Error obteniendo preguntas:', err);
+              quiz.questions = [];
+              observer.next({
+                data: quiz,
+                message: quizResponse.message,
+                meta: quizResponse.meta
+              });
+              observer.complete();
+            }
+          });
+        },
+        error: (err) => {
+          observer.error(err);
+        }
+      });
     });
   }
 
@@ -278,6 +367,7 @@ export class QuizService extends BaseService<IQuiz> {
           "top",
           ["success-snackbar"]
         );
+
         if (storyId) {
           this.getQuizzesByStory(storyId);
         } else {
@@ -309,6 +399,7 @@ export class QuizService extends BaseService<IQuiz> {
           "top",
           ["success-snackbar"]
         );
+
         if (storyId) {
           this.getQuizzesByStory(storyId);
         } else {

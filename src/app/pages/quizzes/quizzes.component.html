@@ -18,13 +18,13 @@
     <div class="card">
       <div class="card-body">
         <app-quiz-list [quizzes]="quizService.quizzes$()" (callModalAction)="openEditQuizModal($event)"
-          (callDeleteAction)="deleteQuiz($event)"
+          (callViewAction)="viewQuiz($event)"
           (callGenerateQuestions)="generateQuestionsForQuiz($event.quizId, $event.numberOfQuestions)">
         </app-quiz-list>
 
-        <ng-container *ngIf="quizService.quizzes$().length > 0">
-          <app-pagination [service]="quizService"></app-pagination>
-        </ng-container>
+        @if (quizService.quizzes$().length > 0) {
+        <app-pagination [service]="quizService"></app-pagination>
+        }
       </div>
     </div>
   </div>
@@ -54,5 +54,12 @@
         <button class="btn btn-primary" (click)="confirmEditFinal()">Sí, modificar</button>
       </div>
     </div>
+  </app-modal>
+</ng-template>
+
+<ng-template #viewQuizModal>
+  <app-modal [hideFooter]="true">
+    <app-quiz-view [quizId]="selectedQuizId" (closeModal)="modalService.closeAll()">
+    </app-quiz-view>
   </app-modal>
 </ng-template>

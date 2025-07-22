@@ -1,41 +1,48 @@
-import { Component, ViewChild, inject, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { FormBuilder, Validators, AbstractControl, ValidationErrors } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
 import { IQuiz } from "../../interfaces";
-import { ModalService } from "../../services/modal.service";
-import { AuthService } from "../../services/auth.service";
 import { QuizService } from "../../services/quiz.service";
+import { ModalService } from "../../services/modal.service";
 import { AlertService } from "../../services/alert.service";
-import { PaginationComponent } from "../../components/pagination/pagination.component";
-import { ModalComponent } from "../../components/modal/modal.component";
-import { QuizzesFormComponent } from "../../components/quizzes/quiz-form/quizzes-form.component";
 import { QuizzesListComponent } from "../../components/quizzes/quiz-list/quizzes-list.component";
+import { QuizzesFormComponent } from "../../components/quizzes/quiz-form/quizzes-form.component";
+import { ModalComponent } from "../../components/modal/modal.component";
+import { PaginationComponent } from "../../components/pagination/pagination.component";
+import { QuizViewComponent } from "../../components/quizzes/quiz-view/quiz-view.component";
 
 @Component({
   selector: "app-quizzes",
   standalone: true,
   imports: [
     CommonModule,
-    PaginationComponent,
-    ModalComponent,
-    QuizzesFormComponent,
+    ReactiveFormsModule,
     QuizzesListComponent,
+    QuizzesFormComponent,
+    ModalComponent,
+    PaginationComponent,
+    QuizViewComponent
   ],
   templateUrl: "./quizzes.component.html",
-  styleUrls: ["./quizzes.component.scss"],
+  styleUrl: "./quizzes.component.scss",
 })
 export class QuizzesComponent implements OnInit {
-  public areActionsAvailable: boolean = false;
-  private pendingEditItem: IQuiz | null = null;
+  @ViewChild("addQuizModal") addQuizModal!: any;
+  @ViewChild("editQuizModal") editQuizModal!: any;
+  @ViewChild("editConfirmationModal") editConfirmationModal!: any;
+  @ViewChild("viewQuizModal") viewQuizModal!: any;
+
   public storyId: number | null = null;
   public isLoading: boolean = false;
+  public selectedQuizId: number | null = null;
+  private pendingEditItem: IQuiz | null = null;
 
+  private fb = inject(FormBuilder);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
   public quizService = inject(QuizService);
   public modalService = inject(ModalService);
-  public authService = inject(AuthService);
-  public route = inject(ActivatedRoute);
-  public fb: FormBuilder = inject(FormBuilder);
   private alertService = inject(AlertService);
 
   public quizForm = this.fb.group({
@@ -47,24 +54,13 @@ export class QuizzesComponent implements OnInit {
     generateWithAI: [false],
     numberOfQuestions: [5, [Validators.min(1), Validators.max(50)]],
   });
-  @ViewChild("editQuizModal") public editQuizModal: any;
-  @ViewChild("addQuizModal") public addQuizModal: any;
-  @ViewChild("editConfirmationModal") public editConfirmationModal: any;
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
-      this.storyId = params["storyId"] ? Number(params["storyId"]) : null;
-      if (this.storyId !== null) {
-        this.quizService.getQuizzesByStory(this.storyId);
-      } else {
-        this.quizService.getAll();
+      if (params["storyId"]) {
+        this.storyId = Number(params["storyId"]);
+        this.loadQuizzes();
       }
-    });
-
-    this.route.data.subscribe((data) => {
-      this.areActionsAvailable = this.authService.areActionsAvailable(
-        data["authorities"] ?? []
-      );
     });
   }
 
@@ -73,10 +69,10 @@ export class QuizzesComponent implements OnInit {
   }
 
   saveQuiz(item: IQuiz) {
-    this.quizService.saveQuiz(item);
+    this.quizService.saveQuiz(item, this.storyId ?? undefined);
   }
 
-  loadQuizzes(): void {
+  loadQuizzes() {
     if (this.storyId) {
       this.quizService.getQuizzesByStory(this.storyId);
     } else {
@@ -128,21 +124,16 @@ export class QuizzesComponent implements OnInit {
       this.loadQuizzes();
       subscription.unsubscribe();
     });
-
     this.quizService.update(item, this.storyId ?? undefined);
-  }
-
-  async deleteQuiz(item: IQuiz) {
-    try {
-      await this.quizService.delete(item, this.storyId ?? undefined);
-      this.loadQuizzes();
-    } catch (error) {
-      console.error("Error al eliminar el quiz:", error);
-    }
   }
 
   generateQuestionsForQuiz(quizId: number, numberOfQuestions: number) {
     this.quizService.generateQuestionsForQuiz(quizId, numberOfQuestions);
+  }
+
+  viewQuiz(quiz: IQuiz) {
+    this.selectedQuizId = quiz.id!;
+    this.modalService.displayModal("lg", this.viewQuizModal);
   }
 
   openEditQuizModal(quiz: IQuiz) {
@@ -151,11 +142,7 @@ export class QuizzesComponent implements OnInit {
       title: quiz.title,
       description: quiz.description,
       dueDate: this.convertDateToString(quiz.dueDate ?? null),
-      storyId: quiz.story?.id
-        ? String(quiz.story.id)
-        : this.storyId !== null
-          ? String(this.storyId)
-          : "",
+      storyId: quiz.story?.id ? String(quiz.story.id) : (this.storyId !== null ? String(this.storyId) : ""),
       generateWithAI: quiz.generateWithAI ?? false,
       numberOfQuestions: quiz.numberOfQuestions ?? 5,
     });
@@ -192,12 +179,14 @@ export class QuizzesComponent implements OnInit {
   }
 
   goBack() {
-    window.history.back();
+    this.router.navigate(["/app/stories"]);
   }
 
-  private convertDateToString(date: Date | string | null): string {
+  convertDateToString(date: Date | string | null): string {
     if (!date) return "";
-    if (typeof date === "string") return date;
+    if (typeof date === "string") {
+      return date;
+    }
     return date.toISOString().split("T")[0];
   }
 
