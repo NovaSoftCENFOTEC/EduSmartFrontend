@@ -154,8 +154,6 @@ export class QuizzesComponent implements OnInit {
     if (this.storyId !== null) {
       this.quizForm.patchValue({ storyId: this.storyId.toString() });
     }
-    const today = new Date().toISOString().split('T')[0];
-    this.quizForm.patchValue({ dueDate: today });
     this.modalService.displayModal("md", this.addQuizModal);
   }
 
@@ -184,10 +182,28 @@ export class QuizzesComponent implements OnInit {
 
   convertDateToString(date: Date | string | null): string {
     if (!date) return "";
+
+    let dateObj: Date;
+
     if (typeof date === "string") {
-      return date;
+      if (date.match(/^\d{4}-\d{2}-\d{2}$/)) {
+        dateObj = new Date(date);
+      } else {
+        dateObj = new Date(date);
+      }
+    } else {
+      dateObj = date;
     }
-    return date.toISOString().split("T")[0];
+
+    if (isNaN(dateObj.getTime())) {
+      return "";
+    }
+
+    const year = dateObj.getFullYear();
+    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const day = String(dateObj.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
   }
 
   private futureDateValidator() {
