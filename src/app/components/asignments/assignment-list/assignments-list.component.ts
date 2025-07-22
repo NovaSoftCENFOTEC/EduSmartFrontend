@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IAssignment } from '../../interfaces';
-import { ConfirmModalComponent } from '../../components/confirm-modal/confirm-modal.component';
+import { IAssignment } from '../../../interfaces';
+import { ConfirmModalComponent } from '../../confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-assignments-list',
@@ -31,7 +31,7 @@ export class AssignmentsListComponent {
     const lower = this.searchText.toLowerCase();
     return this.assignments.filter(assignment =>
       (assignment.title?.toLowerCase() ?? '').includes(lower) ||
-      (assignment.type?.toLowerCase() ?? '').includes(lower) 
+      (assignment.type?.toLowerCase() ?? '').includes(lower)
     );
   }
 

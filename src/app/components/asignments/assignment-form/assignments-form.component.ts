@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { IAssignment } from '../../interfaces';
-import { AuthService } from '../../services/auth.service';
+import { IAssignment } from '../../../interfaces';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-assignments-form',
