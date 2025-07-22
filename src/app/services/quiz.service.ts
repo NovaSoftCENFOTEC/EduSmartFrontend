@@ -357,8 +357,12 @@ export class QuizService extends BaseService<IQuiz> {
       );
       return;
     }
+    const quizData = {
+      ...item,
+      dueDate: this.formatDateForBackend(item.dueDate)
+    };
 
-    this.edit(item.id, item).subscribe({
+    this.edit(item.id, quizData).subscribe({
       next: () => {
         this.alertService.displayAlert(
           "success",
