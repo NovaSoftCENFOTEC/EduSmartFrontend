@@ -29,6 +29,7 @@ export class QuizzesComponent implements OnInit {
   public areActionsAvailable: boolean = false;
   private pendingEditItem: IQuiz | null = null;
   public storyId: number | null = null;
+  public isLoading: boolean = false;
 
   public quizService = inject(QuizService);
   public modalService = inject(ModalService);
@@ -43,7 +44,7 @@ export class QuizzesComponent implements OnInit {
     description: ["", Validators.required],
     dueDate: ["", [Validators.required, this.futureDateValidator()]],
     storyId: ["", Validators.required],
-    generateWithAI: true,
+    generateWithAI: [false],
     numberOfQuestions: [5, [Validators.min(1), Validators.max(50)]],
   });
   @ViewChild("editQuizModal") public editQuizModal: any;
@@ -85,7 +86,6 @@ export class QuizzesComponent implements OnInit {
 
   async handleAddQuiz(item: IQuiz) {
     if (!this.storyId) return;
-
     if (!this.isValidDueDate(item.dueDate)) {
       this.alertService.displayAlert(
         "error",
@@ -96,16 +96,20 @@ export class QuizzesComponent implements OnInit {
       );
       return;
     }
+    this.isLoading = true;
+    const subscription = this.quizService.quizCreated$.subscribe(() => {
+      this.isLoading = false;
+      this.modalService.closeAll();
+      this.quizForm.reset();
+      subscription.unsubscribe();
+    });
     this.quizService.createQuizForStory(item, this.storyId);
-    this.modalService.closeAll();
-    this.quizForm.reset();
   }
 
   async updateQuiz(item: IQuiz) {
     if (this.storyId) {
       item.story = { id: this.storyId };
     }
-
     if (!this.isValidDueDate(item.dueDate)) {
       this.alertService.displayAlert(
         "error",
@@ -116,15 +120,16 @@ export class QuizzesComponent implements OnInit {
       );
       return;
     }
-
-    try {
-      await this.quizService.update(item, this.storyId ?? undefined);
+    this.isLoading = true;
+    const subscription = this.quizService.quizUpdated$.subscribe(() => {
+      this.isLoading = false;
       this.modalService.closeAll();
       this.quizForm.reset();
       this.loadQuizzes();
-    } catch (error) {
-      console.error("Error al actualizar el quiz:", error);
-    }
+      subscription.unsubscribe();
+    });
+
+    this.quizService.update(item, this.storyId ?? undefined);
   }
 
   async deleteQuiz(item: IQuiz) {

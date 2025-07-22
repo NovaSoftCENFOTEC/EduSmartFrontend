@@ -1,58 +1,65 @@
-<form [formGroup]="form" class="mb-4 mx-auto" style="max-width: 400px;">
-  <div class="mb-3 text-center">
-    <h2 class="text-primary text-quiz-form-title" style="font-weight: 600;">{{ formTitle }}</h2>
-  </div>
-
-  <div class="mb-3">
-    <label class="mb-1">Título <span class="required-asterisk">*</span></label>
-    <input formControlName="title" type="text" class="form-control normal"
-      placeholder="Ejemplo: Quiz sobre la conquista de Costa Rica" />
-    <div *ngIf="form.controls['title'].invalid && (form.controls['title'].dirty || form.controls['title'].touched)"
-      class="form-error-message">
-      El título es obligatorio.
+<div class="position-relative">
+  <form [formGroup]="form" class="mb-4 mx-auto" style="max-width: 400px;">
+    <div class="mb-3 text-center">
+      <h2 class="text-primary text-quiz-form-title" style="font-weight: 600;">{{ formTitle }}</h2>
     </div>
-  </div>
 
-  <div class="mb-3">
-    <label class="mb-1">Descripción <span class="required-asterisk">*</span></label>
-    <textarea formControlName="description" rows="3" class="form-control normal"
-      placeholder="Breve descripción del Quiz."></textarea>
-    <div
-      *ngIf="form.controls['description'].invalid && (form.controls['description'].dirty || form.controls['description'].touched)"
-      class="form-error-message">
-      La descripción es obligatoria.
+    <div class="mb-3">
+      <label class="mb-1">Título <span class="required-asterisk">*</span></label>
+      <input formControlName="title" type="text" class="form-control normal"
+        placeholder="Ejemplo: Quiz sobre la conquista de Costa Rica" />
+      <div *ngIf="form.controls['title'].invalid && (form.controls['title'].dirty || form.controls['title'].touched)"
+        class="form-error-message">
+        El título es obligatorio.
+      </div>
     </div>
-  </div>
 
-  <div class="mb-3">
-    <label class="mb-1">Fecha de entrega <span class="required-asterisk">*</span></label>
-    <input formControlName="dueDate" type="date" class="form-control normal" [min]="getTodayDate()" />
-    <div
-      *ngIf="form.controls['dueDate'].invalid && (form.controls['dueDate'].dirty || form.controls['dueDate'].touched)"
-      class="form-error-message">
-      <span *ngIf="form.controls['dueDate'].errors?.['required']">La fecha es obligatoria.</span>
-      <span *ngIf="form.controls['dueDate'].errors?.['pastDate']">La fecha de entrega no puede ser anterior a la fecha
-        actual.</span>
+    <div class="mb-3">
+      <label class="mb-1">Descripción <span class="required-asterisk">*</span></label>
+      <textarea formControlName="description" rows="3" class="form-control normal"
+        placeholder="Breve descripción del Quiz."></textarea>
+      <div
+        *ngIf="form.controls['description'].invalid && (form.controls['description'].dirty || form.controls['description'].touched)"
+        class="form-error-message">
+        La descripción es obligatoria.
+      </div>
     </div>
-  </div>
 
-  <div class="mb-3">
-    <label class="mb-1">Cantidad de preguntas <span class="required-asterisk">*</span></label>
-    <input formControlName="numberOfQuestions" type="number" min="1" max="50" class="form-control normal"
-      placeholder="Número de preguntas" />
-    <div
-      *ngIf="form.controls['numberOfQuestions'].invalid && (form.controls['numberOfQuestions'].dirty || form.controls['numberOfQuestions'].touched)"
-      class="form-error-message">
-      <span *ngIf="form.controls['numberOfQuestions'].errors?.['min']">La cantidad mínima es 1 pregunta.</span>
-      <span *ngIf="form.controls['numberOfQuestions'].errors?.['max']">La cantidad máxima es 50 preguntas.</span>
+    <div class="mb-3">
+      <label class="mb-1">Fecha de entrega <span class="required-asterisk">*</span></label>
+      <input formControlName="dueDate" type="date" class="form-control normal" [min]="getTodayDate()" />
+      <div
+        *ngIf="form.controls['dueDate'].invalid && (form.controls['dueDate'].dirty || form.controls['dueDate'].touched)"
+        class="form-error-message">
+        <span *ngIf="form.controls['dueDate'].errors?.['required']">La fecha es obligatoria.</span>
+        <span *ngIf="form.controls['dueDate'].errors?.['pastDate']">La fecha de entrega no puede ser anterior a la fecha
+          actual.</span>
+      </div>
     </div>
-  </div>
 
-  <input formControlName="storyId" type="hidden" />
+    <div class="mb-3">
+      <label class="mb-1">Cantidad de preguntas <span class="required-asterisk">*</span></label>
+      <input formControlName="numberOfQuestions" type="number" min="1" max="50" class="form-control normal"
+        placeholder="Número de preguntas" />
+      <div
+        *ngIf="form.controls['numberOfQuestions'].invalid && (form.controls['numberOfQuestions'].dirty || form.controls['numberOfQuestions'].touched)"
+        class="form-error-message">
+        <span *ngIf="form.controls['numberOfQuestions'].errors?.['min']">La cantidad mínima es 1 pregunta.</span>
+        <span *ngIf="form.controls['numberOfQuestions'].errors?.['max']">La cantidad máxima es 50 preguntas.</span>
+      </div>
+    </div>
 
-  <div class="text-center mt-4">
-    <button (click)="callSave()" [disabled]="form.invalid" class="btn btn-primary" type="button">
-      {{ buttonText }}
-    </button>
+    <input formControlName="storyId" type="hidden" />
+
+    <div class="text-center mt-4">
+      <button (click)="callSave()" [disabled]="form.invalid || isLoading" class="btn btn-primary" type="button">
+        <span *ngIf="!isLoading">{{ buttonText }}</span>
+        <span *ngIf="isLoading">Procesando...</span>
+      </button>
+    </div>
+  </form>
+
+  <div *ngIf="isLoading" class="loader-overlay">
+    <app-loader></app-loader>
   </div>
-</form>
+</div>

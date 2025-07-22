@@ -5,13 +5,15 @@ import { ActivatedRoute } from '@angular/router';
 
 import { IQuiz } from '../../../interfaces';
 import { AuthService } from '../../../services/auth.service';
+import { LoaderComponent } from '../../loader/loader.component';
 
 @Component({
   selector: 'app-quizzes-form',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    LoaderComponent
   ],
   templateUrl: './quizzes-form.component.html',
   styleUrl: './quizzes-form.component.scss'
@@ -19,6 +21,7 @@ import { AuthService } from '../../../services/auth.service';
 export class QuizzesFormComponent implements OnInit {
   public fb: FormBuilder = inject(FormBuilder);
   @Input() form!: FormGroup;
+  @Input() isLoading: boolean = false;
   @Output() callSaveMethod: EventEmitter<IQuiz> = new EventEmitter<IQuiz>();
   @Output() callUpdateMethod: EventEmitter<IQuiz> = new EventEmitter<IQuiz>();
 
@@ -42,7 +45,7 @@ export class QuizzesFormComponent implements OnInit {
   }
 
   get formTitle(): string {
-    return this.isEditMode ? 'Editar Quiz' : 'Registrar Quiz';
+    return this.isEditMode ? 'Editar Quiz' : 'Crear Quiz';
   }
 
   get buttonText(): string {
@@ -50,13 +53,14 @@ export class QuizzesFormComponent implements OnInit {
   }
 
   callSave() {
-    if (this.form.invalid) return;
+    if (this.form.invalid || this.isLoading) return;
+
     const item: IQuiz = {
       title: this.form.controls['title'].value,
       description: this.form.controls['description'].value,
       dueDate: this.form.controls['dueDate'].value,
       numberOfQuestions: this.form.controls['numberOfQuestions'].value,
-      generateWithAI: this.form.controls['generateWithAI'].value,
+      generateWithAI: true,
       story: {
         id: this.form.controls['storyId'].value || 0
       }

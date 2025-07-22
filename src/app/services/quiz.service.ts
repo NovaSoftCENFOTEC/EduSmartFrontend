@@ -2,7 +2,7 @@ import { inject, Injectable, signal } from "@angular/core";
 import { BaseService } from "./base-service";
 import { IQuiz, IResponse, ISearch } from "../interfaces";
 import { AlertService } from "./alert.service";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -11,12 +11,29 @@ export class QuizService extends BaseService<IQuiz> {
   save(item: IQuiz) {
     throw new Error("Method not implemented.");
   }
-  protected override source: string = "quizzes"
+
+  protected override source: string = "quizzes";
+
   private quizListSignal = signal<IQuiz[]>([]);
   private alertService: AlertService = inject(AlertService);
+  private quizCreatedSubject = new Subject<void>();
+  private quizUpdatedSubject = new Subject<void>();
+  private quizDeletedSubject = new Subject<void>();
 
   get quizzes$() {
     return this.quizListSignal;
+  }
+
+  get quizCreated$() {
+    return this.quizCreatedSubject.asObservable();
+  }
+
+  get quizUpdated$() {
+    return this.quizUpdatedSubject.asObservable();
+  }
+
+  get quizDeleted$() {
+    return this.quizDeletedSubject.asObservable();
   }
 
   public search: ISearch = {
@@ -57,7 +74,6 @@ export class QuizService extends BaseService<IQuiz> {
   }
 
   getQuizzesByStory(storyId: number) {
-
     this.findAllWithParams({
       page: this.search.page,
       size: 1000,
@@ -110,17 +126,27 @@ export class QuizService extends BaseService<IQuiz> {
       generateWithAI: quiz.generateWithAI || false
     };
 
+    console.log('Enviando quiz data:', quizData);
+    console.log('URL endpoint:', `${this.source}/story/${storyId}`);
+
     this.addCustomSource(`story/${storyId}`, quizData).subscribe({
       next: (response: IResponse<IQuiz>) => {
         console.log('Quiz creado exitosamente:', response);
+
+        let successMessage = response.message || "Quiz creado con éxito.";
+        if (quizData.generateWithAI && quizData.numberOfQuestions > 0) {
+          successMessage += ` Se generaron ${quizData.numberOfQuestions} preguntas automáticamente con IA.`;
+        }
+
         this.alertService.displayAlert(
           "success",
-          response.message || "Quiz creado con éxito.",
+          successMessage,
           "center",
           "top",
           ["success-snackbar"]
         );
         this.getQuizzesByStory(storyId);
+        this.quizCreatedSubject.next();
       },
       error: (err) => {
         console.error('Error completo al crear quiz:', err);
@@ -141,6 +167,7 @@ export class QuizService extends BaseService<IQuiz> {
           "top",
           ["error-snackbar"]
         );
+        this.quizCreatedSubject.next();
       },
     });
   }
@@ -166,9 +193,9 @@ export class QuizService extends BaseService<IQuiz> {
           "top",
           ["success-snackbar"]
         );
+
         this.getQuizById(quizId).subscribe({
           next: (quizResponse) => {
-
             const currentQuizzes = this.quizListSignal();
             const updatedQuizzes = currentQuizzes.map(q =>
               q.id === quizId ? quizResponse.data : q
@@ -251,12 +278,12 @@ export class QuizService extends BaseService<IQuiz> {
           "top",
           ["success-snackbar"]
         );
-
         if (storyId) {
           this.getQuizzesByStory(storyId);
         } else {
           this.getAll();
         }
+        this.quizUpdatedSubject.next();
       },
       error: (err: any) => {
         this.alertService.displayAlert(
@@ -267,6 +294,7 @@ export class QuizService extends BaseService<IQuiz> {
           ["error-snackbar"]
         );
         console.error("Error al actualizar quiz:", err);
+        this.quizUpdatedSubject.next();
       },
     });
   }
@@ -281,12 +309,12 @@ export class QuizService extends BaseService<IQuiz> {
           "top",
           ["success-snackbar"]
         );
-
         if (storyId) {
           this.getQuizzesByStory(storyId);
         } else {
           this.getAll();
         }
+        this.quizDeletedSubject.next();
       },
       error: (err: any) => {
         this.alertService.displayAlert(
@@ -297,6 +325,7 @@ export class QuizService extends BaseService<IQuiz> {
           ["error-snackbar"]
         );
         console.error("Error al eliminar el quiz", err);
+        this.quizDeletedSubject.next();
       },
     });
   }
