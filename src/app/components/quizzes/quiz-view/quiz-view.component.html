@@ -17,7 +17,11 @@
                     </span>
                     <span class="badge bg-info me-2">
                         <i class="fas fa-list me-1"></i>
+                        @if (questions.length === 1) {
+                        {{ questions.length }} pregunta
+                        } @else {
                         {{ questions.length }} preguntas
+                        }
                     </span>
                     @if (quiz?.generateWithAI) {
                     <span class="badge bg-success">
