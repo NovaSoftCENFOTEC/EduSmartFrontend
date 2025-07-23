@@ -1,0 +1,90 @@
+<div class="card">
+  <div class="card-header card-header-indigo">
+    <h2 class="mb-0">Lista de Grupos</h2>
+  </div>
+  <div class="card-body">
+    <p class="text-muted mb-3">
+      Si deseas ver o agregar estudiantes para un grupo, selecciona su nombre en
+      la tabla.
+    </p>
+
+    <div class="mb-4 mt-2">
+      <input
+        [(ngModel)]="searchText"
+        class="input-txt input-filter"
+        placeholder="Filtrar grupos por nombre o dominio..."
+        type="text"
+      />
+    </div>
+
+    <div class="table-container table-responsive">
+      <table class="table custom-full-bordered-table">
+        <thead class="table-header-gray">
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Curso</th>
+            <th scope="col">Profesor</th>
+            <th class="text-center" scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of filteredGroups; track item.id) {
+          <tr>
+            <td>
+              <a
+                [routerLink]="['../group-students']"
+                [queryParams]="{ groupId: item.id }"
+                class="no-link-style"
+              >
+                {{ item.name }}
+              </a>
+            </td>
+            <td>{{ item.course?.title }}</td>
+            <td>{{ item.teacher?.name }}</td>
+            <td class="text-center">
+              <button
+                (click)="callModalAction.emit(item)"
+                class="btn border-0 me-2 icon-gray-color"
+                type="button"
+              >
+                <i class="fas fa-pen"></i>
+              </button>
+              <button
+                (click)="openConfirmationModal(item)"
+                class="btn border-0 icon-gray-color"
+                type="button"
+              >
+                <i class="fas fa-trash"></i>
+              </button>
+              <button (click)="goToGroupAssignments(item.id)" class="btn btn-primary px-4 py-2">
+                Ver asignaciones
+              </button>
+            </td>
+          </tr>
+          } @empty {
+          <tr>
+            <td colspan="4">
+              <div
+                class="d-flex justify-content-center align-items-center w-100"
+              >
+                <p class="mb-0">No hay grupos</p>
+              </div>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<app-confirm-modal
+  #confirmDeleteModal
+  (confirmed)="deleteConfirmation()"
+  [cancelText]="'Cancelar'"
+  [confirmText]="'Eliminar'"
+  [message]="
+    '¿Estás seguro de que deseas eliminar el grupo ' + deleteGroup?.name + '?'
+  "
+>
+</app-confirm-modal>

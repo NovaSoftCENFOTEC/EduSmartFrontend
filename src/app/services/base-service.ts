@@ -61,4 +61,7 @@ export class BaseService<T> {
     })
     return queryParams;
   }
+
+
+  
 }

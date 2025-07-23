@@ -1,39 +1,80 @@
-<div class="table-container table-responsive">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Name</th>
-        <th scope="col">Lastname</th>
-        <th scope="col">email</th>
-        <th scope="col">Created</th>
-        <th scope="col">Updated</th>
-        <th class="text-center" scope="col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (item of users; track item.id) {
-        <tr>
-          <th scope="row">{{item.id}}</th>
-          <td>{{item.name}}</td>
-          <td>{{item.lastname}}</td>
-          <td>{{item.email}}</td>
-          <td>{{item.createdAt | date: 'dd/MM/yyyy HH:mm'}}</td>
-          <td>{{item.updatedAt | date: 'dd/MM/yyyy HH:mm'}}</td>
-          <td>
-            <button (click)="callModalAction.emit(item);" class="btn btn-warning me-2" type="button"><i class="fas fa-pen"></i></button>
-            <button (click)="callDeleteAction.emit(item)" class="btn btn-danger" type="button"><i class="fas fa-trash"></i></button>
-          </td>
-        </tr>
-      } @empty {
-        <tr>
-          <td colspan="7">
-            <div class="d-flex justify-content-center align-items-center w-100">
-              <p class="mb-0">There are not users</p>
-            </div>
-          </td>
-        </tr>
-      }
-    </tbody>
-  </table>
+<div class="card">
+    <div class="card-header card-header-indigo">
+        <h2 class="mb-0">Lista de Usuarios</h2>
+    </div>
+    <div class="card-body">
+
+        <div class="mb-4 mt-2">
+            <input
+                    type="text"
+                    class="input-txt input-filter"
+                    placeholder="Filtrar por nombre, apellido o correo..."
+                    [(ngModel)]="searchText"
+            />
+        </div>
+
+        <div class="table-container table-responsive">
+            <table class="table custom-full-bordered-table">
+                <thead class="table-header-gray">
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Correo electrónico</th>
+                    <th scope="col">Creado</th>
+                    <th scope="col">Actualizado</th>
+                    <th class="text-center" scope="col">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                    @if (filteredUsers.length > 0) {
+                        @for (item of filteredUsers; track item.id) {
+                            <tr>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.lastname }}</td>
+                                <td>{{ item.email }}</td>
+                                <td>{{ item.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+                                <td>{{ item.updatedAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+                                <td class="text-center">
+                                    <button
+                                            [disabled]="item.email === 'super.admin@gmail.com'"
+                                            [attr.title]="item.email === 'super.admin@gmail.com' ? 'Este usuario no puede ser editado' : 'Editar usuario'"
+                                            (click)="callModalAction.emit(item)"
+                                            class="btn border-0 me-2 icon-gray-color"
+                                            type="button"
+                                    >
+                                        <i class="fas fa-pen"></i>
+                                    </button>
+                                    <button
+                                            [disabled]="item.email === 'super.admin@gmail.com'"
+                                            [attr.title]="item.email === 'super.admin@gmail.com' ? 'Este usuario no puede ser eliminado' : null"
+                                            (click)="abrirModalConfirmacion(item)"
+                                            class="btn border-0 icon-gray-color"
+                                            type="button"
+                                    >
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    } @else {
+                        <tr>
+                            <td colspan="7">
+                                <div class="d-flex justify-content-center align-items-center w-100">
+                                    <p class="mb-0">No hay usuarios(as)</p>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+
+<app-confirm-modal
+    #confirmDeleteModal
+    [message]="'¿Estás seguro de que deseas eliminar al usuario ' + usuarioAEliminar?.name + ' ' + usuarioAEliminar?.lastname + '?'"
+    [confirmText]="'Eliminar'"
+    [cancelText]="'Cancelar'"
+    (confirmed)="confirmarEliminacion()"
+></app-confirm-modal>

@@ -1,33 +1,52 @@
-<div class="d-flex align-items-center justify-content-center my-3">
-  <nav aria-label="pagination">
-    <ul class="pagination">
-      <li class="page-item">
-        <button (click)="onPage(1)" [disabled]="service.search.pageNumber === 1" class="page-link" >
-          <i class="fas fa-angles-left"></i>
-        </button>
-      </li>
-      <li class="page-item">
-        <button (click)="onPage(service.search.pageNumber - 1)" [disabled]="service.search.pageNumber === 1" class="page-link">
-          <i class="fas fa-angle-left"></i>
-        </button>
-      </li>
-      @for (item of service.totalItems; track $index) {
-        @if (service.search.pageNumber - 2 <= item && item <= service.search.pageNumber + 2) {
-          <li class="page-item">
-            <button [disabled]="service.search.pageNumber === item" (click)="onPage(item)" class="page-link">{{item}}</button>
-          </li>
-        }
-      }
-      <li class="page-item">
-        <button (click)="onPage(service.search.pageNumber + 1)" [disabled]="service.search.pageNumber === service.totalItems.length" class="page-link">
-          <i class="fas fa-angle-right"></i>
-        </button>
-      </li>
-      <li class="page-item">
-        <button (click)="onPage(service.totalItems.length)" [disabled]="service.search.pageNumber === service.totalItems.length" class="page-link">
-          <i class="fas fa-angles-right"></i>
-        </button>
-      </li>
-    </ul>
-  </nav>
+<div class="d-flex align-items-center justify-content-between my-3">
+    
+    <nav aria-label="pagination-prev" class="ms-0">
+        <ul class="pagination custom-pagination-buttons mb-0">
+            <li class="page-item">
+                <button
+                        (click)="onPage((service?.pageNumber || 1) - 1)"
+                        [disabled]="(service?.pageNumber || 1) === 1"
+                        class="page-link">
+                    <i class="fas fa-arrow-left"></i>&nbsp;Atrás
+                </button>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="d-flex align-items-center justify-content-center gap-3 flex-grow-1 mx-3">
+
+        <div class="text-muted">
+            Página {{ service?.pageNumber || 1 }} de {{ service?.totalPages || 1 }}
+        </div>
+
+        <div class="go-to-page-container d-flex align-items-center">
+            <label for="pageInput" class="me-2 mb-0">Ir a página:</label>
+            <input
+                    id="pageInput"
+                    type="number"
+                    min="1"
+                    [max]="service?.totalPages || 1"
+                    [(ngModel)]="pageInput"
+                    class="form-control form-control-sm"
+                    style="width: 70px;"
+                    (keyup.enter)="goToPage()"
+            />
+            <button class="btn btn-sm btn-primary ms-2" (click)="goToPage()">Ir</button>
+        </div>
+
+    </div>
+
+    <nav aria-label="pagination-next" class="me-0">
+        <ul class="pagination custom-pagination-buttons mb-0">
+            <li class="page-item">
+                <button
+                        (click)="onPage((service?.pageNumber || 1) + 1)"
+                        [disabled]="(service?.pageNumber || 1) === (service?.totalPages || 1)"
+                        class="page-link">
+                    Siguiente&nbsp;<i class="fas fa-arrow-right"></i>
+                </button>
+            </li>
+        </ul>
+    </nav>
+
 </div>

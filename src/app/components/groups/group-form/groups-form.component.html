@@ -1,0 +1,76 @@
+<form [formGroup]="form" class="mb-4" style="max-width: 400px; margin: 0 auto">
+    <div class="mb-3 text-center">
+        <h2
+                style="
+        font-size: var(--font-h2-size);
+        font-weight: var(--font-h2-weight);
+        color: var(--color-indigo-dye);
+      "
+        >
+            Registrar Grupo
+        </h2>
+    </div>
+
+    <div class="mb-3">
+        <label class="mb-1" for="name">
+            Nombre del Grupo<span class="required-asterisk">*</span>
+        </label>
+        <input
+                class="form-control normal"
+                formControlName="name"
+                id="name"
+                placeholder="Ej: M13"
+                type="text"
+        />
+        @if (form.controls['name'].invalid && (form.controls['name'].dirty || form.controls['name'].touched)) {
+            <div class="form-error-message">
+                El nombre es obligatorio.
+            </div>
+        }
+    </div>
+
+    <div class="mb-3">
+        <label class="mb-1" for="course">
+            Curso<span class="required-asterisk">*</span>
+        </label>
+        <select [compareWith]="compareCourses" class="ddl" formControlName="course" id="course">
+            <option [ngValue]="null">-- Seleccione un curso --</option>
+            <option *ngFor="let c of courses; trackBy: trackById" [ngValue]="c">
+                {{ c.title }}
+            </option>
+        </select>
+        @if (form.controls['course'].invalid && (form.controls['course'].dirty || form.controls['course'].touched)) {
+            <div class="form-error-message">
+                El curso es obligatorio.
+            </div>
+        }
+    </div>
+
+    <div class="mb-3">
+        <label class="mb-1" for="teacher">
+            Profesor<span class="required-asterisk">*</span>
+        </label>
+        <select [compareWith]="compareTeachers" class="ddl" formControlName="teacher" id="teacher">
+            <option [ngValue]="null">-- Seleccione un profesor --</option>
+            <option *ngFor="let t of teachers; trackBy: trackByTeacherId" [ngValue]="t">
+                {{ t.name }}
+            </option>
+        </select>
+        @if (form.controls['teacher'].invalid && (form.controls['teacher'].dirty || form.controls['teacher'].touched)) {
+            <div class="form-error-message">
+                El profesor es obligatorio.
+            </div>
+        }
+    </div>
+
+    <div class="text-center mt-4">
+        <button
+                (click)="callSave()"
+                [disabled]="form.invalid"
+                class="btn btn-primary"
+                type="button"
+        >
+            Guardar
+        </button>
+    </div>
+</form>

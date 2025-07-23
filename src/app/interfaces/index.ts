@@ -1,11 +1,12 @@
 export interface ILoginResponse {
   accessToken: string;
-  expiresIn: number
+  authUser: IUser;
+  expiresIn: number;
 }
 
 export interface IResponse<T> {
   data: T;
-  message: string,
+  message: string;
   meta: T;
 }
 
@@ -15,11 +16,14 @@ export interface IUser {
   lastname?: string;
   email?: string;
   password?: string;
-  active?: boolean;
   createdAt?: string;
   updatedAt?: string;
+  profilePicture?: string;
   authorities?: IAuthority[];
-  role?: IRole
+  role?: IRole;
+  school?: ISchool;
+  active?: boolean;
+  needsPasswordChange?: boolean;
 }
 
 export interface IAuthority {
@@ -34,22 +38,23 @@ export interface IFeedBackMessage {
 export enum IFeedbackStatus {
   success = "SUCCESS",
   error = "ERROR",
-  default = ''
+  default = "",
 }
 
 export enum IRoleType {
-  admin = "ROLE_ADMIN",
-  user = "ROLE_USER",
-  superAdmin = 'ROLE_SUPER_ADMIN'
+  teacher = "ROLE_TEACHER",
+  student = "ROLE_STUDENT",
+  superAdmin = "ROLE_SUPER_ADMIN",
 }
 
 export interface IRole {
-  createdAt: string;
-  description: string;
   id: number;
   name: string;
+  description: string;
+  createdAt: string;
   updatedAt: string;
 }
+
 export interface ISearch {
   page?: number;
   size?: number;
@@ -57,4 +62,95 @@ export interface ISearch {
   pageSize?: number;
   totalElements?: number;
   totalPages?: number;
+}
+
+export interface ISchool {
+  id?: number;
+  name?: string;
+  domain?: string;
+  createdAt?: string;
+}
+
+export interface IBadge {
+  id?: number;
+  title?: string;
+  description?: string;
+  iconUrl?: string;
+  students?: IUser[];
+}
+
+export interface ICourse {
+  id?: number;
+  code?: string;
+  title?: string;
+  description?: string;
+  createdAt?: string;
+}
+
+export interface IGroup {
+  id?: number;
+  name?: string;
+  course?: ICourse;
+  students?: IUser[];
+  teacher?: IUser;
+}
+
+export interface IStory {
+  id?: number;
+  title: string;
+  content: string;
+  createdAt?: Date;
+  courseId?: number;
+}
+
+export interface IStudent {
+  id?: number;
+  name?: string;
+  lastname?: string;
+  email?: string;
+  password?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  profilePicture?: string;
+  authorities?: IAuthority[];
+  role?: IRole;
+  schoolId?: ISchool;
+  active?: boolean;
+}
+
+export interface IAssignment {
+  group: { id: number; };
+  id?: number;
+  title: string;
+  description: string;
+  type: string;
+  dueDate: Date;
+  createdAt?: Date;
+  groupId?: number;
+
+}
+
+export interface IQuiz {
+  story: { id: number; };
+  id?: number;
+  title: string;
+  description: string;
+  dueDate: Date;
+  numberOfQuestions: number;
+  generateWithAI: boolean;
+  questions?: IQuestion[];
+}
+
+export interface IQuestion {
+  id?: number;
+  text: string;
+  quiz?: IQuiz;
+  options?: IOption[];
+}
+
+export interface IOption {
+  id?: number;
+  text: string;
+  correct: boolean;
+  question?: IQuestion;
 }
