@@ -1,47 +1,69 @@
-@media (min-width: 992px) {
-  .navbar .container-fluid {
-    padding-left: 3rem !important;
-    padding-right: 3rem !important;
+.topbar {
+  height: 8vh;
+  min-height: 64px;
+  padding: 0 3rem;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1100;
+
+  .container-fluid {
+    width: 100%;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
-}
-nav {
-  padding: 0;
-}
 
-nav div {
-  max-width: 1800px;
-  height: 12vh;
-}
+  .navbar-brand {
+    font-family: var(--font-family-roboto);
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--color-indigo-dye);
+    letter-spacing: 0.8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 
-img {
-  height: 40px;
-  width: auto;
-  max-width: 48px;
-}
+    img {
+      height: 40px;
+      width: auto;
+      flex-shrink: 0;
+    }
 
-span {
-  font-size: 1.6rem;
-  font-weight: 800;
-  color: var(--color-indigo-dye);
-  letter-spacing: 1px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    span {
+      display: inline-block;
+      line-height: 1;
+    }
+  }
+
+  .ms-auto {
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 1001;
+  }
 }
 
 @media (max-width: 768px) {
-  nav {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    padding: 0 20px !important;
-  }
-}
-@media (max-width: 1000px) {
-  nav {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    padding: 0 20px !important;
+  .topbar {
+    padding: 0 1.5rem;
+    min-height: 56px;
+
+    .navbar-brand {
+      font-size: 1.3rem;
+      gap: 8px;
+
+      img {
+        height: 32px;
+      }
+    }
   }
 }
