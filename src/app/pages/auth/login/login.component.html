@@ -1,153 +1,133 @@
-<app-topbar></app-topbar>
-<div class="login-wrapper">
-  <div class="login-container">
-   
-    <div class="login-form-section">
-     
-      <div class="form-content">
-        <div class="logo-container">
-          <div class="logo-box">
-            <img src="assets/icons/EduSmartIcon.png" alt="EduSmart Logo" class="logo-image">
-          </div>
-        </div>
+<div class="page-wrapper d-flex flex-column min-vh-100">
+    <app-topbar></app-topbar>
 
+    <div class="flex-grow-1">
+        <div class="login-wrapper">
+            <div class="login-container">
 
-        <h1 class="title">
-          Iniciar Sesión
-        </h1>
+                <div class="login-form-section">
+                    <div class="form-content">
+                        <div class="logo-container">
+                            <div class="logo-box">
+                                <img src="assets/icons/EduSmartIcon.png" alt="EduSmart Logo" class="logo-image" />
+                            </div>
+                        </div>
 
-        <div class="form-wrapper">
-          
-          <div class="form-container">
-            <form (ngSubmit)="handleLogin($event)" autocomplete="off" #frm="ngForm">
-              
-             
-           
-              <div class="input-group">
-                <span class="input-group-text bg-white border-end-0">
-              <i class="bi bi-envelope"></i>
-            </span>
-                <input
-              #email="ngModel"
-              type="email"
-              class="form-control border-start-0"
-              id="email"
-              name="email"
-              placeholder="email@address.com"
-              [(ngModel)]="loginForm.email"
-              required
-              email
-              />
-              </div>
+                        <h1 class="title">Iniciar Sesión</h1>
 
-            
-              @if (email.invalid && (email.dirty || email.touched)) {
-                <div class="error-message">
-                  @if (email.errors?.['required']) {
-                    <div>El correo electrónico es obligatorio.</div>
-                  } 
-                  @if (email.errors?.['email']) {
-                    <div>El correo electrónico no es válido.</div>
-                  }
+                        <div class="form-wrapper">
+                            <div class="form-container">
+                                <form (ngSubmit)="handleLogin($event)" autocomplete="off" #frm="ngForm">
+                                    <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0">
+                      <i class="bi bi-envelope"></i>
+                    </span>
+                                        <input
+                                            #email="ngModel"
+                                            type="email"
+                                            class="form-control border-start-0"
+                                            id="email"
+                                            name="email"
+                                            placeholder="email@address.com"
+                                            [(ngModel)]="loginForm.email"
+                                            required
+                                            email
+                                        />
+                                    </div>
+
+                                    @if (email.invalid && (email.dirty || email.touched)) {
+                                        <div class="error-message">
+                                            @if (email.errors?.['required']) {
+                                                <div>El correo electrónico es obligatorio.</div>
+                                            }
+                                            @if (email.errors?.['email']) {
+                                                <div>El correo electrónico no es válido.</div>
+                                            }
+                                        </div>
+                                    }
+
+                                    <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0">
+                      <i class="bi bi-lock"></i>
+                    </span>
+                                        <input
+                                            #password="ngModel"
+                                            type="password"
+                                            class="form-control border-start-0 border-end-0"
+                                            id="password"
+                                            name="password"
+                                            placeholder="********"
+                                            [(ngModel)]="loginForm.password"
+                                            required
+                                            minlength="6"
+                                        />
+                                        <button
+                                                type="button"
+                                                class="input-group-text bg-white border-start-0 password-toggle"
+                                                onclick="this.previousElementSibling.type = this.previousElementSibling.type === 'password' ? 'text' : 'password'; this.querySelector('i').classList.toggle('bi-eye'); this.querySelector('i').classList.toggle('bi-eye-slash');"
+                                                tabindex="-1"
+                                        >
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                    </div>
+
+                                    @if (password.invalid && (password.dirty || password.touched)) {
+                                        <div class="error-message">
+                                            @if (password.errors?.['required']) {
+                                                <div>La contraseña es obligatoria.</div>
+                                            }
+                                            @if (password.errors?.['minlength']) {
+                                                <div>Contraseña debe tener al menos 6 caracteres.</div>
+                                            }
+                                        </div>
+                                    }
+
+                                    <div class="forgot-password">
+                                        <a href="/password-recovery">¿Olvidaste tu contraseña?</a>
+                                    </div>
+
+                                    <button
+                                            class="btn btn-primary w-100 py-2 mb-3"
+                                            style="font-size: 1.3rem; font-weight: 700; height: 55px; margin-top: 1rem;"
+                                            type="submit"
+                                            [disabled]="frm.invalid"
+                                    >
+                                        <span>Iniciar Sesión</span>
+                                    </button>
+                                </form>
+
+                                <div class="separator"><span>O</span></div>
+
+                                <div class="social-buttons">
+                                    <div class="google-login-button-container">
+                                        <asl-google-signin-button
+                                                type="standard"
+                                                size="large"
+                                                text="continue_with"
+                                                locale="es"
+                                        ></asl-google-signin-button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              }
 
-             
-            
-              <div class="input-group">
-                     <span class="input-group-text bg-white border-end-0">
-              <i class="bi bi-lock"></i>
-            </span>
-                <input
-              #password="ngModel"
-              type="password"
-              class="form-control border-start-0 border-end-0"
-              id="password"
-              name="password"
-              placeholder="********"
-              [(ngModel)]="loginForm.password"
-              required
-              minlength="6"
-              />
-            <button
-              type="button"
-              class="input-group-text bg-white border-start-0 password-toggle"
-              onclick="this.previousElementSibling.type = this.previousElementSibling.type === 'password' ? 'text' : 'password'; this.querySelector('i').classList.toggle('bi-eye'); this.querySelector('i').classList.toggle('bi-eye-slash');"
-              tabindex="-1"
-            >
-              <i class="bi bi-eye"></i>
-            </button>
-              </div>
-
-             
-              @if (password.invalid && (password.dirty || password.touched)) {
-                <div class="error-message">
-                  @if (password.errors?.['required']) {
-                    <div>La contraseña es obligatoria.</div>
-                  } 
-                  @if (password.errors?.['minlength']) {
-                    <div>Contraseña debe tener al menos 6 caracteres.</div>
-                  }
+                <div class="image-section">
+                    <div class="image-content">
+                        <img
+                                src="assets/img/LoginScreen.jpg"
+                                alt="EduSmart - Plataforma Educativa"
+                                class="login-image"
+                                onError="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                        />
+                    </div>
                 </div>
-              }
 
-              
-              <div class="forgot-password">
-                <a href="/password-recovery">
-                  ¿Olvidaste tu contraseña?
-                </a>
-              </div>
-
-           
-              <button
-              class="btn btn-primary w-100 py-2 mb-3"
-              style="font-size: 1.3rem; font-weight: 700; height: 55px; margin-top: 1rem;"
-              type="submit"
-              [disabled]="frm.invalid"
-            >
-                
-                <span>Iniciar Sesión</span>
-              </button>
-            </form>
-
-          
-          <div class="separator">
-            <span>O</span>
-          </div>
-
-        <div class="social-buttons">
-           
-            <div class="google-login-button-container">
-              <asl-google-signin-button
-                type="standard"
-                size="large"
-                text="continue_with"
-                 type="standard"
-                locale="es"
-                
-              ></asl-google-signin-button>
             </div>
-
-          
-          </div>
-        
-          </div>
         </div>
-      </div>
     </div>
 
-    
-    <div class="image-section">
-      <div class="image-content">
-        <img 
-          src="assets/img/LoginScreen.jpg"
-          alt="EduSmart - Plataforma Educativa"
-          class="login-image"
-          onError="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-        />
-       
-      </div>
-    </div>
-  </div>
+    <app-footer></app-footer>
 </div>
-<app-footer></app-footer>
