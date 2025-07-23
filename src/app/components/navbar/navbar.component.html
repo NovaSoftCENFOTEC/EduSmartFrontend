@@ -1,13 +1,16 @@
-<nav class="navbar navbar-expand-lg navbar-dark navbar-custom-green shadow">
-    <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mx-auto">
+<nav class="navbar navbar-expand-lg navbar-dark elegant-navbar">
+    <div class="container-fluid justify-content-center">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+            <ul class="navbar-nav d-flex align-items-center gap-2 flex-wrap">
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/app/dashboard" routerLinkActive="active">
-                        <i class="fas fa-chart-pie me-1"></i>
-                        Inicio
+                        <i class="fas fa-home"></i>
+                        <span>Inicio</span>
                     </a>
                 </li>
 
@@ -15,16 +18,13 @@
                     @if (route.data?.showInSidebar && route.path !== 'dashboard') {
                         <li class="nav-item">
                             <a class="nav-link" [routerLink]="'/app/' + route.path" routerLinkActive="active">
-
-                                {{ route.data?.name || route.path }}
+                                <i *ngIf="route.data?.icon" class="{{route.data.icon}}"></i>
+                                <span>{{ route.data?.name || route.path }}</span>
                             </a>
                         </li>
                     }
                 }
-
             </ul>
-
-
         </div>
     </div>
 </nav>
