@@ -17,13 +17,15 @@ import { NgIf } from '@angular/common';
     ModalComponent,
     BadgeFormComponent,
     BadgeListComponent,
+    NgIf,
   ],
   templateUrl: './badges.component.html',
   styleUrls: ['./badges.component.scss']
 })
 export class BadgesComponent {
-  public badgeService: BadgeService = inject(BadgeService);
-  public fb: FormBuilder = inject(FormBuilder);
+  public badgeService = inject(BadgeService);
+  public modalService = inject(ModalService);
+  public fb = inject(FormBuilder);
 
   public form = this.fb.group({
     id: [''],
@@ -32,7 +34,6 @@ export class BadgesComponent {
     iconUrl: ['', Validators.required]
   });
 
-  public modalService: ModalService = inject(ModalService);
   @ViewChild('editBadgeModal') public editBadgeModal: any;
   @ViewChild('addBadgeModal') public addBadgeModal: any;
   @ViewChild('editConfirmationModal') public editConfirmationModal: any;
@@ -43,43 +44,10 @@ export class BadgesComponent {
     this.badgeService.getAll();
   }
 
-  saveBadge(item: IBadge) {
-    this.badgeService.save(item);
-  }
-
   handleAddBadge(item: IBadge) {
-    this.saveBadge(item);
+    this.badgeService.save(item);
     this.modalService.closeAll();
     this.form.reset();
-  }
-
-  updateBadge(item: IBadge) {
-    this.badgeService.update(item, () => {
-      this.badgeService.getAll();
-      this.modalService.closeAll();
-      this.form.reset();
-    });
-  }
-
-  deleteBadge(item: IBadge) {
-    this.badgeService.delete(item, () => {
-      this.badgeService.getAll();
-    });
-  }
-
-  openEditBadgeModal(badge: IBadge) {
-    this.form.patchValue({
-      id: JSON.stringify(badge.id),
-      title: badge.title,
-      description: badge.description,
-      iconUrl: badge.iconUrl
-    });
-    this.modalService.displayModal('lg', this.editBadgeModal);
-  }
-
-  openAddBadgeModal() {
-    this.form.reset();
-    this.modalService.displayModal('md', this.addBadgeModal);
   }
 
   confirmEdit(item: IBadge) {
@@ -96,13 +64,33 @@ export class BadgesComponent {
 
   confirmEditFinal() {
     if (this.pendingEditItem) {
-      this.updateBadge(this.pendingEditItem);
+      this.badgeService.update(this.pendingEditItem);
       this.pendingEditItem = null;
+      this.modalService.closeAll();
+      this.form.reset();
     }
+  }
+
+  deleteBadge(item: IBadge) {
+    this.badgeService.delete(item);
+  }
+
+  openEditBadgeModal(badge: IBadge) {
+    this.form.patchValue({
+      id: String(badge.id),
+      title: badge.title,
+      description: badge.description,
+      iconUrl: badge.iconUrl
+    });
+    this.modalService.displayModal('lg', this.editBadgeModal);
+  }
+
+  openAddBadgeModal() {
+    this.form.reset();
+    this.modalService.displayModal('md', this.addBadgeModal);
   }
 
   goBack() {
     window.history.back();
   }
-
 }

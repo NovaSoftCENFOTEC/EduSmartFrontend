@@ -99,7 +99,7 @@ export class StoriesComponent implements OnInit {
       content: this.storyForm.controls['content'].value || ''
     };
 
-    this.storyService.update(payloadToSend as IStory, () => {
+    this.storyService.updateStory(payloadToSend as IStory, () => {
       this.modalService.closeAll();
       this.storyForm.reset();
       this.originalStory = null;
@@ -109,7 +109,7 @@ export class StoriesComponent implements OnInit {
 
   deleteStory(item: IStory) {
     if (!this.courseId || !item.id) return;
-    this.storyService.delete(item, () => {
+    this.storyService.deleteStory(item, () => {
       this.storyService.getStoriesByCourse(this.courseId!);
     });
   }

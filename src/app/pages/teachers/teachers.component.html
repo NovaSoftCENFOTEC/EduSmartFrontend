@@ -21,10 +21,9 @@
                         (callModalAction)="openEditTeacherModal($event)"
                         (callDeleteAction)="deleteTeacher($event)">
                 </app-teachers-list>
-
                 @if (teacherList().length) {
                     <app-pagination
-                            [service]="userService.search"
+                            [service]="teacherService.search"
                             [loadFunction]="loadTeachers.bind(this)">
                     </app-pagination>
                 }
