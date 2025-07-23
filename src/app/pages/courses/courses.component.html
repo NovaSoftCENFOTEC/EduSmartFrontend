@@ -22,10 +22,12 @@
                     (callDeleteAction)="deleteCourse($event)">
                 </app-courses-list>
 
-                <ng-container *ngIf="courseService.courses$().length > 0">
-
-                    <app-pagination [service]="courseService"></app-pagination>
-                </ng-container>
+                @if (courseService.courses$().length ) {
+                    <app-pagination
+                            [service]="courseService.search"
+                            [loadFunction]="courseService.getAll.bind(courseService)">
+                    </app-pagination>
+                }
             </div>
         </div>
     </div>

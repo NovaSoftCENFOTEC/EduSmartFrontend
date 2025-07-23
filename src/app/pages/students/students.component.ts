@@ -10,17 +10,16 @@ import { ActivatedRoute } from '@angular/router';
 import { StudentsFormComponent } from '../../components/students/students-form/students-form.component';
 import { StudentsListComponent } from '../../components/students/students-list/students-list.component';
 import {UserService} from "../../services/user.service";
-import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-students',
   standalone: true,
-  imports: [
-    PaginationComponent,
-    ModalComponent,
-    StudentsFormComponent,
-    StudentsListComponent,
-  ],
+    imports: [
+        PaginationComponent,
+        ModalComponent,
+        StudentsFormComponent,
+        StudentsListComponent,
+    ],
   templateUrl: './students.component.html',
   styleUrls: ['./students.component.scss']
 })

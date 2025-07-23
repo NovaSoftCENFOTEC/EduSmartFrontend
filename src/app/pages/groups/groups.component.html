@@ -21,9 +21,11 @@
                         (callModalAction)="openEditGroupModal($event)"
                         (callDeleteAction)="deleteGroup($event)">
                 </app-groups-list>
-
-                @if (groupsService.groups$().length) {
-                    <app-pagination [service]="groupsService"></app-pagination>
+                @if (groupsService.groups$().length && authService.getUser()?.id) {
+                    <app-pagination
+                            [service]="groupsService.search"
+                            [loadFunction]="loadGroups.bind(this)">
+                    </app-pagination>
                 }
             </div>
         </div>

@@ -22,6 +22,8 @@ export class AssignmentsService extends BaseService<IAssignment> {
   public search: ISearch = {
     page: 1,
     size: 5,
+    pageNumber: 1,
+    totalPages: 1,
   };
 
   public totalItems: any = [];

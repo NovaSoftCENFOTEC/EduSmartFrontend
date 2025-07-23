@@ -10,7 +10,7 @@ import {AuthService} from '../../services/auth.service';
 import {ActivatedRoute} from '@angular/router';
 import {SchoolsFormComponent} from "../../components/schools/school-form/schools-form.component";
 import {SchoolsListComponent} from "../../components/schools/school-list/schools-list.component";
-import {NgIf} from "@angular/common";
+import {AsyncPipe, NgIf} from "@angular/common";
 import {FooterComponent} from "../../components/app-layout/elements/footer/footer.component";
 
 @Component({
@@ -23,7 +23,8 @@ import {FooterComponent} from "../../components/app-layout/elements/footer/foote
         SchoolsFormComponent,
         SchoolsListComponent,
         NgIf,
-        FooterComponent
+        FooterComponent,
+        AsyncPipe
     ],
     templateUrl: './schools.component.html',
     styleUrl: './schools.component.scss'
@@ -56,6 +57,8 @@ export class SchoolsComponent {
         this.route.data.subscribe(data => {
             this.areActionsAvailable = this.authService.areActionsAvailable(data['authorities'] ?? []);
         });
+
+        this.schoolService.getAll();
     }
 
     constructor() {

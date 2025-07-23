@@ -24,14 +24,12 @@
                         (callModalAction)="openEditStudentModal($event)"
                         (callDeleteAction)="deleteStudent($event)">
                 </app-students-list>
-
-                @if (studentList().length > 0) {
+                @if (studentList().length) {
                     <app-pagination
                             [service]="studentService.search"
                             [loadFunction]="loadStudents.bind(this)">
                     </app-pagination>
                 }
-
             </div>
         </div>
     </div>

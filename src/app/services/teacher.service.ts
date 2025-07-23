@@ -20,9 +20,9 @@ export class TeacherService extends BaseService<IUser> {
 
     public search: ISearch = {
         page: 1,
-        size: 10,
+        size: 5,
         pageNumber: 1,
-        totalPages: 1
+        totalPages: 1,
     };
 
 
@@ -39,33 +39,29 @@ export class TeacherService extends BaseService<IUser> {
     getTeachersBySchool(schoolId: number) {
         this.setCurrentSchoolId(schoolId);
         const params = {
-            page: this.search.pageNumber ?? 1,
-            size: this.search.size ?? 10
+            page: this.search.page,
+            size: this.search.size
         };
 
-
         this.findAllWithParamsAndCustomSource(`school/${schoolId}/teachers`, params).subscribe({
-            next: (response: any) => {
-                this.search = {
-                    ...this.search,
-                    pageNumber: response.meta.page ?? 1,
-                    totalPages: response.meta.totalPages ?? 1,
-                    size: response.meta.size ?? 10
-                };
-                this.totalItems = Array.from({length: this.search.totalPages ?? 0}, (_, i) => i + 1);
+            next: (response: IResponse<IUser[]>) => {
                 this.teacherListSignal.set(response.data);
+                this.search = { ...this.search, ...response.meta };
+                this.totalItems = Array.from({ length: this.search.totalPages || 0 }, (_, i) => i + 1);
             },
             error: (err) => {
                 this.alertService.displayAlert(
                     'error',
                     'Ocurrió un error al obtener los profesores.',
-                    'center', 'top',
+                    'center',
+                    'top',
                     ['error-snackbar']
                 );
                 console.error('Error al obtener profesores:', err);
             }
         });
     }
+
 
 
     saveTeacher(schoolId: number, teacher: IUser) {

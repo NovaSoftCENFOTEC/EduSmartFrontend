@@ -1,14 +1,14 @@
-import {Component, ViewChild, inject} from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 
-import {PaginationComponent} from '../../components/pagination/pagination.component';
-import {ModalComponent} from '../../components/modal/modal.component';
-import {ICourse} from '../../interfaces';
-import {FormBuilder, Validators} from '@angular/forms';
-import {ModalService} from '../../services/modal.service';
-import {AuthService} from '../../services/auth.service';
-import {ActivatedRoute} from '@angular/router';
-import {NgIf} from "@angular/common";
-import {FooterComponent} from "../../components/app-layout/elements/footer/footer.component";
+import { PaginationComponent } from '../../components/pagination/pagination.component';
+import { ModalComponent } from '../../components/modal/modal.component';
+import { ICourse } from '../../interfaces';
+import { FormBuilder, Validators } from '@angular/forms';
+import { ModalService } from '../../services/modal.service';
+import { AuthService } from '../../services/auth.service';
+import { ActivatedRoute } from '@angular/router';
+import { NgIf } from '@angular/common';
+import { FooterComponent } from '../../components/app-layout/elements/footer/footer.component';
 import { CoursesFormComponent } from '../../components/courses/course-form/courses-form.component';
 import { CoursesListComponent } from '../../components/courses/course-list/courses-list.component';
 import { CourseService } from '../../services/course.service';
@@ -17,21 +17,21 @@ import { CourseService } from '../../services/course.service';
     selector: 'app-courses',
     standalone: true,
     imports: [
-
         PaginationComponent,
         ModalComponent,
         CoursesFormComponent,
         CoursesListComponent,
         NgIf,
-        FooterComponent
     ],
     templateUrl: './courses.component.html',
     styleUrl: './courses.component.scss'
 })
 export class CoursesComponent {
-    public courseList: ICourse[] = [];
     public courseService: CourseService = inject(CourseService);
     public fb: FormBuilder = inject(FormBuilder);
+    public modalService: ModalService = inject(ModalService);
+    public authService: AuthService = inject(AuthService);
+    public route: ActivatedRoute = inject(ActivatedRoute);
 
     public courseForm = this.fb.group({
         id: [''],
@@ -39,26 +39,24 @@ export class CoursesComponent {
         title: ['', [Validators.required, Validators.maxLength(100)]],
         description: ['', [Validators.required, Validators.maxLength(250)]],
         createdAt: ['']
-});
-    public modalService: ModalService = inject(ModalService);
+    });
+
     @ViewChild('editCourseModal') public editCourseModal: any;
     @ViewChild('addCourseModal') public addCourseModal: any;
     @ViewChild('editConfirmationModal') public editConfirmationModal: any;
 
-    public authService: AuthService = inject(AuthService);
     public areActionsAvailable: boolean = false;
-    public route: ActivatedRoute = inject(ActivatedRoute);
-
     private pendingEditItem: ICourse | null = null;
+
+    constructor() {
+    }
 
     ngOnInit(): void {
         this.authService.getUserAuthorities();
         this.route.data.subscribe(data => {
             this.areActionsAvailable = this.authService.areActionsAvailable(data['authorities'] ?? []);
         });
-    }
 
-    constructor() {
         this.courseService.getAll();
     }
 
@@ -98,13 +96,11 @@ export class CoursesComponent {
         this.modalService.displayModal('md', this.addCourseModal);
     }
 
-
     confirmEdit(item: ICourse) {
         this.pendingEditItem = item;
         this.modalService.closeAll();
         this.modalService.displayModal('sm', this.editConfirmationModal);
     }
-
 
     cancelEdit() {
         this.pendingEditItem = null;
@@ -122,6 +118,4 @@ export class CoursesComponent {
     goBack() {
         window.history.back();
     }
-
-
 }

@@ -22,9 +22,11 @@
                         (callDeleteAction)="deleteSchool($event)">
                 </app-schools-list>
 
-                @if (schoolService.schools$().length) {
-                    <app-pagination [service]="schoolService"></app-pagination>
-                }
+                <app-pagination
+                        *ngIf="schoolService.schools$().length > 0"
+                        [service]="schoolService.search"
+                        [loadFunction]="schoolService.getAll.bind(schoolService)">
+                </app-pagination>
             </div>
         </div>
     </div>

@@ -23,10 +23,9 @@ import { GroupsListComponent } from '../../components/groups/group-list/groups-l
     styleUrl: './groups.component.scss'
 })
 export class GroupsComponent implements OnInit {
-    public groupList: IGroup[] = [];
-    public areActionsAvailable: boolean = false;
-    private pendingEditItem: IGroup | null = null;
+    public teacherId: number | null = null;
     public schoolName: string | null = null;
+    public areActionsAvailable: boolean = false;
 
     public groupsService = inject(GroupsService);
     public fb = inject(FormBuilder);
@@ -34,9 +33,9 @@ export class GroupsComponent implements OnInit {
     public authService = inject(AuthService);
     public route = inject(ActivatedRoute);
 
-    @ViewChild('editGroupModal') public editGroupModal: any;
-    @ViewChild('addGroupModal') public addGroupModal: any;
-    @ViewChild('editConfirmationModal') public editConfirmationModal: any;
+    @ViewChild('editGroupModal') public editGroupModal!: any;
+    @ViewChild('addGroupModal') public addGroupModal!: any;
+    @ViewChild('editConfirmationModal') public editConfirmationModal!: any;
 
     public groupForm = this.fb.group({
         id: [''],
@@ -48,16 +47,19 @@ export class GroupsComponent implements OnInit {
 
     ngOnInit(): void {
         const user = this.authService.getUser();
-        const teacherId = user?.id;
-
-        if (teacherId) {
-            this.groupsService.getGroupsByTeacher(teacherId);
-            this.schoolName = user.school?.name || null;
-        }
-
+        if (!user) return;
+        this.teacherId   = user.id ?? null;
+        this.schoolName = user.school?.name || null;
+        this.loadGroups();
         this.route.data.subscribe(data => {
             this.areActionsAvailable = this.authService.areActionsAvailable(data['authorities'] ?? []);
         });
+    }
+
+    loadGroups(): void {
+        if (this.teacherId) {
+            this.groupsService.getGroupsByTeacher(this.teacherId);
+        }
     }
 
     saveGroup(item: IGroup) {
@@ -82,7 +84,7 @@ export class GroupsComponent implements OnInit {
 
     openEditGroupModal(group: IGroup) {
         this.groupForm.patchValue({
-            id: group.id !== undefined && group.id !== null ? String(group.id) : null,
+            id: group.id != null ? String(group.id) : null,
             name: group.name,
             course: group.course,
             students: group.students ?? [],
@@ -98,22 +100,18 @@ export class GroupsComponent implements OnInit {
     }
 
     confirmEdit(item: IGroup) {
-        this.pendingEditItem = item;
         this.modalService.closeAll();
         this.modalService.displayModal('sm', this.editConfirmationModal);
     }
 
-    cancelEdit() {
-        this.pendingEditItem = null;
+    confirmEditFinal() {
+        this.updateGroup(this.groupForm.value as IGroup);
         this.modalService.closeAll();
-        this.modalService.displayModal('lg', this.editGroupModal);
     }
 
-    confirmEditFinal() {
-        if (this.pendingEditItem) {
-            this.updateGroup(this.pendingEditItem);
-            this.pendingEditItem = null;
-        }
+    cancelEdit() {
+        this.modalService.closeAll();
+        this.modalService.displayModal('lg', this.editGroupModal);
     }
 
     goBack() {
