@@ -24,6 +24,7 @@ import { AdminTeacherRoleGuard } from "./guards/admin-teacher-role.guard";
 import { StoriesComponent } from "./pages/stories/stories.component";
 import { GroupStudentsComponent } from "./pages/groupstudents/students.component";
 import { AssignmentsComponent } from "./pages/assignments/assignments.component";
+import { QuizzesComponent } from "./pages/quizzes/quizzes.component";
 
 export const routes: Routes = [
   {
@@ -188,6 +189,15 @@ export const routes: Routes = [
         data: {
           authorities: [IRoleType.superAdmin, IRoleType.teacher],
           name: "Asignaciones",
+        },
+      },
+      {
+        path: "quizzes",
+        component: QuizzesComponent,
+        canActivate: [AdminTeacherRoleGuard],
+        data: {
+          authorities: [IRoleType.superAdmin, IRoleType.teacher],
+          name: "Quices",
         },
       },
     ],

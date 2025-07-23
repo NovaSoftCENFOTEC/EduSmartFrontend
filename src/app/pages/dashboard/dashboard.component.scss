@@ -1,0 +1,16 @@
+.text-indigo-dye {
+  color: var(--color-indigo-dye);
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 3rem !important;
+    line-height: 1.2;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .intro, .outro {
+    font-size: 1.2rem !important;
+  }
+}

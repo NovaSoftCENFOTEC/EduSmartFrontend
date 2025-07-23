@@ -8,8 +8,8 @@ import { AuthService } from "../../services/auth.service";
 import { AssignmentsService } from "../../services/assignment.service";
 import { PaginationComponent } from "../../components/pagination/pagination.component";
 import { ModalComponent } from "../../components/modal/modal.component";
-import { AssignmentsFormComponent } from "../../asignments/assignment-form/assignments-form.component";
-import { AssignmentsListComponent } from "../../asignments/assignment-list/assignments-list.component";
+import { AssignmentsFormComponent } from "../../components/asignments/assignment-form/assignments-form.component";
+import { AssignmentsListComponent } from "../../components/asignments/assignment-list/assignments-list.component";
 
 @Component({
   selector: "app-assignments",
@@ -128,8 +128,8 @@ export class AssignmentsComponent implements OnInit {
       group_id: assignment.groupId
         ? String(assignment.groupId)
         : this.groupId !== null
-        ? String(this.groupId)
-        : "",
+          ? String(this.groupId)
+          : "",
       created_at: this.convertDateToString(assignment.createdAt ?? null),
     });
     this.modalService.displayModal("lg", this.editAssignmentModal);

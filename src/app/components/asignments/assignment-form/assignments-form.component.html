@@ -75,7 +75,12 @@
     <label class="mb-1"
       >Fecha de entrega<span class="required-asterisk">*</span></label
     >
-    <input formControlName="due_date" type="date" class="form-control normal" />
+    <input
+      formControlName="due_date"
+      type="date"
+      class="form-control normal"
+      [min]="minDueDate"
+    />
     <div
       *ngIf="
         form.controls['due_date'].invalid &&

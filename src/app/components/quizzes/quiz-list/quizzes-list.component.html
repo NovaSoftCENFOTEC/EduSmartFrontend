@@ -1,17 +1,16 @@
 <div class="card">
   <div class="card-header card-header-indigo">
-    <h2 class="mb-0">Lista de Historias</h2>
+    <h2 class="mb-0">Lista de Quices</h2>
   </div>
+
   <div class="card-body">
-    <p class="text-muted mb-3">
-      Historias registradas para el curso seleccionado.
-    </p>
+    <p class="text-muted mb-3">Puedes ver o editar un quiz desde esta tabla.</p>
 
     <div class="mb-4 mt-2">
       <input
         type="text"
-        class="input-txt input-filter"
-        placeholder="Filtrar por título o contenido..."
+        class="input-txt w-25"
+        placeholder="Filtrar quiz por título o tipo..."
         [(ngModel)]="searchText"
       />
     </div>
@@ -21,48 +20,44 @@
         <thead class="table-header-gray">
           <tr>
             <th scope="col">Título</th>
-            <th scope="col">Contenido</th>
-            <th scope="col">Fecha de creación</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Fecha de entrega</th>
             <th class="text-center" scope="col">Acciones</th>
           </tr>
         </thead>
         <tbody>
-          @if (filteredStories.length > 0) { @for (item of filteredStories;
-          track item.id) {
+          @for (item of filteredQuizzes; track item.id) {
           <tr>
             <td>{{ item.title }}</td>
-            <td>{{ item.content }}</td>
-            <td>{{ item.createdAt | date : "mediumDate" }}</td>
+            <td>{{ item.description }}</td>
+            <td>{{ item.dueDate | date : "dd/MM/yyyy" }}</td>
+
             <td class="text-center">
               <button
                 (click)="callModalAction.emit(item)"
                 class="btn border-0 me-2 icon-gray-color"
                 type="button"
+                title="Editar quiz"
               >
                 <i class="fas fa-pen"></i>
               </button>
               <button
-                (click)="openConfirmationModal(item)"
+                (click)="viewQuiz(item)"
                 class="btn border-0 icon-gray-color"
                 type="button"
+                title="Ver quiz"
               >
-                <i class="fas fa-trash"></i>
-              </button>
-               <button
-                (click)="goToQuizStories(item.id)"
-                class="btn btn-primary px-4 py-2"
-              >
-                Ver quices
+                <i class="fas fa-eye"></i>
               </button>
             </td>
           </tr>
-          } } @else {
+          } @empty {
           <tr>
-            <td colspan="4">
+            <td colspan="6">
               <div
                 class="d-flex justify-content-center align-items-center w-100"
               >
-                <p class="mb-0">No hay historias registradas</p>
+                <p class="mb-0">No hay quizzes registrados</p>
               </div>
             </td>
           </tr>
@@ -71,16 +66,4 @@
       </table>
     </div>
   </div>
-
-  <app-confirm-modal
-    #confirmDeleteModal
-    [message]="
-      '¿Estás seguro(a) de que deseas eliminar la historia ' +
-      deleteStory?.title +
-      '?'
-    "
-    [confirmText]="'Eliminar'"
-    [cancelText]="'Cancelar'"
-    (confirmed)="deleteConfirmation()"
-  ></app-confirm-modal>
 </div>
