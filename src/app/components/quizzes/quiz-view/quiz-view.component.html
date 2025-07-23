@@ -1,0 +1,107 @@
+<div class="quiz-view-container">
+    <div class="position-relative">
+        <div class="quiz-header mb-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="quiz-title mb-0">
+                    <i class="fas fa-question-circle me-2"></i>
+                    {{ quiz?.title || 'Cargando...' }}
+                </h2>
+            </div>
+
+            <div class="quiz-info mt-3">
+                <p class="quiz-description mb-2">{{ quiz?.description }}</p>
+                <div class="quiz-meta">
+                    <span class="badge bg-primary me-2">
+                        <i class="fas fa-calendar me-1"></i>
+                        Fecha de entrega: {{ quiz?.dueDate | date: 'dd/MM/yyyy' }}
+                    </span>
+                    <span class="badge bg-info me-2">
+                        <i class="fas fa-list me-1"></i>
+                        @if (questions.length === 1) {
+                        {{ questions.length }} pregunta
+                        } @else {
+                        {{ questions.length }} preguntas
+                        }
+                    </span>
+                    @if (quiz?.generateWithAI) {
+                    <span class="badge bg-success">
+                        <i class="fas fa-magic me-1"></i>
+                        Generado con IA
+                    </span>
+                    }
+                </div>
+            </div>
+        </div>
+        @if (isLoading) {
+        <div class="loader-overlay">
+            <app-loader></app-loader>
+        </div>
+        }
+        @if (!isLoading && quiz) {
+        <div class="questions-container">
+            @if (questions.length === 0) {
+            <div class="no-questions">
+                <div class="text-center py-5">
+                    <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                    <h4 class="text-muted">No hay preguntas disponibles</h4>
+                    <p class="text-muted">Este quiz aún no tiene preguntas asignadas.</p>
+                </div>
+            </div>
+            }
+            @if (questions.length > 0) {
+            <div class="questions-list">
+                @for (question of questions; track question.id; let i = $index) {
+                <div class="question-card mb-4">
+                    <div class="question-header">
+                        <h5 class="question-number">
+                            <span class="question-badge">{{ i + 1 }}</span>
+                            Pregunta {{ i + 1 }}
+                        </h5>
+                    </div>
+
+                    <div class="question-content">
+                        <p class="question-text">{{ question.text }}</p>
+
+                        <div class="options-container">
+                            @if (getCorrectOptions(question).length > 0) {
+                            <div class="correct-options mb-3">
+                                <h6 class="options-title text-success">
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    Respuesta correcta:
+                                </h6>
+                                <div class="options-list">
+                                    @for (option of getCorrectOptions(question); track option.id) {
+                                    <div class="option-item correct">
+                                        <i class="fas fa-check text-success me-2"></i>
+                                        {{ option.text }}
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                            }
+                            @if (getIncorrectOptions(question).length > 0) {
+                            <div class="incorrect-options">
+                                <h6 class="options-title text-danger">
+                                    <i class="fas fa-times-circle me-2"></i>
+                                    Respuestas incorrectas:
+                                </h6>
+                                <div class="options-list">
+                                    @for (option of getIncorrectOptions(question); track option.id) {
+                                    <div class="option-item incorrect">
+                                        <i class="fas fa-times text-danger me-2"></i>
+                                        {{ option.text }}
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+            }
+        </div>
+        }
+    </div>
+</div>
