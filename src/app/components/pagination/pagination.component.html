@@ -1,6 +1,5 @@
 <div class="d-flex align-items-center justify-content-between my-3">
-
-    <!-- Botón Atrás -->
+    
     <nav aria-label="pagination-prev" class="ms-0">
         <ul class="pagination custom-pagination-buttons mb-0">
             <li class="page-item">
@@ -14,28 +13,29 @@
         </ul>
     </nav>
 
-    <!-- Texto de página actual -->
-    <div class="text-muted">
-        Página {{ service?.pageNumber || 1 }} de {{ service?.totalPages || 1 }}
+    <div class="d-flex align-items-center justify-content-center gap-3 flex-grow-1 mx-3">
+
+        <div class="text-muted">
+            Página {{ service?.pageNumber || 1 }} de {{ service?.totalPages || 1 }}
+        </div>
+
+        <div class="go-to-page-container d-flex align-items-center">
+            <label for="pageInput" class="me-2 mb-0">Ir a página:</label>
+            <input
+                    id="pageInput"
+                    type="number"
+                    min="1"
+                    [max]="service?.totalPages || 1"
+                    [(ngModel)]="pageInput"
+                    class="form-control form-control-sm"
+                    style="width: 70px;"
+                    (keyup.enter)="goToPage()"
+            />
+            <button class="btn btn-sm btn-primary ms-2" (click)="goToPage()">Ir</button>
+        </div>
+
     </div>
 
-    <!-- Input para ir a página específica -->
-    <div class="go-to-page-container d-flex align-items-center mx-3">
-        <label for="pageInput" class="me-2 mb-0">Ir a página:</label>
-        <input
-                id="pageInput"
-                type="number"
-                min="1"
-                [max]="service?.totalPages || 1"
-                [(ngModel)]="pageInput"
-                class="form-control form-control-sm"
-                style="width: 70px;"
-                (keyup.enter)="goToPage()"
-        />
-        <button class="btn btn-sm btn-primary ms-2" (click)="goToPage()">Ir</button>
-    </div>
-
-    <!-- Botón Siguiente -->
     <nav aria-label="pagination-next" class="me-0">
         <ul class="pagination custom-pagination-buttons mb-0">
             <li class="page-item">
@@ -48,4 +48,5 @@
             </li>
         </ul>
     </nav>
+
 </div>
