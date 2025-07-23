@@ -2,7 +2,7 @@
   background-color: var(--color-indigo-dye) !important;
   font-family: var(--font-family-roboto);
   padding: 0.75rem 1.5rem;
-  border-radius: 0 0 20px 20px;
+  border-radius: 0;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   position: relative;
   z-index: 1000;
@@ -44,7 +44,8 @@
       padding: 0.8rem 1.6rem;
       border-radius: 0.6rem;
       border: 1px solid transparent;
-      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease, border-color 0.3s ease;
+      transition: background-color 0.3s ease, transform 0.2s ease,
+        box-shadow 0.2s ease, border-color 0.3s ease;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       line-height: 1.2;
