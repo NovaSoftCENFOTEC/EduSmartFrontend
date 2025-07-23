@@ -16,8 +16,10 @@ export class CourseService extends BaseService<ICourse> {
 
   public search: ISearch = {
     page: 1,
-    size: 5
-  }
+    size: 5,
+    pageNumber: 1,
+    totalPages: 1,
+  };
 
   public totalItems: any = [];
   private alertService: AlertService = inject(AlertService);

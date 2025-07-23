@@ -22,10 +22,10 @@
                         (callDeleteAction)="deleteStudent($event)"> 
                 </app-students-list>
 
-                @if (studentList().length) { 
+                @if (studentList().length) {
                     <app-pagination
                             [service]="userService.search"
-                            [loadFunction]="loadStudents.bind(this)"> 
+                            [loadFunction]="loadStudents.bind(this)">
                     </app-pagination>
                 }
             </div>

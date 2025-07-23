@@ -1,6 +1,6 @@
 <div class="row p-4">
   <div class="col-12 mb-3">
-    <h2 class="title-highlight">Insignias</h2>
+    <h2 class="title-highlight">Medallas</h2>
   </div>
 
   <div class="col-12">
@@ -23,8 +23,7 @@
           (callDeleteAction)="deleteBadge($event)"
         >
         </app-badge-list>
-
-        @if (badgeService.badges$().length > 0) {
+        @if (badgeService.badges$()) {
         <app-pagination
           [service]="badgeService.search"
           [loadFunction]="badgeService.getAll.bind(badgeService)"

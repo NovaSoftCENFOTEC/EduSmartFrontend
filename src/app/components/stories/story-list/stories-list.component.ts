@@ -1,16 +1,23 @@
-import { Component, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
-import { IStory } from '../../../interfaces';
-import { ConfirmModalComponent } from '../../confirm-modal/confirm-modal.component';
-import { DatePipe, NgForOf, NgIf } from '@angular/common';
-import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+  inject,
+} from "@angular/core";
+import { IStory } from "../../../interfaces";
+import { ConfirmModalComponent } from "../../confirm-modal/confirm-modal.component";
+import { DatePipe, NgForOf, NgIf } from "@angular/common";
+import { Router } from "@angular/router";
+import { FormsModule } from "@angular/forms";
 
 @Component({
-  selector: 'app-story-list',
+  selector: "app-story-list",
   standalone: true,
   imports: [ConfirmModalComponent, DatePipe, NgForOf, NgIf, FormsModule],
-  templateUrl: './stories-list.component.html',  
-  styleUrls: ['./stories-list.component.scss']
+  templateUrl: "./stories-list.component.html",
+  styleUrls: ["./stories-list.component.scss"],
 })
 export class StoryListComponent {
   @Input() stories: IStory[] = [];
@@ -19,19 +26,19 @@ export class StoryListComponent {
   @Output() callModalAction = new EventEmitter<IStory>();
 
   deleteStory: IStory | null = null;
-  searchText: string = '';
+  searchText: string = "";
 
-  @ViewChild('confirmDeleteModal') confirmDeleteModal!: ConfirmModalComponent;
+  @ViewChild("confirmDeleteModal") confirmDeleteModal!: ConfirmModalComponent;
 
-  // Aquí sí estás inyectando correctamente Router:
   router = inject(Router);
 
   get filteredStories(): IStory[] {
     if (!this.searchText) return this.stories;
     const lower = this.searchText.toLowerCase();
-    return this.stories.filter(s =>
-      (s.title?.toLowerCase() ?? '').includes(lower) ||
-      (s.content?.toLowerCase() ?? '').includes(lower)
+    return this.stories.filter(
+      (s) =>
+        (s.title?.toLowerCase() ?? "").includes(lower) ||
+        (s.content?.toLowerCase() ?? "").includes(lower)
     );
   }
 
@@ -49,7 +56,7 @@ export class StoryListComponent {
 
   goToQuizStories(storyId: number | undefined): void {
     if (storyId !== undefined) {
-      this.router.navigate(['/app/quizzes'], {
+      this.router.navigate(["/app/quizzes"], {
         queryParams: { storyId: storyId.toString() },
       });
     }
