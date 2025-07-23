@@ -1,13 +1,13 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { CommonModule } from "@angular/common";
+import { Component, Input } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 
 @Component({
-  selector: 'app-pagination',
+  selector: "app-pagination",
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './pagination.component.html',
-  styleUrl: './pagination.component.scss'
+  templateUrl: "./pagination.component.html",
+  styleUrl: "./pagination.component.scss",
 })
 export class PaginationComponent {
   @Input() service: any;
@@ -16,17 +16,16 @@ export class PaginationComponent {
   pageInput: number | null = null;
 
   onPage(pPage: number) {
-
     if (pPage < 1 || pPage > (this.service.totalPages || 1)) return;
 
     this.service.page = pPage;
-    this.service.pageNumber = pPage; // sincroniza ambas
+    this.service.pageNumber = pPage;
 
     if (this.loadFunction) {
       this.loadFunction();
     }
 
-    this.pageInput = null; // limpia input
+    this.pageInput = null;
   }
 
   goToPage() {

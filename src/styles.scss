@@ -323,18 +323,18 @@ body {
   width: 100%;
   border: 1px solid var(--color-gray-border);
   border-radius: 12px;
-  box-shadow: 0 4px 12px var(--color-shadow-primary); /* sombra más suave */
+  box-shadow: 0 4px 12px var(--color-shadow-primary);
   background: var(--color-white, #ffffff);
   font-family: var(--font-family-roboto);
   font-size: var(--font-base-size);
   font-weight: var(--font-base-weight);
   color: var(--color-indigo-dye);
   transition: box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  background-clip: padding-box; /* evita overflow de sombra en bordes redondeados */
+  background-clip: padding-box;
 }
 
 .custom-full-bordered-table:hover {
-  box-shadow: 0 8px 24px var(--color-shadow-hover); /* sombra al hover */
+  box-shadow: 0 8px 24px var(--color-shadow-hover);
 }
 
 .custom-full-bordered-table thead {
@@ -386,13 +386,12 @@ body {
 }
 
 .custom-full-bordered-table tbody tr:hover {
-  position: relative;  /* para que el z-index funcione */
+  position: relative;
   z-index: 1;
   background-color: var(--color-hover-row);
   box-shadow: inset 4px 0 0 0 var(--color-blue-munsell);
 }
 
-/* Evita sombra en hover para último tr (evita efecto raro) */
 .custom-full-bordered-table tbody tr:last-child:hover {
   box-shadow: none;
 }
@@ -414,7 +413,6 @@ body {
   border-right: none;
 }
 
-/* Mantener borde inferior en última fila para evitar "espacio" extraño */
 .custom-full-bordered-table tbody tr:last-child td,
 .custom-full-bordered-table tbody tr:last-child th {
   border-bottom: 1px solid var(--color-gray-border);
@@ -428,11 +426,10 @@ body {
   border-bottom-right-radius: 11px;
 }
 
-
-
 .btn.border-0.icon-gray-color {
   color: var(--color-indigo-dye);
-  transition: color 0.2s ease-out, transform 0.15s ease-out, filter 0.2s ease-out;
+  transition: color 0.2s ease-out, transform 0.15s ease-out,
+    filter 0.2s ease-out;
   font-size: 22px;
   opacity: 0.8;
 }
