@@ -1,6 +1,8 @@
 import { CommonModule } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, Input, inject } from "@angular/core";
 import { FormsModule } from "@angular/forms";
+import {AlertService} from "../../services/alert.service";
+
 
 @Component({
   selector: "app-pagination",
@@ -14,6 +16,7 @@ export class PaginationComponent {
   @Input() loadFunction: (() => void) | undefined;
 
   pageInput: number | null = null;
+  private alert = inject(AlertService);
 
   onPage(pPage: number) {
     if (pPage < 1 || pPage > (this.service.totalPages || 1)) return;
@@ -35,7 +38,7 @@ export class PaginationComponent {
     if (page >= 1 && page <= (this.service.totalPages || 1)) {
       this.onPage(page);
     } else {
-      alert(`Por favor ingresa un número entre 1 y ${this.service.totalPages}`);
+      this.alert.displayAlert('error', `Por favor ingresa un número entre 1 y ${this.service.totalPages}`);
     }
   }
 }
