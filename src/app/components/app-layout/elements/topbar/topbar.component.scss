@@ -6,8 +6,8 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   display: flex;
   align-items: center;
-  position: relative;
-  z-index: 1100;
+  position: static;
+  z-index: auto;
 
   .container-fluid {
     width: 100%;
