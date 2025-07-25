@@ -24,7 +24,7 @@
 
                 @if (studentList().length) {
                     <app-pagination
-                            [service]="userService.search"
+                            [service]="search"
                             [loadFunction]="loadStudents.bind(this)">
                     </app-pagination>
                 }
