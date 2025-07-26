@@ -11,20 +11,25 @@ import { IRoleType } from "../interfaces";
 @Injectable({
   providedIn: "root",
 })
-export class StudentRoleGuard implements CanActivate {
+export class MultiRoleGuard implements CanActivate {
   private authService = inject(AuthService);
   private router = inject(Router);
 
   canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+      route: ActivatedRouteSnapshot,
+      state: RouterStateSnapshot
   ): boolean {
-    const hasRole = this.authService.hasRole(IRoleType.student);
+    const hasValidRole =
+        this.authService.hasRole(IRoleType.superAdmin) ||
+        this.authService.hasRole(IRoleType.teacher)||
+        this.authService.hasRole(IRoleType.student)
+    ;
 
-    if (!hasRole) {
+    if (!hasValidRole) {
       this.router.navigate(["access-denied"]);
       return false;
     }
+
     return true;
   }
 }

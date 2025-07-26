@@ -26,6 +26,8 @@ import { GroupStudentsComponent } from "./pages/groupstudents/students.component
 import { AssignmentsComponent } from "./pages/assignments/assignments.component";
 import { QuizzesComponent } from "./pages/quizzes/quizzes.component";
 import {ChatComponent} from "./pages/chat/chat.component";
+import {StudentRoleGuard} from "./guards/student-role.guard";
+import {MultiRoleGuard} from "./guards/multi-role.guard";
 
 export const routes: Routes = [
   {
@@ -204,11 +206,11 @@ export const routes: Routes = [
       {
         path: "chat",
         component: ChatComponent,
-        canActivate: [AdminTeacherRoleGuard],
+        canActivate: [MultiRoleGuard],
         data: {
-          authorities: [IRoleType.superAdmin, IRoleType.teacher],
-          name: "chat",
-          showInSidebar: true,
+          authorities: [IRoleType.superAdmin, IRoleType.teacher, IRoleType.student],
+          name: "Chat",
+          showInSidebar: false,
         },
       },
     ],
