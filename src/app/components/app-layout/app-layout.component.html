@@ -6,9 +6,14 @@
 
             <app-navbar></app-navbar>
 
-            <a class="chatbot-btn" routerLink="/app/chat">
+            <a
+                    class="chatbot-btn"
+                    routerLink="/app/chat"
+                    *ngIf="!shouldHideChat"
+            >
                 <img src="assets/img/TicoBot.png" alt="TicoBot" />
             </a>
+
 
             <div class="page-body">
 
