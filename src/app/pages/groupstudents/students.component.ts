@@ -150,20 +150,15 @@ export class GroupStudentsComponent implements OnInit {
         this.originalStudent = null;
     }
 
-    deleteStudent(item: IUser) { 
-       
-   
-    if (!item.id || !this.groupId) {
-        return;
+    deleteStudent(item: IUser) {
+        if (!item.id || !this.groupId) {
+            return;
+        }
+        this.groupsService.deleteStudentFromGroup(this.groupId, item.id);
+        setTimeout(() => {
+            this.loadGroupAndStudents(this.groupId!);
+        }, 1000);
     }
-    
-   
-    this.groupsService.deleteStudentFromGroup(this.groupId, item.id);
-    
-    
-    setTimeout(() => {
-        this.loadGroupAndStudents(this.groupId!);
-    }, 1000);
 
     openEditStudentModal(student: IUser) {
         this.originalStudent = student;
