@@ -45,7 +45,6 @@ export class ChatComponent implements OnInit {
                 this.isLoading = false;
             },
             error: (error) => {
-                console.error('Error sending message:', error);
                 this.messages.push({
                     content: "Lo siento, tuve un problema al procesar tu solicitud. Inténtalo de nuevo más tarde.",
                     sender: 'bot'

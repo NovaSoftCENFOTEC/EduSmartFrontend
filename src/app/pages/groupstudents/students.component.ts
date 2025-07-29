@@ -153,7 +153,6 @@ export class GroupStudentsComponent implements OnInit {
        
    
     if (!item.id || !this.groupId) {
-        console.error('Faltan datos: item.id =', item.id, 'groupId =', this.groupId);
         return;
     }
     

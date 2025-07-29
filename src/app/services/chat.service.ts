@@ -23,7 +23,6 @@ export class ChatService {
                     'top',
                     ['error-snackbar']
                 );
-                console.error('Error al enviar mensaje al chatbot:', err);
                 return throwError(() => new Error('Error al enviar mensaje al chatbot.'));
             })
         );

@@ -2,12 +2,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { IBadge } from '../../../interfaces';
 import {NgIf} from "@angular/common";
-
+const MAX_BADGE_IMAGE_SIZE = 10 * 1024 * 1024.
 @Component({
   selector: 'app-badge-form',
   templateUrl: './badge-form.component.html',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf],
+  imports: [ReactiveFormsModule],
   styleUrls: ['./badge-form.component.scss']
 })
 export class BadgeFormComponent {
@@ -33,7 +33,7 @@ export class BadgeFormComponent {
           multiple: false,
           resourceType: 'image',
           clientAllowedFormats: ['jpg', 'png', 'jpeg', 'gif', 'webp', 'bmp'],
-          maxFileSize: 10485760, // 10 MB
+          maxFileSize: MAX_BADGE_IMAGE_SIZE,
           styles: {
             palette: {
               window: '#ffffff',
