@@ -17,4 +17,7 @@ goToHome() {
     history.replaceState(null, '', window.location.pathname);
   }
 } 
+goToProduct() {
+  window.location.href = '/product';
+}
 }
