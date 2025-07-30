@@ -25,6 +25,8 @@ import { StoriesComponent } from "./pages/stories/stories.component";
 import { GroupStudentsComponent } from "./pages/groupstudents/students.component";
 import { AssignmentsComponent } from "./pages/assignments/assignments.component";
 import { QuizzesComponent } from "./pages/quizzes/quizzes.component";
+import { TeamPageComponent } from "./pages/team-page/team-page.component";
+import { ProductComponent } from "./pages/product/product.component";
 
 export const routes: Routes = [
   {
@@ -55,6 +57,15 @@ export const routes: Routes = [
     path: "password-change",
     component: PasswordChangeComponent,
     canActivate: [AuthGuard],
+  },
+      {
+        path: "landing",
+        component: TeamPageComponent,
+     
+      },
+       {
+    path: "product",
+    component: ProductComponent,
   },
   {
     path: "app",
@@ -191,6 +202,7 @@ export const routes: Routes = [
           name: "Asignaciones",
         },
       },
+  
       {
         path: "quizzes",
         component: QuizzesComponent,
