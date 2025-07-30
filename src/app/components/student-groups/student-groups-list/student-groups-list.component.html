@@ -17,20 +17,20 @@
                 <thead class="table-header-gray">
                     <tr>
                         <th scope="col">Nombre del Grupo</th>
-                        <th scope="col">Curso</th>
                         <th scope="col">Docente</th>
-                        <th class="text-center" scope="col">Acciones</th>
+                        <th scope="col">Curso</th>
+                        <th class="text-center" scope="col">Ver curso</th>
                     </tr>
                 </thead>
                 <tbody>
                     @for (item of filteredGroups; track item.id) {
                     <tr>
                         <td>{{ item.name }}</td>
-                        <td>{{ item.course?.title }}</td>
                         <td>{{ item.teacher?.name }} {{ item.teacher?.lastname }}</td>
+                        <td>{{ item.course?.title }}</td>
                         <td class="text-center">
-                            <button (click)="groupClick.emit(item.id!)" class="btn border-0 icon-gray-color"
-                                type="button" title="Ver historias del grupo">
+                            <button (click)="groupClick.emit(item.id!)" class="btn btn-view border-0 icon-gray-color"
+                                type="button" title="Ver historias del grupo" style="cursor: pointer;">
                                 <i class="fas fa-eye"></i>
                             </button>
                         </td>
