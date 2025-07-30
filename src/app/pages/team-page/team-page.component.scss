@@ -1,4 +1,4 @@
-body {  
+body {
   font-family: 'Inter', sans-serif;
   background: #0a0a0a;
   color: #fff;
@@ -7,7 +7,7 @@ body {
 }
 
 html {
-  
+
   scroll-behavior: smooth;
 }
 
@@ -16,7 +16,7 @@ html {
   top: 0;
   left: 0;
   width: 100%;
-  background: rgba(0,0,0,0.85);
+  background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid #222;
   z-index: 100;
@@ -34,7 +34,7 @@ html {
 .logo-title {
   font-size: 2.8rem;
   font-weight: 800;
-  color:  #3b82f6   ;
+  color: #3b82f6;
   font-family: 'JetBrains Mono', monospace;
   letter-spacing: 2px;
   display: flex;
@@ -59,8 +59,14 @@ html {
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.7; transform: scale(1.1); }
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
 }
 
 .nav-links {
@@ -76,6 +82,7 @@ html {
   border-radius: 8px;
   border: 2px solid transparent;
   transition: all 0.3s;
+
   &:hover {
     color: #4ade80;
     border-color: #4ade80;
@@ -92,6 +99,7 @@ html {
   position: relative;
   padding-top: 100px;
   padding-bottom: 60px;
+
   &::before {
     content: '';
     position: absolute;
@@ -113,15 +121,39 @@ html {
     animation: float 8s ease-in-out infinite;
     pointer-events: none;
   }
-  .floating-code:nth-child(1) { top: 180px; left: 30px; animation-delay: -1s; }
-  .floating-code:nth-child(2) { bottom: 40px; right: 40px; animation-delay: -3s; }
-  .floating-code:nth-child(3) { bottom: 120px; left: 80px; animation-delay: -2s; }
-  .floating-code:nth-child(4) { top: 120px; right: 80px; animation-delay: -4s; }
+
+  .floating-code:nth-child(1) {
+    top: 180px;
+    left: 30px;
+    animation-delay: -1s;
+  }
+
+  .floating-code:nth-child(2) {
+    bottom: 40px;
+    right: 40px;
+    animation-delay: -3s;
+  }
+
+  .floating-code:nth-child(3) {
+    bottom: 120px;
+    left: 80px;
+    animation-delay: -2s;
+  }
+
+  .floating-code:nth-child(4) {
+    top: 120px;
+    right: 80px;
+    animation-delay: -4s;
+  }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-30px) rotate(5deg); }
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-30px) rotate(5deg);
+  }
 }
 
 .hero-content {
@@ -155,7 +187,7 @@ html {
   font-family: 'JetBrains Mono', monospace;
   color: #4ade80;
   font-size: 3.0rem;
-    
+
 }
 
 .typing-animation {
@@ -166,8 +198,12 @@ html {
 }
 
 @keyframes blink {
-  0%, 50% { border-color: #4ade80; }
-  51%, 100% { border-color: transparent; }
+  0%, 50% {
+    border-color: #4ade80;
+  }
+  51%, 100% {
+    border-color: transparent;
+  }
 }
 
 .hero-buttons {
@@ -185,7 +221,7 @@ html {
   border: none;
   cursor: pointer;
   transition: all 0.3s;
-  box-shadow: 0 4px 16px rgba(74,222,128,0.08);
+  box-shadow: 0 4px 16px rgba(74, 222, 128, 0.08);
   text-decoration: none;
   display: inline-block;
 }
@@ -193,6 +229,7 @@ html {
 .btn-main {
   background: linear-gradient(90deg, #4ade80, #3b82f6);
   color: #fff;
+
   &:hover {
     background: linear-gradient(90deg, #3b82f6, #4ade80);
     transform: scale(1.05);
@@ -203,6 +240,7 @@ html {
   background: transparent;
   color: #4ade80;
   border: 2px solid #4ade80;
+
   &:hover {
     background: #222;
     color: #fff;
@@ -247,7 +285,7 @@ html {
 .team-member:hover {
   transform: translate(-4px, -4px);
   box-shadow: 8px 8px 0 #4ade80;
-  
+
 }
 
 .team-photo {
@@ -275,13 +313,14 @@ html {
   position: absolute;
   top: 40px;
   left: 0;
-  width: 700px; 
+  width: 700px;
   height: 700px;
   object-fit: contain;
   opacity: 0.08;
   z-index: 0;
   pointer-events: none;
 }
+
 #about .container {
   position: relative;
   z-index: 1;
@@ -290,12 +329,12 @@ html {
 .vision-mision-modern {
   position: relative;
   padding: 90px 0;
-  background: #181836; 
+  background: #181836;
   color: #fff;
   overflow: hidden;
   min-height: 60vh;
 
-  
+
   &::before {
     content: '';
     position: absolute;
@@ -315,10 +354,12 @@ html {
     pointer-events: none;
     user-select: none;
   }
+
   .floating-code:first-child {
     top: 30px;
     left: 5%;
   }
+
   .floating-code:nth-child(2) {
     bottom: 30px;
     right: 8%;
@@ -341,28 +382,32 @@ html {
 
   .vision-box-modern, .mision-box-modern {
     flex: 1 1 320px;
-    background: rgba(26,26,46,0.95);
+    background: rgba(26, 26, 46, 0.95);
     border-radius: 18px;
     padding: 36px 28px;
     max-width: 480px;
-    box-shadow: 0 8px 32px 0 rgba(59,130,246,0.18);
+    box-shadow: 0 8px 32px 0 rgba(59, 130, 246, 0.18);
     border: 1.5px solid #3b82f6;
     transition: transform 0.2s;
   }
+
   .vision-box-modern:hover, .mision-box-modern:hover {
     transform: translateY(-8px) scale(1.03);
-    box-shadow: 0 16px 48px 0 rgba(59,130,246,0.28);
+    box-shadow: 0 16px 48px 0 rgba(59, 130, 246, 0.28);
   }
+
   .vision-box-modern h2 {
     color: #00bcd4;
     margin-bottom: 18px;
     font-size: 2rem;
   }
+
   .mision-box-modern h2 {
     color: #3b82f6;
     margin-bottom: 18px;
     font-size: 2rem;
   }
+
   .vision-box-modern p, .mision-box-modern p {
     color: #e0e6ed;
     font-size: 1.15rem;
@@ -377,36 +422,17 @@ html {
   min-height: 60vh;
 
   &::before {
-    content: 
-      "const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A"
-"const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A"
-"const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A"
- "const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A"
-"const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A"
-"const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A"
-"const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A"
-"const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A"
-"const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A"
-"const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A"
-"const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A"
-"const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A"
-"const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A" 
-"const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A"
-"const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A"
-"const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A"
-"const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A"
-"const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A"
-"const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A"
-"const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A" 
-"const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A" 
-      "const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos';";
+    content: "const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A" "const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A" "const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A" "const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A" "const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A" "const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A" "const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A" "const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A" "const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A" "const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A" "const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A" "const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A" "const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A" "const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A" "const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A" "const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A" "const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A" "const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A" "const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A" "const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A" "const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos'; const objetivo = 'ofrecer plataformas accesibles , escalables y funcionales' \A" "const vision = 'Innovar y liderar en soluciones web'; const mision = 'Facilitar el acceso digital a todos';";
     white-space: pre;
     font-family: 'JetBrains Mono', monospace;
     font-size: 1.1rem;
     color: #00ffd0;
     opacity: 0.07;
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     z-index: 0;
     pointer-events: none;
     user-select: none;
@@ -414,7 +440,7 @@ html {
     padding: 40px 0 0 24px;
   }
 
-  
+
   > * {
     position: relative;
     z-index: 1;
