@@ -20,4 +20,7 @@ goToHome() {
 goToProduct() {
   window.location.href = '/product';
 }
+goToMisionVision() {
+  window.location.href = '/landing#vision-mision';
+}
 }
