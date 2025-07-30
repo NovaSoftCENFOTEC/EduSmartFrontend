@@ -291,7 +291,6 @@
   box-shadow: 0 0 0 0.25rem rgba(0, 62, 107, 0.5);
 }
 
-// Stories Dashboard Styles
 .stories-dashboard {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -305,6 +304,9 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: all 0.3s ease;
+  height: 500px; 
+  display: flex;
+  flex-direction: column;
 
   &.locked {
     opacity: 0.6;
@@ -323,6 +325,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: var(--color-indigo-dye);
+  flex-shrink: 0; 
 
   h3 {
     margin: 0;
@@ -344,31 +348,21 @@
       }
     }
   }
-
-  &.precolombina {
-    background: var(--color-indigo-dye);
-  }
-
-  &.conquista {
-    background: var(--color-blue-munsell);
-  }
-
-  &.independencia {
-    background: var(--color-indigo-dye);
-  }
-
-  &.moderna {
-    background: var(--color-blue-munsell);
-  }
 }
 
 .section-content {
-  padding: 1.5rem;
+  padding: 1rem;
+  flex: 1; 
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; 
 
   &.locked-content {
     text-align: center;
     padding: 3rem 1.5rem;
     color: #6c757d;
+    justify-content: center;
+    align-items: center;
 
     .lock-icon {
       font-size: 3rem;
@@ -380,6 +374,59 @@
       margin: 0;
       font-size: 1rem;
       font-weight: 500;
+    }
+  }
+}
+
+.story-content-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 0.5rem; 
+  margin-bottom: 1rem;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-blue-munsell);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--color-indigo-dye);
+  }
+}
+
+.story-title {
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--color-gray-border);
+
+  h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-indigo-dye);
+    line-height: 1.3;
+  }
+}
+
+.story-text {
+  p {
+    margin: 0 0 1rem 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #495057;
+    text-align: justify;
+
+    &:last-child {
+      margin-bottom: 0;
     }
   }
 }
@@ -481,6 +528,10 @@
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  justify-content: flex-end;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-gray-border);
+  flex-shrink: 0; 
 
   i {
     cursor: pointer;
@@ -503,11 +554,14 @@
   }
 }
 
-// Responsive adjustments
 @media (max-width: 768px) {
   .stories-dashboard {
     grid-template-columns: 1fr;
     gap: 1rem;
+  }
+
+  .story-section {
+    height: 400px;
   }
 
   .section-header {
@@ -519,18 +573,18 @@
   }
 
   .section-content {
-    padding: 1rem;
+    padding: 0.75rem;
 
     &.locked-content {
       padding: 2rem 1rem;
     }
   }
 
-  .chapter-item {
-    padding: 0.75rem 0;
+  .story-title h4 {
+    font-size: 1rem;
   }
 
-  .chapter-info h4 {
+  .story-text p {
     font-size: 0.9rem;
   }
 } 

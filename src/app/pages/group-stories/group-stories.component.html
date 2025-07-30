@@ -27,15 +27,14 @@
                 </div>
                 <div class="section-content" [class.locked-content]="!story.id">
                     @if (story.id) {
-                    <div class="chapter-item completed">
-                        <div class="chapter-info">
-                            <h4>{{ story.content || 'Contenido de la historia' }}</h4>
-
+                    <div class="story-content-scroll">
+                        <div class="story-text">
+                            <p>{{ story.content || 'Contenido de la historia' }}</p>
                         </div>
-                        <div class="chapter-actions">
-                            <i class="fas fa-check"></i>
-                            <i class="fas fa-ellipsis-h"></i>
-                        </div>
+                    </div>
+                    <div class="chapter-actions">
+                        <i class="fas fa-check"></i>
+                        <i class="fas fa-ellipsis-h"></i>
                     </div>
                     } @else {
                     <i class="fas fa-lock lock-icon"></i>

@@ -17,12 +17,16 @@ export class GroupStoriesService extends BaseService<IStory> {
     public search: ISearch = {
         page: 1,
         size: 10,
-        pageNumber: 1,
         totalPages: 1,
+        pageNumber: 1,
     };
 
     public totalItems: number[] = [];
     private alertService: AlertService = inject(AlertService);
+
+    clearStories(): void {
+        this.storyListSignal.set([]);
+    }
 
     getStoriesByCourse(courseId: number) {
         this.findAllWithParamsAndCustomSource(`course/${courseId}/stories`, {}).subscribe({

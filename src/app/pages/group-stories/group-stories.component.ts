@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, effect } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { FooterComponent } from '../../components/app-layout/elements/footer/footer.component';
@@ -25,10 +25,23 @@ export class GroupStoriesComponent implements OnInit {
     public groupStoriesService: GroupStoriesService = inject(GroupStoriesService);
     public groupCoursesService: GroupCoursesService = inject(GroupCoursesService);
 
+    constructor() {
+        effect(() => {
+            const courses = this.groupCoursesService.courses$();
+            if (courses.length > 0 && this.groupId) {
+                this.courseId = courses[0].id || null;
+                if (this.courseId) {
+                    this.groupStoriesService.getStoriesByCourse(this.courseId);
+                }
+            }
+        });
+    }
+
     ngOnInit(): void {
         this.route.params.subscribe(params => {
             this.groupId = +params['groupId'];
             if (this.groupId) {
+                this.groupStoriesService.clearStories();
                 this.loadCourseAndStories();
             }
         });
@@ -37,13 +50,6 @@ export class GroupStoriesComponent implements OnInit {
     loadCourseAndStories(): void {
         if (this.groupId) {
             this.groupCoursesService.getCoursesByGroup(this.groupId);
-            const courses = this.groupCoursesService.courses$();
-            if (courses.length > 0) {
-                this.courseId = courses[0].id || null;
-                if (this.courseId) {
-                    this.groupStoriesService.getStoriesByCourse(this.courseId);
-                }
-            }
         }
     }
 
