@@ -12,7 +12,15 @@
                         src="assets/img/TicoBot.png"
                         alt="Bot"
                 />
-                <p>{{ message.content }}</p>
+
+                <div class="message-content">
+      <span class="message-sender-name">
+        {{ message.sender === 'bot' ? 'Tico Bot' : userName }}
+      </span>
+                    <p>{{ message.content }}</p>
+                    <span class="timestamp">{{ message.timestamp | date:'shortTime' }}</span>
+                </div>
+
                 <img
                         *ngIf="message.sender === 'user'"
                         class="avatar user-avatar"
@@ -21,6 +29,7 @@
                 />
             </div>
         </div>
+
 
         <div *ngIf="isLoading" class="bot loading">
             <div class="message-wrapper">
