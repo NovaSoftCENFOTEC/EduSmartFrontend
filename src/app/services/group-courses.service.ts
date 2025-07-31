@@ -36,7 +36,6 @@ export class GroupCoursesService extends BaseService<ICourse> {
                 this.totalItems = [1];
             },
             error: (err: any) => {
-                console.error('Error al obtener curso del grupo', err);
                 this.alertService.displayAlert(
                     'error',
                     'Ocurrió un error al obtener el curso del grupo.',

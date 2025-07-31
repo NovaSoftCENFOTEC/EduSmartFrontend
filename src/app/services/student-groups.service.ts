@@ -45,7 +45,6 @@ export class StudentGroupsService extends BaseService<IGroup> {
                 );
             },
             error: (err: any) => {
-                console.error('Error al obtener grupos del estudiante', err);
                 this.alertService.displayAlert(
                     'error',
                     'Ocurrió un error al obtener los grupos del estudiante.',

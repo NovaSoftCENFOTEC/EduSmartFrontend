@@ -40,7 +40,6 @@ export class GroupStoriesService extends BaseService<IStory> {
                 this.totalItems = [1];
             },
             error: (err: any) => {
-                console.error('Error al obtener historias del curso', err);
                 this.alertService.displayAlert(
                     'error',
                     'Ocurrió un error al obtener las historias del curso.',
