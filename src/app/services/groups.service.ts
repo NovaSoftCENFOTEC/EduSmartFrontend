@@ -33,7 +33,6 @@ export class GroupsService extends BaseService<IGroup> {
                 this.totalItems = Array.from({ length: this.search.totalPages || 0 }, (_, i) => i + 1);
             },
             error: (err: any) => {
-                console.error('Error al obtener los grupos', err);
                 this.alertService.displayAlert('error', 'Ocurrió un error al obtener los grupos.', 'center', 'top', ['error-snackbar']);
             }
         });
@@ -53,7 +52,6 @@ export class GroupsService extends BaseService<IGroup> {
                 this.totalItems = Array.from({ length: this.search.totalPages || 0 }, (_, i) => i + 1);
             },
             error: (err: any) => {
-                console.error('Error al obtener grupos del docente', err);
                 this.alertService.displayAlert('error', 'Ocurrió un error al obtener los grupos del docente.', 'center', 'top', ['error-snackbar']);
             }
         });
@@ -82,7 +80,6 @@ export class GroupsService extends BaseService<IGroup> {
             },
             error: (err) => {
                 this.alertService.displayAlert('error', 'Ocurrió un error al agregar el grupo.', 'center', 'top', ['error-snackbar']);
-                console.error('Error al guardar grupo:', err);
             }
         });
     }
@@ -127,7 +124,6 @@ export class GroupsService extends BaseService<IGroup> {
             },
             error: (err: any) => {
                 this.alertService.displayAlert('error', 'Ocurrió un error al eliminar el grupo.', 'center', 'top', ['error-snackbar']);
-                console.error('Error al eliminar el grupo', err);
             }
         });
     }

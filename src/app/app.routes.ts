@@ -15,7 +15,6 @@ import { LandingPageComponent } from "./pages/landing-page/landing-page.componen
 import { PasswordRecoveryComponent } from "./pages/auth/password-recovery/password-recovery.component";
 import { PasswordChangeComponent } from "./pages/auth/password-change/password-change.component";
 import { StudentsComponent } from "./pages/students/students.component";
-import { TeacherRoleGuard } from "./guards/teacher-role.guard";
 import { PasswordChangeGuard } from "./guards/password-change.guard";
 import { BadgesComponent } from "./pages/badges/badges.component";
 import { CoursesComponent } from "./pages/courses/courses.component";
@@ -25,6 +24,7 @@ import { StoriesComponent } from "./pages/stories/stories.component";
 import { GroupStudentsComponent } from "./pages/groupstudents/students.component";
 import { AssignmentsComponent } from "./pages/assignments/assignments.component";
 import { QuizzesComponent } from "./pages/quizzes/quizzes.component";
+import { ChatComponent } from "./pages/chat/chat.component";
 
 export const routes: Routes = [
   {
@@ -198,6 +198,19 @@ export const routes: Routes = [
         data: {
           authorities: [IRoleType.superAdmin, IRoleType.teacher],
           name: "Quices",
+        },
+      },
+      {
+        path: "chat",
+        component: ChatComponent,
+        data: {
+          authorities: [
+            IRoleType.superAdmin,
+            IRoleType.teacher,
+            IRoleType.student,
+          ],
+          name: "Chat",
+          showInSidebar: false,
         },
       },
     ],

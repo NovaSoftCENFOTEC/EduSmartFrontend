@@ -61,7 +61,6 @@ export class StudentsFormComponent implements OnInit {
                 this.availableStudents.set(studentsNotInGroup);
             }, 500);
         } else {
-            console.warn('No se encontró school ID del usuario');
             this.availableStudents.set([]);
         }
     }
