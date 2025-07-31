@@ -1,6 +1,6 @@
 <div class="row p-4">
     <div class="col-12 mb-3">
-        <h2 class="title-highlight">Historia</h2>
+        <h2 class="title-highlight">Materiales</h2>
     </div>
 
     <div class="col-12">
@@ -8,7 +8,7 @@
             <button (click)="goBack()" class="btn custom-add-full-btn">
                 <i class="fas fa-arrow-left me-2"></i> Volver
             </button>
-            <button (click)="openAddStoryModal()" class="btn custom-add-full-btn">
+            <button (click)="openAddMaterialModal()" class="btn custom-add-full-btn">
                 <i class="fas fa-plus me-2"></i> Agregar
             </button>
         </div>
@@ -17,16 +17,16 @@
     <div class="col-12 mt-3">
         <div class="card">
             <div class="card-body">
-                <app-story-list
-                        [stories]="storyList()"
-                        (callModalAction)="openEditStoryModal($event)"
-                        (callDeleteAction)="deleteStory($event)">
-                </app-story-list>
+                <app-materials-list
+                        [materials]="materials()"
+                        (callModalAction)="openEditMaterialModal($event)"
+                        (callDeleteAction)="deleteMaterial($event)">
+                </app-materials-list>
 
-                @if (storyList().length) {
+                @if (materials().length) {
                     <app-pagination
-                            [service]="storyService.search"
-                            [loadFunction]="loadStories.bind(this)">
+                            [service]="materialService.search"
+                            [loadFunction]="loadMaterials.bind(this)">
                     </app-pagination>
                 }
             </div>
@@ -34,21 +34,21 @@
     </div>
 </div>
 
-<ng-template #addStoryModal>
+<ng-template #addMaterialModal>
     <app-modal [hideFooter]="true">
-        <app-stories-form
-                [form]="storyForm"
-                (callSaveMethod)="handleAddStory($event)">
-        </app-stories-form>
+        <app-materials-form
+                [form]="materialForm"
+                (callSaveMethod)="handleAddMaterial($event)">
+        </app-materials-form>
     </app-modal>
 </ng-template>
 
-<ng-template #editStoryModal>
+<ng-template #editMaterialModal>
     <app-modal [hideFooter]="true">
-        <app-stories-form
-                [form]="storyForm"
+        <app-materials-form
+                [form]="materialForm"
                 (callUpdateMethod)="confirmEdit($event)">
-        </app-stories-form>
+        </app-materials-form>
     </app-modal>
 </ng-template>
 
@@ -56,7 +56,7 @@
     <app-modal [hideFooter]="true">
         <div class="text-center p-4">
             <h2>Confirmación</h2>
-            <p>¿Está seguro que desea modificar la historia?</p>
+            <p>¿Está seguro que desea modificar el material?</p>
             <div class="d-flex justify-content-center mt-4">
                 <button class="btn btn-secondary me-2" (click)="cancelEdit()">Cancelar</button>
                 <button class="btn btn-primary" (click)="confirmEditFinal()">Sí, modificar</button>
