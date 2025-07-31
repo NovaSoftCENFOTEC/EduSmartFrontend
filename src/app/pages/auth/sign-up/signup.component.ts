@@ -1,16 +1,18 @@
-import { CommonModule } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
-import { FormsModule, NgModel } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../../services/auth.service';
-import { IUser } from '../../../interfaces';
-import { FooterComponent } from '../../../components/app-layout/elements/footer/footer.component';
-import { TopbarComponent } from '../../../components/app-layout/elements/topbar/topbar.component';
+import {CommonModule} from '@angular/common';
+import {Component, ViewChild} from '@angular/core';
+import {FormsModule, NgModel} from '@angular/forms';
+import {Router} from '@angular/router';
+import {AuthService} from '../../../services/auth.service';
+import {IUser} from '../../../interfaces';
+import {FooterComponent} from '../../../components/app-layout/elements/footer/footer.component';
+import {TopbarComponent} from '../../../components/app-layout/elements/topbar/topbar.component';
 
+const MAX_FILE_SIZE_MB = 5;
+const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, TopbarComponent, FooterComponent],
+  imports: [CommonModule, FormsModule, TopbarComponent, FooterComponent],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'
 })
@@ -28,6 +30,8 @@ export class SigUpComponent {
   public showPassword = false;
   public profilePhotoPreview: string | ArrayBuffer | null = null;
   public selectedFile: File | null = null;
+
+
 
   public user: IUser = {
     name: '',
@@ -93,9 +97,8 @@ export class SigUpComponent {
       }
 
       // Validar tamaño (opcional, máximo 5MB)
-      const maxSize = 5 * 1024 * 1024; // 5MB
-      if (file.size > maxSize) {
-        this.profilePhotoError = 'La imagen debe ser menor a 5MB.';
+      if (file.size > MAX_FILE_SIZE_BYTES) {
+        this.profilePhotoError = `La imagen debe ser menor a ${MAX_FILE_SIZE_MB}MB.`;
         this.selectedFile = null;
         this.profilePhotoPreview = null;
         return;

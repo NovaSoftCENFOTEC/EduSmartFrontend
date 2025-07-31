@@ -27,6 +27,7 @@ import { AssignmentsComponent } from "./pages/assignments/assignments.component"
 import { QuizzesComponent } from "./pages/quizzes/quizzes.component";
 import { StudentGroupsComponent } from "./pages/student-groups/student-groups.component";
 import { GroupStoriesComponent } from "./pages/group-stories/group-stories.component";
+import { ChatComponent } from "./pages/chat/chat.component";
 
 export const routes: Routes = [
   {
@@ -219,6 +220,14 @@ export const routes: Routes = [
         data: {
           authorities: [IRoleType.student],
           name: "Historias del Grupo",
+        },
+      },
+      {
+        path: "chat",
+        component: ChatComponent,
+        data: {
+          authorities: [IRoleType.student],
+          name: "Chat",
           showInSidebar: false,
         },
       },

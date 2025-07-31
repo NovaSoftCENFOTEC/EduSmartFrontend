@@ -152,7 +152,6 @@ export class GroupStudentsComponent implements OnInit {
 
     deleteStudent(item: IUser) {
         if (!item.id || !this.groupId) {
-            console.error('Faltan datos: item.id =', item.id, 'groupId =', this.groupId);
             return;
         }
         this.groupsService.deleteStudentFromGroup(this.groupId, item.id);

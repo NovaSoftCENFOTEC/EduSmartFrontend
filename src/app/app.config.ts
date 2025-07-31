@@ -19,11 +19,10 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(),
     provideHttpClient(
-      withInterceptors([
-        baseUrlInterceptor,
-        accessTokenInterceptor,
-        //handleErrorsInterceptor
-      ])
+        withInterceptors([
+          baseUrlInterceptor,
+          accessTokenInterceptor,
+        ])
     ),
     importProvidersFrom(SocialLoginModule),
     {
@@ -34,14 +33,13 @@ export const appConfig: ApplicationConfig = {
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              "731369077540-79b1cu21reeiu3kv8647ej5jq601bcih.apps.googleusercontent.com"
+                "731369077540-79b1cu21reeiu3kv8647ej5jq601bcih.apps.googleusercontent.com"
             ),
           },
         ],
-        onError: (err) =>
-          console.error("Error en SocialAuthServiceConfig:", err),
       } as SocialAuthServiceConfig,
     },
     provideAnimationsAsync(),
   ],
 };
+

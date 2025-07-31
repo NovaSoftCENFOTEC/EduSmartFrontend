@@ -6,7 +6,6 @@ import { IRoleType } from '../interfaces';
 export const StudentRoleGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
-
   const user = authService.getUser();
   if (!user) {
     router.navigate(['/login']);

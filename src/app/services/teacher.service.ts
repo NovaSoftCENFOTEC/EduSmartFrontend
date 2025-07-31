@@ -57,7 +57,6 @@ export class TeacherService extends BaseService<IUser> {
                     'top',
                     ['error-snackbar']
                 );
-                console.error('Error al obtener profesores:', err);
             }
         });
     }
@@ -82,7 +81,6 @@ export class TeacherService extends BaseService<IUser> {
                     'center', 'top',
                     ['error-snackbar']
                 );
-                console.error('Error al guardar profesor:', err);
             }
         });
     }

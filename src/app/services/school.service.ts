@@ -30,11 +30,10 @@ export class SchoolService extends BaseService<ISchool> {
       next: (response: IResponse<ISchool[]>) => {
         this.search = { ...this.search, ...response.meta };
         this.totalItems = Array.from({ length: this.search.totalPages ? this.search.totalPages : 0 }, (_, i) => i + 1);
-        console.log("Datos recibidos de la API:", response.data);
         this.schoolListSignal.set(response.data);
       },
       error: (err: any) => {
-        console.error('Error al obtener las escuelas', err);
+        this.alertService.displayAlert('error', 'Ocurrió un error al obtener las escuelas.', 'center', 'top', ['error-snackbar']);
       }
     });
   }
@@ -47,7 +46,6 @@ export class SchoolService extends BaseService<ISchool> {
       },
       error: (err: any) => {
         this.alertService.displayAlert('error', 'Ocurrió un error al agregar la escuela.', 'center', 'top', ['error-snackbar']);
-        console.error('Error al guardar la escuela', err);
       }
     });
   }
@@ -60,7 +58,6 @@ export class SchoolService extends BaseService<ISchool> {
       },
       error: (err: any) => {
         this.alertService.displayAlert('error', 'Ocurrió un error al actualizar la escuela.', 'center', 'top', ['error-snackbar']);
-        console.error('Error al actualizar la escuela', err);
       }
     });
   }
@@ -73,7 +70,6 @@ export class SchoolService extends BaseService<ISchool> {
       },
       error: (err: any) => {
         this.alertService.displayAlert('error', 'Ocurrió un error al eliminar la escuela.', 'center', 'top', ['error-snackbar']);
-        console.error('Error al eliminar la escuela', err);
       }
     });
   }

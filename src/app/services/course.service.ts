@@ -32,7 +32,7 @@ export class CourseService extends BaseService<ICourse> {
         this.courseListSignal.set(response.data);
       },
       error: (err: any) => {
-        console.error('Error al obtener los cursos', err);
+        this.alertService.displayAlert('error', 'Ocurrió un error al obtener los cursos.', 'center', 'top', ['error-snackbar']);
       }
     });
   }
@@ -45,7 +45,6 @@ export class CourseService extends BaseService<ICourse> {
       },
       error: (err: any) => {
         this.alertService.displayAlert('error', 'Ocurrió un error al agregar el curso.', 'center', 'top', ['error-snackbar']);
-        console.error('Error al guardar el curso', err);
       }
     });
   }
@@ -58,7 +57,6 @@ export class CourseService extends BaseService<ICourse> {
       },
       error: (err: any) => {
         this.alertService.displayAlert('error', 'Ocurrió un error al actualizar el curso.', 'center', 'top', ['error-snackbar']);
-        console.error('Error al actualizar el curso', err);
       }
     });
   }
@@ -71,7 +69,6 @@ export class CourseService extends BaseService<ICourse> {
       },
       error: (err: any) => {
         this.alertService.displayAlert('error', 'Ocurrió un error al eliminar el curso.', 'center', 'top', ['error-snackbar']);
-        console.error('Error al eliminar el curso', err);
       }
     });
   }
