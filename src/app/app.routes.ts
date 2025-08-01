@@ -28,6 +28,7 @@ import { QuizzesComponent } from "./pages/quizzes/quizzes.component";
 import { StudentGroupsComponent } from "./pages/student-groups/student-groups.component";
 import { GroupStoriesComponent } from "./pages/group-stories/group-stories.component";
 import { ChatComponent } from "./pages/chat/chat.component";
+import {MaterialsComponent} from "./pages/materials/materials.component";
 
 export const routes: Routes = [
   {
@@ -232,6 +233,16 @@ export const routes: Routes = [
             IRoleType.superAdmin,
           ],
           name: "Chat",
+          showInSidebar: false,
+        },
+      },
+      {
+        path: "materials",
+        component: MaterialsComponent,
+        canActivate: [AdminTeacherRoleGuard],
+        data: {
+          authorities: [IRoleType.superAdmin, IRoleType.teacher],
+          name: "Materiales",
           showInSidebar: false,
         },
       },

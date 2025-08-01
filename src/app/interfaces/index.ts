@@ -154,3 +154,13 @@ export interface IOption {
   correct: boolean;
   question?: IQuestion;
 }
+
+export interface IMaterial {
+  id?: number;
+  name: string;
+  fileUrl: string;
+  uploadedAt?: string;
+  course?: Partial<ICourse> | null;
+  teacher?: Partial<IUser> | null;
+}
+
