@@ -16,18 +16,18 @@
             Nombre del material<span class="required-asterisk">*</span>
         </label>
         <input
-                id="name"
-                formControlName="name"
-                type="text"
                 class="form-control normal"
+                formControlName="name"
+                id="name"
                 placeholder="Nombre del material"
+                type="text"
         />
         <div
-                class="form-error-message"
                 *ngIf="
         form.controls['name'].invalid &&
         (form.controls['name'].dirty || form.controls['name'].touched)
       "
+                class="form-error-message"
         >
             El nombre es obligatorio.
         </div>
@@ -39,15 +39,15 @@
         </label>
         <div class="d-flex gap-2 align-items-center">
             <input
-                    id="fileUrl"
-                    type="text"
+                    [disabled]="true"
+                    [readonly]="true"
                     class="form-control disabled-field"
                     formControlName="fileUrl"
-                    [readonly]="true"
-                    [disabled]="true"
+                    id="fileUrl"
                     placeholder="Se llenará automáticamente al subir un archivo"
+                    type="text"
             />
-            <button type="button" class="btn btn-secondary" (click)="openUploadWidget()">Subir Archivo</button>
+            <button (click)="openUploadWidget()" class="btn btn-secondary" type="button">Subir Archivo</button>
         </div>
 
         @if (form.get('fileUrl')?.invalid && (form.get('fileUrl')?.dirty || form.get('fileUrl')?.touched)) {

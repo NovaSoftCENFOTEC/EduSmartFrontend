@@ -9,10 +9,10 @@
 
         <div class="mb-4 mt-2">
             <input
-                    type="text"
+                    [(ngModel)]="searchText"
                     class="input-txt input-filter"
                     placeholder="Filtrar por nombre..."
-                    [(ngModel)]="searchText"
+                    type="text"
             />
         </div>
 
@@ -31,8 +31,8 @@
                 <tr *ngFor="let item of filteredMaterials; trackBy: trackById">
                     <td>{{ item.name }}</td>
                     <td>
-                        <a [href]="item.fileUrl" target="_blank" rel="noopener noreferrer"
-                           class="d-flex align-items-center link-material">
+                        <a [href]="item.fileUrl" class="d-flex align-items-center link-material" rel="noopener noreferrer"
+                           target="_blank">
                             <i [class]="getFileIcon(item.fileUrl)" class="me-2"
                                style="font-size: 1.5em;"></i>
                             <span>Abrir</span>
@@ -44,16 +44,16 @@
                         <button
                                 (click)="callModalAction.emit(item)"
                                 class="btn border-0 me-2 icon-gray-color"
-                                type="button"
                                 title="Editar material"
+                                type="button"
                         >
                             <i class="fas fa-pen"></i>
                         </button>
                         <button
                                 (click)="openConfirmationModal(item)"
                                 class="btn border-0 icon-gray-color"
-                                type="button"
                                 title="Eliminar material"
+                                type="button"
                         >
                             <i class="fas fa-trash"></i>
                         </button>
@@ -73,9 +73,9 @@
 
     <app-confirm-modal
         #confirmDeleteModal
-        [message]="'¿Estás seguro de que deseas eliminar el material ' + deleteMaterial?.name + '?'"
-        [confirmText]="'Eliminar'"
-        [cancelText]="'Cancelar'"
         (confirmed)="deleteConfirmation()"
+        [cancelText]="'Cancelar'"
+        [confirmText]="'Eliminar'"
+        [message]="'¿Estás seguro de que deseas eliminar el material ' + deleteMaterial?.name + '?'"
     ></app-confirm-modal>
 </div>

@@ -18,9 +18,9 @@
         <div class="card">
             <div class="card-body">
                 <app-materials-list
-                        [materials]="materials()"
+                        (callDeleteAction)="deleteMaterial($event)"
                         (callModalAction)="openEditMaterialModal($event)"
-                        (callDeleteAction)="deleteMaterial($event)">
+                        [materials]="materials()">
                 </app-materials-list>
 
                 @if (materials().length) {
@@ -37,8 +37,8 @@
 <ng-template #addMaterialModal>
     <app-modal [hideFooter]="true">
         <app-materials-form
-                [form]="materialForm"
-                (callSaveMethod)="handleAddMaterial($event)">
+                (callSaveMethod)="handleAddMaterial($event)"
+                [form]="materialForm">
         </app-materials-form>
     </app-modal>
 </ng-template>
@@ -46,8 +46,8 @@
 <ng-template #editMaterialModal>
     <app-modal [hideFooter]="true">
         <app-materials-form
-                [form]="materialForm"
-                (callUpdateMethod)="confirmEdit($event)">
+                (callUpdateMethod)="confirmEdit($event)"
+                [form]="materialForm">
         </app-materials-form>
     </app-modal>
 </ng-template>
@@ -58,8 +58,8 @@
             <h2>Confirmación</h2>
             <p>¿Está seguro que desea modificar el material?</p>
             <div class="d-flex justify-content-center mt-4">
-                <button class="btn btn-secondary me-2" (click)="cancelEdit()">Cancelar</button>
-                <button class="btn btn-primary" (click)="confirmEditFinal()">Sí, modificar</button>
+                <button (click)="cancelEdit()" class="btn btn-secondary me-2">Cancelar</button>
+                <button (click)="confirmEditFinal()" class="btn btn-primary">Sí, modificar</button>
             </div>
         </div>
     </app-modal>

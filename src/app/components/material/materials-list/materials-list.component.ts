@@ -1,11 +1,4 @@
-import {
-    Component,
-    EventEmitter,
-    Input,
-    Output,
-    ViewChild,
-    inject,
-} from "@angular/core";
+import {Component, EventEmitter, Input, Output, ViewChild,} from "@angular/core";
 import {IMaterial} from "../../../interfaces";
 import {ConfirmModalComponent} from "../../confirm-modal/confirm-modal.component";
 import {DatePipe, NgForOf, NgIf} from "@angular/common";
