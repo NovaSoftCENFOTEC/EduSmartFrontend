@@ -37,8 +37,16 @@ export class MaterialsReadOnlyComponent implements OnInit {
 
     filteredMaterials(): IMaterial[] {
         if (!this.searchText) return this.materials();
+
         const lower = this.searchText.toLowerCase();
-        return this.materials().filter(m => m.name.toLowerCase().includes(lower));
+
+        return this.materials().filter(material =>
+            material.name?.toLowerCase().includes(lower) ||
+            material.teacher?.name?.toLowerCase().includes(lower) ||
+            material.fileUrl?.toLowerCase().includes(lower) ||
+            this.getFileExtension(material.fileUrl)?.includes(lower) ||
+            (material.uploadedAt && new Date(material.uploadedAt).toLocaleDateString('es-ES').includes(lower))
+        );
     }
 
     getFileIcon(fileUrl: string): string {
