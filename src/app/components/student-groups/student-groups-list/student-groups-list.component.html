@@ -29,11 +29,19 @@
                         <td>{{ item.teacher?.name }} {{ item.teacher?.lastname }}</td>
                         <td>{{ item.course?.title }}</td>
                         <td class="text-center">
+                            <!-- Botón ver historias del grupo -->
                             <button (click)="groupClick.emit(item.id!)" class="btn btn-view border-0 icon-gray-color"
-                                type="button" title="Ver historias del grupo" style="cursor: pointer;">
+                                    type="button" title="Ver historias del grupo" style="cursor: pointer;">
                                 <i class="fas fa-eye"></i>
                             </button>
+
+                            <!-- Nuevo botón para ver materiales del curso -->
+                            <button (click)="goToMaterials(item.course?.id!)" class="btn btn-view border-0 icon-gray-color ms-2"
+                                    type="button" title="Ver materiales del curso" style="cursor: pointer;">
+                                <i class="fas fa-book-open"></i>
+                            </button>
                         </td>
+
                     </tr>
                     } @empty {
                     <tr>

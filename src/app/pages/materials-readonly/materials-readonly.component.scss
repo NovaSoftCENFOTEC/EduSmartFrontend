@@ -1,0 +1,108 @@
+.no-link-style {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.no-link-style:hover {
+  color: #007bff;
+}
+
+.link-material {
+  color: var(--color-indigo-dye);
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+.link-material:hover {
+  color: var(--color-blue-munsell);
+}
+
+.link-material i {
+  color: var(--color-blue-munsell);
+  transition: color 0.2s ease-in-out;
+}
+
+.link-material:hover i {
+  color: var(--color-indigo-dye);
+}
+
+.material-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 12px;
+  overflow: hidden;
+  border: none;
+}
+
+.material-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.file-icon {
+  font-size: 3em !important;
+  min-width: 40px;
+  text-align: center;
+}
+
+.card-title {
+  font-size: var(--font-h3-size, 1.5rem);
+  font-weight: var(--font-h3-weight, 600);
+  color: var(--color-indigo-dye, #3f51b5);
+}
+
+/* Colores según tipo de archivo */
+.material-card.color-pdf {
+  border-left: 5px solid #d9534f;
+}
+
+.material-card.color-word {
+  border-left: 5px solid #2864b4;
+}
+
+.material-card.color-excel {
+  border-left: 5px solid #3c763d;
+}
+
+.material-card.color-powerpoint {
+  border-left: 5px solid #d45915;
+}
+
+.material-card.color-default {
+  border-left: 5px solid var(--color-indigo-dye, #3f51b5);
+}
+
+.color-pdf-icon {
+  color: #d9534f !important;
+}
+
+.color-word-icon {
+  color: #2864b4 !important;
+}
+
+.color-excel-icon {
+  color: #3c763d !important;
+}
+
+.color-powerpoint-icon {
+  color: #d45915 !important;
+}
+
+.color-default-icon {
+  color: var(--color-indigo-dye, #3f51b5) !important;
+}
+
+.btn-custom-volver {
+  background-color: #003E6B;
+  color: #fff;
+  border: 1px solid #003E6B;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  font-weight: bold;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+

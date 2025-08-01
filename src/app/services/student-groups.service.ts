@@ -38,6 +38,7 @@ export class StudentGroupsService extends BaseService<IGroup> {
         this.findAllWithParamsAndCustomSource(`student/${studentId}/groups`, params).subscribe({
             next: (response: IResponse<IGroup[]>) => {
                 this.groupListSignal.set(response.data);
+                console.log(response.data);
                 this.search = { ...this.search, ...response.meta };
                 this.totalItems = Array.from(
                     { length: this.search.totalPages || 0 },
