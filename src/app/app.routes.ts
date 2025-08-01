@@ -20,10 +20,13 @@ import { BadgesComponent } from "./pages/badges/badges.component";
 import { CoursesComponent } from "./pages/courses/courses.component";
 import { GroupsComponent } from "./pages/groups/groups.component";
 import { AdminTeacherRoleGuard } from "./guards/admin-teacher-role.guard";
+import { StudentRoleGuard } from "./guards/student-role.guard";
 import { StoriesComponent } from "./pages/stories/stories.component";
 import { GroupStudentsComponent } from "./pages/groupstudents/students.component";
 import { AssignmentsComponent } from "./pages/assignments/assignments.component";
 import { QuizzesComponent } from "./pages/quizzes/quizzes.component";
+import { StudentGroupsComponent } from "./pages/student-groups/student-groups.component";
+import { GroupStoriesComponent } from "./pages/group-stories/group-stories.component";
 import { ChatComponent } from "./pages/chat/chat.component";
 import {MaterialsComponent} from "./pages/materials/materials.component";
 
@@ -202,13 +205,32 @@ export const routes: Routes = [
         },
       },
       {
+        path: "student-groups",
+        component: StudentGroupsComponent,
+        canActivate: [StudentRoleGuard],
+        data: {
+          authorities: [IRoleType.student],
+          name: "Mis Grupos",
+          showInSidebar: true,
+        },
+      },
+      {
+        path: "group-by-student-id/:groupId/courses",
+        component: GroupStoriesComponent,
+        canActivate: [StudentRoleGuard],
+        data: {
+          authorities: [IRoleType.student],
+          name: "Historias del Grupo",
+        },
+      },
+      {
         path: "chat",
         component: ChatComponent,
         data: {
           authorities: [
-            IRoleType.superAdmin,
-            IRoleType.teacher,
             IRoleType.student,
+            IRoleType.teacher,
+            IRoleType.superAdmin,
           ],
           name: "Chat",
           showInSidebar: false,
