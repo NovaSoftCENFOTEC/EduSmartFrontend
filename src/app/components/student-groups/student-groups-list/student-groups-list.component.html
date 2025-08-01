@@ -9,48 +9,59 @@
 
         <div class="mb-4 mt-2">
             <input type="text" class="input-txt input-filter"
-                placeholder="Filtrar grupos por nombre, curso o docente..." [(ngModel)]="searchText" />
+                   placeholder="Filtrar grupos por nombre, curso o docente..." [(ngModel)]="searchText"/>
         </div>
 
         <div class="table-container table-responsive">
             <table class="table custom-full-bordered-table">
                 <thead class="table-header-gray">
-                    <tr>
-                        <th scope="col">Nombre del Grupo</th>
-                        <th scope="col">Docente</th>
-                        <th scope="col">Curso</th>
-                        <th class="text-center" scope="col">Ver curso</th>
-                    </tr>
+                <tr>
+                    <th scope="col">Nombre del Grupo</th>
+                    <th scope="col">Docente</th>
+                    <th scope="col">Curso</th>
+                    <th class="text-center" scope="col">Acciones</th>
+                </tr>
                 </thead>
                 <tbody>
                     @for (item of filteredGroups; track item.id) {
-                    <tr>
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.teacher?.name }} {{ item.teacher?.lastname }}</td>
-                        <td>{{ item.course?.title }}</td>
-                        <td class="text-center">
-                            <!-- Botón ver historias del grupo -->
-                            <button (click)="groupClick.emit(item.id!)" class="btn btn-view border-0 icon-gray-color"
-                                    type="button" title="Ver historias del grupo" style="cursor: pointer;">
-                                <i class="fas fa-eye"></i>
-                            </button>
+                        <tr>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.teacher?.name }} {{ item.teacher?.lastname }}</td>
+                            <td>{{ item.course?.title }}</td>
+                            <td class="text-center">
+                                <div class="d-flex justify-content-center gap-3">
+          <span
+                  (click)="groupClick.emit(item.id!)"
+                  role="button"
+                  tabindex="0"
+                  title="Ver Historias"
+                  class="no-link-style text-link-special"
+                  style="cursor: pointer;"
+          >
+            <i class="fas fa-book-open me-2"></i> Ver Historias
+          </span>
 
-                            <!-- Nuevo botón para ver materiales del curso -->
-                            <button (click)="goToMaterials(item.course?.id!)" class="btn btn-view border-0 icon-gray-color ms-2"
-                                    type="button" title="Ver materiales del curso" style="cursor: pointer;">
-                                <i class="fas fa-book-open"></i>
-                            </button>
-                        </td>
-
-                    </tr>
+                                    <span
+                                            (click)="goToMaterials(item.course?.id!)"
+                                            role="button"
+                                            tabindex="0"
+                                            title="Ver Materiales"
+                                            class="no-link-style text-link-special"
+                                            style="cursor: pointer;"
+                                    >
+            <i class="fas fa-folder-open me-2"></i> Ver Materiales
+          </span>
+                                </div>
+                            </td>
+                        </tr>
                     } @empty {
-                    <tr>
-                        <td colspan="4">
-                            <div class="d-flex justify-content-center align-items-center w-100">
-                                <p class="mb-0">No hay grupos asignados</p>
-                            </div>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td colspan="4">
+                                <div class="d-flex justify-content-center align-items-center w-100">
+                                    <p class="mb-0">No hay grupos asignados</p>
+                                </div>
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
