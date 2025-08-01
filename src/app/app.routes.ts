@@ -226,7 +226,11 @@ export const routes: Routes = [
         path: "chat",
         component: ChatComponent,
         data: {
-          authorities: [IRoleType.student],
+          authorities: [
+            IRoleType.student,
+            IRoleType.teacher,
+            IRoleType.superAdmin,
+          ],
           name: "Chat",
           showInSidebar: false,
         },
