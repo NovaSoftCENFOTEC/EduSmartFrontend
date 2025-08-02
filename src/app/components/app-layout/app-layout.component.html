@@ -3,11 +3,20 @@
         <app-topbar></app-topbar>
 
         <div class="page-body-wrapper">
-        
+
             <app-navbar></app-navbar>
 
+            <a
+                    class="chatbot-btn"
+                    routerLink="/app/chat"
+                    *ngIf="!shouldHideChat"
+            >
+                <img src="assets/img/TicoBot.png" alt="TicoBot" />
+            </a>
+
+
             <div class="page-body">
-              
+
                 <main class="main-content">
                     <div class="container-fluid py-4">
                         <router-outlet></router-outlet>

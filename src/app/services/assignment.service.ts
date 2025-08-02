@@ -42,7 +42,6 @@ export class AssignmentsService extends BaseService<IAssignment> {
         );
       },
       error: (err: any) => {
-        console.error("Error al obtener las asignaciones", err);
         this.alertService.displayAlert(
           "error",
           "Ocurrió un error al obtener las asignaciones.",
@@ -71,7 +70,6 @@ export class AssignmentsService extends BaseService<IAssignment> {
           );
         },
         error: (err: any) => {
-          console.error("Error al obtener asignaciones del grupo", err);
           this.alertService.displayAlert(
             "error",
             "Ocurrió un error al obtener las asignaciones del grupo.",
@@ -119,7 +117,6 @@ export class AssignmentsService extends BaseService<IAssignment> {
         "top",
         ["error-snackbar"]
       );
-      console.error("Error al guardar asignación:", err);
     },
   });
 }
@@ -189,7 +186,6 @@ export class AssignmentsService extends BaseService<IAssignment> {
         "top",
         ["error-snackbar"]
       );
-      console.error("Error al eliminar la asignación", err);
     },
   });
 }

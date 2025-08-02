@@ -1,0 +1,28 @@
+<div class="row p-4">
+    <div class="col-12 mb-4">
+        <h1 class="title-highlight display-5 fw-bold">Grupos del Estudiante</h1>
+    </div>
+
+    <div class="col-12 mb-4 d-flex justify-content-start">
+        <button (click)="goBack()" type="button" class="btn btn-primary btn-lg custom-btn-back">
+            <i class="fas fa-arrow-left me-2"></i> Volver
+        </button>
+    </div>
+
+    <div class="col-12">
+        <div class="card shadow-sm rounded-4">
+            <div class="card-body">
+                <app-student-groups-list
+                        [groups]="studentGroupsService.groups$()"
+                        (groupClick)="goToGroupStories($event)">
+                </app-student-groups-list>
+
+                <app-pagination
+                        *ngIf="studentGroupsService.groups$().length > 0"
+                        [service]="studentGroupsService.search"
+                        [loadFunction]="loadGroups.bind(this)">
+                </app-pagination>
+            </div>
+        </div>
+    </div>
+</div>

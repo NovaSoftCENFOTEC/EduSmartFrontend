@@ -44,7 +44,6 @@ export class QuizViewComponent implements OnInit {
                 this.isLoading = false;
             },
             error: (err) => {
-                console.error('Error cargando quiz:', err);
                 this.alertService.displayAlert(
                     "error",
                     "Error al cargar el quiz con sus preguntas.",
