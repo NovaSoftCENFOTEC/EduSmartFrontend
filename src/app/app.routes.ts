@@ -25,11 +25,12 @@ import { StoriesComponent } from "./pages/stories/stories.component";
 import { GroupStudentsComponent } from "./pages/groupstudents/students.component";
 import { AssignmentsComponent } from "./pages/assignments/assignments.component";
 import { QuizzesComponent } from "./pages/quizzes/quizzes.component";
+import { ExploreMoreComponent } from "./pages/explore-more/explore-more.component";
 import { StudentGroupsComponent } from "./pages/student-groups/student-groups.component";
 import { GroupStoriesComponent } from "./pages/group-stories/group-stories.component";
 import { ChatComponent } from "./pages/chat/chat.component";
-import {MaterialsComponent} from "./pages/materials/materials.component";
-import {MaterialsReadOnlyComponent} from "./pages/materials-readonly/materials-readonly.component";
+import { MaterialsComponent } from "./pages/materials/materials.component";
+import { MaterialsReadOnlyComponent } from "./pages/materials-readonly/materials-readonly.component";
 
 export const routes: Routes = [
   {
@@ -246,18 +247,29 @@ export const routes: Routes = [
           name: "Materiales",
           showInSidebar: false,
         },
-
       },
       {
         path: "materials-readonly",
-        component:MaterialsReadOnlyComponent,
+        component: MaterialsReadOnlyComponent,
         canActivate: [StudentRoleGuard],
         data: {
           authorities: [IRoleType.student],
           name: "Materiales",
           showInSidebar: false,
         },
-
+      },
+      {
+        path: "explore-more",
+        component: ExploreMoreComponent,
+        data: {
+          authorities: [
+            IRoleType.superAdmin,
+            IRoleType.teacher,
+            IRoleType.student,
+          ],
+          name: "Explora +",
+          showInSidebar: true,
+        },
       },
     ],
   },
