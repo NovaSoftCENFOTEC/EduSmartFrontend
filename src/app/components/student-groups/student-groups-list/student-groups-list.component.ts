@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IGroup } from '../../../interfaces';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-student-groups-list',
@@ -17,6 +18,9 @@ export class StudentGroupsListComponent {
 
     searchText: string = '';
 
+    constructor(private router: Router) {}
+
+
     get filteredGroups(): IGroup[] {
         if (!this.searchText) return this.groups;
         const lower = this.searchText.toLowerCase();
@@ -26,4 +30,10 @@ export class StudentGroupsListComponent {
             (g.teacher?.name?.toLowerCase() ?? '').includes(lower)
         );
     }
-} 
+
+    goToMaterials(courseId: number) {
+        this.router.navigate(['/app/materials-readonly'], {
+            queryParams: { courseId }
+        });
+    }
+}

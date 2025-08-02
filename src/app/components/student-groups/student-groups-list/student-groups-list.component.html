@@ -1,51 +1,51 @@
-<div class="card">
+<div class="card card-with-grid">
     <div class="card-header card-header-indigo">
-        <h2 class="mb-0">Lista de Grupos</h2>
+        <h2 class="mb-0 title-highlight">Mis Grupos</h2>
     </div>
+
     <div class="card-body">
-        <p class="text-muted mb-3">
-            Lista de grupos a los que está asignado el estudiante. Selecciona un grupo para ver sus historias.
+        <p class="text-muted mb-3 fs-5">
+            Aquí puedes ver todos los grupos a los que perteneces. En cada tarjeta encontrarás detalles del curso y el docente a cargo, además de enlaces directos a sus materiales e historias.
         </p>
 
         <div class="mb-4 mt-2">
-            <input type="text" class="input-txt input-filter"
-                placeholder="Filtrar grupos por nombre, curso o docente..." [(ngModel)]="searchText" />
+            <input
+                    type="text"
+                    class="input-txt input-filter"
+                    placeholder="Filtrar grupos por nombre, curso o docente..."
+                    [(ngModel)]="searchText"
+            />
         </div>
 
-        <div class="table-container table-responsive">
-            <table class="table custom-full-bordered-table">
-                <thead class="table-header-gray">
-                    <tr>
-                        <th scope="col">Nombre del Grupo</th>
-                        <th scope="col">Docente</th>
-                        <th scope="col">Curso</th>
-                        <th class="text-center" scope="col">Ver curso</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (item of filteredGroups; track item.id) {
-                    <tr>
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.teacher?.name }} {{ item.teacher?.lastname }}</td>
-                        <td>{{ item.course?.title }}</td>
-                        <td class="text-center">
-                            <button (click)="groupClick.emit(item.id!)" class="btn btn-view border-0 icon-gray-color"
-                                type="button" title="Ver historias del grupo" style="cursor: pointer;">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    } @empty {
-                    <tr>
-                        <td colspan="4">
-                            <div class="d-flex justify-content-center align-items-center w-100">
-                                <p class="mb-0">No hay grupos asignados</p>
-                            </div>
-                        </td>
-                    </tr>
-                    }
-                </tbody>
-            </table>
+        <div class="groups-grid">
+            @for (item of filteredGroups; track item.id) {
+                <div class="group-card" role="button" tabindex="0">
+                    <div class="group-card-header">
+                        <h3 class="group-title mb-1">{{ item.name }}</h3>
+                        <span class="badge-course">{{ item.course?.title }}</span>
+                    </div>
+
+                    <div class="group-card-body">
+                        <div class="group-detail">
+                            <i class="fas fa-user-tie me-2"></i>
+                            <span><strong>Docente:</strong> {{ item.teacher?.name }} {{ item.teacher?.lastname }}</span>
+                        </div>
+                    </div>
+
+                    <div class="group-card-footer">
+                        <button class="btn btn-link-action" (click)="groupClick.emit(item.id!)" title="Ver Historias">
+                            <i class="fas fa-book-open me-2"></i>Historias
+                        </button>
+                        <button class="btn btn-link-action" (click)="goToMaterials(item.course?.id!)" title="Ver Materiales">
+                            <i class="fas fa-folder-open me-2"></i>Materiales
+                        </button>
+                    </div>
+                </div>
+            } @empty {
+                <div class="empty-state">
+                    <p class="mb-0">No hay grupos asignados aún. ¡Explora y únete cuando estés listo!</p>
+                </div>
+            }
         </div>
     </div>
 </div>
