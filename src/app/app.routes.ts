@@ -207,19 +207,6 @@ export const routes: Routes = [
         },
       },
       {
-        path: "explore-more",
-        component: ExploreMoreComponent,
-        data: {
-          authorities: [
-            IRoleType.superAdmin,
-            IRoleType.teacher,
-            IRoleType.student,
-          ],
-          name: "Explora +",
-          showInSidebar: true,
-        },
-      },
-      {
         path: "student-groups",
         component: StudentGroupsComponent,
         canActivate: [StudentRoleGuard],
@@ -269,6 +256,19 @@ export const routes: Routes = [
           authorities: [IRoleType.student],
           name: "Materiales",
           showInSidebar: false,
+        },
+      },
+      {
+        path: "explore-more",
+        component: ExploreMoreComponent,
+        data: {
+          authorities: [
+            IRoleType.superAdmin,
+            IRoleType.teacher,
+            IRoleType.student,
+          ],
+          name: "Explora +",
+          showInSidebar: true,
         },
       },
     ],
