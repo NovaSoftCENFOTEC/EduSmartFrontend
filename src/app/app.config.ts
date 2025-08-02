@@ -8,6 +8,7 @@ import { baseUrlInterceptor } from "./interceptors/base-url.interceptor";
 import { accessTokenInterceptor } from "./interceptors/access-token.interceptor";
 import { handleErrorsInterceptor } from "./interceptors/handle-errors.interceptor";
 import { provideAnimationsAsync } from "@angular/platform-browser/animations/async";
+import { environment } from "../environments/environment";
 import {
   GoogleLoginProvider,
   SocialAuthServiceConfig,
@@ -19,10 +20,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(),
     provideHttpClient(
-        withInterceptors([
-          baseUrlInterceptor,
-          accessTokenInterceptor,
-        ])
+      withInterceptors([baseUrlInterceptor, accessTokenInterceptor])
     ),
     importProvidersFrom(SocialLoginModule),
     {
@@ -32,9 +30,7 @@ export const appConfig: ApplicationConfig = {
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-                "731369077540-79b1cu21reeiu3kv8647ej5jq601bcih.apps.googleusercontent.com"
-            ),
+            provider: new GoogleLoginProvider(environment.googleClientId),
           },
         ],
       } as SocialAuthServiceConfig,
@@ -42,4 +38,3 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
   ],
 };
-

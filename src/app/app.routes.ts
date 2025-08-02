@@ -28,7 +28,7 @@ import { QuizzesComponent } from "./pages/quizzes/quizzes.component";
 import { StudentGroupsComponent } from "./pages/student-groups/student-groups.component";
 import { GroupStoriesComponent } from "./pages/group-stories/group-stories.component";
 import { ChatComponent } from "./pages/chat/chat.component";
-import {MaterialsComponent} from "./pages/materials/materials.component";
+import { MaterialsComponent } from "./pages/materials/materials.component";
 
 export const routes: Routes = [
   {
