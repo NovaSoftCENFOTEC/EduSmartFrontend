@@ -1,4 +1,8 @@
-import { ApplicationConfig, importProvidersFrom } from "@angular/core";
+import {
+  ApplicationConfig,
+  importProvidersFrom,
+  LOCALE_ID,
+} from "@angular/core";
 import { provideRouter } from "@angular/router";
 
 import { routes } from "./app.routes";
@@ -14,6 +18,10 @@ import {
   SocialAuthServiceConfig,
   SocialLoginModule,
 } from "@abacritt/angularx-social-login";
+import { registerLocaleData } from "@angular/common";
+import localeEs from "@angular/common/locales/es";
+
+registerLocaleData(localeEs);
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -36,5 +44,6 @@ export const appConfig: ApplicationConfig = {
       } as SocialAuthServiceConfig,
     },
     provideAnimationsAsync(),
+    { provide: LOCALE_ID, useValue: "es" },
   ],
 };

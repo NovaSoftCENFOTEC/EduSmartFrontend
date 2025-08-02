@@ -9,10 +9,10 @@
         </p>
         <div class="mb-4 mt-2">
             <input
-                    type="text"
+                    [(ngModel)]="searchText"
                     class="input-txt w-25"
                     placeholder="Filtrar cursos por código o título..."
-                    [(ngModel)]="searchText"
+                    type="text"
             />
         </div>
 
@@ -99,12 +99,12 @@
 
 <app-confirm-modal
     #confirmDeleteModal
+    (confirmed)="deleteConfirmation()"
+    [cancelText]="'Cancelar'"
+    [confirmText]="'Eliminar'"
     [message]="
     '¿Estás seguro de que deseas eliminar el curso ' + deleteCourse?.title + '?'
   "
-    [confirmText]="'Eliminar'"
-    [cancelText]="'Cancelar'"
-    (confirmed)="deleteConfirmation()"
 >
 </app-confirm-modal>
 

@@ -1,44 +1,64 @@
+
 .custom-add-full-btn {
   background-color: #003E6B;
   color: #fff;
   border: 1px solid #003E6B;
   padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-  font-weight: bold;
+  border-radius: 0.6rem;
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  font-weight: 700;
   text-transform: uppercase;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  user-select: none;
 }
 
-.custom-add-full-btn:hover {
+.custom-add-full-btn:hover,
+.custom-add-full-btn:focus {
   background-color: #002e50;
   border-color: #002e50;
-}
-
-.custom-add-full-btn:focus {
-  box-shadow: 0 0 0 0.25rem rgba(0, 62, 107, 0.5);
+  box-shadow: 0 0 8px rgba(0, 46, 80, 0.6);
+  outline: none;
+  color: #fff;
 }
 
 .custom-full-bordered-table {
   border-collapse: separate;
   border-spacing: 0;
   border: 1px solid #e9ecef;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.05);
 }
 
 .custom-full-bordered-table thead th {
   border-bottom: 1px solid #e9ecef;
   border-right: 1px solid #e9ecef;
   color: #495057;
+  background-color: #f8f9fa;
+  font-weight: 600;
+  padding: 12px 15px;
+  text-align: left;
+  user-select: none;
 }
 
 .custom-full-bordered-table thead th:last-child {
   border-right: none;
 }
 
-.table-header-gray {
-  background-color: #f8f9fa;
+.custom-full-bordered-table tbody tr {
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.custom-full-bordered-table tbody tr:hover {
+  background-color: #f1f5f9;
 }
 
 .custom-full-bordered-table tbody tr td,
@@ -46,6 +66,7 @@
   color: #212529;
   border-bottom: 1px solid #e9ecef;
   border-right: 1px solid #e9ecef;
+  padding: 12px 15px;
 }
 
 .custom-full-bordered-table tbody tr:last-child td,
@@ -64,6 +85,8 @@
 
 .icon-gray-color {
   color: #6c757d;
+  transition: color 0.2s ease;
+  cursor: pointer;
 }
 
 .icon-gray-color:hover {
