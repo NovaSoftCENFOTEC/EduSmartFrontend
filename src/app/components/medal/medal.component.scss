@@ -1,0 +1,15 @@
+.medal-list {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.medal-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ffd700; // Borde dorado
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}

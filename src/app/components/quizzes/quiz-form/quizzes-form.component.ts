@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
-import { IQuiz } from '../../../interfaces';
+import { IQuiz, IOption } from '../../../interfaces';
 import { AuthService } from '../../../services/auth.service';
 import { LoaderComponent } from '../../loader/loader.component';
 
@@ -28,7 +28,10 @@ export class QuizzesFormComponent implements OnInit {
   public authService: AuthService = inject(AuthService);
   public areActionsAvailable: boolean = false;
   public route: ActivatedRoute = inject(ActivatedRoute);
-
+ //Aqui agregue
+  public userAnswers: { [questionId: number]: number } = {}; // questionId -> optionId
+  public questions: { id: number; options: IOption[] }[] = []; // Aqui agregue
+//Aqui agregue
   ngOnInit(): void {
     this.authService.getUserAuthorities();
     this.route.data.subscribe(data => {
@@ -76,5 +79,22 @@ export class QuizzesFormComponent implements OnInit {
       this.callSaveMethod.emit(item);
     }
   }
+  //Aqui agregue
+  getScore(): number {
+    let correctCount = 0;
+    let totalQuestions = this.questions.length;
+
+    for (const question of this.questions) {
+        const userOptionId = this.userAnswers[question.id];
+        const correctOption = question.options?.find(opt => opt.correct);
+
+        if (correctOption && userOptionId === correctOption.id) {
+            correctCount++;
+        }
+    }
+
+    return totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
+}
+//Aqui agregue
 }
 

@@ -1,0 +1,51 @@
+<div class="col-12 mb-4">
+        <h1 class="title-highlight display-5 fw-bold">Mis Medallas</h1>
+    </div>
+ <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center">
+            <button (click)="goBack()" type="button" class="btn custom-add-full-btn">
+                <i class="fas fa-arrow-left me-2"></i> Volver
+            </button>
+        </div>
+    </div>
+
+<div class="col-12">
+  <div class="card shadow-sm rounded-4">
+    <div class="card-body">
+      <section class="medals-section">
+        <div class="medals-list">
+          <ng-container *ngFor="let medal of medals">
+            <div class="medal-item">
+              <ng-container *ngIf="medal.id && isUnlocked(medal.id); else lockedMedal">
+                <img
+                  [src]="medal.iconUrl"
+                  [alt]="medal.title"
+                  class="medal-img"
+                />
+                <div class="medal-name">{{ medal.title }}</div>
+                
+              </ng-container>
+              <ng-template #lockedMedal>
+                <img
+                  src="assets/img/Lock.png"
+                  alt="Medalla bloqueada"
+                  class="medal-img locked"
+                />
+                <div class="medal-name">Bloqueado</div>
+              </ng-template>
+            </div>
+          </ng-container>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+<app-pagination
+  *ngIf="medals.length > 0"
+  [service]="badgeService.search"
+  [loadFunction]="badgeService.getAll.bind(badgeService)">
+</app-pagination>
+
+
+
+
