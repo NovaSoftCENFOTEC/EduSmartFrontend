@@ -22,31 +22,6 @@ html {
   z-index: 100;
 }
 
-.nav-content {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  max-width: 1600px;
-  margin: 0 auto;
-  padding: 5px 25px;
-}
-
-.logo-title {
-  font-size: 2.8rem;
-  font-weight: 800;
-  color:  #3b82f6   ;
-  font-family: 'Inter', sans-serif;
-  letter-spacing: 2px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.logo-img {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
-}
 
 .status-indicator {
   width: 12px;
