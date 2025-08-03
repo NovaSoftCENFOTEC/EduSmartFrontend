@@ -1,76 +1,178 @@
-
-<div class="row info-container">
-  <div class="col-6">
-    <div class="shadow-sm bg-body rounded px-4 py-4 h-100">
-      <div>
-        <i class="fa-solid fa-user-tie"></i>
-      </div>
-      <div class="border-bottom my-3">
-        <label>Name:</label>
-        <p>{{profileService.user$().name}}</p>
-      </div>
-      <div class="border-bottom my-3">
-        <label>Lastname:</label>
-        <p>{{profileService.user$().lastname}}</p>
-      </div>
-      <div class="border-bottom my-3">
-        <label>email:</label>
-        <p>{{profileService.user$().email}}</p>
-      </div>
-      <div class=" my-3">
-        <label>Last update:</label>
-        <p>{{profileService.user$().updatedAt | date:'dd/MM/YYYY'}}</p>
-      </div>
-    </div>
+<div class="row p-4">
+  <div class="col-12 mb-3">
+    <h2 class="title-highlight">Mi Perfil</h2>
   </div>
-  <div class="col-6">
-    <div class="row">
-      <div class="col-12 shadow-sm bg-body rounded px-4 py-4 mb-3">
-        <label>Rol:</label>
-        <div class="border-bottom my-3">
-          <label>Name:</label>
-          <p>{{profileService.user$().role?.name}}</p>
+  <div class="profile-main-container">
+    <div class="profile-form-container">
+      <div class="profile-header">
+        <div style="position: relative; display: inline-block">
+          <img
+            [src]="
+              profileForm.profilePicture ||
+              profileService.user$().profilePic ||
+              'assets/icons/user.png'
+            "
+            alt="Foto de perfil"
+            class="badge-icon"
+          />
+          <button
+            type="button"
+            (click)="openUploadWidget()"
+            style="
+              position: absolute;
+              bottom: 8px;
+              right: 8px;
+              background: white;
+              border: none;
+              border-radius: 50%;
+              padding: 4px;
+              box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+              cursor: pointer;
+            "
+            aria-label="Cambiar foto de perfil"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M3 17.25V21h3.75l11.06-11.06-3.75-3.75L3 17.25zM20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z"
+                fill="#003E6B"
+              />
+            </svg>
+          </button>
         </div>
-        <div class="border-bottom my-3">
-          <label>Description:</label>
-          <p>{{profileService.user$().role?.description}}</p>
-        </div>
-        <div class=" my-3">
-          <label>Last update:</label>
-          <p>{{profileService.user$().role?.updatedAt | date:'dd/MM/YYYY'}}</p>
+
+        <div class="profile-header-info">
+          <h1 class="mt-2">
+            {{ profileService.user$().name }}
+            {{ profileService.user$().lastname }}
+          </h1>
+          <h2 class="text-muted">{{ profileService.user$().email }}</h2>
         </div>
       </div>
-      <div class="col-12 shadow-sm bg-body rounded px-4 py-4">
-        <label>Last actions:</label>
-        <div>
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Date</th>
-                <th scope="col">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>10/06/2024</td>
-                <td>Deleted user</td>
-              </tr>
-              <tr>
-                <th scope="row">1</th>
-                <td>10/06/2024</td>
-                <td>Deleted user</td>
-              </tr>
-              <tr>
-                <th scope="row">1</th>
-                <td>10/06/2024</td>
-                <td>Deleted user</td>
-              </tr>
-            </tbody>
-          </table>
+
+      <form (ngSubmit)="handleUpdateUser($event)" #frm="ngForm" class="row g-4">
+        <div class="col-md-6">
+          <label for="name" class="form-label">Nombre</label>
+          <input
+            name="name"
+            #name="ngModel"
+            type="text"
+            class="form-control"
+            id="name"
+            [value]="profileService.user$().name"
+            [(ngModel)]="profileForm.name"
+            required
+          />
+
+          @if (name.invalid && (name.dirty || name.touched)) {
+          <div class="error-message">
+            @if (name.errors?.['required']) {
+            <div>El nombre es obligatorio.</div>
+            }
+          </div>
+          }
         </div>
-      </div>
+        <div class="col-md-6 mb-3">
+          <label for="lastname" class="form-label">Apellidos</label>
+          <input
+            name="lastname"
+            #lastname="ngModel"
+            type="text"
+            class="form-control"
+            id="lastname"
+            [value]="profileService.user$().lastname"
+            [(ngModel)]="profileForm.lastname"
+            required
+          />
+
+          @if (lastname.invalid && (lastname.dirty || lastname.touched)) {
+          <div class="error-message">
+            @if (lastname.errors?.['required']) {
+            <div>El apellido es obligatorio.</div>
+            }
+          </div>
+          }
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="email" class="form-label">Correo</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            [value]="profileService.user$().email"
+            disabled
+          />
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label for="role" class="form-label">Rol</label>
+          <input
+            type="text"
+            class="form-control"
+            id="role"
+            [value]="profileService.user$().role?.name"
+            disabled
+          />
+        </div>
+
+        <button
+          type="button"
+          (click)="onRequestChangePassword()"
+          class="btn btn-secondary w-100 mt-15"
+        >
+          Cambiar Contraseña
+        </button>
+
+        <button
+          type="button"
+          [disabled]="frm.invalid"
+          (click)="onRequestSaveProfile($event)"
+          class="btn btn-primary w-100 mt-3"
+        >
+          Guardar Cambios
+        </button>
+      </form>
+    </div>
+    <div class="profile-animation-container">
+      <iframe
+        src="https://lottie.host/embed/6402751d-8e5e-42ca-887c-6362e51f2385/W7FaeaLIJe.json"
+        style="width: 100%; max-width: 400px; height: 400px; border: none"
+        title="Animación Editar Perfil"
+      ></iframe>
     </div>
   </div>
 </div>
+
+<ng-template #changePasswordModal>
+  <app-modal [hideFooter]="true">
+    <app-change-password
+      [form]="changePasswordForm"
+      (callChangePasswordMethod)="onRequestConfirmChangePassword($event)"
+    ></app-change-password>
+  </app-modal>
+</ng-template>
+
+<ng-template #confirmationModal>
+  <app-modal [hideFooter]="true">
+    <div class="text-center p-4">
+      <h1>Confirmación</h1>
+      <p>{{ confirmationMessage }}</p>
+      <div class="d-flex justify-content-center mt-4">
+        <button
+          class="btn btn-secondary me-2"
+          (click)="closeConfirmationModal()"
+        >
+          Cancelar
+        </button>
+        <button class="btn btn-primary" (click)="confirmAction()">
+          Sí, confirmar
+        </button>
+      </div>
+    </div>
+  </app-modal>
+</ng-template>
