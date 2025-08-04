@@ -16,6 +16,8 @@ import { AuthService } from '../../services/auth.service';
 export class MedalComponent implements OnInit {
   public studentBadgeIds: number[] = [];
   public allBadges: IBadge[] = [];
+  public showModal: boolean = false;
+  public selectedBadge?: IBadge;
 
   constructor(
     public badgeService: BadgeService,
@@ -30,7 +32,7 @@ export class MedalComponent implements OnInit {
     this.badgeService.getAll();
     setTimeout(() => {
       this.allBadges = this.badgeService.badges$();
-      console.log('Todas las medallas:', this.allBadges);
+      
 
       if (typeof studentId === 'number') {
         this.badgeService.getBadgesByStudent(studentId);
@@ -54,5 +56,16 @@ export class MedalComponent implements OnInit {
 
   goBack(): void {
     this.router.navigate(['/app/student-groups']);
+  }
+
+  openModal(badge: IBadge): void {
+     console.log('Datos del badge seleccionado:', badge);
+    this.selectedBadge = badge;
+    this.showModal = true;
+  }
+
+  closeModal(): void {
+    this.showModal = false;
+    this.selectedBadge = undefined;
   }
 }

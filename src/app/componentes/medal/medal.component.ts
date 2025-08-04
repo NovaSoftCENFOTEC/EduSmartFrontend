@@ -1,11 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-medal',
   standalone: true,
+  imports: [],
   templateUrl: './medal.component.html',
-  styleUrls: ['./medal.component.scss']
+  styleUrl: './medal.component.scss'
 })
 export class MedalComponent {
-  @Input() medals: string[] = []; 
+
 }

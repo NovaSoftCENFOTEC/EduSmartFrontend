@@ -15,8 +15,12 @@
       <section class="medals-section">
         <div class="medals-list">
           <ng-container *ngFor="let medal of medals">
-            <div class="medal-item">
-              <ng-container *ngIf="medal.id && isUnlocked(medal.id); else lockedMedal">
+            <div
+              class="medal-item"
+              (click)="medal.id !== undefined && isUnlocked(medal.id) ? openModal(medal) : null"
+              style="cursor:pointer;"
+            >
+              <ng-container *ngIf="medal.id !== undefined && isUnlocked(medal.id); else lockedMedal">
                 <img
                   [src]="medal.iconUrl"
                   [alt]="medal.title"
@@ -39,11 +43,27 @@
     </div>
   </div>
 </div>
+
+
+<div class="modal-backdrop" *ngIf="showModal" (click)="closeModal()"></div>
+
+
+<div class="modal-badge" *ngIf="showModal && selectedBadge">
+  <button class="close-btn" (click)="closeModal()">×</button>
+  <div class="insignia-decor">
+    <img [src]="selectedBadge.iconUrl" [alt]="selectedBadge.title" class="modal-img" />
+    <div class="medal-ribbon"></div>
+  </div>
+  <div class="modal-title">{{ selectedBadge.title }}</div>
+  <div class="modal-description">{{ selectedBadge.description }}</div>
+</div>
+
 <app-pagination
   *ngIf="medals.length > 0"
   [service]="badgeService.search"
   [loadFunction]="badgeService.getAll.bind(badgeService)">
 </app-pagination>
+
 
 
 
