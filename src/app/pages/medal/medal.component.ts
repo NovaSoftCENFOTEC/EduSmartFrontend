@@ -4,6 +4,7 @@ import { BadgeService } from '../../services/badge.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IBadge } from '../../interfaces';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
+import { AuthService } from '../../services/auth.service'; 
 
 @Component({
   selector: 'app-medal',
@@ -13,31 +14,45 @@ import { PaginationComponent } from '../../components/pagination/pagination.comp
   styleUrls: ['./medal.component.scss']
 })
 export class MedalComponent implements OnInit {
-      public route: ActivatedRoute = inject(ActivatedRoute);
-      public router = inject(Router);
-  public quizzes: { id: number; score: number }[] = [
-    { id: 1, score: 90 },
-    { id: 2, score: 100   },
-    { id: 3, score: 70 }
-  ]; // Ejemplo de datos
+  public studentBadgeIds: number[] = [];
+  public allBadges: IBadge[] = [];
 
-  constructor(public badgeService: BadgeService) {}
+  constructor(
+    public badgeService: BadgeService,
+    private router: Router,
+    private authService: AuthService 
+  ) {}
 
   ngOnInit(): void {
+    const user = this.authService.getUser();
+    const studentId = user?.id;
+
     this.badgeService.getAll();
-    // Aquí deberías cargar los quizzes y sus scores del estudiante
-    // Por ahora usamos datos de ejemplo arriba
+    setTimeout(() => {
+      this.allBadges = this.badgeService.badges$();
+      console.log('Todas las medallas:', this.allBadges);
+
+      if (typeof studentId === 'number') {
+        this.badgeService.getBadgesByStudent(studentId);
+        setTimeout(() => {
+          const studentBadges = this.badgeService.badges$();
+          this.studentBadgeIds = studentBadges.map(badge => badge.id!).filter(id => id !== undefined);
+        }, 500);
+      } else {
+        console.warn('No se encontró el studentId del usuario logueado.');
+      }
+    }, 500);
   }
 
   get medals() {
-    return this.badgeService.badges$();
+    return this.allBadges;
   }
 
   isUnlocked(medalId: number): boolean {
-    const quiz = this.quizzes.find((q: { id: number; score: number }) => q.id === medalId);
-    return !!quiz && quiz.score > 70;
+    return this.studentBadgeIds.includes(medalId);
   }
-    goBack(): void {
-        this.router.navigate(['/app/student-groups']);
-    }
+
+  goBack(): void {
+    this.router.navigate(['/app/student-groups']);
+  }
 }

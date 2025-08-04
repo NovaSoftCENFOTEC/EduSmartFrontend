@@ -52,6 +52,11 @@
   border-color: #bbb;
 }
 
+.medal-img.unlocked-spin {
+  animation: spin-unlock 1s cubic-bezier(0.4, 0.2, 0.2, 1);
+  backface-visibility: hidden;
+}
+
 .medal-name {
   font-size: 1.2rem;
   color: #495057;
@@ -77,4 +82,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+}
+
+@keyframes spin-unlock {
+  0% { transform: rotateY(0deg); }
+  60% { transform: rotateY(360deg); }
+  100% { transform: rotateY(360deg); }
 }
