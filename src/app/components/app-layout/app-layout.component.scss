@@ -1,0 +1,37 @@
+.chatbot-btn {
+  position: fixed;
+  bottom: 20px; /* más natural en la esquina inferior */
+  right: 20px;  /* pegado a la derecha */
+  background: #fff;
+  border: 2px solid var(--color-blue-munsell);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s, box-shadow 0.3s;
+  z-index: 1500;
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.chatbot-btn img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.chatbot-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

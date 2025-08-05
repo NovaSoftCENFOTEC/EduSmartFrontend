@@ -11,7 +11,7 @@ import { IRoleType } from "../interfaces";
 @Injectable({
   providedIn: "root",
 })
-export class TeacherRoleGuard implements CanActivate {
+export class StudentRoleGuard implements CanActivate {
   private authService = inject(AuthService);
   private router = inject(Router);
 

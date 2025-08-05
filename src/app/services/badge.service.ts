@@ -41,7 +41,6 @@ export class BadgeService extends BaseService<IBadge> {
         this.badgeListSignal.set(response.data);
       },
       error: (err: any) => {
-        console.error('Error al obtener insignias', err);
         this.alertService.displayAlert(
             'error',
             'Ocurrió un error al obtener las insignias.',
@@ -66,7 +65,6 @@ export class BadgeService extends BaseService<IBadge> {
         this.getAll();
       },
       error: (err: any) => {
-        console.error('Error al guardar insignia', err);
         this.alertService.displayAlert(
             'error',
             'Ocurrió un error al guardar la insignia.',
@@ -91,7 +89,6 @@ export class BadgeService extends BaseService<IBadge> {
         this.getAll();
       },
       error: (err: any) => {
-        console.error('Error al actualizar insignia', err);
         this.alertService.displayAlert(
             'error',
             'Ocurrió un error al actualizar la insignia.',
@@ -116,7 +113,6 @@ export class BadgeService extends BaseService<IBadge> {
         this.getAll();
       },
       error: (err: any) => {
-        console.error('Error al eliminar insignia', err);
         this.alertService.displayAlert(
             'error',
             'Ocurrió un error al eliminar la insignia.',

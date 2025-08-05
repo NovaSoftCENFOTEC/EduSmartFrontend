@@ -57,7 +57,6 @@ export class QuizService extends BaseService<IQuiz> {
         );
       },
       error: (err: any) => {
-        console.error("Error al obtener los quices", err);
         this.alertService.displayAlert(
           "error",
           "Ocurrió un error al obtener los quices.",
@@ -94,7 +93,6 @@ export class QuizService extends BaseService<IQuiz> {
         );
       },
       error: (err: any) => {
-        console.error("Error al obtener los quices de la story", err);
         this.alertService.displayAlert(
           "error",
           "Ocurrió un error al obtener los quices de la story.",
@@ -159,7 +157,6 @@ export class QuizService extends BaseService<IQuiz> {
                     }
                   },
                   error: (err) => {
-                    console.error(`Error obteniendo opciones para pregunta ${questions[index].id}:`, err);
                     questionsWithOptions[index].options = [];
                     completedOptions++;
 
@@ -177,7 +174,6 @@ export class QuizService extends BaseService<IQuiz> {
               });
             },
             error: (err) => {
-              console.error('Error obteniendo preguntas:', err);
               quiz.questions = [];
               observer.next({
                 data: quiz,
@@ -215,12 +211,8 @@ export class QuizService extends BaseService<IQuiz> {
       generateWithAI: quiz.generateWithAI || false
     };
 
-    console.log('Enviando quiz data:', quizData);
-    console.log('URL endpoint:', `${this.source}/story/${storyId}`);
-
     this.addCustomSource(`story/${storyId}`, quizData).subscribe({
       next: (response: IResponse<IQuiz>) => {
-        console.log('Quiz creado exitosamente:', response);
 
         let successMessage = response.message || "Quiz creado con éxito.";
         if (quizData.generateWithAI && quizData.numberOfQuestions > 0) {
@@ -238,11 +230,6 @@ export class QuizService extends BaseService<IQuiz> {
         this.quizCreatedSubject.next();
       },
       error: (err) => {
-        console.error('Error completo al crear quiz:', err);
-        console.error('Error status:', err.status);
-        console.error('Error message:', err.message);
-        console.error('Error body:', err.error);
-
         let errorMessage = "Ocurrió un error al crear el quiz.";
         if (err.error && err.error.message) {
           errorMessage = err.error.message;
@@ -301,7 +288,6 @@ export class QuizService extends BaseService<IQuiz> {
           "top",
           ["error-snackbar"]
         );
-        console.error("Error al generar preguntas:", err);
       },
     });
   }
@@ -341,7 +327,6 @@ export class QuizService extends BaseService<IQuiz> {
           "top",
           ["error-snackbar"]
         );
-        console.error("Error al guardar quiz:", err);
       },
     });
   }
@@ -387,7 +372,6 @@ export class QuizService extends BaseService<IQuiz> {
           "top",
           ["error-snackbar"]
         );
-        console.error("Error al actualizar quiz:", err);
         this.quizUpdatedSubject.next();
       },
     });
@@ -419,7 +403,6 @@ export class QuizService extends BaseService<IQuiz> {
           "top",
           ["error-snackbar"]
         );
-        console.error("Error al eliminar el quiz", err);
         this.quizDeletedSubject.next();
       },
     });

@@ -1,0 +1,28 @@
+.no-link-style {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.no-link-style:hover {
+  color: #007bff;
+}
+
+.link-material {
+  color: var(--color-indigo-dye);
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+.link-material:hover {
+  color: var(--color-blue-munsell);
+}
+
+.link-material i {
+  color: var(--color-blue-munsell);
+  transition: color 0.2s ease-in-out;
+}
+
+.link-material:hover i {
+  color: var(--color-indigo-dye);
+}

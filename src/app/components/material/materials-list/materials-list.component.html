@@ -1,0 +1,81 @@
+<div class="card">
+    <div class="card-header card-header-indigo">
+        <h2 class="mb-0">Lista de Materiales</h2>
+    </div>
+    <div class="card-body">
+        <p class="text-muted mb-3">
+            Materiales registrados para el curso seleccionado.
+        </p>
+
+        <div class="mb-4 mt-2">
+            <input
+                    [(ngModel)]="searchText"
+                    class="input-txt input-filter"
+                    placeholder="Filtrar por nombre..."
+                    type="text"
+            />
+        </div>
+
+        <div class="table-container table-responsive">
+            <table class="table custom-full-bordered-table">
+                <thead class="table-header-gray">
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Archivo</th>
+                    <th scope="col">Fecha de subida</th>
+                    <th scope="col">Profesor</th>
+                    <th class="text-center" scope="col">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of filteredMaterials; trackBy: trackById">
+                    <td>{{ item.name }}</td>
+                    <td>
+                        <a [href]="item.fileUrl" class="d-flex align-items-center link-material" rel="noopener noreferrer"
+                           target="_blank">
+                            <i [class]="getFileIcon(item.fileUrl)" class="me-2"
+                               style="font-size: 1.5em;"></i>
+                            <span>Abrir</span>
+                        </a>
+                    </td>
+                    <td>{{ item.uploadedAt | date: 'mediumDate' }}</td>
+                    <td>{{ item.teacher?.name || 'Sin asignar' }}</td>
+                    <td class="text-center">
+                        <button
+                                (click)="callModalAction.emit(item)"
+                                class="btn border-0 me-2 icon-gray-color"
+                                title="Editar material"
+                                type="button"
+                        >
+                            <i class="fas fa-pen"></i>
+                        </button>
+                        <button
+                                (click)="openConfirmationModal(item)"
+                                class="btn border-0 icon-gray-color"
+                                title="Eliminar material"
+                                type="button"
+                        >
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr *ngIf="filteredMaterials.length === 0">
+                    <td colspan="5">
+                        <div class="d-flex justify-content-center align-items-center w-100">
+                            <p class="mb-0" style="color: var(--color-indigo-dye);">No hay materiales registrados</p>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <app-confirm-modal
+        #confirmDeleteModal
+        (confirmed)="deleteConfirmation()"
+        [cancelText]="'Cancelar'"
+        [confirmText]="'Eliminar'"
+        [message]="'¿Estás seguro de que deseas eliminar el material ' + deleteMaterial?.name + '?'"
+    ></app-confirm-modal>
+</div>

@@ -18,20 +18,21 @@ export class GroupsService extends BaseService<IGroup> {
 
     public search: ISearch = {
         page: 1,
-        size: 5
-    }
+        size: 5,
+        pageNumber: 1,
+        totalPages: 1,
+    };
 
     public totalItems: any = [];
 
     getAll() {
-        this.findAllWithParams({page: this.search.page, size: this.search.size}).subscribe({
+        this.findAllWithParams({ page: this.search.page, size: this.search.size }).subscribe({
             next: (response: IResponse<IGroup[]>) => {
                 this.groupListSignal.set(response.data);
-                this.search = {...this.search, ...response.meta};
-                this.totalItems = Array.from({length: this.search.totalPages || 0}, (_, i) => i + 1);
+                this.search = { ...this.search, ...response.meta };
+                this.totalItems = Array.from({ length: this.search.totalPages || 0 }, (_, i) => i + 1);
             },
             error: (err: any) => {
-                console.error('Error al obtener los grupos', err);
                 this.alertService.displayAlert('error', 'Ocurrió un error al obtener los grupos.', 'center', 'top', ['error-snackbar']);
             }
         });
@@ -47,14 +48,17 @@ export class GroupsService extends BaseService<IGroup> {
         this.findAllWithParamsAndCustomSource(`teacher/${teacherId}/groups`, params).subscribe({
             next: (response: IResponse<IGroup[]>) => {
                 this.groupListSignal.set(response.data);
-                this.search = {...this.search, ...response.meta};
-                this.totalItems = Array.from({length: this.search.totalPages || 0}, (_, i) => i + 1);
+                this.search = { ...this.search, ...response.meta };
+                this.totalItems = Array.from({ length: this.search.totalPages || 0 }, (_, i) => i + 1);
             },
             error: (err: any) => {
-                console.error('Error al obtener grupos del docente', err);
                 this.alertService.displayAlert('error', 'Ocurrió un error al obtener los grupos del docente.', 'center', 'top', ['error-snackbar']);
             }
         });
+    }
+
+    getById(groupId: number) {
+        return this.find(groupId);
     }
 
     save(item: IGroup) {
@@ -66,7 +70,7 @@ export class GroupsService extends BaseService<IGroup> {
             return;
         }
 
-        const payload = {name: item.name};
+        const payload = { name: item.name };
 
         this.addCustomSource(`course/${courseId}/teacher/${teacherId}`, payload).subscribe({
             next: (response: IResponse<IGroup>) => {
@@ -76,7 +80,6 @@ export class GroupsService extends BaseService<IGroup> {
             },
             error: (err) => {
                 this.alertService.displayAlert('error', 'Ocurrió un error al agregar el grupo.', 'center', 'top', ['error-snackbar']);
-                console.error('Error al guardar grupo:', err);
             }
         });
     }
@@ -89,8 +92,8 @@ export class GroupsService extends BaseService<IGroup> {
 
         const payload = {
             name: item.name,
-            course: {id: item.course?.id},
-            teacher: {id: item.teacher?.id},
+            course: { id: item.course?.id },
+            teacher: { id: item.teacher?.id },
             students: item.students || []
         };
 
@@ -121,7 +124,6 @@ export class GroupsService extends BaseService<IGroup> {
             },
             error: (err: any) => {
                 this.alertService.displayAlert('error', 'Ocurrió un error al eliminar el grupo.', 'center', 'top', ['error-snackbar']);
-                console.error('Error al eliminar el grupo', err);
             }
         });
     }

@@ -15,18 +15,24 @@ import { LandingPageComponent } from "./pages/landing-page/landing-page.componen
 import { PasswordRecoveryComponent } from "./pages/auth/password-recovery/password-recovery.component";
 import { PasswordChangeComponent } from "./pages/auth/password-change/password-change.component";
 import { StudentsComponent } from "./pages/students/students.component";
-import { TeacherRoleGuard } from "./guards/teacher-role.guard";
 import { PasswordChangeGuard } from "./guards/password-change.guard";
 import { BadgesComponent } from "./pages/badges/badges.component";
 import { CoursesComponent } from "./pages/courses/courses.component";
 import { GroupsComponent } from "./pages/groups/groups.component";
 import { AdminTeacherRoleGuard } from "./guards/admin-teacher-role.guard";
+import { StudentRoleGuard } from "./guards/student-role.guard";
 import { StoriesComponent } from "./pages/stories/stories.component";
 import { GroupStudentsComponent } from "./pages/groupstudents/students.component";
 import { AssignmentsComponent } from "./pages/assignments/assignments.component";
 import { QuizzesComponent } from "./pages/quizzes/quizzes.component";
 import { TeamPageComponent } from "./pages/team-page/team-page.component";
 import { ProductComponent } from "./pages/product/product.component";
+import { ExploreMoreComponent } from "./pages/explore-more/explore-more.component";
+import { StudentGroupsComponent } from "./pages/student-groups/student-groups.component";
+import { GroupStoriesComponent } from "./pages/group-stories/group-stories.component";
+import { ChatComponent } from "./pages/chat/chat.component";
+import { MaterialsComponent } from "./pages/materials/materials.component";
+import { MaterialsReadOnlyComponent } from "./pages/materials-readonly/materials-readonly.component";
 
 export const routes: Routes = [
   {
@@ -58,12 +64,11 @@ export const routes: Routes = [
     component: PasswordChangeComponent,
     canActivate: [AuthGuard],
   },
-      {
-        path: "landing",
-        component: TeamPageComponent,
-     
-      },
-       {
+  {
+    path: "landing",
+    component: TeamPageComponent,
+  },
+  {
     path: "product",
     component: ProductComponent,
   },
@@ -202,7 +207,7 @@ export const routes: Routes = [
           name: "Asignaciones",
         },
       },
-  
+
       {
         path: "quizzes",
         component: QuizzesComponent,
@@ -210,6 +215,71 @@ export const routes: Routes = [
         data: {
           authorities: [IRoleType.superAdmin, IRoleType.teacher],
           name: "Quices",
+        },
+      },
+      {
+        path: "student-groups",
+        component: StudentGroupsComponent,
+        canActivate: [StudentRoleGuard],
+        data: {
+          authorities: [IRoleType.student],
+          name: "Mis Grupos",
+          showInSidebar: true,
+        },
+      },
+      {
+        path: "group-by-student-id/:groupId/courses",
+        component: GroupStoriesComponent,
+        canActivate: [StudentRoleGuard],
+        data: {
+          authorities: [IRoleType.student],
+          name: "Historias del Grupo",
+        },
+      },
+      {
+        path: "chat",
+        component: ChatComponent,
+        data: {
+          authorities: [
+            IRoleType.student,
+            IRoleType.teacher,
+            IRoleType.superAdmin,
+          ],
+          name: "Chat",
+          showInSidebar: false,
+        },
+      },
+      {
+        path: "materials",
+        component: MaterialsComponent,
+        canActivate: [AdminTeacherRoleGuard],
+        data: {
+          authorities: [IRoleType.superAdmin, IRoleType.teacher],
+          name: "Materiales",
+          showInSidebar: false,
+        },
+      },
+      {
+        path: "materials-readonly",
+        component: MaterialsReadOnlyComponent,
+        canActivate: [StudentRoleGuard],
+        data: {
+          authorities: [IRoleType.student],
+          name: "Materiales",
+          showInSidebar: false,
+        },
+      },
+      {
+        path: "explore-more",
+        component: ExploreMoreComponent,
+        data: {
+          authorities: [
+            IRoleType.superAdmin,
+            IRoleType.teacher,
+            IRoleType.student,
+          ],
+          name: "Explora +",
+          showInSidebar: true,
         },
       },
     ],

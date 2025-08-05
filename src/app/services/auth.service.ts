@@ -138,8 +138,6 @@ export class AuthService {
 
   public areActionsAvailable(routeAuthorities: string[]): boolean {
     let allowedUser = false;
-    let isAdmin = false;
-
     let userAuthorities = this.getUserAuthorities();
 
     for (const authority of routeAuthorities) {
@@ -149,10 +147,6 @@ export class AuthService {
       }
     }
 
-    if (userAuthorities?.some((item) => item.authority == IRoleType.superAdmin)) {
-      isAdmin = true;
-    }
-
-    return allowedUser || isAdmin;
+    return allowedUser;
   }
 }

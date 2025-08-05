@@ -69,7 +69,6 @@ export class LoginComponent implements OnInit {
               }
             },
             error: (err: any) => {
-              console.error("Error al enviar token de Google al backend:", err);
               this.alertService.displayAlert(
                 "error",
                 "Error al iniciar sesión con Google. Inténtalo de nuevo.",
@@ -82,7 +81,6 @@ export class LoginComponent implements OnInit {
         }
       },
       (error) => {
-        console.error("Error en la suscripción de SocialAuthService:", error);
         this.alertService.displayAlert(
           "error",
           "Error al configurar el inicio de sesión con Google.",
