@@ -1,39 +1,31 @@
-
-
-
-
-
 .landing-container {
-  font-family: var(--font-family-roboto, 'Roboto', sans-serif);
+  font-family: var(--font-family-roboto, "Roboto", sans-serif);
   color: #333;
   width: 100%;
   padding-top: 90px;
-  
 
   &.two-columns {
     display: flex;
     width: 100%;
     height: 100vh;
     overflow: hidden;
-    
 
     .center-section {
       color: #222;
       flex: 1 1 0;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: center;
       background: #10b6b6;
       padding: 40px;
-      clip-path: polygon(0 0, 100% 0, 100% 90%, 50% 100%, 0 90%);
-    
+
       .text-box {
         flex: 1;
 
         h2 {
           font-size: 2.5rem;
           color: var(--color-indigo-dye, #003366);
-          font-family: var(--font-family-roboto, 'Roboto', sans-serif);
+          font-family: var(--font-family-roboto, "Roboto", sans-serif);
           text-align: center;
         }
 
@@ -45,9 +37,9 @@
 
         p {
           margin: 32px 0;
-          font-size: 1.1rem;
+          font-size: 1.3rem;
           color: white;
-          font-family: var(--font-family-roboto, 'Roboto', sans-serif);
+          font-family: var(--font-family-roboto, "Roboto", sans-serif);
           line-height: 2;
         }
 
@@ -58,7 +50,7 @@
           max-width: 260px;
           margin: 32px auto;
           padding: 16px 0;
-          background:  #003366;
+          background: #003366;
           color: #fff;
           font-size: 1.2rem;
           font-weight: bold;
@@ -70,7 +62,7 @@
           transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
 
           &:hover {
-            background: #003366;;
+            background: #003366;
             transform: translateY(-2px) scale(1.03);
             box-shadow: 0 8px 24px rgba(59, 130, 246, 0.22);
           }
@@ -81,8 +73,6 @@
     .right-section {
       flex: 1 1 0;
       background-size: 100% auto;
-     ;
-     
     }
     .left-section {
       flex: 1 1 0;
