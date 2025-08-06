@@ -28,6 +28,16 @@ export class GroupStoriesComponent implements OnInit {
 
     constructor() {
         effect(() => {
+            const courses = this.groupCoursesService.courses$();
+            if (courses.length > 0 && this.groupId) {
+                this.courseId = courses[0].id || null;
+                if (this.courseId) {
+                    this.groupStoriesService.getStoriesByCourse(this.courseId);
+                }
+            }
+        });
+
+        effect(() => {
             const stories = this.groupStoriesService.stories$();
             if (stories.length > 0) {
                 this.expandedStories = new Array(stories.length).fill(false);
@@ -47,13 +57,6 @@ export class GroupStoriesComponent implements OnInit {
     loadCourseAndStories(): void {
         if (this.groupId) {
             this.groupCoursesService.getCoursesByGroup(this.groupId);
-            const courses = this.groupCoursesService.courses$();
-            if (courses.length > 0) {
-                this.courseId = courses[0].id || null;
-                if (this.courseId) {
-                    this.groupStoriesService.getStoriesByCourse(this.courseId);
-                }
-            }
         }
     }
 
