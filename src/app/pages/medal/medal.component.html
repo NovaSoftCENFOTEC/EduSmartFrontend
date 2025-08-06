@@ -50,9 +50,11 @@
 
 <div class="modal-badge" *ngIf="showModal && selectedBadge">
   <button class="close-btn" (click)="closeModal()">×</button>
-  <div class="insignia-decor">
-    <img [src]="selectedBadge.iconUrl" [alt]="selectedBadge.title" class="modal-img" />
+  <div class="insignia-decor" style="position: relative;">
     <div class="medal-ribbon"></div>
+    <img [src]="selectedBadge.iconUrl" [alt]="selectedBadge.title" class="modal-img" />
+    
+    
   </div>
   <div class="modal-title">{{ selectedBadge.title }}</div>
   <div class="modal-description">{{ selectedBadge.description }}</div>
