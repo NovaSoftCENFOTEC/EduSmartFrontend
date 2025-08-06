@@ -1,6 +1,6 @@
 import {inject, Injectable, signal} from "@angular/core";
 import {BaseService} from "./base-service";
-import {IQuiz, IResponse, ISearch, IQuestion, IOption} from "../interfaces";
+import {IOption, IQuestion, IQuiz, IResponse, ISearch} from "../interfaces";
 import {AlertService} from "./alert.service";
 import {Observable, Subject} from "rxjs";
 import {QuizDataTransformerService} from "./quiz-data-transformer.service";
@@ -10,22 +10,18 @@ import {QuizDataTransformerService} from "./quiz-data-transformer.service";
     providedIn: "root",
 })
 export class QuizService extends BaseService<IQuiz> {
-    protected override source: string = "quizzes";
-
-    private quizListSignal = signal<IQuiz[]>([]);
-    private alertService = inject(AlertService);
-    private transformer = inject(QuizDataTransformerService);
-
-    private quizCreatedSubject = new Subject<void>();
-    private quizUpdatedSubject = new Subject<void>();
-    private quizDeletedSubject = new Subject<void>();
-
     public search: ISearch = {
         page: 1,
         size: 5,
     };
-
     public totalItems: any = [];
+    protected override source: string = "quizzes";
+    private quizListSignal = signal<IQuiz[]>([]);
+    private alertService = inject(AlertService);
+    private transformer = inject(QuizDataTransformerService);
+    private quizCreatedSubject = new Subject<void>();
+    private quizUpdatedSubject = new Subject<void>();
+    private quizDeletedSubject = new Subject<void>();
 
     get quizzes$() {
         return this.quizListSignal;
