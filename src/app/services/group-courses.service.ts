@@ -24,6 +24,10 @@ export class GroupCoursesService extends BaseService<ICourse> {
     public totalItems: number[] = [];
     private alertService: AlertService = inject(AlertService);
 
+    clearCourses(): void {
+        this.courseListSignal.set([]);
+    }
+
     getCoursesByGroup(groupId: number) {
         this.http.get<IResponse<ICourse>>(`${this.source}/${groupId}/course`).subscribe({
             next: (response: IResponse<ICourse>) => {

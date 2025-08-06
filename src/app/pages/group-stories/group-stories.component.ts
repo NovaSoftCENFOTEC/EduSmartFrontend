@@ -56,6 +56,10 @@ export class GroupStoriesComponent implements OnInit {
 
     loadCourseAndStories(): void {
         if (this.groupId) {
+            this.groupStoriesService.clearStories();
+            this.groupCoursesService.clearCourses();
+            this.expandedStories = [];
+            this.courseId = null;
             this.groupCoursesService.getCoursesByGroup(this.groupId);
         }
     }
