@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
-import { IQuiz, IOption } from '../../../interfaces';
+import { IQuiz } from '../../../interfaces';
 import { AuthService } from '../../../services/auth.service';
 import { LoaderComponent } from '../../loader/loader.component';
 
