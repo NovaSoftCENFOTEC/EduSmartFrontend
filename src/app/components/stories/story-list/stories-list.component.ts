@@ -8,14 +8,21 @@ import {
 } from "@angular/core";
 import { IStory } from "../../../interfaces";
 import { ConfirmModalComponent } from "../../confirm-modal/confirm-modal.component";
-import { DatePipe, NgForOf, NgIf } from "@angular/common";
+import { DatePipe, NgForOf, NgIf, SlicePipe } from "@angular/common";
 import { Router } from "@angular/router";
 import { FormsModule } from "@angular/forms";
 
 @Component({
   selector: "app-story-list",
   standalone: true,
-  imports: [ConfirmModalComponent, DatePipe, NgForOf, NgIf, FormsModule],
+  imports: [
+    ConfirmModalComponent,
+    DatePipe,
+    NgForOf,
+    NgIf,
+    FormsModule,
+    SlicePipe,
+  ],
   templateUrl: "./stories-list.component.html",
   styleUrls: ["./stories-list.component.scss"],
 })
@@ -60,5 +67,11 @@ export class StoryListComponent {
         queryParams: { storyId: storyId.toString() },
       });
     }
+  }
+
+  expandedStoryId: number | null = null;
+
+  toggleContent(storyId: number) {
+    this.expandedStoryId = this.expandedStoryId === storyId ? null : storyId;
   }
 }

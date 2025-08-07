@@ -31,7 +31,21 @@
           track item.id) {
           <tr>
             <td>{{ item.title }}</td>
-            <td>{{ item.content }}</td>
+            <td>
+              <span
+                class="story-content"
+                [class.expanded]="expandedStoryId === item.id"
+                (click)="toggleContent(item.id!)"
+                title="Haz clic para ver más"
+              >
+                {{
+                  expandedStoryId === item.id
+                    ? item.content
+                    : (item.content | slice : 0 : 100) +
+                      (item.content.length > 100 ? "..." : "")
+                }}
+              </span>
+            </td>
             <td>{{ item.createdAt | date : "mediumDate" }}</td>
             <td class="text-center">
               <button
@@ -48,7 +62,7 @@
               >
                 <i class="fas fa-trash"></i>
               </button>
-               <button
+              <button
                 (click)="goToQuizStories(item.id)"
                 class="btn btn-primary px-4 py-2"
               >

@@ -1,83 +1,83 @@
 <div class="position-relative">
-  <form [formGroup]="form" class="mb-4 mx-auto" style="max-width: 400px;">
-    <div class="mb-3 text-center">
-      <h2 style="
+    <form [formGroup]="form" class="mb-4 mx-auto" style="max-width: 400px;">
+        <div class="mb-3 text-center">
+            <h2 style="
         font-size: var(--font-h2-size);
         font-weight: var(--font-h2-weight);
         color: var(--color-indigo-dye);">{{ formTitle }}</h2>
-    </div>
+        </div>
 
-    <div class="mb-3">
-      <label class="mb-1">Título <span class="required-asterisk">*</span></label>
-      <input formControlName="title" type="text" class="form-control normal"
-        placeholder="Ejemplo: Quiz sobre la conquista de Costa Rica" />
-      @if (form.controls['title'].invalid && (form.controls['title'].dirty || form.controls['title'].touched)) {
-      <div class="form-error-message">
-        El título es obligatorio.
-      </div>
-      }
-    </div>
+        <div class="mb-3">
+            <label class="mb-1">Título <span class="required-asterisk">*</span></label>
+            <input class="form-control normal" formControlName="title" placeholder="Ejemplo: Quiz sobre la conquista de Costa Rica"
+                   type="text"/>
+            @if (form.controls['title'].invalid && (form.controls['title'].dirty || form.controls['title'].touched)) {
+                <div class="form-error-message">
+                    El título es obligatorio.
+                </div>
+            }
+        </div>
 
-    <div class="mb-3">
-      <label class="mb-1">Descripción <span class="required-asterisk">*</span></label>
-      <textarea formControlName="description" rows="3" class="form-control normal"
-        placeholder="Breve descripción del Quiz."></textarea>
-      @if (form.controls['description'].invalid && (form.controls['description'].dirty ||
-      form.controls['description'].touched)) {
-      <div class="form-error-message">
-        La descripción es obligatoria.
-      </div>
-      }
-    </div>
+        <div class="mb-3">
+            <label class="mb-1">Descripción <span class="required-asterisk">*</span></label>
+            <textarea class="form-control normal" formControlName="description" placeholder="Breve descripción del Quiz."
+                      rows="3"></textarea>
+            @if (form.controls['description'].invalid && (form.controls['description'].dirty ||
+                form.controls['description'].touched)) {
+                <div class="form-error-message">
+                    La descripción es obligatoria.
+                </div>
+            }
+        </div>
 
-    <div class="mb-3">
-      <label class="mb-1">Fecha de entrega <span class="required-asterisk">*</span></label>
-      <input formControlName="dueDate" type="date" class="form-control normal" [min]="getTodayDate()" />
-      @if (form.controls['dueDate'].invalid && (form.controls['dueDate'].dirty || form.controls['dueDate'].touched)) {
-      <div class="form-error-message">
-        @if (form.controls['dueDate'].errors?.['required']) {
-        <span>La fecha es obligatoria.</span>
+        <div class="mb-3">
+            <label class="mb-1">Fecha de entrega <span class="required-asterisk">*</span></label>
+            <input [min]="getTodayDate()" class="form-control normal" formControlName="dueDate" type="date"/>
+            @if (form.controls['dueDate'].invalid && (form.controls['dueDate'].dirty || form.controls['dueDate'].touched)) {
+                <div class="form-error-message">
+                    @if (form.controls['dueDate'].errors?.['required']) {
+                        <span>La fecha es obligatoria.</span>
+                    }
+                    @if (form.controls['dueDate'].errors?.['pastDate']) {
+                        <span>La fecha de entrega no puede ser anterior a la fecha actual.</span>
+                    }
+                </div>
+            }
+        </div>
+        @if (formTitle === 'Crear Quiz') {
+            <div class="mb-3">
+                <label class="mb-1">Cantidad de preguntas <span class="required-asterisk">*</span></label>
+                <input formControlName="numberOfQuestions" type="number" min="1" max="50" class="form-control normal"
+                       placeholder="Número de preguntas"/>
+                @if (form.controls['numberOfQuestions'].invalid && (form.controls['numberOfQuestions'].dirty ||
+                    form.controls['numberOfQuestions'].touched)) {
+                    <div class="form-error-message">
+                        @if (form.controls['numberOfQuestions'].errors?.['min']) {
+                            <span>La cantidad mínima es 1 pregunta.</span>
+                        }
+                        @if (form.controls['numberOfQuestions'].errors?.['max']) {
+                            <span>La cantidad máxima es 50 preguntas.</span>
+                        }
+                    </div>
+                }
+            </div>
         }
-        @if (form.controls['dueDate'].errors?.['pastDate']) {
-        <span>La fecha de entrega no puede ser anterior a la fecha actual.</span>
-        }
-      </div>
-      }
-    </div>
-    @if (formTitle === 'Crear Quiz') {
-    <div class="mb-3">
-      <label class="mb-1">Cantidad de preguntas <span class="required-asterisk">*</span></label>
-      <input formControlName="numberOfQuestions" type="number" min="1" max="50" class="form-control normal"
-        placeholder="Número de preguntas" />
-      @if (form.controls['numberOfQuestions'].invalid && (form.controls['numberOfQuestions'].dirty ||
-      form.controls['numberOfQuestions'].touched)) {
-      <div class="form-error-message">
-        @if (form.controls['numberOfQuestions'].errors?.['min']) {
-        <span>La cantidad mínima es 1 pregunta.</span>
-        }
-        @if (form.controls['numberOfQuestions'].errors?.['max']) {
-        <span>La cantidad máxima es 50 preguntas.</span>
-        }
-      </div>
-      }
-    </div>
+        <input formControlName="storyId" type="hidden"/>
+
+        <div class="text-center mt-4">
+            <button (click)="callSave()" [disabled]="form.invalid || isLoading" class="btn btn-primary" type="button">
+                @if (!isLoading) {
+                    <span>{{ buttonText }}</span>
+                }
+                @if (isLoading) {
+                    <span>Procesando...</span>
+                }
+            </button>
+        </div>
+    </form>
+    @if (isLoading) {
+        <div class="loader-overlay">
+            <app-loader></app-loader>
+        </div>
     }
-    <input formControlName="storyId" type="hidden" />
-
-    <div class="text-center mt-4">
-      <button (click)="callSave()" [disabled]="form.invalid || isLoading" class="btn btn-primary" type="button">
-        @if (!isLoading) {
-        <span>{{ buttonText }}</span>
-        }
-        @if (isLoading) {
-        <span>Procesando...</span>
-        }
-      </button>
-    </div>
-  </form>
-  @if (isLoading) {
-  <div class="loader-overlay">
-    <app-loader></app-loader>
-  </div>
-  }
 </div>
