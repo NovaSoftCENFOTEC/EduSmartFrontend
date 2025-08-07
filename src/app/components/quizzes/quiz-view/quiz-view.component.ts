@@ -38,12 +38,12 @@ export class QuizViewComponent implements OnInit {
         this.isLoading = true;
 
         this.quizService.getQuizWithQuestionsAndOptions(this.quizId).subscribe({
-            next: (response) => {
+            next: (response: any) => {
                 this.quiz = response.data;
                 this.questions = response.data.questions || [];
                 this.isLoading = false;
             },
-            error: (err) => {
+            error: (err: any) => {
                 this.alertService.displayAlert(
                     "error",
                     "Error al cargar el quiz con sus preguntas.",

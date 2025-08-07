@@ -154,6 +154,21 @@ export interface IOption {
   question?: IQuestion;
 }
 
+export interface ISubmission {
+  id?: number;
+  quiz?: IQuiz;
+  student?: IUser;
+  submittedAt?: string;
+  score?: number;
+}
+
+export interface IAnswer {
+  id?: number;
+  submission?: ISubmission;
+  question?: IQuestion;
+  selectedOption?: IOption;
+}
+
 export interface IMaterial {
   id?: number;
   name: string;

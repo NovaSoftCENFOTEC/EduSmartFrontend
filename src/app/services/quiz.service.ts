@@ -2,7 +2,9 @@ import { inject, Injectable, signal } from "@angular/core";
 import { BaseService } from "./base-service";
 import { IQuiz, IResponse, ISearch, IQuestion, IOption } from "../interfaces";
 import { AlertService } from "./alert.service";
+import { AuthService } from "./auth.service";
 import { Observable, Subject } from "rxjs";
+import { catchError } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
@@ -14,14 +16,27 @@ export class QuizService extends BaseService<IQuiz> {
 
   protected override source: string = "quizzes";
 
+  private quizSignal = signal<IQuiz | null>(null);
   private quizListSignal = signal<IQuiz[]>([]);
+  private quizCreatedSignal = signal<IQuiz | null>(null);
+  private quizUpdatedSignal = signal<IQuiz | null>(null);
+  private availableQuizzesSignal = signal<IQuiz[]>([]);
   private alertService: AlertService = inject(AlertService);
+  private authService: AuthService = inject(AuthService);
   private quizCreatedSubject = new Subject<void>();
   private quizUpdatedSubject = new Subject<void>();
   private quizDeletedSubject = new Subject<void>();
 
+  get quiz$() {
+    return this.quizSignal;
+  }
+
   get quizzes$() {
     return this.quizListSignal;
+  }
+
+  get availableQuizzes$() {
+    return this.availableQuizzesSignal;
   }
 
   get quizCreated$() {
@@ -72,6 +87,25 @@ export class QuizService extends BaseService<IQuiz> {
     return this.find(id);
   }
 
+  // Método para obtener quiz individual (para el componente de estudiante)
+  getQuizByIdForStudent(quizId: number) {
+    this.http.get<IResponse<IQuiz>>(`${this.source}/${quizId}`).subscribe({
+      next: (response: IResponse<IQuiz>) => {
+        this.quizSignal.set(response.data);
+      },
+      error: (err: any) => {
+        console.error('Error al obtener el quiz', err);
+        this.alertService.displayAlert(
+          'error',
+          'Ocurrió un error al obtener el quiz.',
+          'center',
+          'top',
+          ['error-snackbar']
+        );
+      }
+    });
+  }
+
   getQuizzesByStory(storyId: number) {
     this.findAllWithParams({
       page: this.search.page,
@@ -105,11 +139,29 @@ export class QuizService extends BaseService<IQuiz> {
   }
 
   getQuestionsByQuiz(quizId: number): Observable<IResponse<IQuestion[]>> {
-    return this.http.get<IResponse<IQuestion[]>>(`questions/quiz/${quizId}`);
+    // Intentar endpoint para estudiantes primero, luego fallback a teacher
+    return this.http.get<IResponse<IQuestion[]>>(`questions/quiz/${quizId}/student`).pipe(
+      catchError((err) => {
+        if (err.status === 403) {
+          // Si no hay endpoint para estudiantes, usar el de teachers
+          return this.http.get<IResponse<IQuestion[]>>(`questions/quiz/${quizId}`);
+        }
+        throw err;
+      })
+    );
   }
 
   getOptionsByQuestion(questionId: number): Observable<IResponse<IOption[]>> {
-    return this.http.get<IResponse<IOption[]>>(`options/question/${questionId}`);
+    // Intentar endpoint para estudiantes primero, luego fallback a teacher
+    return this.http.get<IResponse<IOption[]>>(`options/question/${questionId}/student`).pipe(
+      catchError((err) => {
+        if (err.status === 403) {
+          // Si no hay endpoint para estudiantes, usar el de teachers
+          return this.http.get<IResponse<IOption[]>>(`options/question/${questionId}`);
+        }
+        throw err;
+      })
+    );
   }
 
   getQuizWithQuestionsAndOptions(quizId: number): Observable<IResponse<IQuiz>> {
@@ -128,6 +180,7 @@ export class QuizService extends BaseService<IQuiz> {
 
               if (optionsObservables.length === 0) {
                 quiz.questions = [];
+                this.quizSignal.set(quiz); // Actualizar el signal
                 observer.next({
                   data: quiz,
                   message: quizResponse.message,
@@ -148,6 +201,7 @@ export class QuizService extends BaseService<IQuiz> {
 
                     if (completedOptions === optionsObservables.length) {
                       quiz.questions = questionsWithOptions;
+                      this.quizSignal.set(quiz); // Actualizar el signal
                       observer.next({
                         data: quiz,
                         message: quizResponse.message,
@@ -162,6 +216,7 @@ export class QuizService extends BaseService<IQuiz> {
 
                     if (completedOptions === optionsObservables.length) {
                       quiz.questions = questionsWithOptions;
+                      this.quizSignal.set(quiz); // Actualizar el signal
                       observer.next({
                         data: quiz,
                         message: quizResponse.message,
@@ -175,6 +230,7 @@ export class QuizService extends BaseService<IQuiz> {
             },
             error: (err) => {
               quiz.questions = [];
+              this.quizSignal.set(quiz); // Actualizar el signal
               observer.next({
                 data: quiz,
                 message: quizResponse.message,
@@ -405,6 +461,33 @@ export class QuizService extends BaseService<IQuiz> {
         );
         this.quizDeletedSubject.next();
       },
+    });
+  }
+
+  clearQuiz(): void {
+    this.quizSignal.set(null);
+  }
+
+  clearAvailableQuizzes(): void {
+    this.availableQuizzesSignal.set([]);
+  }
+
+  // Método para obtener quizzes por historia (para estudiantes)
+  getQuizzesByStoryForStudent(storyId: number) {
+    this.http.get<IResponse<IQuiz[]>>(`${this.source}/story/${storyId}/quizzes`).subscribe({
+      next: (response: IResponse<IQuiz[]>) => {
+        this.availableQuizzesSignal.set(response.data);
+      },
+      error: (err: any) => {
+        console.error('Error al obtener quizzes de la historia', err);
+        this.alertService.displayAlert(
+          'error',
+          'Ocurrió un error al obtener los quizzes de la historia.',
+          'center',
+          'top',
+          ['error-snackbar']
+        );
+      }
     });
   }
 }

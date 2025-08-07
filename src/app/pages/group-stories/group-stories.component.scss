@@ -561,23 +561,38 @@
   border-top: 1px solid var(--color-gray-border);
   flex-shrink: 0;
 
-  i {
-    cursor: pointer;
-    padding: 0.25rem;
-    border-radius: 4px;
+  .quiz-btn {
+    background-color: var(--color-blue-munsell);
+    color: white;
+    border: 1px solid var(--color-blue-munsell);
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
     transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
 
     &:hover {
-      background-color: var(--color-hover-row);
-      color: var(--color-indigo-dye);
+      background-color: var(--color-indigo-dye);
+      border-color: var(--color-indigo-dye);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
-    &.fa-check {
-      color: #28a745;
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 0.2rem rgba(0, 62, 107, 0.25);
     }
 
-    &.fa-ellipsis-h {
-      color: #6c757d;
+    &:active {
+      transform: translateY(0);
+    }
+
+    i {
+      font-size: 0.875rem;
     }
   }
 }

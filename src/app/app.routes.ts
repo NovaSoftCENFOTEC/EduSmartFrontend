@@ -30,6 +30,7 @@ import { ProductComponent } from "./pages/product/product.component";
 import { ExploreMoreComponent } from "./pages/explore-more/explore-more.component";
 import { StudentGroupsComponent } from "./pages/student-groups/student-groups.component";
 import { GroupStoriesComponent } from "./pages/group-stories/group-stories.component";
+import { QuizComponent } from "./pages/quiz/quiz.component";
 import { ChatComponent } from "./pages/chat/chat.component";
 import { MaterialsComponent } from "./pages/materials/materials.component";
 import { MaterialsReadOnlyComponent } from "./pages/materials-readonly/materials-readonly.component";
@@ -234,6 +235,16 @@ export const routes: Routes = [
         data: {
           authorities: [IRoleType.student],
           name: "Historias del Grupo",
+        },
+      },
+      {
+        path: "story/:storyId/quiz",
+        component: QuizComponent,
+        canActivate: [StudentRoleGuard],
+        data: {
+          authorities: [IRoleType.student],
+          name: "Quiz",
+          showInSidebar: false,
         },
       },
       {

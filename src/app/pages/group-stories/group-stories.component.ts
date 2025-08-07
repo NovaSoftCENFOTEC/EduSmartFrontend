@@ -70,6 +70,11 @@ export class GroupStoriesComponent implements OnInit {
         }
     }
 
+    viewQuizzes(storyId: number): void {
+        // Navegar a la pantalla de quiz para esta historia
+        this.router.navigate(['/app/story', storyId, 'quiz']);
+    }
+
     goBack(): void {
         this.router.navigate(['/app/student-groups']);
     }
