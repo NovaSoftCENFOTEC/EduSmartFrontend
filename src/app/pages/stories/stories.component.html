@@ -1,66 +1,76 @@
 <div class="row p-4">
-    <div class="col-12 mb-3">
-        <h2 class="title-highlight">Historia</h2>
-    </div>
+  <div class="col-12 mb-3">
+    <h2 class="title-highlight">Historia</h2>
+  </div>
 
-    <div class="col-12">
-        <div class="d-flex justify-content-between align-items-center">
-            <button (click)="goBack()" class="btn custom-add-full-btn">
-                <i class="fas fa-arrow-left me-2"></i> Volver
-            </button>
-            <button (click)="openAddStoryModal()" class="btn custom-add-full-btn">
-                <i class="fas fa-plus me-2"></i> Agregar
-            </button>
-        </div>
+  <div class="col-12">
+    <div class="d-flex justify-content-between align-items-center">
+      <button (click)="goBack()" class="btn custom-add-full-btn">
+        <i class="fas fa-arrow-left me-2"></i> Volver
+      </button>
+      <button (click)="openAddStoryModal()" class="btn custom-add-full-btn">
+        <i class="fas fa-plus me-2"></i> Agregar
+      </button>
     </div>
+  </div>
 
-    <div class="col-12 mt-3">
-        <div class="card">
-            <div class="card-body">
-                <app-story-list
-                        [stories]="storyList()"
-                        (callModalAction)="openEditStoryModal($event)"
-                        (callDeleteAction)="deleteStory($event)">
-                </app-story-list>
+  <div class="col-12 mt-3">
+    <div class="card">
+      <div class="card-body">
+        <app-story-list
+          [stories]="storyList()"
+          (callModalAction)="openEditStoryModal($event)"
+          (callDeleteAction)="deleteStory($event)"
+        >
+        </app-story-list>
 
-                @if (storyList().length) {
-                    <app-pagination
-                            [service]="storyService.search"
-                            [loadFunction]="loadStories.bind(this)">
-                    </app-pagination>
-                }
-            </div>
-        </div>
+        @if (storyList().length) {
+        <app-pagination
+          [service]="storyService.search"
+          [loadFunction]="loadStories.bind(this)"
+        >
+        </app-pagination>
+        }
+      </div>
     </div>
+  </div>
 </div>
 
 <ng-template #addStoryModal>
-    <app-modal [hideFooter]="true">
-        <app-stories-form
-                [form]="storyForm"
-                (callSaveMethod)="handleAddStory($event)">
-        </app-stories-form>
-    </app-modal>
+  <app-modal [hideFooter]="true">
+    <app-stories-form
+      [form]="storyForm"
+      (callSaveMethod)="handleAddStory($event)"
+      [isLoading]="isLoading"
+    >
+    </app-stories-form>
+  </app-modal>
 </ng-template>
 
 <ng-template #editStoryModal>
-    <app-modal [hideFooter]="true">
-        <app-stories-form
-                [form]="storyForm"
-                (callUpdateMethod)="confirmEdit($event)">
-        </app-stories-form>
-    </app-modal>
+  <app-modal [hideFooter]="true">
+    <app-stories-form
+      [form]="storyForm"
+      (callUpdateMethod)="confirmEdit($event)"
+      [isLoading]="isLoading"
+    >
+    </app-stories-form>
+  </app-modal>
 </ng-template>
 
 <ng-template #editConfirmationModal>
-    <app-modal [hideFooter]="true">
-        <div class="text-center p-4">
-            <h2>Confirmación</h2>
-            <p>¿Está seguro que desea modificar la historia?</p>
-            <div class="d-flex justify-content-center mt-4">
-                <button class="btn btn-secondary me-2" (click)="cancelEdit()">Cancelar</button>
-                <button class="btn btn-primary" (click)="confirmEditFinal()">Sí, modificar</button>
-            </div>
-        </div>
-    </app-modal>
+  <app-modal [hideFooter]="true">
+    <div class="text-center p-4">
+      <h2>Confirmación</h2>
+      <p>¿Está seguro que desea modificar la historia?</p>
+      <div class="d-flex justify-content-center mt-4">
+        <button class="btn btn-secondary me-2" (click)="cancelEdit()">
+          Cancelar
+        </button>
+        <button class="btn btn-primary" (click)="confirmEditFinal()">
+          Sí, modificar
+        </button>
+      </div>
+    </div>
+  </app-modal>
 </ng-template>
