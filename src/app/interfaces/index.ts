@@ -18,7 +18,7 @@ export interface IUser {
   password?: string;
   createdAt?: string;
   updatedAt?: string;
-  profilePicture?: string;
+  profilePic?: string;
   authorities?: IAuthority[];
   role?: IRole;
   school?: ISchool;
@@ -119,7 +119,7 @@ export interface IStudent {
 }
 
 export interface IAssignment {
-  group: { id: number; };
+  group: { id: number };
   id?: number;
   title: string;
   description: string;
@@ -127,11 +127,10 @@ export interface IAssignment {
   dueDate: Date;
   createdAt?: Date;
   groupId?: number;
-
 }
 
 export interface IQuiz {
-  story: { id: number; };
+  story: { id: number };
   id?: number;
   title: string;
   description: string;
@@ -163,4 +162,3 @@ export interface IMaterial {
   course?: Partial<ICourse> | null;
   teacher?: Partial<IUser> | null;
 }
-

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <app-custom-topbar></app-custom-topbar>
+
+    <section id="home" class="hero-section">
+      <div class="floating-code">
+        const skills = ['JavaScript', 'Python', 'React'];
+      </div>
+      <div class="floating-code">git commit -m "Level up complete"</div>
+      <div class="floating-code">&lt;div className="developer-mindset"&gt;</div>
+      <div class="floating-code">
+        function buildFuture() return 'innovation';
+      </div>
+      <div class="hero-content">
+        <span class="code-font">&lt;h1&gt;</span>
+        <span class="gradient-text">Desarrolladores</span>
+        <span class="neon-glow">de Softwares</span>
+        <span class="code-font">&lt;/h1&gt;</span>
+        <br />
+        <p
+          style="
+            color: #bbb;
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            margin-top: 2rem;
+          "
+        >
+          Construyendo el futuro, una línea de código a la vez
+        </p>
+        <p style="color: #bbb; font-size: 1.3rem; margin-bottom: 2rem">
+          Apasionados por crear soluciones innovadoras a través del código.
+          Actualmente perfeccionando tecnologías web modernas y buenas prácticas
+          de desarrollo.
+        </p>
+        <div class="hero-buttons">
+          <a (click)="goToAbout()" class="btn-main">Nuestro Equipo</a>
+          <a (click)="goToMisionVision()" class="btn-main">Visión y Misión</a>
+        </div>
+        <p style="color: #bbb; font-size: 1.3rem; margin-top: 2rem">
+          Explorar ejemplo
+        </p>
+        <div class="hero-buttons">
+          <a (click)="goToProduct()" class="btn-secondary">EduSmart</a>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <section
+      id="about"
+      style="padding: 90px 0; background: #1a1a2e; position: relative"
+    >
+      <img
+        src="assets/img/logo.png"
+        alt="Logo NovaSoft"
+        class="about-logo-bg"
+      />
+      <div class="hero-content">
+        <span class="code-font text-green-400 text-lg">&lt;</span>
+        <span class="gradient-text">Nuestro Equipo</span>
+        <span class="code-font text-green-400 text-lg">/&gt;</span>
+        <span class="neon-glow">Conoce a las personas detrás</span>
+      </div>
+
+      <section id="team" class="team-section">
+        <h2 class="section-title"></h2>
+
+        <div class="team-grid">
+          <div class="team-member">
+            <img
+              src="assets/img/team/Gia.png"
+              alt="Gianina Montero"
+              class="team-photo"
+            />
+            <h3 class="member-name">Gianina Montero</h3>
+            <p class="member-role">Coordinador General</p>
+          </div>
+          <div class="team-member">
+            <img
+              src="assets/img/team/Andres.jpg"
+              alt="Andrés Segura"
+              class="team-photo"
+            />
+            <h3 class="member-name">Andrés Segura</h3>
+            <p class="member-role">Coordinador de Calidad I</p>
+          </div>
+          <div class="team-member">
+            <img
+              src="assets/img/team/Isabella.png"
+              alt="Isabella Nassar"
+              class="team-photo"
+            />
+            <h3 class="member-name">Isabella Nassar</h3>
+            <p class="member-role">Coordinador de Calidad II</p>
+          </div>
+          <div class="team-member">
+            <img
+              src="assets/img/team/Fabian.jpeg"
+              alt="Fabián Chacón"
+              class="team-photo"
+            />
+            <h3 class="member-name">Fabián Chacón</h3>
+            <p class="member-role">Coordinador de Desarrollo</p>
+          </div>
+          <div class="team-member">
+            <img
+              src="assets/img/team/Pablo.png"
+              alt="Pablo Navarro"
+              class="team-photo"
+            />
+            <h3 class="member-name">Pablo Navarro</h3>
+            <p class="member-role">Coordinador de DevOps</p>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <hr class="section-divider" />
+
+    <section id="vision-mision" class="vision-mision-modern code-chalk-bg">
+      <div class="hero-content" style="text-align: center">
+        <span class="code-font text-green-400 text-lg">&lt;</span>
+        <span class="gradient-text">Visión y Misión</span>
+        <span class="code-font text-green-400 text-lg">/&gt;</span>
+      </div>
+      <div class="vision-mision-container-modern">
+        <div class="vision-box-modern">
+          <h2>Visión</h2>
+          <p>
+            Ser la empresa de referencia en el desarrollo de soluciones web
+            modernas e inteligentes, integrando tecnologías de vanguardia como
+            APIs de terceros, inteligencia artificial, autenticación con Google
+            y componentes front-end avanzados, con el objetivo de ofrecer
+            plataformas accesibles, escalables y funcionales para emprendedores
+            y pequeñas empresas que buscan digitalizar su presencia sin
+            experiencia técnica previa.
+          </p>
+        </div>
+        <div class="mision-box-modern">
+          <h2>Misión</h2>
+          <p>
+            Nuestra misión es diseñar y desarrollar sitios web funcionales,
+            personalizables y tecnológicamente integrados que ayuden a pequeñas
+            empresas y emprendedores a establecer y fortalecer su presencia
+            digital. A través del uso de APIs gratuitas, inteligencia
+            artificial, autenticación con Google y componentes front-end
+            modernos, buscamos simplificar el acceso a soluciones web
+            profesionales sin necesidad de conocimientos técnicos avanzados.
+          </p>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
