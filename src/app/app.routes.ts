@@ -33,6 +33,7 @@ import { GroupStoriesComponent } from "./pages/group-stories/group-stories.compo
 import { ChatComponent } from "./pages/chat/chat.component";
 import { MaterialsComponent } from "./pages/materials/materials.component";
 import { MaterialsReadOnlyComponent } from "./pages/materials-readonly/materials-readonly.component";
+import { MedalComponent } from "./pages/medal/medal.component";
 
 export const routes: Routes = [
   {
@@ -267,6 +268,16 @@ export const routes: Routes = [
           authorities: [IRoleType.student],
           name: "Materiales",
           showInSidebar: false,
+        },
+      },
+      {
+        path: "medals",
+        component: MedalComponent,
+        canActivate: [StudentRoleGuard],
+        data: {
+          authorities: [IRoleType.student],
+          name: "Mis Medallas",
+          showInSidebar: true,
         },
       },
       {

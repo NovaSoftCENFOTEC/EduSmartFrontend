@@ -123,4 +123,30 @@ export class BadgeService extends BaseService<IBadge> {
       }
     });
   }
+
+  getBadgesByStudent(studentId: number) {
+    const params = {
+      page: this.search.page,
+      size: this.search.size
+    };
+
+    this.findAllWithParamsAndCustomSource(`student/${studentId}`, params).subscribe({
+      next: (response: IResponse<IBadge[]>) => {
+        this.badgeListSignal.set(response.data);
+        this.search = { ...this.search, ...response.meta };
+        this.totalItems = Array.from({ length: this.search.totalPages || 0 }, (_, i) => i + 1);
+      },
+      error: (err: any) => {
+        this.alertService.displayAlert(
+          'error',
+          'Ocurrió un error al obtener las medallas del estudiante.',
+          'center',
+          'top',
+          ['error-snackbar']
+        );
+      }
+    });
+  }
+
+ 
 }
