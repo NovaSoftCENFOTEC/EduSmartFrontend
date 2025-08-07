@@ -3,6 +3,8 @@ import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IAssignment } from '../../../interfaces';
 import { ConfirmModalComponent } from '../../confirm-modal/confirm-modal.component';
+import {RouterModule} from "@angular/router";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-assignments-list',
@@ -10,6 +12,7 @@ import { ConfirmModalComponent } from '../../confirm-modal/confirm-modal.compone
   imports: [
     ConfirmModalComponent,
     DatePipe,
+    RouterModule,
     FormsModule
   ],
   templateUrl: './assignments-list.component.html',
@@ -24,7 +27,8 @@ export class AssignmentsListComponent {
   deleteAssignment: IAssignment | null = null;
   searchText: string = '';
 
-  @ViewChild('confirmDeleteModal') confirmDeleteModal!: ConfirmModalComponent;
+  @ViewChild("confirmDeleteModal") confirmDeleteModal!: ConfirmModalComponent;
+    constructor(private router: Router) {}
 
   get filteredAssignments(): IAssignment[] {
     if (!this.searchText) return this.assignments;
@@ -45,5 +49,13 @@ export class AssignmentsListComponent {
       this.callDeleteAction.emit(this.deleteAssignment);
       this.deleteAssignment = null;
     }
+  }
+
+  goToAssignmentsTasks(assignmentId: number | undefined): void {
+  if (assignmentId !== undefined) {
+    this.router.navigate(['/app/task-submission'], {
+      queryParams: { assignmentId: assignmentId.toString() }
+    });
+  }
   }
 }

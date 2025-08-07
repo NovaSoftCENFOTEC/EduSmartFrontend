@@ -162,3 +162,14 @@ export interface IMaterial {
   course?: Partial<ICourse> | null;
   teacher?: Partial<IUser> | null;
 }
+
+export interface ITaskSubmission {
+  id?: number;
+  fileUrl: string;
+  comment: string;
+  submittedAt: string;
+  assignmentId: number;
+  studentId: number;
+}
+
+

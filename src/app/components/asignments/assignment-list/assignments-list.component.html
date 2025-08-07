@@ -52,7 +52,11 @@
                   title="Eliminar asignación"
                 >
                   <i class="fas fa-trash"></i>
+                  
                 </button>
+                <button (click)="goToAssignmentsTasks(item.id)" class="btn btn-primary px-4 py-2">
+                Ver asignaciones
+              </button>
               </td>
             </tr>
           } @empty {
