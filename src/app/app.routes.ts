@@ -260,6 +260,16 @@ export const routes: Routes = [
         },
       },
       {
+        path: "medals",
+        component: MedalComponent,
+        canActivate: [StudentRoleGuard],
+        data: {
+          authorities: [IRoleType.student],
+          name: "Mis Medallas",
+          showInSidebar: true,
+        },
+      },
+      {
         path: "explore-more",
         component: ExploreMoreComponent,
         data: {
@@ -269,16 +279,6 @@ export const routes: Routes = [
             IRoleType.student,
           ],
           name: "Explora +",
-          showInSidebar: true,
-        },
-      },
-      {
-        path: "medals",
-        component: MedalComponent,
-        canActivate: [StudentRoleGuard],
-        data: {
-          authorities: [IRoleType.student],
-          name: "Mis Medallas",
           showInSidebar: true,
         },
       },
