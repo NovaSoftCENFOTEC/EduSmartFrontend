@@ -20,6 +20,7 @@ import { ICourse } from '../../interfaces';
 export class GroupStoriesComponent implements OnInit {
     public groupId: number | null = null;
     public courseId: number | null = null;
+    public expandedStories: boolean[] = [];
     public route: ActivatedRoute = inject(ActivatedRoute);
     public router = inject(Router);
     public groupStoriesService: GroupStoriesService = inject(GroupStoriesService);
@@ -35,13 +36,19 @@ export class GroupStoriesComponent implements OnInit {
                 }
             }
         });
+
+        effect(() => {
+            const stories = this.groupStoriesService.stories$();
+            if (stories.length > 0) {
+                this.expandedStories = new Array(stories.length).fill(false);
+            }
+        });
     }
 
     ngOnInit(): void {
         this.route.params.subscribe(params => {
             this.groupId = +params['groupId'];
             if (this.groupId) {
-                this.groupStoriesService.clearStories();
                 this.loadCourseAndStories();
             }
         });
@@ -49,7 +56,17 @@ export class GroupStoriesComponent implements OnInit {
 
     loadCourseAndStories(): void {
         if (this.groupId) {
+            this.groupStoriesService.clearStories();
+            this.groupCoursesService.clearCourses();
+            this.expandedStories = [];
+            this.courseId = null;
             this.groupCoursesService.getCoursesByGroup(this.groupId);
+        }
+    }
+
+    toggleStory(index: number): void {
+        if (this.expandedStories[index] !== undefined) {
+            this.expandedStories[index] = !this.expandedStories[index];
         }
     }
 
