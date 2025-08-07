@@ -158,6 +158,7 @@ export class StoriesComponent implements OnInit {
 
   confirmEditFinal() {
     if (this.pendingEditItem) {
+      this.isLoading = true;
       this.updateStory();
       this.pendingEditItem = null;
     }
