@@ -31,14 +31,11 @@ export class StudentGroupsComponent implements OnInit {
     public currentStudent: IUser | null = null;
 
     ngOnInit(): void {
+        localStorage.removeItem('currentGroupId');
         this.currentStudent = this.authService.getUser() || null;
         if (this.currentStudent && this.currentStudent.id) {
             this.loadGroups();
         }
-    }
-
-    constructor() {
-        this.loadGroups();
     }
 
     loadGroups(): void {
