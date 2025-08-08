@@ -245,7 +245,7 @@ export const routes: Routes = [
         canActivate: [StudentRoleGuard],
         data: {
           authorities: [IRoleType.student],
-          name: "Quizzes de la Historia",
+          name: "Quices de la Historia",
           showInSidebar: false,
         },
       },

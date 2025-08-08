@@ -126,7 +126,7 @@ export class QuizService extends BaseService<IQuiz> {
             error: () => {
                 this.alertService.displayAlert(
                     'error',
-                    'Ocurrió un error al obtener los quizzes de la historia.',
+                    'Ocurrió un error al obtener los quices de la historia.',
                     'center',
                     'top',
                     ['error-snackbar']
@@ -175,7 +175,7 @@ export class QuizService extends BaseService<IQuiz> {
             error: (err: any) => {
                 this.alertService.displayAlert(
                     'error',
-                    'Ocurrió un error al obtener los quizzes de la historia.',
+                    'Ocurrió un error al obtener los quices de la historia.',
                     'center',
                     'top',
                     ['error-snackbar']
