@@ -1,0 +1,59 @@
+<div class="row p-4">
+    <div class="col-12 mb-3">
+        <h2 class="title-highlight">Quizzes Disponibles</h2>
+    </div>
+
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center">
+            <button (click)="goBack()" type="button" class="btn custom-add-full-btn">
+                <i class="fas fa-arrow-left me-2"></i> Volver
+            </button>
+        </div>
+    </div>
+
+    <div class="col-12 mt-3">
+        <div class="quiz-selection">
+            <div class="quiz-selection-header">
+                <h3>Selecciona un Quiz</h3>
+                <p class="quiz-selection-description">
+                    Elige el quiz que deseas realizar para esta historia
+                </p>
+            </div>
+
+            <div class="quiz-list">
+                @for (quiz of getAvailableQuizzes(); track quiz.id) {
+                <div class="quiz-item" (click)="selectQuiz(quiz.id!)">
+                    <div class="quiz-item-content">
+                        <h4>{{ quiz.title }}</h4>
+                        <p>{{ quiz.description }}</p>
+                        <div class="quiz-item-meta">
+                            <span class="quiz-questions">
+                                <i class="fas fa-question-circle me-1"></i>
+                                @if (quiz.numberOfQuestions && quiz.numberOfQuestions > 0) {
+                                {{ quiz.numberOfQuestions }} preguntas
+                                } @else {
+                                Sin preguntas
+                                }
+                            </span>
+                            @if (quiz.dueDate) {
+                            <span class="quiz-due-date">
+                                <i class="fas fa-calendar me-1"></i>
+                                Vence: {{ quiz.dueDate | date:'shortDate' }}
+                            </span>
+                            }
+                        </div>
+                    </div>
+                    <div class="quiz-item-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+                } @empty {
+                <div class="no-quizzes">
+                    <i class="fas fa-info-circle"></i>
+                    <p>No hay quizzes disponibles para esta historia</p>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

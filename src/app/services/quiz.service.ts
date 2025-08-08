@@ -1,9 +1,9 @@
-import {inject, Injectable, signal} from "@angular/core";
-import {BaseService} from "./base-service";
-import {IOption, IQuestion, IQuiz, IResponse, ISearch} from "../interfaces";
-import {AlertService} from "./alert.service";
-import {Observable, Subject} from "rxjs";
-import {QuizDataTransformerService} from "./quiz-data-transformer.service";
+import { inject, Injectable, signal } from "@angular/core";
+import { BaseService } from "./base-service";
+import { IOption, IQuestion, IQuiz, IResponse, ISearch } from "../interfaces";
+import { AlertService } from "./alert.service";
+import { Observable, Subject } from "rxjs";
+import { QuizDataTransformerService } from "./quiz-data-transformer.service";
 
 
 @Injectable({
@@ -46,9 +46,9 @@ export class QuizService extends BaseService<IQuiz> {
         }).subscribe({
             next: (response: IResponse<IQuiz[]>) => {
                 this.quizListSignal.set(response.data);
-                this.search = {...this.search, ...response.meta};
+                this.search = { ...this.search, ...response.meta };
                 this.totalItems = Array.from(
-                    {length: this.search.totalPages || 0},
+                    { length: this.search.totalPages || 0 },
                     (_, i) => i + 1
                 );
             },
@@ -77,34 +77,110 @@ export class QuizService extends BaseService<IQuiz> {
     }
 
     getQuizzesByStory(storyId: number) {
-        this.findAllWithParams({
-            page: this.search.page,
-            size: 1000,
-        }).subscribe({
+        this.http.get<IResponse<IQuiz[]>>(`${this.source}/story/${storyId}/quizzes`).subscribe({
             next: (response: IResponse<IQuiz[]>) => {
-                const filteredQuizzes = response.data.filter(quiz =>
-                    quiz.story && quiz.story.id === storyId
-                );
-                this.quizListSignal.set(filteredQuizzes);
-                this.search = {
-                    ...this.search,
-                    totalPages: Math.ceil(filteredQuizzes.length / (this.search.size || 5)),
-                    totalElements: filteredQuizzes.length
-                };
-                this.totalItems = Array.from(
-                    {length: this.search.totalPages || 0},
-                    (_, i) => i + 1
-                );
+                const quizzes = response.data;
+
+                if (quizzes.some(quiz => !quiz.numberOfQuestions || quiz.numberOfQuestions === 0)) {
+                    const questionPromises = quizzes.map(quiz =>
+                        this.getQuestionsByQuiz(quiz.id!).toPromise()
+                    );
+
+                    Promise.all(questionPromises).then(questionResponses => {
+                        const quizzesWithQuestions = quizzes.map((quiz, index) => {
+                            const questionResponse = questionResponses[index];
+                            if (questionResponse && questionResponse.data) {
+                                quiz.numberOfQuestions = questionResponse.data.length;
+                            } else {
+                                quiz.numberOfQuestions = 0;
+                            }
+                            return quiz;
+                        });
+
+                        this.quizListSignal.set(quizzesWithQuestions);
+                        this.search = {
+                            ...this.search,
+                            totalPages: 1,
+                            totalElements: quizzesWithQuestions.length
+                        };
+                        this.totalItems = [1];
+                    }).catch(() => {
+                        this.quizListSignal.set(quizzes);
+                        this.search = {
+                            ...this.search,
+                            totalPages: 1,
+                            totalElements: quizzes.length
+                        };
+                        this.totalItems = [1];
+                    });
+                } else {
+                    this.quizListSignal.set(quizzes);
+                    this.search = {
+                        ...this.search,
+                        totalPages: 1,
+                        totalElements: quizzes.length
+                    };
+                    this.totalItems = [1];
+                }
             },
             error: () => {
                 this.alertService.displayAlert(
-                    "error",
-                    "Ocurrió un error al obtener los quices de la story.",
-                    "center",
-                    "top",
-                    ["error-snackbar"]
+                    'error',
+                    'Ocurrió un error al obtener los quizzes de la historia.',
+                    'center',
+                    'top',
+                    ['error-snackbar']
                 );
+            }
+        });
+    }
+
+    getQuizzesByStoryWithQuestions(storyId: number) {
+        this.http.get<IResponse<IQuiz[]>>(`${this.source}/story/${storyId}/quizzes`).subscribe({
+            next: (response: IResponse<IQuiz[]>) => {
+                const quizzes = response.data;
+
+                const quizPromises = quizzes.map(quiz =>
+                    this.getQuizWithQuestionsAndOptions(quiz.id!).toPromise()
+                );
+
+                Promise.all(quizPromises).then(quizResponses => {
+                    const quizzesWithQuestions = quizzes.map((quiz, index) => {
+                        const quizResponse = quizResponses[index];
+                        if (quizResponse && quizResponse.data && quizResponse.data.questions) {
+                            quiz.numberOfQuestions = quizResponse.data.questions.length;
+                        } else {
+                            quiz.numberOfQuestions = 0;
+                        }
+                        return quiz;
+                    });
+
+                    this.quizListSignal.set(quizzesWithQuestions);
+                    this.search = {
+                        ...this.search,
+                        totalPages: 1,
+                        totalElements: quizzesWithQuestions.length
+                    };
+                    this.totalItems = [1];
+                }).catch(err => {
+                    this.quizListSignal.set(quizzes);
+                    this.search = {
+                        ...this.search,
+                        totalPages: 1,
+                        totalElements: quizzes.length
+                    };
+                    this.totalItems = [1];
+                });
             },
+            error: (err: any) => {
+                this.alertService.displayAlert(
+                    'error',
+                    'Ocurrió un error al obtener los quizzes de la historia.',
+                    'center',
+                    'top',
+                    ['error-snackbar']
+                );
+            }
         });
     }
 

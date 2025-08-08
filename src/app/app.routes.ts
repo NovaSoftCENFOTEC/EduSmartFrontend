@@ -30,6 +30,8 @@ import { ProductComponent } from "./pages/product/product.component";
 import { ExploreMoreComponent } from "./pages/explore-more/explore-more.component";
 import { StudentGroupsComponent } from "./pages/student-groups/student-groups.component";
 import { GroupStoriesComponent } from "./pages/group-stories/group-stories.component";
+import { StudentQuizzesComponent } from "./pages/student-quizzes/student-quizzes.component";
+import { StudentQuizComponent } from "./pages/student-quiz/student-quiz.component";
 import { ChatComponent } from "./pages/chat/chat.component";
 import { MaterialsComponent } from "./pages/materials/materials.component";
 import { MaterialsReadOnlyComponent } from "./pages/materials-readonly/materials-readonly.component";
@@ -235,6 +237,26 @@ export const routes: Routes = [
         data: {
           authorities: [IRoleType.student],
           name: "Historias del Grupo",
+        },
+      },
+      {
+        path: "story/:storyId/quizzes",
+        component: StudentQuizzesComponent,
+        canActivate: [StudentRoleGuard],
+        data: {
+          authorities: [IRoleType.student],
+          name: "Quizzes de la Historia",
+          showInSidebar: false,
+        },
+      },
+      {
+        path: "story/:storyId/quiz/:quizId",
+        component: StudentQuizComponent,
+        canActivate: [StudentRoleGuard],
+        data: {
+          authorities: [IRoleType.student],
+          name: "Tomar Quiz",
+          showInSidebar: false,
         },
       },
       {

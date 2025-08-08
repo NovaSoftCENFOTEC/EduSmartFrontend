@@ -35,8 +35,11 @@
                         </div>
                     </div>
                     <div class="chapter-actions">
-                        <i class="fas fa-check"></i>
-                        <i class="fas fa-ellipsis-h"></i>
+                        <button class="btn quiz-btn" (click)="viewQuizzes(story.id)"
+                            title="Ver quizzes de esta historia">
+                            <i class="fas fa-question-circle me-2"></i>
+                            Ver Quizzes
+                        </button>
                     </div>
                     } @else {
                     <i class="fas fa-lock lock-icon"></i>

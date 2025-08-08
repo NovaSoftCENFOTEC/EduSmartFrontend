@@ -4,7 +4,6 @@ import { AsyncPipe, NgIf } from '@angular/common';
 import { FooterComponent } from '../../components/app-layout/elements/footer/footer.component';
 import { GroupStoriesService } from '../../services/group-stories.service';
 import { GroupCoursesService } from '../../services/group-courses.service';
-import { ICourse } from '../../interfaces';
 
 @Component({
     selector: 'app-group-stories',
@@ -72,5 +71,12 @@ export class GroupStoriesComponent implements OnInit {
 
     goBack(): void {
         this.router.navigate(['/app/student-groups']);
+    }
+
+    viewQuizzes(storyId: number): void {
+        if (this.groupId) {
+            localStorage.setItem('currentGroupId', this.groupId.toString());
+        }
+        this.router.navigate(['/app/story', storyId, 'quizzes']);
     }
 }
