@@ -1,0 +1,95 @@
+<form
+  [formGroup]="form"
+  (ngSubmit)="callSave()"
+  class="mb-4"
+  style="max-width: 500px; margin: 0 auto"
+>
+  <div class="mb-3 text-center">
+    <h2
+      style="
+        font-size: var(--font-h2-size);
+        font-weight: var(--font-h2-weight);
+        color: var(--color-indigo-dye);
+      "
+    >
+      {{ form.get("id")?.value ? "Editar Entrega" : "Registrar Entrega" }}
+    </h2>
+  </div>
+
+  <div class="mb-3">
+    <label class="mb-1" for="comment">
+      Comentario<span class="required-asterisk">*</span>
+    </label>
+    <input
+      class="form-control normal"
+      formControlName="comment"
+      id="comment"
+      placeholder="Comentario sobre la entrega"
+      type="text"
+    />
+    <div
+      *ngIf="
+        form.controls['comment'].invalid &&
+        (form.controls['comment'].dirty || form.controls['comment'].touched)
+      "
+      class="form-error-message"
+    >
+      El comentario es obligatorio.
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label class="mb-1" for="fileUrl">
+      Enlace del archivo<span class="required-asterisk">*</span>
+    </label>
+    <div class="d-flex gap-2 align-items-center">
+      <input
+        [disabled]="true"
+        [readonly]="true"
+        class="form-control disabled-field"
+        formControlName="fileUrl"
+        id="fileUrl"
+        placeholder="Se llenará automáticamente al subir un archivo"
+        type="text"
+      />
+      <button
+        (click)="openUploadWidget()"
+        class="btn btn-secondary"
+        type="button"
+      >
+        Subir Archivo
+      </button>
+    </div>
+    <div
+      *ngIf="
+        form.controls['fileUrl'].invalid &&
+        (form.controls['fileUrl'].dirty || form.controls['fileUrl'].touched)
+      "
+      class="form-error-message"
+    >
+      El enlace del archivo es obligatorio.
+    </div>
+  </div>
+
+  <div class="mb-3" *ngIf="assignments && assignments.length > 0">
+    <label class="mb-1" for="assignmentId">Tarea Asignada</label>
+    <select
+      formControlName="assignmentId"
+      class="form-select"
+      id="assignmentId"
+    >
+      <option *ngFor="let assignment of assignments" [ngValue]="assignment">
+        {{ assignment.title }}
+      </option>
+    </select>
+  </div>
+
+  <div class="text-center mt-4">
+    <button [disabled]="form.invalid" class="btn btn-primary" type="submit" (click)="callUpdate()">
+      Guardar
+    </button>
+  </div>
+</form>
+
+
+  

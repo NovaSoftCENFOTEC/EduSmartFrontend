@@ -35,6 +35,10 @@ import { MaterialsComponent } from "./pages/materials/materials.component";
 import { MaterialsReadOnlyComponent } from "./pages/materials-readonly/materials-readonly.component";
 import { MedalComponent } from "./pages/medal/medal.component";
 
+import { AssignmentsReadOnlyComponent } from "./pages/assignments-readonly/assignments-readonly.component";
+import { TaskSubmissionsComponent } from "./pages/task-submissions/task-submission.component";
+
+
 export const routes: Routes = [
   {
     path: "login",
@@ -210,6 +214,15 @@ export const routes: Routes = [
       },
 
       {
+        path: "assignments-readonly",
+        component: AssignmentsReadOnlyComponent,
+        canActivate: [StudentRoleGuard],
+        data: {
+          authorities: [IRoleType.student],
+          name: "Asignaciones",
+        },
+      },
+      {
         path: "quizzes",
         component: QuizzesComponent,
         canActivate: [AdminTeacherRoleGuard],
@@ -293,6 +306,19 @@ export const routes: Routes = [
           showInSidebar: true,
         },
       },
+      {
+        path: "task-submission",
+        component: TaskSubmissionsComponent,
+        data: {
+          authorities: [
+            IRoleType.teacher,
+            IRoleType.student,
+          ],
+          name: "Tareas",
+          showInSidebar: true,
+        },
+      },
+      
     ],
   },
 ];

@@ -1,7 +1,8 @@
 .groups-grid {
   display: grid;
   gap: 24px;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(345px, 1fr));
+
   padding: 10px 0;
 }
 
@@ -85,8 +86,9 @@
   background-color: #f9fbfc;
   display: flex;
   justify-content: flex-end;
-  gap: 16px;
+  gap: 12px;
 }
+
 
 .btn-link-action {
   background: none;

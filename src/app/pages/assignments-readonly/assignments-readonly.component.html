@@ -1,0 +1,71 @@
+<div class="row p-4">
+  <div class="col-12 mb-3">
+    <h2 class="title-highlight mb-2">¡Mantente al día con tus tareas!</h2>
+    <div class="mt-2">
+      <button (click)="goBack()" class="btn btn-custom-volver">
+        <i class="fas fa-arrow-left me-2"></i> Volver
+      </button>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header card-header-indigo">
+        <h2 class="mb-0">Lista de asignaciones</h2>
+      </div>
+      <div class="card-body">
+        <p class="mb-4">
+          Aquí puedes ver todas las asignaciones disponibles en este curso.
+          Revisa los detalles y cumple con tus fechas límite.
+        </p>
+
+        <div class="mb-4 mt-2">
+          <input
+            [(ngModel)]="searchText"
+            class="form-control input-filter"
+            placeholder="Busca una asignación rápidamente..."
+            type="text"
+          />
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+          <div class="col" *ngFor="let assignment of filteredAssignments()">
+            <div class="card h-100 assignment-card">
+              <div class="card-body d-flex flex-column">
+                <div class="mb-3">
+                  <h5 class="card-title mb-1">{{ assignment.title }}</h5>
+                  <small class="text-muted"
+                    >Tipo: {{ assignment.type || "No especificado" }}</small
+                  ><br />
+                  <small class="text-muted"
+                    >Fecha de entrega:
+                    {{
+                      assignment.dueDate | date : "longDate" : "" : "es"
+                    }}</small
+                  >
+                </div>
+                <p class="flex-grow-1">{{ assignment.description }}</p>
+                <div class="mt-auto d-grid gap-2">
+                  <button
+                    class="btn btn-primary"
+                    *ngIf="assignment.id"
+                    (click)="verDetalles(assignment.id)"
+                  >
+                    <i class="fas fa-tasks me-2"></i> Realizar entrega
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12" *ngIf="filteredAssignments().length === 0">
+            <div class="alert alert-info text-center" role="alert">
+              No hay asignaciones disponibles en este momento. ¡Mantente atento
+              a nuevas tareas!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

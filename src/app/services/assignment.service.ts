@@ -7,17 +7,12 @@ import { AlertService } from "./alert.service";
   providedIn: "root",
 })
 export class AssignmentsService extends BaseService<IAssignment> {
-  save(item: IAssignment) {
-    throw new Error("Method not implemented.");
-  }
-  getAssignmentsByGroupId(groupId: number) {}
   protected override source: string = "assignments";
-  private assignmentListSignal = signal<IAssignment[]>([]);
-  private alertService: AlertService = inject(AlertService);
+  private alertService = inject(AlertService);
 
-  get assignments$() {
-    return this.assignmentListSignal;
-  }
+  private assignmentListSignal = signal<IAssignment[]>([]);
+  private currentGroupId: number | null = null;
+  public isLoading = signal<boolean>(false);
 
   public search: ISearch = {
     page: 1,
@@ -26,22 +21,54 @@ export class AssignmentsService extends BaseService<IAssignment> {
     totalPages: 1,
   };
 
-  public totalItems: any = [];
+  public totalItems: number[] = [];
+
+  constructor() {
+    super();
+    
+    const saved = localStorage.getItem("lastGroupId");
+    if (saved) {
+      const parsed = Number(saved);
+      if (!isNaN(parsed)) {
+        this.currentGroupId = parsed;
+      }
+    }
+  }
+
+  get assignments$() {
+    return this.assignmentListSignal;
+  }
+
+  private setAssignments(data: IAssignment[], meta: any) {
+    this.assignmentListSignal.set(data);
+    this.search = { ...this.search, ...meta };
+    this.totalItems = Array.from(
+      { length: this.search.totalPages || 0 },
+      (_, i) => i + 1
+    );
+  }
+
+  setCurrentGroupId(groupId: number | null) {
+    this.currentGroupId = groupId;
+    if (groupId !== null) {
+      localStorage.setItem("lastGroupId", groupId.toString());
+    } else {
+      localStorage.removeItem("lastGroupId");
+    }
+  }
 
   getAll() {
+    this.isLoading.set(true);
     this.findAllWithParams({
       page: this.search.page,
       size: this.search.size,
     }).subscribe({
       next: (response: IResponse<IAssignment[]>) => {
-        this.assignmentListSignal.set(response.data);
-        this.search = { ...this.search, ...response.meta };
-        this.totalItems = Array.from(
-          { length: this.search.totalPages || 0 },
-          (_, i) => i + 1
-        );
+        this.setAssignments(response.data, response.meta);
+        this.isLoading.set(false);
       },
-      error: (err: any) => {
+      error: () => {
+        this.isLoading.set(false);
         this.alertService.displayAlert(
           "error",
           "Ocurrió un error al obtener las asignaciones.",
@@ -54,72 +81,74 @@ export class AssignmentsService extends BaseService<IAssignment> {
   }
 
   getAssignmentsByGroup(groupId: number) {
+    this.setCurrentGroupId(groupId);
+    this.isLoading.set(true);
+
     const params = {
       page: this.search.page,
       size: this.search.size,
     };
 
-    this.findAllWithParamsAndCustomSource(`group/${groupId}`, params).subscribe(
-      {
-        next: (response: IResponse<IAssignment[]>) => {
-          this.assignmentListSignal.set(response.data);
-          this.search = { ...this.search, ...response.meta };
-          this.totalItems = Array.from(
-            { length: this.search.totalPages || 0 },
-            (_, i) => i + 1
-          );
-        },
-        error: (err: any) => {
-          this.alertService.displayAlert(
-            "error",
-            "Ocurrió un error al obtener las asignaciones del grupo.",
-            "center",
-            "top",
-            ["error-snackbar"]
-          );
-        },
-      }
-    );
+    this.findAllWithParamsAndCustomSource(`group/${groupId}`, params).subscribe({
+      next: (response: IResponse<IAssignment[]>) => {
+        this.setAssignments(response.data, response.meta);
+        this.isLoading.set(false);
+      },
+      error: () => {
+        this.isLoading.set(false);
+        this.alertService.displayAlert(
+          "error",
+          "Ocurrió un error al obtener las asignaciones del grupo.",
+          "center",
+          "top",
+          ["error-snackbar"]
+        );
+      },
+    });
   }
 
-  saveAssignment(item: IAssignment, groupId?: number) {
-  if (!item.title || !item.group || !item.group.id) {
-    this.alertService.displayAlert(
-      "error",
-      "Debe completar los campos obligatorios.",
-      "center",
-      "top",
-      ["error-snackbar"]
-    );
-    return;
+  loadCurrentGroupIfExists() {
+    if (this.currentGroupId) {
+      this.getAssignmentsByGroup(this.currentGroupId);
+    }
   }
 
-  this.add(item).subscribe({
-    next: (response: IResponse<IAssignment>) => {
-      this.alertService.displayAlert(
-        "success",
-        response.message || "Asignación agregada correctamente.",
-        "center",
-        "top",
-        ["success-snackbar"]
-      );
-      if (groupId) {
-        this.getAssignmentsByGroup(groupId);
-      } else {
-        this.getAll();
-      }
-    },
-    error: (err) => {
+  saveAssignment(assignment: IAssignment, groupId?: number) {
+    const targetGroup = groupId ?? this.currentGroupId;
+    if (!targetGroup) {
       this.alertService.displayAlert(
         "error",
-        "Ocurrió un error al agregar la asignación.",
+        "No se especificó el grupo para guardar la asignación.",
         "center",
         "top",
         ["error-snackbar"]
       );
-    },
-  });
-}
+      return;
+    }
+
+    const customUrl = `group/${targetGroup}`;
+    this.addCustomSource(customUrl, assignment).subscribe({
+      next: (response: IResponse<IAssignment>) => {
+        this.alertService.displayAlert(
+          "success",
+          response.message || "Asignación creada correctamente.",
+          "center",
+          "top",
+          ["success-snackbar"]
+        );
+        this.getAssignmentsByGroup(targetGroup);
+      },
+      error: () => {
+        this.alertService.displayAlert(
+          "error",
+          "Error al guardar la asignación.",
+          "center",
+          "top",
+          ["error-snackbar"]
+        );
+      },
+    });
+  }
 
   update(item: IAssignment, groupId?: number) {
     if (!item.id) {
@@ -143,13 +172,14 @@ export class AssignmentsService extends BaseService<IAssignment> {
           ["success-snackbar"]
         );
 
-        if (groupId) {
-          this.getAssignmentsByGroup(groupId);
+        const target = groupId ?? this.currentGroupId;
+        if (target) {
+          this.getAssignmentsByGroup(target);
         } else {
           this.getAll();
         }
       },
-      error: (err: any) => {
+      error: () => {
         this.alertService.displayAlert(
           "error",
           "Ocurrió un error al actualizar la asignación.",
@@ -162,31 +192,34 @@ export class AssignmentsService extends BaseService<IAssignment> {
   }
 
   delete(item: IAssignment, groupId?: number) {
-  this.del(item.id!).subscribe({
-    next: (response: IResponse<IAssignment>) => {
-      this.alertService.displayAlert(
-        "success",
-        response.message || "Asignación eliminada correctamente.",
-        "center",
-        "top",
-        ["success-snackbar"]
-      );
+    if (!item.id) return;
 
-      if (groupId) {
-        this.getAssignmentsByGroup(groupId);
-      } else {
-        this.getAll();
-      }
-    },
-    error: (err: any) => {
-      this.alertService.displayAlert(
-        "error",
-        "Ocurrió un error al eliminar la asignación.",
-        "center",
-        "top",
-        ["error-snackbar"]
-      );
-    },
-  });
-}
+    this.del(item.id).subscribe({
+      next: (response: IResponse<IAssignment>) => {
+        this.alertService.displayAlert(
+          "success",
+          response.message || "Asignación eliminada correctamente.",
+          "center",
+          "top",
+          ["success-snackbar"]
+        );
+
+        const target = groupId ?? this.currentGroupId;
+        if (target) {
+          this.getAssignmentsByGroup(target);
+        } else {
+          this.getAll();
+        }
+      },
+      error: () => {
+        this.alertService.displayAlert(
+          "error",
+          "Ocurrió un error al eliminar la asignación.",
+          "center",
+          "top",
+          ["error-snackbar"]
+        );
+      },
+    });
+  }
 }

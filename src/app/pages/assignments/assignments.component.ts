@@ -73,7 +73,7 @@ export class AssignmentsComponent implements OnInit {
   }
 
   saveAssignment(item: IAssignment) {
-    this.assignmentsService.save(item);
+    this.assignmentsService.saveAssignment(item);
   }
 
   loadAssignments(): void {
