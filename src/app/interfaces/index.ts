@@ -172,4 +172,20 @@ export interface ITaskSubmission {
   studentId: number;
 }
 
+export interface IGrade {
+  id?: number;
+  grade: number;
+  justification: string;
+  gradedAt?: string; 
+  submissionId: number;
+  teacherId: number;
+}
+
+export interface IGradePayload {
+  grade: number;
+  justification: string;
+  gradedAt?: string;
+  submission: { id: number };
+  teacher: { id: number };
+}
 

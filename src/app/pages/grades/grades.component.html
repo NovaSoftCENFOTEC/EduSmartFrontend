@@ -1,6 +1,6 @@
 <div class="row p-4">
   <div class="col-12 mb-3">
-    <h2 class="title-highlight">Entregas</h2>
+    <h2 class="title-highlight">Calificaciones</h2>
   </div>
 
   <div class="col-12">
@@ -8,36 +8,46 @@
       <button (click)="goBack()" class="btn custom-add-full-btn">
         <i class="fas fa-arrow-left me-2"></i> Volver
       </button>
+      <button (click)="openAddGradeModal()" class="btn custom-add-full-btn">
+        <i class="fas fa-plus me-2"></i> Agregar
+      </button>
     </div>
   </div>
 
   <div class="col-12 mt-3">
     <div class="card">
       <div class="card-body">
-        <app-task-submission-list
-          (callDeleteAction)="deleteSubmission($event)"
-          (callModalAction)="openEditSubmissionModal($event)"
-          [submissions]="submissions()">
-        </app-task-submission-list>
+        <app-grade-list
+          (callDeleteAction)="deleteGrade($event)"
+          (callModalAction)="openEditGradeModal($event)"
+          [grades]="grades()">
+        </app-grade-list>
 
-        @if (submissions().length) {
-          <app-pagination
-            [service]="submissionService.search"
-            [loadFunction]="loadSubmissions.bind(this)">
-          </app-pagination>
-        }
+        <app-pagination
+          *ngIf="grades().length > 0"
+          [service]="gradeService.search"
+          [loadFunction]="loadGrades.bind(this)">
+        </app-pagination>
       </div>
     </div>
   </div>
 </div>
 
-
-<ng-template #editSubmissionModal>
+<ng-template #addGradeModal>
   <app-modal [hideFooter]="true">
-    <app-task-submission-form
-      [form]="submissionForm"
+    <app-grade-form
+      [form]="gradeForm"
+      (callSaveMethod)="handleAddGrade($event)">
+    </app-grade-form>
+  </app-modal>
+</ng-template>
+
+<ng-template #editGradeModal>
+  <app-modal [hideFooter]="true">
+    <app-grade-form
+      [form]="gradeForm"
       (callUpdateMethod)="confirmEdit($event)">
-    </app-task-submission-form>
+    </app-grade-form>
   </app-modal>
 </ng-template>
 
@@ -45,7 +55,7 @@
   <app-modal [hideFooter]="true">
     <div class="text-center p-4">
       <h2>Confirmación</h2>
-      <p>¿Está seguro que desea modificar la entrega?</p>
+      <p>¿Está seguro que desea modificar la calificación?</p>
       <div class="d-flex justify-content-center mt-4">
         <button (click)="cancelEdit()" class="btn btn-secondary me-2">Cancelar</button>
         <button (click)="confirmEditFinal()" class="btn btn-primary">Sí, modificar</button>

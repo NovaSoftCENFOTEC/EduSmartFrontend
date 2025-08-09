@@ -53,7 +53,7 @@ export class AssignmentsListComponent {
 
   goToAssignmentsTasks(assignmentId: number | undefined): void {
   if (assignmentId !== undefined) {
-    this.router.navigate(['/app/task-submission'], {
+    this.router.navigate(['/app/tasks-submissions-readonly'], {
       queryParams: { assignmentId: assignmentId.toString() }
     });
   }

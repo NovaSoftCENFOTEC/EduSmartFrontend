@@ -4,11 +4,12 @@ import { ConfirmModalComponent } from "../../confirm-modal/confirm-modal.compone
 import { DatePipe, NgForOf, NgIf } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
+import { Router } from '@angular/router';
 
 @Component({
   selector: "app-task-submission-list",
   standalone: true,
-  imports: [ConfirmModalComponent, NgForOf, NgIf, FormsModule, RouterModule, DatePipe],
+  imports: [ConfirmModalComponent, NgForOf, NgIf, FormsModule, RouterModule, DatePipe, RouterModule],
   templateUrl: "./task-submission-list.component.html",
   styleUrls: ["./task-submission-list.component.scss"]
 })
@@ -18,12 +19,12 @@ export class TaskSubmissionListComponent {
   @Output() callDeleteAction = new EventEmitter<ITaskSubmission>();
   @Input() studentMap: { [id: number]: string } = {};
   
-  
 
   deleteSubmission: ITaskSubmission | null = null;
   searchText: string = "";
 
   @ViewChild("confirmDeleteModal") confirmDeleteModal!: ConfirmModalComponent;
+  constructor(private router: Router) {}
 
   get filteredSubmissions(): ITaskSubmission[] {
     if (!this.searchText) return this.submissions;
@@ -65,4 +66,10 @@ export class TaskSubmissionListComponent {
       default: return 'fas fa-file';
     }
   }
-}
+  goToTasksGrades(taskSubmissionId: number | undefined): void {
+  if (taskSubmissionId !== undefined) {
+    this.router.navigate(['/app/grade'], {
+      queryParams: { taskSubmissionId: taskSubmissionId.toString() }
+    });
+  }
+}}

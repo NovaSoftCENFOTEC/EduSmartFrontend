@@ -31,9 +31,11 @@ import { GroupStoriesComponent } from "./pages/group-stories/group-stories.compo
 import { ChatComponent } from "./pages/chat/chat.component";
 import { MaterialsComponent } from "./pages/materials/materials.component";
 import { MaterialsReadOnlyComponent } from "./pages/materials-readonly/materials-readonly.component";
-
 import { AssignmentsReadOnlyComponent } from "./pages/assignments-readonly/assignments-readonly.component";
 import { TaskSubmissionsComponent } from "./pages/task-submissions/task-submission.component";
+import { TasksSubmissionsReadOnlyComponent } from "./pages/tasks-submissions-readonly/tasks-submissions-readonly.component";
+import { GradesComponent } from "./pages/grades/grades.component";
+
 
 
 export const routes: Routes = [
@@ -293,7 +295,31 @@ export const routes: Routes = [
             IRoleType.student,
           ],
           name: "Tareas",
-          showInSidebar: true,
+          showInSidebar: false,
+        },
+      },
+      {
+        path: "tasks-submissions-readonly",
+        component: TasksSubmissionsReadOnlyComponent,
+        data: {
+          authorities: [
+            IRoleType.teacher,
+            IRoleType.student,
+          ],
+          name: "Tareas",
+          showInSidebar: false,
+        },
+      },
+      {
+        path: "grade",
+        component: GradesComponent,
+        data: {
+          authorities: [
+            IRoleType.teacher,
+            IRoleType.student,
+          ],
+          name: "Grade",
+          showInSidebar: false,
         },
       },
       

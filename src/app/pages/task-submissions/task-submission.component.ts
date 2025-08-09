@@ -174,10 +174,6 @@ export class TaskSubmissionsComponent implements OnInit {
     }
   }
   
-
-  
-  
-
   goBack() {
     window.history.back();
   }
