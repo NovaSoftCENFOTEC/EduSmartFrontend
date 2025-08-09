@@ -66,7 +66,6 @@ export class TaskSubmissionService extends BaseService<ITaskSubmission> {
       studentId: studentId,
       submittedAt: new Date().toISOString()
     };
-    console.log('Payload enviado:', payload);
 
     this.add(payload).subscribe({
       next: (response: IResponse<ITaskSubmission>) => {
