@@ -5,6 +5,7 @@ import { FooterComponent } from '../../components/app-layout/elements/footer/foo
 import { QuizService } from '../../services/quiz.service';
 import { AuthService } from '../../services/auth.service';
 import { SubmissionService, ISubmission, IAnswerRequest, ISubmissionResult } from '../../services/submission.service';
+import { BadgeService } from '../../services/badge.service';
 import { IUser, IQuiz, IQuestion, IOption } from '../../interfaces';
 
 @Component({
@@ -38,6 +39,7 @@ export class StudentQuizComponent implements OnInit {
     public quizService: QuizService = inject(QuizService);
     public authService: AuthService = inject(AuthService);
     public submissionService: SubmissionService = inject(SubmissionService);
+    public badgeService: BadgeService = inject(BadgeService);
 
     constructor() {
         effect(() => {
@@ -224,6 +226,17 @@ export class StudentQuizComponent implements OnInit {
                         this.results = resultsResponse.data;
                         this.quizCompleted = true;
                         this.isSubmitting = false;
+
+                        if (this.currentUser?.id && this.quizId && this.results && this.results.score >= 70) {
+                            this.badgeService.assignBadgeForQuizCompletion(
+                                this.currentUser.id,
+                                this.quizId,
+                                this.results.score
+                            ).subscribe({
+                                next: () => { },
+                                error: () => { }
+                            });
+                        }
                     },
                     error: (err: any) => {
                         this.isSubmitting = false;

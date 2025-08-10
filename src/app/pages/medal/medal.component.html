@@ -17,24 +17,14 @@
                 <section class="medals-section">
                     <div class="medals-list">
                         <ng-container *ngFor="let medal of medals">
-                            <div
-                                    (click)="medal.id !== undefined && isUnlocked(medal.id) ? openModal(medal) : null"
-                                    class="medal-item"
-                            >
+                            <div (click)="medal.id !== undefined && isUnlocked(medal.id) ? openModal(medal) : null"
+                                class="medal-item">
                                 <ng-container *ngIf="medal.id !== undefined && isUnlocked(medal.id); else lockedMedal">
-                                    <img
-                                            [alt]="medal.title"
-                                            [src]="medal.iconUrl"
-                                            class="medal-img unlocked-spin"
-                                    />
+                                    <img [alt]="medal.title" [src]="medal.iconUrl" class="medal-img unlocked-spin" />
                                     <div class="medal-name">{{ medal.title }}</div>
                                 </ng-container>
                                 <ng-template #lockedMedal>
-                                    <img
-                                            alt="Medalla bloqueada"
-                                            class="medal-img locked"
-                                            src="assets/img/Lock.png"
-                                    />
+                                    <img alt="Medalla bloqueada" class="medal-img locked" src="assets/img/Lock.png" />
                                     <div class="medal-name">Bloqueado</div>
                                 </ng-template>
                             </div>
@@ -42,11 +32,8 @@
                     </div>
                 </section>
 
-                <app-pagination
-                        *ngIf="medals.length > 0"
-                        [loadFunction]="badgeService.getAll.bind(badgeService)"
-                        [service]="badgeService.search"
-                ></app-pagination>
+                <app-pagination *ngIf="medals.length > 0" [loadFunction]="badgeService.getAll.bind(badgeService)"
+                    [service]="badgeService.search"></app-pagination>
             </div>
         </div>
     </div>
@@ -57,11 +44,7 @@
         <button (click)="closeModal()" class="close-btn">×</button>
         <div class="insignia-decor" style="position: relative;">
             <div class="medal-ribbon"></div>
-            <img
-                    [alt]="selectedBadge.title"
-                    [src]="selectedBadge.iconUrl"
-                    class="modal-img"
-            />
+            <img [alt]="selectedBadge.title" [src]="selectedBadge.iconUrl" class="modal-img" />
         </div>
         <div class="modal-title">{{ selectedBadge.title }}</div>
         <div class="modal-description">{{ selectedBadge.description }}</div>

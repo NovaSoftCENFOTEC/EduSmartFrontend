@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {BadgeService} from '../../services/badge.service';
-import {Router} from '@angular/router';
-import {IBadge} from '../../interfaces';
-import {PaginationComponent} from '../../components/pagination/pagination.component';
-import {AuthService} from '../../services/auth.service';
+import { Component, OnInit, effect } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { BadgeService } from '../../services/badge.service';
+import { Router } from '@angular/router';
+import { IBadge } from '../../interfaces';
+import { PaginationComponent } from '../../components/pagination/pagination.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-medal',
@@ -18,12 +18,21 @@ export class MedalComponent implements OnInit {
     public allBadges: IBadge[] = [];
     public showModal: boolean = false;
     public selectedBadge?: IBadge;
+    private studentId?: number;
 
     constructor(
         public badgeService: BadgeService,
         private router: Router,
         private authService: AuthService
     ) {
+        effect(() => {
+            this.allBadges = this.badgeService.badges$();
+        });
+
+        effect(() => {
+            const studentBadges = this.badgeService.studentBadges$();
+            this.studentBadgeIds = studentBadges.map((badge: IBadge) => badge.id!).filter((id: number | undefined) => id !== undefined);
+        });
     }
 
     get medals() {
@@ -32,20 +41,15 @@ export class MedalComponent implements OnInit {
 
     ngOnInit(): void {
         const user = this.authService.getUser();
-        const studentId = user?.id;
+        this.studentId = user?.id;
+
+        this.badgeService.clearStudentBadges();
 
         this.badgeService.getAll();
-        setTimeout(() => {
-            this.allBadges = this.badgeService.badges$();
 
-            if (typeof studentId === 'number') {
-                this.badgeService.getBadgesByStudent(studentId);
-                setTimeout(() => {
-                    const studentBadges = this.badgeService.badges$();
-                    this.studentBadgeIds = studentBadges.map(badge => badge.id!).filter(id => id !== undefined);
-                }, 500);
-            }
-        }, 500);
+        if (typeof this.studentId === 'number') {
+            this.badgeService.getBadgesByStudent(this.studentId);
+        }
     }
 
     isUnlocked(medalId: number): boolean {
