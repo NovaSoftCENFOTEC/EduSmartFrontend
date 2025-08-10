@@ -11,7 +11,7 @@ import {
 } from "@angular/core";
 import {ITaskSubmission} from "../../../interfaces";
 import {ConfirmModalComponent} from "../../confirm-modal/confirm-modal.component";
-import {AsyncPipe, DatePipe, NgForOf, NgIf} from "@angular/common";
+import {AsyncPipe, DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {Router, RouterModule} from "@angular/router";
 import {AuthService} from "../../../services/auth.service";
@@ -30,6 +30,7 @@ import {catchError} from "rxjs/operators";
         RouterModule,
         DatePipe,
         AsyncPipe,
+        NgClass,
     ],
     templateUrl: "./task-submission-list.component.html",
     styleUrls: ["./task-submission-list.component.scss"],
@@ -124,6 +125,21 @@ export class TaskSubmissionListComponent implements OnInit, OnChanges {
         }
     }
 
+    getFileColorClass(fileUrl: string): string {
+        const ext = fileUrl.split('.').pop()?.toLowerCase();
+        switch (ext) {
+            case 'pdf': return 'color-pdf';
+            case 'doc':
+            case 'docx': return 'color-word';
+            case 'xls':
+            case 'xlsx': return 'color-excel';
+            case 'ppt':
+            case 'pptx': return 'color-powerpoint';
+            default: return 'color-default';
+        }
+    }
+
+
     goToTasksGrades(taskSubmissionId: number | undefined): void {
         if (taskSubmissionId !== undefined) {
             this.router.navigate(["/app/grade"], {
@@ -136,7 +152,6 @@ export class TaskSubmissionListComponent implements OnInit, OnChanges {
         const user = this.authService.getUser();
 
         if (this.isStudent && user) {
-            // Estudiante: asignar su propio nombre para todos los studentIds
             const studentName = user.name || "Sin nombre";
 
             const studentIds = Array.from(
@@ -155,8 +170,6 @@ export class TaskSubmissionListComponent implements OnInit, OnChanges {
             this.studentsMap$ = of(map);
             return;
         }
-
-        // Teacher u otros roles: obtener nombres desde API
         const studentIds = Array.from(
             new Set(
                 this.submissions

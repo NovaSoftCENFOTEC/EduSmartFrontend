@@ -41,11 +41,12 @@
                             >
                                 <i
                                         [class]="getFileIcon(task.fileUrl)"
-                                        class="me-2"
+                                        [ngClass]="[getFileColorClass(task.fileUrl) + '-icon', 'me-2']"
                                         style="font-size: 1.5em"
                                 ></i>
                                 <span>Abrir</span>
                             </a>
+
                         </td>
                         <td>{{ task.comment }}</td>
                         <td>{{ task.submittedAt | date : "mediumDate" }}</td>
