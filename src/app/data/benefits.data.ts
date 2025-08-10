@@ -7,7 +7,7 @@ export const BENEFITS = [
     {
         icon: 'bi-award',
         title: 'Retos y recompensas',
-        text: 'Pon a prueba tus conocimientos con quizzes interactivos al finalizar cada lección. Gana medallas exclusivas como recompensa y desbloquea puntos extra explorando la sección de Explora+, donde descubrirás datos sorprendentes.'
+        text: 'Pon a prueba tus conocimientos con quices interactivos al finalizar cada lección. Gana medallas exclusivas como recompensa y desbloquea puntos extra explorando la sección de Explora+, donde descubrirás datos sorprendentes.'
     },
     {
         icon: 'bi-robot',

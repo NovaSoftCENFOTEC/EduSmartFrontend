@@ -191,3 +191,17 @@ export interface IGradePayload {
   teacher: { id: number };
 }
 
+export interface IAudioTrack {
+  id?: number;
+  title: string;
+  voiceType: VoiceTypeEnum;
+  url: string;
+  createdAt?: string;
+  story?: IStory;
+}
+
+export enum VoiceTypeEnum {
+  MALE = 'MALE',
+  FEMALE = 'FEMALE',
+  NEUTRAL = 'NEUTRAL'
+}

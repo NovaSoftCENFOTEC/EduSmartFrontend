@@ -1,9 +1,9 @@
-import { Component, Input, Output, EventEmitter, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { IQuiz, IQuestion, IOption } from '../../../interfaces';
-import { QuizService } from '../../../services/quiz.service';
-import { AlertService } from '../../../services/alert.service';
-import { LoaderComponent } from '../../loader/loader.component';
+import {Component, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {IOption, IQuestion, IQuiz} from '../../../interfaces';
+import {QuizService} from '../../../services/quiz.service';
+import {AlertService} from '../../../services/alert.service';
+import {LoaderComponent} from '../../loader/loader.component';
 
 @Component({
     selector: 'app-quiz-view',

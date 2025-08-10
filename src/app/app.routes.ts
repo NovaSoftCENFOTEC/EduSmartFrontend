@@ -25,9 +25,13 @@ import { StoriesComponent } from "./pages/stories/stories.component";
 import { GroupStudentsComponent } from "./pages/groupstudents/students.component";
 import { AssignmentsComponent } from "./pages/assignments/assignments.component";
 import { QuizzesComponent } from "./pages/quizzes/quizzes.component";
+import { TeamPageComponent } from "./pages/team-page/team-page.component";
+import { ProductComponent } from "./pages/product/product.component";
 import { ExploreMoreComponent } from "./pages/explore-more/explore-more.component";
 import { StudentGroupsComponent } from "./pages/student-groups/student-groups.component";
 import { GroupStoriesComponent } from "./pages/group-stories/group-stories.component";
+import { StudentQuizzesComponent } from "./pages/student-quizzes/student-quizzes.component";
+import { StudentQuizComponent } from "./pages/student-quiz/student-quiz.component";
 import { ChatComponent } from "./pages/chat/chat.component";
 import { MaterialsComponent } from "./pages/materials/materials.component";
 import { MaterialsReadOnlyComponent } from "./pages/materials-readonly/materials-readonly.component";
@@ -36,6 +40,8 @@ import { TaskSubmissionsComponent } from "./pages/task-submissions/task-submissi
 import { TasksSubmissionsReadOnlyComponent } from "./pages/tasks-submissions-readonly/tasks-submissions-readonly.component";
 import { GradesComponent } from "./pages/grades/grades.component";
 import { GradeReadOnlyComponent } from "./pages/grades-readonly/grades-readonly.component";
+import { MedalComponent } from "./pages/medal/medal.component";
+
 
 export const routes: Routes = [
   {
@@ -66,6 +72,14 @@ export const routes: Routes = [
     path: "password-change",
     component: PasswordChangeComponent,
     canActivate: [AuthGuard],
+  },
+  {
+    path: "landing",
+    component: TeamPageComponent,
+  },
+  {
+    path: "product",
+    component: ProductComponent,
   },
   {
     path: "app",
@@ -202,6 +216,7 @@ export const routes: Routes = [
           name: "Asignaciones",
         },
       },
+
       {
         path: "assignments-readonly",
         component: AssignmentsReadOnlyComponent,
@@ -240,6 +255,26 @@ export const routes: Routes = [
         },
       },
       {
+        path: "story/:storyId/quizzes",
+        component: StudentQuizzesComponent,
+        canActivate: [StudentRoleGuard],
+        data: {
+          authorities: [IRoleType.student],
+          name: "Quices de la Historia",
+          showInSidebar: false,
+        },
+      },
+      {
+        path: "story/:storyId/quiz/:quizId",
+        component: StudentQuizComponent,
+        canActivate: [StudentRoleGuard],
+        data: {
+          authorities: [IRoleType.student],
+          name: "Tomar Quiz",
+          showInSidebar: false,
+        },
+      },
+      {
         path: "chat",
         component: ChatComponent,
         data: {
@@ -270,6 +305,16 @@ export const routes: Routes = [
           authorities: [IRoleType.student],
           name: "Materiales",
           showInSidebar: false,
+        },
+      },
+      {
+        path: "medals",
+        component: MedalComponent,
+        canActivate: [StudentRoleGuard],
+        data: {
+          authorities: [IRoleType.student],
+          name: "Mis Medallas",
+          showInSidebar: true,
         },
       },
       {
