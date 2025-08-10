@@ -16,7 +16,37 @@
             <div class="story-section" [class.active]="story.id" [class.locked]="!story.id"
                 [class.expanded]="expandedStories[i]">
                 <div class="section-header" (click)="toggleStory(i)">
-                    <h3>{{ story.title || 'Historia ' + (i + 1) }}</h3>
+                    <div class="story-header-content">
+                        <div class="audio-controls">
+                            @if (story.id) {
+                            <div class="audio-buttons">
+                                @if (getAudioTrackByVoiceType(story.id, VoiceTypeEnum.MALE)) {
+                                <button class="btn audio-btn male-voice"
+                                    (click)="playAudio(story.id, VoiceTypeEnum.MALE); $event.stopPropagation()"
+                                    title="Escuchar con voz masculina">
+                                    <i class="fas fa-volume-up"></i>
+                                    <span class="voice-label">Hombre</span>
+                                </button>
+                                }
+                                @if (getAudioTrackByVoiceType(story.id, VoiceTypeEnum.FEMALE)) {
+                                <button class="btn audio-btn female-voice"
+                                    (click)="playAudio(story.id, VoiceTypeEnum.FEMALE); $event.stopPropagation()"
+                                    title="Escuchar con voz femenina">
+                                    <i class="fas fa-volume-up"></i>
+                                    <span class="voice-label">Mujer</span>
+                                </button>
+                                }
+                                @if (!hasAudioTracks(story.id)) {
+                                <span class="no-audio">
+                                    <i class="fas fa-volume-mute"></i>
+                                    <span class="voice-label">Sin audio</span>
+                                </span>
+                                }
+                            </div>
+                            }
+                        </div>
+                        <h3>{{ story.title || 'Historia ' + (i + 1) }}</h3>
+                    </div>
                     <div class="header-actions">
                         @if (story.id) {
                         <i class="fas" [class.fa-chevron-down]="!expandedStories[i]"
@@ -55,3 +85,22 @@
         </div>
     </div>
 </div>
+
+@if (currentAudio) {
+<div class="audio-player-modal" [class.show]="showAudioPlayer">
+    <div class="audio-player-content">
+        <div class="audio-player-header">
+            <h4>Reproduciendo: {{ currentAudio.title }}</h4>
+            <button class="btn-close" (click)="stopAudio()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="audio-player-body">
+            <audio #audioPlayer controls autoplay>
+                <source [src]="currentAudio.url" type="audio/mpeg">
+                Tu navegador no soporta el elemento de audio.
+            </audio>
+        </div>
+    </div>
+</div>
+}

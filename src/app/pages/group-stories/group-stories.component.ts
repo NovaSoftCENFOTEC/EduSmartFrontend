@@ -4,6 +4,8 @@ import { AsyncPipe, NgIf } from '@angular/common';
 import { FooterComponent } from '../../components/app-layout/elements/footer/footer.component';
 import { GroupStoriesService } from '../../services/group-stories.service';
 import { GroupCoursesService } from '../../services/group-courses.service';
+import { AudioTrackService } from '../../services/audio-track.service';
+import { IAudioTrack, VoiceTypeEnum } from '../../interfaces';
 
 @Component({
     selector: 'app-group-stories',
@@ -20,10 +22,15 @@ export class GroupStoriesComponent implements OnInit {
     public groupId: number | null = null;
     public courseId: number | null = null;
     public expandedStories: boolean[] = [];
+    public currentAudio: IAudioTrack | null = null;
+    public showAudioPlayer: boolean = false;
+    public VoiceTypeEnum = VoiceTypeEnum;
+
     public route: ActivatedRoute = inject(ActivatedRoute);
     public router = inject(Router);
     public groupStoriesService: GroupStoriesService = inject(GroupStoriesService);
     public groupCoursesService: GroupCoursesService = inject(GroupCoursesService);
+    public audioTrackService: AudioTrackService = inject(AudioTrackService);
 
     constructor() {
         effect(() => {
@@ -40,6 +47,11 @@ export class GroupStoriesComponent implements OnInit {
             const stories = this.groupStoriesService.stories$();
             if (stories.length > 0) {
                 this.expandedStories = new Array(stories.length).fill(false);
+                stories.forEach(story => {
+                    if (story.id) {
+                        this.audioTrackService.loadAudioTracksForStory(story.id);
+                    }
+                });
             }
         });
     }
@@ -57,6 +69,7 @@ export class GroupStoriesComponent implements OnInit {
         if (this.groupId) {
             this.groupStoriesService.clearStories();
             this.groupCoursesService.clearCourses();
+            this.audioTrackService.clearAudioTracks();
             this.expandedStories = [];
             this.courseId = null;
             this.groupCoursesService.getCoursesByGroup(this.groupId);
@@ -77,6 +90,28 @@ export class GroupStoriesComponent implements OnInit {
         if (this.groupId) {
             localStorage.setItem('currentGroupId', this.groupId.toString());
         }
+
         this.router.navigate(['/app/story', storyId, 'quizzes']);
+    }
+
+    getAudioTrackByVoiceType(storyId: number, voiceType: VoiceTypeEnum): IAudioTrack | null {
+        const audioTrack = this.audioTrackService.getAudioTrackByVoiceType(storyId, voiceType);
+        return audioTrack;
+    }
+
+    hasAudioTracks(storyId: number): boolean {
+        const hasTracks = this.audioTrackService.hasAudioTracks(storyId);
+        return hasTracks;
+    }
+
+    playAudio(storyId: number, voiceType: VoiceTypeEnum): void {
+        const audioTrack = this.getAudioTrackByVoiceType(storyId, voiceType);
+        this.currentAudio = audioTrack;
+        this.showAudioPlayer = true;
+    }
+
+    stopAudio(): void {
+        this.currentAudio = null;
+        this.showAudioPlayer = false;
     }
 }
