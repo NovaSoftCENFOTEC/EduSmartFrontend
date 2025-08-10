@@ -1,112 +1,115 @@
 <div class="card">
-  <div class="card-header card-header-indigo">
-    <h2 class="mb-0">Entregas de Tareas</h2>
-  </div>
-
-  <div class="card-body">
-    <p class="text-muted mb-3">
-      Se presenta un espacio donde se muestran las tareas.
-    </p>
-
-    <div class="mb-4 mt-2">
-      <input
-        [(ngModel)]="searchText"
-        class="input-txt input-filter"
-        placeholder="Filtrar por estudiante..."
-        type="text"
-      />
+    <div class="card-header card-header-indigo">
+        <h2 class="mb-0">Entregas de Tareas</h2>
     </div>
 
-    <div class="table-container table-responsive">
-      <table class="table custom-full-bordered-table">
-        <thead class="table-header-gray">
-          <tr>
-            <th scope="col">Estudiante</th>
-            <th scope="col">Archivo</th>
-            <th scope="col">Comentario</th>
-            <th scope="col">Fecha de Entrega</th>
-            <th class="text-center" scope="col">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let task of filteredSubmissions; trackBy: trackById">
-            <td>{{ getStudentName(task.studentId) }}</td>
+    <div class="card-body">
+        <p class="text-muted mb-3">
+            Se presenta un espacio donde se muestran las tareas.
+        </p>
 
-            <td>
-              <a
-                [href]="task.fileUrl"
-                class="d-flex align-items-center link-material"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                <i
-                  [class]="getFileIcon(task.fileUrl)"
-                  class="me-2"
-                  style="font-size: 1.5em"
-                ></i>
-                <span>Abrir</span>
-              </a>
-            </td>
-            <td>{{ task.comment }}</td>
-            <td>{{ task.submittedAt | date : "mediumDate" }}</td>
-            <td class="text-center">
-              <button
-                (click)="callModalAction.emit(task)"
-                class="btn border-0 me-2 icon-gray-color"
-                title="Editar entrega"
-                type="button"
-              >
-                <i class="fas fa-pen"></i>
-              </button>
-              <button
-                (click)="openConfirmationModal(task)"
-                class="btn border-0 icon-gray-color"
-                title="Eliminar entrega"
-                type="button"
-              >
-                <i class="fas fa-trash"></i>
-              </button>
-              <button
-                *ngIf="isTeacher"
-                [routerLink]="['/app/grade']"
-                [queryParams]="{ taskSubmissionId: task.id }"
-                class="btn btn-primary px-4 py-2"
-              >
-                Calificar
-              </button>
+        <div class="mb-4 mt-2">
+            <input
+                    [(ngModel)]="searchText"
+                    class="input-txt input-filter"
+                    placeholder="Filtrar por estudiante..."
+                    type="text"
+            />
+        </div>
 
-              <button
-                *ngIf="isStudent"
-                [routerLink]="['/app/grade-readonly']"
-                [queryParams]="{ taskSubmissionId: task.id }"
-                class="btn btn-primary px-4 py-2"
-              >
-                Ver Calificación
-              </button>
-            </td>
-          </tr>
+        <div class="table-container table-responsive">
+            <table class="table custom-full-bordered-table">
+                <thead class="table-header-gray">
+                <tr>
+                    <th scope="col">Estudiante</th>
+                    <th scope="col">Archivo</th>
+                    <th scope="col">Comentario</th>
+                    <th scope="col">Fecha de Entrega</th>
+                    <th class="text-center" scope="col">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <ng-container *ngIf="studentsMap$ | async as studentsMap">
+                    <tr *ngFor="let task of filteredSubmissions; trackBy: trackById">
+                        <td>{{ studentsMap[task.studentId!] || "Sin nombre" }}</td>
+                        <td>
+                            <a
+                                    [href]="task.fileUrl"
+                                    class="d-flex align-items-center link-material"
+                                    rel="noopener noreferrer"
+                                    target="_blank"
+                            >
+                                <i
+                                        [class]="getFileIcon(task.fileUrl)"
+                                        class="me-2"
+                                        style="font-size: 1.5em"
+                                ></i>
+                                <span>Abrir</span>
+                            </a>
+                        </td>
+                        <td>{{ task.comment }}</td>
+                        <td>{{ task.submittedAt | date : "mediumDate" }}</td>
+                        <td class="text-center">
+                            <button
+                                    (click)="callModalAction.emit(task)"
+                                    *ngIf="!isTeacher"
+                                    class="btn border-0 me-2 icon-gray-color"
+                                    title="Editar entrega"
+                                    type="button"
+                            >
+                                <i class="fas fa-pen"></i>
+                            </button>
+                            <button
+                                    (click)="openConfirmationModal(task)"
+                                    *ngIf="!isTeacher"
+                                    class="btn border-0 icon-gray-color"
+                                    title="Eliminar entrega"
+                                    type="button"
+                            >
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <button
+                                    *ngIf="isTeacher"
+                                    [queryParams]="{ taskSubmissionId: task.id }"
+                                    [routerLink]="['/app/grade']"
+                                    class="btn btn-primary px-4 py-2"
+                            >
+                                Calificar
+                            </button>
 
-          <tr *ngIf="filteredSubmissions.length === 0">
-            <td colspan="4">
-              <div
-                class="d-flex justify-content-center align-items-center w-100"
-              >
-                <p class="mb-0" style="color: var(--color-indigo-dye)">
-                  No hay entregas registradas
-                </p>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+                            <button
+                                    *ngIf="isStudent"
+                                    [queryParams]="{ taskSubmissionId: task.id }"
+                                    [routerLink]="['/app/grade-readonly']"
+                                    class="btn btn-primary px-4 py-2"
+                            >
+                                Ver Calificación
+                            </button>
+                        </td>
+                    </tr>
+                </ng-container>
+
+                <tr *ngIf="filteredSubmissions.length === 0">
+                    <td colspan="5">
+                        <div
+                                class="d-flex justify-content-center align-items-center w-100"
+                        >
+                            <p class="mb-0" style="color: var(--color-indigo-dye)">
+                                No hay entregas registradas
+                            </p>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-  </div>
 
-  <app-confirm-modal
-    #confirmDeleteModal
-    (confirmed)="deleteConfirmation()"
-    [cancelText]="'Cancelar'"
-    [confirmText]="'Eliminar'"
-    [message]="'¿Estás seguro de que deseas eliminar la entrega seleccionada?'"
-  ></app-confirm-modal>
+    <app-confirm-modal
+        #confirmDeleteModal
+        (confirmed)="deleteConfirmation()"
+        [cancelText]="'Cancelar'"
+        [confirmText]="'Eliminar'"
+        [message]="'¿Estás seguro de que deseas eliminar la entrega seleccionada?'"
+    ></app-confirm-modal>
 </div>
