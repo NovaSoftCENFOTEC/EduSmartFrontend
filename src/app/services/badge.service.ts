@@ -160,7 +160,7 @@ export class BadgeService extends BaseService<IBadge> {
 
   assignBadgeForQuizCompletion(studentId: number, quizId: number, score: number): Observable<IResponse<IBadge | null>> {
 
-    if (score < 70) {
+    if (score < 69) {
       return new Observable(observer => {
         observer.next({ data: null, message: 'Score insuficiente para badge', meta: null });
         observer.complete();
