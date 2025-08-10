@@ -35,8 +35,7 @@ import { AssignmentsReadOnlyComponent } from "./pages/assignments-readonly/assig
 import { TaskSubmissionsComponent } from "./pages/task-submissions/task-submission.component";
 import { TasksSubmissionsReadOnlyComponent } from "./pages/tasks-submissions-readonly/tasks-submissions-readonly.component";
 import { GradesComponent } from "./pages/grades/grades.component";
-
-
+import { GradeReadOnlyComponent } from "./pages/grades-readonly/grades-readonly.component";
 
 export const routes: Routes = [
   {
@@ -290,10 +289,7 @@ export const routes: Routes = [
         path: "task-submission",
         component: TaskSubmissionsComponent,
         data: {
-          authorities: [
-            IRoleType.teacher,
-            IRoleType.student,
-          ],
+          authorities: [IRoleType.teacher, IRoleType.student],
           name: "Tareas",
           showInSidebar: false,
         },
@@ -302,10 +298,7 @@ export const routes: Routes = [
         path: "tasks-submissions-readonly",
         component: TasksSubmissionsReadOnlyComponent,
         data: {
-          authorities: [
-            IRoleType.teacher,
-            IRoleType.student,
-          ],
+          authorities: [IRoleType.teacher, IRoleType.student],
           name: "Tareas",
           showInSidebar: false,
         },
@@ -314,15 +307,21 @@ export const routes: Routes = [
         path: "grade",
         component: GradesComponent,
         data: {
-          authorities: [
-            IRoleType.teacher,
-            IRoleType.student,
-          ],
+          authorities: [IRoleType.teacher, IRoleType.student],
           name: "Grade",
           showInSidebar: false,
         },
       },
-      
+
+      {
+        path: "grade-readonly",
+        component: GradeReadOnlyComponent,
+        data: {
+          authorities: [IRoleType.student],
+          name: "Grade",
+          showInSidebar: false,
+        },
+      },
     ],
   },
 ];

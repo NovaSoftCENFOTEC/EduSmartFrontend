@@ -8,7 +8,11 @@
       <button (click)="goBack()" type="button" class="btn custom-add-full-btn">
         <i class="fas fa-arrow-left me-2"></i> Volver
       </button>
-      <button (click)="openAddAssignmentModal()" type="button" class="btn custom-add-full-btn">
+      <button
+        (click)="openAddAssignmentModal()"
+        type="button"
+        class="btn custom-add-full-btn"
+      >
         <i class="fas fa-plus me-2"></i> Agregar
       </button>
     </div>
@@ -20,7 +24,8 @@
         <app-assignments-list
           [assignments]="assignmentsService.assignments$()"
           (callModalAction)="openEditAssignmentModal($event)"
-          (callDeleteAction)="deleteAssignment($event)">
+          (callDeleteAction)="deleteAssignment($event)"
+        >
         </app-assignments-list>
 
         <ng-container *ngIf="assignmentsService.assignments$().length > 0">
@@ -35,7 +40,8 @@
   <app-modal [hideFooter]="true">
     <app-assignments-form
       [form]="assignmentForm"
-      (callSaveMethod)="handleAddAssignment($event)">
+      (callSaveMethod)="handleAddAssignment($event)"
+    >
     </app-assignments-form>
   </app-modal>
 </ng-template>
@@ -44,7 +50,8 @@
   <app-modal [hideFooter]="true">
     <app-assignments-form
       [form]="assignmentForm"
-      (callUpdateMethod)="confirmEdit($event)">
+      (callUpdateMethod)="confirmEdit($event)"
+    >
     </app-assignments-form>
   </app-modal>
 </ng-template>
@@ -55,10 +62,13 @@
       <h2>Confirmación</h2>
       <p>¿Está seguro que desea modificar la tarea?</p>
       <div class="d-flex justify-content-center mt-4">
-        <button class="btn btn-secondary me-2" (click)="cancelEdit()">Cancelar</button>
-        <button class="btn btn-primary" (click)="confirmEditFinal()">Sí, modificar</button>
+        <button class="btn btn-secondary me-2" (click)="cancelEdit()">
+          Cancelar
+        </button>
+        <button class="btn btn-primary" (click)="confirmEditFinal()">
+          Sí, modificar
+        </button>
       </div>
     </div>
   </app-modal>
 </ng-template>
-

@@ -26,10 +26,10 @@ import { IGrade } from "../../interfaces";
     GradesListComponent,
     ReactiveFormsModule,
   ],
-  templateUrl: "./grades.component.html",
-  styleUrls: ["./grades.component.scss"],
+  templateUrl: "./grades-readonly.component.html",
+  styleUrls: ["./grades-readonly.component.scss"],
 })
-export class GradesComponent implements OnInit {
+export class GradeReadOnlyComponent implements OnInit {
   public grades!: WritableSignal<IGrade[]>;
   public gradeService = inject(GradeService);
   @ViewChild("editGradeModal") public editGradeModal: any;
@@ -78,13 +78,6 @@ export class GradesComponent implements OnInit {
       this.gradeService.getBySubmission(this.currentSubmissionId);
     }
   }
-  hasGradeForSubmission(): boolean {
-    const currentGrades = this.grades();
-    if (!this.currentSubmissionId) return false;
-    return currentGrades.some(
-      (g) => g.submissionId === this.currentSubmissionId
-    );
-  }
 
   handleAddGrade(item: {
     grade: number;
@@ -92,11 +85,6 @@ export class GradesComponent implements OnInit {
     submissionId: number;
     teacherId: number;
   }) {
-    if (this.hasGradeForSubmission()) {
-      alert("Ya existe una calificación registrada para esta entrega.");
-      return;
-    }
-
     const payload: IGrade = {
       grade: item.grade,
       justification: item.justification,

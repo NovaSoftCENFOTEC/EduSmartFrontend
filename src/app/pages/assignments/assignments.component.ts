@@ -11,7 +11,6 @@ import { ModalComponent } from "../../components/modal/modal.component";
 import { AssignmentsFormComponent } from "../../components/asignments/assignment-form/assignments-form.component";
 import { AssignmentsListComponent } from "../../components/asignments/assignment-list/assignments-list.component";
 
-// ... (todas las importaciones igual)
 
 @Component({
   selector: "app-assignments",

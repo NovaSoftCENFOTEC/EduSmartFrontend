@@ -170,6 +170,7 @@ export interface ITaskSubmission {
   submittedAt: string;
   assignmentId: number;
   studentId: number;
+  studentName?: string;
 }
 
 export interface IGrade {
@@ -179,6 +180,7 @@ export interface IGrade {
   gradedAt?: string; 
   submissionId: number;
   teacherId: number;
+  submission?: ITaskSubmission; 
 }
 
 export interface IGradePayload {

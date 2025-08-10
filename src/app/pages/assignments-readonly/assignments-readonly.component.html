@@ -48,8 +48,8 @@
                 <div class="mt-auto d-grid gap-2">
                   <button
                     class="btn btn-primary"
-                    *ngIf="assignment.id"
-                    (click)="verDetalles(assignment.id)"
+                    *ngIf="student?.id"
+                    (click)="SeeDetails(student?.id, assignment.id)"
                   >
                     <i class="fas fa-tasks me-2"></i> Realizar entrega
                   </button>

@@ -17,26 +17,28 @@
         <app-task-submission-list
           (callDeleteAction)="deleteSubmission($event)"
           (callModalAction)="openEditSubmissionModal($event)"
-          [submissions]="submissions()">
+          [submissions]="submissions()"
+        >
         </app-task-submission-list>
 
         @if (submissions().length) {
-          <app-pagination
-            [service]="submissionService.search"
-            [loadFunction]="loadSubmissions.bind(this)">
-          </app-pagination>
+        <app-pagination
+          [service]="submissionService.search"
+          [loadFunction]="loadSubmissions.bind(this)"
+        >
+        </app-pagination>
         }
       </div>
     </div>
   </div>
 </div>
 
-
 <ng-template #editSubmissionModal>
   <app-modal [hideFooter]="true">
     <app-task-submission-form
       [form]="submissionForm"
-      (callUpdateMethod)="confirmEdit($event)">
+      (callUpdateMethod)="confirmEdit($event)"
+    >
     </app-task-submission-form>
   </app-modal>
 </ng-template>
@@ -47,8 +49,12 @@
       <h2>Confirmación</h2>
       <p>¿Está seguro que desea modificar la entrega?</p>
       <div class="d-flex justify-content-center mt-4">
-        <button (click)="cancelEdit()" class="btn btn-secondary me-2">Cancelar</button>
-        <button (click)="confirmEditFinal()" class="btn btn-primary">Sí, modificar</button>
+        <button (click)="cancelEdit()" class="btn btn-secondary me-2">
+          Cancelar
+        </button>
+        <button (click)="confirmEditFinal()" class="btn btn-primary">
+          Sí, modificar
+        </button>
       </div>
     </div>
   </app-modal>
