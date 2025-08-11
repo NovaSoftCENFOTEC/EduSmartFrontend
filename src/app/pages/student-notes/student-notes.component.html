@@ -22,20 +22,22 @@
         <div class="card-body">
         
           <div class="notes-list">
-            <table class="table custom-full-bordered-table">
-              <thead>
-                <tr>
-                  <th>Nombre del Quiz</th>
-                  <th>Puntuación</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let note of notes">
-                  <td>{{ note.title }}</td>
-                  <td>{{ note.score }}</td>
-                </tr>
-              </tbody>
-            </table>
+            <div *ngIf="notes.length > 0">
+              <table class="table custom-full-bordered-table">
+                <thead>
+                  <tr>
+                    <th>Nombre del Quiz</th>
+                    <th>Puntuación</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let note of notes">
+                    <td>{{ note.title }}</td>
+                    <td>{{ note.score }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
