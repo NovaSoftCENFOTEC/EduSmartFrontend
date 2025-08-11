@@ -1,0 +1,44 @@
+<div class="row p-4">
+  <div class="col-12 mb-4">
+    <h2 class="title-highlight">Mis Notas</h2>
+  </div>
+
+  <div class="col-12 mb-4">
+    <div class="card shadow-sm rounded-4">
+      <h4 class="mb-0 title-highlight">Mis Grupos</h4>
+      <div class="notes-group-list">
+        <ng-container *ngFor="let group of groupList">
+          <button
+            class="btn custom-add-full-btn-2 mb-2"
+            [class.active]="selectedGroupId === group.id"
+            (click)="onGroupClick(group.id)">
+            {{ group.name }} - {{ group.course?.title }}
+          </button>
+        </ng-container>
+      </div>
+    </div>
+    <div class="col-12" *ngIf="selectedGroupId">
+      <div class="card shadow-sm rounded-4">
+        <div class="card-body">
+        
+          <div class="notes-list">
+            <table class="table custom-full-bordered-table">
+              <thead>
+                <tr>
+                  <th>Nombre del Quiz</th>
+                  <th>Puntuación</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let note of notes">
+                  <td>{{ note.title }}</td>
+                  <td>{{ note.score }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

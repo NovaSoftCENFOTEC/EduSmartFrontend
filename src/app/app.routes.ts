@@ -36,6 +36,7 @@ import { ChatComponent } from "./pages/chat/chat.component";
 import { MaterialsComponent } from "./pages/materials/materials.component";
 import { MaterialsReadOnlyComponent } from "./pages/materials-readonly/materials-readonly.component";
 import { MedalComponent } from "./pages/medal/medal.component";
+import { StudentNotesComponent } from "./pages/student-notes/student-notes.component";
 
 export const routes: Routes = [
   {
@@ -312,6 +313,16 @@ export const routes: Routes = [
             IRoleType.student,
           ],
           name: "Explora +",
+          showInSidebar: true,
+        },
+      },
+      {
+        path: "student-notes",
+        component: StudentNotesComponent,
+        canActivate: [StudentRoleGuard],
+        data: {
+          authorities: [IRoleType.student],
+          name: "Mis Notas",
           showInSidebar: true,
         },
       },
