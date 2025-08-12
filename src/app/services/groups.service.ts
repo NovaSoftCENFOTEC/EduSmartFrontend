@@ -1,12 +1,19 @@
 import {inject, Injectable, signal} from '@angular/core';
 import {BaseService} from './base-service';
-import {IResponse, ISearch, IGroup} from '../interfaces';
+import {IGroup, IResponse, ISearch} from '../interfaces';
 import {AlertService} from './alert.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class GroupsService extends BaseService<IGroup> {
+    public search: ISearch = {
+        page: 1,
+        size: 5,
+        pageNumber: 1,
+        totalPages: 1,
+    };
+    public totalItems: any = [];
     protected override source: string = 'groups';
     private groupListSignal = signal<IGroup[]>([]);
     private alertService: AlertService = inject(AlertService);
@@ -16,21 +23,12 @@ export class GroupsService extends BaseService<IGroup> {
         return this.groupListSignal;
     }
 
-    public search: ISearch = {
-        page: 1,
-        size: 5,
-        pageNumber: 1,
-        totalPages: 1,
-    };
-
-    public totalItems: any = [];
-
     getAll() {
-        this.findAllWithParams({ page: this.search.page, size: this.search.size }).subscribe({
+        this.findAllWithParams({page: this.search.page, size: this.search.size}).subscribe({
             next: (response: IResponse<IGroup[]>) => {
                 this.groupListSignal.set(response.data);
-                this.search = { ...this.search, ...response.meta };
-                this.totalItems = Array.from({ length: this.search.totalPages || 0 }, (_, i) => i + 1);
+                this.search = {...this.search, ...response.meta};
+                this.totalItems = Array.from({length: this.search.totalPages || 0}, (_, i) => i + 1);
             },
             error: (err: any) => {
                 this.alertService.displayAlert('error', 'Ocurrió un error al obtener los grupos.', 'center', 'top', ['error-snackbar']);
@@ -48,8 +46,8 @@ export class GroupsService extends BaseService<IGroup> {
         this.findAllWithParamsAndCustomSource(`teacher/${teacherId}/groups`, params).subscribe({
             next: (response: IResponse<IGroup[]>) => {
                 this.groupListSignal.set(response.data);
-                this.search = { ...this.search, ...response.meta };
-                this.totalItems = Array.from({ length: this.search.totalPages || 0 }, (_, i) => i + 1);
+                this.search = {...this.search, ...response.meta};
+                this.totalItems = Array.from({length: this.search.totalPages || 0}, (_, i) => i + 1);
             },
             error: (err: any) => {
                 this.alertService.displayAlert('error', 'Ocurrió un error al obtener los grupos del docente.', 'center', 'top', ['error-snackbar']);
@@ -70,7 +68,7 @@ export class GroupsService extends BaseService<IGroup> {
             return;
         }
 
-        const payload = { name: item.name };
+        const payload = {name: item.name};
 
         this.addCustomSource(`course/${courseId}/teacher/${teacherId}`, payload).subscribe({
             next: (response: IResponse<IGroup>) => {
@@ -92,8 +90,8 @@ export class GroupsService extends BaseService<IGroup> {
 
         const payload = {
             name: item.name,
-            course: { id: item.course?.id },
-            teacher: { id: item.teacher?.id },
+            course: {id: item.course?.id},
+            teacher: {id: item.teacher?.id},
             students: item.students || []
         };
 

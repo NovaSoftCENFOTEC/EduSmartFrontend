@@ -1,10 +1,4 @@
-import {
-    Component,
-    inject,
-    OnInit,
-    ViewChild,
-    WritableSignal,
-} from "@angular/core";
+import {Component, inject, OnInit, ViewChild, WritableSignal,} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ModalComponent} from "../../components/modal/modal.component";
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";

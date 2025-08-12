@@ -1,10 +1,4 @@
-import {
-    Component,
-    inject,
-    OnInit,
-    ViewChild,
-    WritableSignal,
-} from "@angular/core";
+import {Component, inject, OnInit, ViewChild, WritableSignal,} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {PaginationComponent} from "../../components/pagination/pagination.component";
 import {ModalComponent} from "../../components/modal/modal.component";
@@ -63,6 +57,17 @@ export class TasksSubmissionsReadOnlyComponent implements OnInit {
         this.submissions = this.submissionService.submissions$;
     }
 
+    public get studentSubmissions(): ITaskSubmission[] {
+        const currentUser = this.authService.getUser();
+        const currentStudentId = currentUser?.id;
+
+        if (!currentStudentId) return [];
+
+        return this.submissions().filter(
+            (sub) => sub.studentId === currentStudentId
+        );
+    }
+
     ngOnInit(): void {
         this.route.queryParams.subscribe((params) => {
             const id = Number(params["assignmentId"]);
@@ -83,17 +88,6 @@ export class TasksSubmissionsReadOnlyComponent implements OnInit {
         if (this.assignmentId) {
             this.submissionService.getByAssignment(this.assignmentId);
         }
-    }
-
-    public get studentSubmissions(): ITaskSubmission[] {
-        const currentUser = this.authService.getUser();
-        const currentStudentId = currentUser?.id;
-
-        if (!currentStudentId) return [];
-
-        return this.submissions().filter(
-            (sub) => sub.studentId === currentStudentId
-        );
     }
 
     updateSubmission() {

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, inject, WritableSignal} from '@angular/core';
+import {Component, inject, OnInit, ViewChild, WritableSignal} from '@angular/core';
 import {ModalComponent} from '../../components/modal/modal.component';
 import {PaginationComponent} from '../../components/pagination/pagination.component';
 import {UserFormComponent} from '../../components/user/user-from/user-form.component';
@@ -36,9 +36,6 @@ export class UsersComponent implements OnInit {
     @ViewChild('editConfirmationModal') public editConfirmationModal: any;
 
     public areActionsAvailable: boolean = false;
-    private originalUser: IUser | null = null;
-    private pendingEditItem: IUser | null = null;
-
     userForm = this.fb.group({
         id: [''],
         name: ['', Validators.required],
@@ -47,6 +44,8 @@ export class UsersComponent implements OnInit {
         password: [''],
         updatedAt: ['']
     });
+    private originalUser: IUser | null = null;
+    private pendingEditItem: IUser | null = null;
 
     constructor() {
         this.userList = this.userService.users$;

@@ -1,9 +1,9 @@
-import { inject, Injectable, signal } from "@angular/core";
-import { BaseService } from "./base-service";
-import { IOption, IQuestion, IQuiz, IResponse, ISearch } from "../interfaces";
-import { AlertService } from "./alert.service";
-import { Observable, Subject } from "rxjs";
-import { QuizDataTransformerService } from "./quiz-data-transformer.service";
+import {inject, Injectable, signal} from "@angular/core";
+import {BaseService} from "./base-service";
+import {IOption, IQuestion, IQuiz, IResponse, ISearch} from "../interfaces";
+import {AlertService} from "./alert.service";
+import {Observable, Subject} from "rxjs";
+import {QuizDataTransformerService} from "./quiz-data-transformer.service";
 
 
 @Injectable({
@@ -46,9 +46,9 @@ export class QuizService extends BaseService<IQuiz> {
         }).subscribe({
             next: (response: IResponse<IQuiz[]>) => {
                 this.quizListSignal.set(response.data);
-                this.search = { ...this.search, ...response.meta };
+                this.search = {...this.search, ...response.meta};
                 this.totalItems = Array.from(
-                    { length: this.search.totalPages || 0 },
+                    {length: this.search.totalPages || 0},
                     (_, i) => i + 1
                 );
             },

@@ -17,9 +17,9 @@
         <div class="card">
             <div class="card-body">
                 <app-teachers-list
-                        [teachers]="teacherList()"
+                        (callDeleteAction)="deleteTeacher($event)"
                         (callModalAction)="openEditTeacherModal($event)"
-                        (callDeleteAction)="deleteTeacher($event)">
+                        [teachers]="teacherList()">
                 </app-teachers-list>
                 @if (teacherList().length) {
                     <app-pagination
@@ -34,8 +34,8 @@
 <ng-template #addTeacherModal>
     <app-modal [hideFooter]="true">
         <app-teachers-form
-                [form]="teacherForm"
-                (callSaveMethod)="handleAddTeacher($event)">
+                (callSaveMethod)="handleAddTeacher($event)"
+                [form]="teacherForm">
         </app-teachers-form>
     </app-modal>
 </ng-template>
@@ -43,8 +43,8 @@
 <ng-template #editTeacherModal>
     <app-modal [hideFooter]="true">
         <app-teachers-form
-                [form]="teacherForm"
-                (callUpdateMethod)="confirmEdit($event)">
+                (callUpdateMethod)="confirmEdit($event)"
+                [form]="teacherForm">
         </app-teachers-form>
     </app-modal>
 </ng-template>
@@ -55,8 +55,8 @@
             <h2>Confirmación</h2>
             <p>¿Está seguro que desea modificar el/la Docente?</p>
             <div class="d-flex justify-content-center mt-4">
-                <button class="btn btn-secondary me-2" (click)="cancelEdit()">Cancelar</button>
-                <button class="btn btn-primary" (click)="confirmEditFinal()">Sí, modificar</button>
+                <button (click)="cancelEdit()" class="btn btn-secondary me-2">Cancelar</button>
+                <button (click)="confirmEditFinal()" class="btn btn-primary">Sí, modificar</button>
             </div>
         </div>
     </app-modal>

@@ -8,10 +8,10 @@
 
         <div class="mb-4 mt-2">
             <input
-                    type="text"
+                    [(ngModel)]="searchText"
                     class="input-txt input-filter"
                     placeholder="Filtrar por nombre, apellido o correo..."
-                    [(ngModel)]="searchText"
+                    type="text"
             />
         </div>
 
@@ -66,9 +66,9 @@
 
     <app-confirm-modal
         #confirmDeleteModal
-        [message]="'¿Estás seguro(a) de que deseas eliminar el/la docente ' + deleteTeacher?.name + '?'"
-        [confirmText]="'Eliminar'"
-        [cancelText]="'Cancelar'"
         (confirmed)="deleteConfirmation()"
+        [cancelText]="'Cancelar'"
+        [confirmText]="'Eliminar'"
+        [message]="'¿Estás seguro(a) de que deseas eliminar el/la docente ' + deleteTeacher?.name + '?'"
     ></app-confirm-modal>
 </div>

@@ -1,20 +1,16 @@
-import { Component, inject, OnInit, effect } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AsyncPipe, NgIf, DecimalPipe } from '@angular/common';
-import { FooterComponent } from '../../components/app-layout/elements/footer/footer.component';
-import { QuizService } from '../../services/quiz.service';
-import { AuthService } from '../../services/auth.service';
-import { SubmissionService, ISubmission, IAnswerRequest, ISubmissionResult } from '../../services/submission.service';
-import { BadgeService } from '../../services/badge.service';
-import { IUser, IQuiz, IQuestion, IOption } from '../../interfaces';
+import {Component, effect, inject, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {DecimalPipe} from '@angular/common';
+import {QuizService} from '../../services/quiz.service';
+import {AuthService} from '../../services/auth.service';
+import {IAnswerRequest, ISubmission, ISubmissionResult, SubmissionService} from '../../services/submission.service';
+import {BadgeService} from '../../services/badge.service';
+import {IQuiz, IUser} from '../../interfaces';
 
 @Component({
     selector: 'app-student-quiz',
     standalone: true,
     imports: [
-        NgIf,
-        FooterComponent,
-        AsyncPipe,
         DecimalPipe
     ],
     templateUrl: './student-quiz.component.html',
@@ -166,8 +162,8 @@ export class StudentQuizComponent implements OnInit {
 
         this.currentSubmission = {
             id: Date.now(),
-            quiz: { id: this.quizId },
-            student: { id: this.currentUser.id }
+            quiz: {id: this.quizId},
+            student: {id: this.currentUser.id}
         };
         this.submissionService.setCurrentSubmission(this.currentSubmission);
         this.quizStarted = true;
@@ -192,7 +188,7 @@ export class StudentQuizComponent implements OnInit {
         if (existingIndex >= 0) {
             this.answers[existingIndex].optionId = optionId;
         } else {
-            this.answers.push({ questionId, optionId });
+            this.answers.push({questionId, optionId});
         }
     }
 
@@ -233,8 +229,10 @@ export class StudentQuizComponent implements OnInit {
                                 this.quizId,
                                 this.results.score
                             ).subscribe({
-                                next: () => { },
-                                error: () => { }
+                                next: () => {
+                                },
+                                error: () => {
+                                }
                             });
                         }
                     },

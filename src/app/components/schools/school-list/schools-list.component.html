@@ -9,10 +9,10 @@
 
         <div class="mb-4 mt-2">
             <input
-                    type="text"
+                    [(ngModel)]="searchText"
                     class="input-txt input-filter"
                     placeholder="Filtrar escuelas por nombre o dominio..."
-                    [(ngModel)]="searchText"
+                    type="text"
             />
         </div>
 
@@ -79,9 +79,9 @@
 
 <app-confirm-modal
     #confirmDeleteModal
-    [message]="'¿Estás seguro de que deseas eliminar la escuela ' + deleteSchool?.name + '?'"
-    [confirmText]="'Eliminar'"
-    [cancelText]="'Cancelar'"
     (confirmed)="deleteConfirmation()"
+    [cancelText]="'Cancelar'"
+    [confirmText]="'Eliminar'"
+    [message]="'¿Estás seguro de que deseas eliminar la escuela ' + deleteSchool?.name + '?'"
 >
 </app-confirm-modal>

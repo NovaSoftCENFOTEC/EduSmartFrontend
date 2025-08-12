@@ -1,74 +1,74 @@
 <div class="row p-4">
-  <div class="col-12 mb-3">
-    <h2 class="title-highlight">Asignaciones</h2>
-  </div>
-
-  <div class="col-12">
-    <div class="d-flex justify-content-between align-items-center">
-      <button (click)="goBack()" type="button" class="btn custom-add-full-btn">
-        <i class="fas fa-arrow-left me-2"></i> Volver
-      </button>
-      <button
-        (click)="openAddAssignmentModal()"
-        type="button"
-        class="btn custom-add-full-btn"
-      >
-        <i class="fas fa-plus me-2"></i> Agregar
-      </button>
+    <div class="col-12 mb-3">
+        <h2 class="title-highlight">Asignaciones</h2>
     </div>
-  </div>
 
-  <div class="col-12 mt-3">
-    <div class="card">
-      <div class="card-body">
-        <app-assignments-list
-          [assignments]="assignmentsService.assignments$()"
-          (callModalAction)="openEditAssignmentModal($event)"
-          (callDeleteAction)="deleteAssignment($event)"
-        >
-        </app-assignments-list>
-
-        <ng-container *ngIf="assignmentsService.assignments$().length > 0">
-          <app-pagination [service]="assignmentsService"></app-pagination>
-        </ng-container>
-      </div>
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center">
+            <button (click)="goBack()" class="btn custom-add-full-btn" type="button">
+                <i class="fas fa-arrow-left me-2"></i> Volver
+            </button>
+            <button
+                    (click)="openAddAssignmentModal()"
+                    class="btn custom-add-full-btn"
+                    type="button"
+            >
+                <i class="fas fa-plus me-2"></i> Agregar
+            </button>
+        </div>
     </div>
-  </div>
+
+    <div class="col-12 mt-3">
+        <div class="card">
+            <div class="card-body">
+                <app-assignments-list
+                        (callDeleteAction)="deleteAssignment($event)"
+                        (callModalAction)="openEditAssignmentModal($event)"
+                        [assignments]="assignmentsService.assignments$()"
+                >
+                </app-assignments-list>
+
+                <ng-container *ngIf="assignmentsService.assignments$().length > 0">
+                    <app-pagination [service]="assignmentsService"></app-pagination>
+                </ng-container>
+            </div>
+        </div>
+    </div>
 </div>
 
 <ng-template #addAssignmentModal>
-  <app-modal [hideFooter]="true">
-    <app-assignments-form
-      [form]="assignmentForm"
-      (callSaveMethod)="handleAddAssignment($event)"
-    >
-    </app-assignments-form>
-  </app-modal>
+    <app-modal [hideFooter]="true">
+        <app-assignments-form
+                (callSaveMethod)="handleAddAssignment($event)"
+                [form]="assignmentForm"
+        >
+        </app-assignments-form>
+    </app-modal>
 </ng-template>
 
 <ng-template #editAssignmentModal>
-  <app-modal [hideFooter]="true">
-    <app-assignments-form
-      [form]="assignmentForm"
-      (callUpdateMethod)="confirmEdit($event)"
-    >
-    </app-assignments-form>
-  </app-modal>
+    <app-modal [hideFooter]="true">
+        <app-assignments-form
+                (callUpdateMethod)="confirmEdit($event)"
+                [form]="assignmentForm"
+        >
+        </app-assignments-form>
+    </app-modal>
 </ng-template>
 
 <ng-template #editConfirmationModal>
-  <app-modal [hideFooter]="true">
-    <div class="text-center p-4">
-      <h2>Confirmación</h2>
-      <p>¿Está seguro que desea modificar la tarea?</p>
-      <div class="d-flex justify-content-center mt-4">
-        <button class="btn btn-secondary me-2" (click)="cancelEdit()">
-          Cancelar
-        </button>
-        <button class="btn btn-primary" (click)="confirmEditFinal()">
-          Sí, modificar
-        </button>
-      </div>
-    </div>
-  </app-modal>
+    <app-modal [hideFooter]="true">
+        <div class="text-center p-4">
+            <h2>Confirmación</h2>
+            <p>¿Está seguro que desea modificar la tarea?</p>
+            <div class="d-flex justify-content-center mt-4">
+                <button (click)="cancelEdit()" class="btn btn-secondary me-2">
+                    Cancelar
+                </button>
+                <button (click)="confirmEditFinal()" class="btn btn-primary">
+                    Sí, modificar
+                </button>
+            </div>
+        </div>
+    </app-modal>
 </ng-template>

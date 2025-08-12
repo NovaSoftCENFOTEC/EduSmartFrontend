@@ -1,10 +1,10 @@
-import { Component, OnInit, effect } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { BadgeService } from '../../services/badge.service';
-import { Router } from '@angular/router';
-import { IBadge } from '../../interfaces';
-import { PaginationComponent } from '../../components/pagination/pagination.component';
-import { AuthService } from '../../services/auth.service';
+import {Component, effect, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {BadgeService} from '../../services/badge.service';
+import {Router} from '@angular/router';
+import {IBadge} from '../../interfaces';
+import {PaginationComponent} from '../../components/pagination/pagination.component';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
     selector: 'app-medal',

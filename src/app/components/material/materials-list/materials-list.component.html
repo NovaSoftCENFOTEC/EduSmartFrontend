@@ -31,7 +31,8 @@
                 <tr *ngFor="let item of filteredMaterials; trackBy: trackById">
                     <td>{{ item.name }}</td>
                     <td>
-                        <a [href]="item.fileUrl" class="d-flex align-items-center link-material" rel="noopener noreferrer"
+                        <a [href]="item.fileUrl" class="d-flex align-items-center link-material"
+                           rel="noopener noreferrer"
                            target="_blank">
                             <i [class]="getFileIcon(item.fileUrl)" class="me-2"
                                style="font-size: 1.5em;"></i>

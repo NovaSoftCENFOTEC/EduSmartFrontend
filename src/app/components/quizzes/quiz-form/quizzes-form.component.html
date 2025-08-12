@@ -9,7 +9,8 @@
 
         <div class="mb-3">
             <label class="mb-1">Título <span class="required-asterisk">*</span></label>
-            <input class="form-control normal" formControlName="title" placeholder="Ejemplo: Quiz sobre la conquista de Costa Rica"
+            <input class="form-control normal" formControlName="title"
+                   placeholder="Ejemplo: Quiz sobre la conquista de Costa Rica"
                    type="text"/>
             @if (form.controls['title'].invalid && (form.controls['title'].dirty || form.controls['title'].touched)) {
                 <div class="form-error-message">
@@ -20,7 +21,8 @@
 
         <div class="mb-3">
             <label class="mb-1">Descripción <span class="required-asterisk">*</span></label>
-            <textarea class="form-control normal" formControlName="description" placeholder="Breve descripción del Quiz."
+            <textarea class="form-control normal" formControlName="description"
+                      placeholder="Breve descripción del Quiz."
                       rows="3"></textarea>
             @if (form.controls['description'].invalid && (form.controls['description'].dirty ||
                 form.controls['description'].touched)) {

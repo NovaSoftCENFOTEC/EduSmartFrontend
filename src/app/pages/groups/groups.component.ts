@@ -1,14 +1,14 @@
-import { Component, ViewChild, inject, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { ICourse, IGroup, IUser } from '../../interfaces';
-import { GroupsService } from '../../services/groups.service';
-import { ModalService } from '../../services/modal.service';
-import { AuthService } from '../../services/auth.service';
-import { PaginationComponent } from '../../components/pagination/pagination.component';
-import { ModalComponent } from '../../components/modal/modal.component';
-import { GroupsFormComponent } from '../../components/groups/group-form/groups-form.component';
-import { GroupsListComponent } from '../../components/groups/group-list/groups-list.component';
+import {Component, inject, OnInit, ViewChild} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {ICourse, IGroup, IUser} from '../../interfaces';
+import {GroupsService} from '../../services/groups.service';
+import {ModalService} from '../../services/modal.service';
+import {AuthService} from '../../services/auth.service';
+import {PaginationComponent} from '../../components/pagination/pagination.component';
+import {ModalComponent} from '../../components/modal/modal.component';
+import {GroupsFormComponent} from '../../components/groups/group-form/groups-form.component';
+import {GroupsListComponent} from '../../components/groups/group-list/groups-list.component';
 
 @Component({
     selector: 'app-groups',
@@ -48,7 +48,7 @@ export class GroupsComponent implements OnInit {
     ngOnInit(): void {
         const user = this.authService.getUser();
         if (!user) return;
-        this.teacherId   = user.id ?? null;
+        this.teacherId = user.id ?? null;
         this.schoolName = user.school?.name || null;
         this.loadGroups();
         this.route.data.subscribe(data => {
@@ -95,7 +95,7 @@ export class GroupsComponent implements OnInit {
 
     openAddGroupModal() {
         this.groupForm.reset();
-        this.groupForm.patchValue({ students: [] });
+        this.groupForm.patchValue({students: []});
         this.modalService.displayModal('md', this.addGroupModal);
     }
 

@@ -1,24 +1,24 @@
 <div class="row p-4">
-  <div class="col-12 mb-3">
-    <h2 class="title-highlight">Mi Perfil</h2>
-  </div>
-  <div class="profile-main-container">
-    <div class="profile-form-container">
-      <div class="profile-header">
-        <div style="position: relative; display: inline-block">
-          <img
-            [src]="
+    <div class="col-12 mb-3">
+        <h2 class="title-highlight">Mi Perfil</h2>
+    </div>
+    <div class="profile-main-container">
+        <div class="profile-form-container">
+            <div class="profile-header">
+                <div style="position: relative; display: inline-block">
+                    <img
+                            [src]="
               profileForm.profilePicture ||
               profileService.user$().profilePic ||
               'assets/icons/user.png'
             "
-            alt="Foto de perfil"
-            class="badge-icon"
-          />
-          <button
-            type="button"
-            (click)="openUploadWidget()"
-            style="
+                            alt="Foto de perfil"
+                            class="badge-icon"
+                    />
+                    <button
+                            (click)="openUploadWidget()"
+                            aria-label="Cambiar foto de perfil"
+                            style="
               position: absolute;
               bottom: 8px;
               right: 8px;
@@ -29,150 +29,150 @@
               box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
               cursor: pointer;
             "
-            aria-label="Cambiar foto de perfil"
-          >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M3 17.25V21h3.75l11.06-11.06-3.75-3.75L3 17.25zM20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z"
-                fill="#003E6B"
-              />
-            </svg>
-          </button>
+                            type="button"
+                    >
+                        <svg
+                                fill="none"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                width="20"
+                                xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                    d="M3 17.25V21h3.75l11.06-11.06-3.75-3.75L3 17.25zM20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z"
+                                    fill="#003E6B"
+                            />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="profile-header-info">
+                    <h1 class="mt-2">
+                        {{ profileService.user$().name }}
+                        {{ profileService.user$().lastname }}
+                    </h1>
+                    <h2 class="text-muted">{{ profileService.user$().email }}</h2>
+                </div>
+            </div>
+
+            <form #frm="ngForm" (ngSubmit)="handleUpdateUser($event)" class="row g-4">
+                <div class="col-md-6">
+                    <label class="form-label" for="name">Nombre</label>
+                    <input
+                            #name="ngModel"
+                            [(ngModel)]="profileForm.name"
+                            [value]="profileService.user$().name"
+                            class="form-control"
+                            id="name"
+                            name="name"
+                            required
+                            type="text"
+                    />
+
+                    @if (name.invalid && (name.dirty || name.touched)) {
+                        <div class="error-message">
+                            @if (name.errors?.['required']) {
+                                <div>El nombre es obligatorio.</div>
+                            }
+                        </div>
+                    }
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label" for="lastname">Apellidos</label>
+                    <input
+                            #lastname="ngModel"
+                            [(ngModel)]="profileForm.lastname"
+                            [value]="profileService.user$().lastname"
+                            class="form-control"
+                            id="lastname"
+                            name="lastname"
+                            required
+                            type="text"
+                    />
+
+                    @if (lastname.invalid && (lastname.dirty || lastname.touched)) {
+                        <div class="error-message">
+                            @if (lastname.errors?.['required']) {
+                                <div>El apellido es obligatorio.</div>
+                            }
+                        </div>
+                    }
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label" for="email">Correo</label>
+                    <input
+                            [value]="profileService.user$().email"
+                            class="form-control"
+                            disabled
+                            id="email"
+                            type="email"
+                    />
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label" for="role">Rol</label>
+                    <input
+                            [value]="profileService.user$().role?.name"
+                            class="form-control"
+                            disabled
+                            id="role"
+                            type="text"
+                    />
+                </div>
+
+                <button
+                        (click)="onRequestChangePassword()"
+                        class="btn btn-secondary w-100 mt-15"
+                        type="button"
+                >
+                    Cambiar Contraseña
+                </button>
+
+                <button
+                        (click)="onRequestSaveProfile($event)"
+                        [disabled]="frm.invalid"
+                        class="btn btn-primary w-100 mt-3"
+                        type="button"
+                >
+                    Guardar Cambios
+                </button>
+            </form>
         </div>
-
-        <div class="profile-header-info">
-          <h1 class="mt-2">
-            {{ profileService.user$().name }}
-            {{ profileService.user$().lastname }}
-          </h1>
-          <h2 class="text-muted">{{ profileService.user$().email }}</h2>
+        <div class="profile-animation-container">
+            <iframe
+                    src="https://lottie.host/embed/5d42b400-6493-4fbf-b444-ecd39c81d73c/wex1Wn0G0Q.json"
+                    style="width: 100%; max-width: 400px; height: 400px; border: none"
+                    title="Animación Editar Perfil"
+            ></iframe>
         </div>
-      </div>
-
-      <form (ngSubmit)="handleUpdateUser($event)" #frm="ngForm" class="row g-4">
-        <div class="col-md-6">
-          <label for="name" class="form-label">Nombre</label>
-          <input
-            name="name"
-            #name="ngModel"
-            type="text"
-            class="form-control"
-            id="name"
-            [value]="profileService.user$().name"
-            [(ngModel)]="profileForm.name"
-            required
-          />
-
-          @if (name.invalid && (name.dirty || name.touched)) {
-          <div class="error-message">
-            @if (name.errors?.['required']) {
-            <div>El nombre es obligatorio.</div>
-            }
-          </div>
-          }
-        </div>
-        <div class="col-md-6 mb-3">
-          <label for="lastname" class="form-label">Apellidos</label>
-          <input
-            name="lastname"
-            #lastname="ngModel"
-            type="text"
-            class="form-control"
-            id="lastname"
-            [value]="profileService.user$().lastname"
-            [(ngModel)]="profileForm.lastname"
-            required
-          />
-
-          @if (lastname.invalid && (lastname.dirty || lastname.touched)) {
-          <div class="error-message">
-            @if (lastname.errors?.['required']) {
-            <div>El apellido es obligatorio.</div>
-            }
-          </div>
-          }
-        </div>
-        <div class="col-md-6 mb-3">
-          <label for="email" class="form-label">Correo</label>
-          <input
-            type="email"
-            class="form-control"
-            id="email"
-            [value]="profileService.user$().email"
-            disabled
-          />
-        </div>
-
-        <div class="col-md-6 mb-3">
-          <label for="role" class="form-label">Rol</label>
-          <input
-            type="text"
-            class="form-control"
-            id="role"
-            [value]="profileService.user$().role?.name"
-            disabled
-          />
-        </div>
-
-        <button
-          type="button"
-          (click)="onRequestChangePassword()"
-          class="btn btn-secondary w-100 mt-15"
-        >
-          Cambiar Contraseña
-        </button>
-
-        <button
-          type="button"
-          [disabled]="frm.invalid"
-          (click)="onRequestSaveProfile($event)"
-          class="btn btn-primary w-100 mt-3"
-        >
-          Guardar Cambios
-        </button>
-      </form>
     </div>
-    <div class="profile-animation-container">
-      <iframe
-        src="https://lottie.host/embed/5d42b400-6493-4fbf-b444-ecd39c81d73c/wex1Wn0G0Q.json"
-        style="width: 100%; max-width: 400px; height: 400px; border: none"
-        title="Animación Editar Perfil"
-      ></iframe>
-    </div>
-  </div>
 </div>
 
 <ng-template #changePasswordModal>
-  <app-modal [hideFooter]="true">
-    <app-change-password
-      [form]="changePasswordForm"
-      (callChangePasswordMethod)="onRequestConfirmChangePassword($event)"
-    ></app-change-password>
-  </app-modal>
+    <app-modal [hideFooter]="true">
+        <app-change-password
+                (callChangePasswordMethod)="onRequestConfirmChangePassword($event)"
+                [form]="changePasswordForm"
+        ></app-change-password>
+    </app-modal>
 </ng-template>
 
 <ng-template #confirmationModal>
-  <app-modal [hideFooter]="true">
-    <div class="text-center p-4">
-      <h1>Confirmación</h1>
-      <p>{{ confirmationMessage }}</p>
-      <div class="d-flex justify-content-center mt-4">
-        <button
-          class="btn btn-secondary me-2"
-          (click)="closeConfirmationModal()"
-        >
-          Cancelar
-        </button>
-        <button class="btn btn-primary" (click)="confirmAction()">
-          Sí, confirmar
-        </button>
-      </div>
-    </div>
-  </app-modal>
+    <app-modal [hideFooter]="true">
+        <div class="text-center p-4">
+            <h1>Confirmación</h1>
+            <p>{{ confirmationMessage }}</p>
+            <div class="d-flex justify-content-center mt-4">
+                <button
+                        (click)="closeConfirmationModal()"
+                        class="btn btn-secondary me-2"
+                >
+                    Cancelar
+                </button>
+                <button (click)="confirmAction()" class="btn btn-primary">
+                    Sí, confirmar
+                </button>
+            </div>
+        </div>
+    </app-modal>
 </ng-template>

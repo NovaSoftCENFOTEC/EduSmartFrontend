@@ -1,6 +1,6 @@
-import {Injectable, inject, signal, WritableSignal} from '@angular/core';
+import {inject, Injectable, signal, WritableSignal} from '@angular/core';
 import {BaseService} from './base-service';
-import {IUser, ISearch, IResponse} from '../interfaces';
+import {IResponse, ISearch, IUser} from '../interfaces';
 import {AlertService} from './alert.service';
 import {TeacherService} from './teacher.service';
 import {StudentService} from './student.service';
@@ -11,19 +11,6 @@ import {Observable} from 'rxjs';
     providedIn: 'root',
 })
 export class UserService extends BaseService<IUser> {
-    protected override source = 'users';
-
-    private teacherService = inject(TeacherService);
-    private studentService = inject(StudentService);
-    private authService = inject(AuthService);
-    private alertService = inject(AlertService);
-
-    private userListSignal: WritableSignal<IUser[]> = signal<IUser[]>([]);
-
-    get users$() {
-        return this.userListSignal;
-    }
-
     public search: ISearch = {
         page: 1,
         size: 5,
@@ -31,7 +18,17 @@ export class UserService extends BaseService<IUser> {
         totalPages: 1,
     };
     public totalItems: number[] = [];
+    protected override source = 'users';
+    private teacherService = inject(TeacherService);
+    private studentService = inject(StudentService);
+    private authService = inject(AuthService);
+    private alertService = inject(AlertService);
+    private userListSignal: WritableSignal<IUser[]> = signal<IUser[]>([]);
     private currentSchoolId: number | null = null;
+
+    get users$() {
+        return this.userListSignal;
+    }
 
     setCurrentSchoolId(schoolId: number | null) {
         this.currentSchoolId = schoolId;

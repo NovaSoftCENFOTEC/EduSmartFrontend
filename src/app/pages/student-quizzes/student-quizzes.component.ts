@@ -1,18 +1,13 @@
-import { Component, inject, OnInit, effect } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AsyncPipe, NgIf, DatePipe } from '@angular/common';
-import { FooterComponent } from '../../components/app-layout/elements/footer/footer.component';
-import { QuizService } from '../../services/quiz.service';
-import { GroupStoriesService } from '../../services/group-stories.service';
-import { IQuiz } from '../../interfaces';
+import {Component, inject, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {DatePipe} from '@angular/common';
+import {QuizService} from '../../services/quiz.service';
+import {GroupStoriesService} from '../../services/group-stories.service';
 
 @Component({
     selector: 'app-student-quizzes',
     standalone: true,
     imports: [
-        NgIf,
-        FooterComponent,
-        AsyncPipe,
         DatePipe
     ],
     templateUrl: './student-quizzes.component.html',

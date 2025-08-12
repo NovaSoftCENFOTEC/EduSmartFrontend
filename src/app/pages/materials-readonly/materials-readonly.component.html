@@ -15,7 +15,8 @@
             </div>
             <div class="card-body">
                 <p class="mb-4">
-                    Aquí encontrarás todos los materiales que necesitas para dominar este curso. Explora los recursos y lleva tu aprendizaje al siguiente nivel.
+                    Aquí encontrarás todos los materiales que necesitas para dominar este curso. Explora los recursos y
+                    lleva tu aprendizaje al siguiente nivel.
                 </p>
 
                 <div class="mb-4 mt-2">
@@ -28,22 +29,24 @@
                 </div>
 
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                    <div class="col" *ngFor="let material of filteredMaterials()">
-                        <div class="card h-100 material-card" [ngClass]="getFileColorClass(material.fileUrl)">
+                    <div *ngFor="let material of filteredMaterials()" class="col">
+                        <div [ngClass]="getFileColorClass(material.fileUrl)" class="card h-100 material-card">
                             <div class="card-body d-flex flex-column">
                                 <div class="d-flex align-items-start mb-3">
                                     <i
-                                            class="me-3 file-icon"
                                             [ngClass]="[getFileIcon(material.fileUrl), getFileColorClass(material.fileUrl) + '-icon']"
+                                            class="me-3 file-icon"
                                     ></i>
                                     <div class="flex-grow-1">
                                         <h5 class="card-title mb-1">{{ material.name }}</h5>
-                                        <small class="text-muted">Subido por {{ material.teacher?.name || 'Profesor sin asignar' }}</small><br />
+                                        <small class="text-muted">Subido
+                                            por {{ material.teacher?.name || 'Profesor sin asignar' }}</small><br/>
                                         <small class="text-muted">Fecha: {{ material.uploadedAt | date: 'longDate':'':'es' }}</small>
                                     </div>
                                 </div>
                                 <div class="mt-auto d-grid gap-2">
-                                    <a [href]="material.fileUrl" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                                    <a [href]="material.fileUrl" class="btn btn-primary" rel="noopener noreferrer"
+                                       target="_blank">
                                         <i class="fas fa-eye me-2"></i> Ver Material
                                     </a>
                                 </div>
@@ -51,7 +54,7 @@
                         </div>
                     </div>
 
-                    <div class="col-12" *ngIf="filteredMaterials().length === 0">
+                    <div *ngIf="filteredMaterials().length === 0" class="col-12">
                         <div class="alert alert-info text-center" role="alert">
                             No hay materiales disponibles en este momento. ¡Sigue revisando las actualizaciones!
                         </div>

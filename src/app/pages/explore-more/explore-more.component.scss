@@ -39,7 +39,7 @@ html {
   border-radius: 12px;
   padding: 35px;
   box-shadow: 0 2px 8px rgba(0, 62, 107, 0.1);
-  
+
 }
 
 .arrow {
@@ -65,14 +65,14 @@ html {
   position: relative;
   min-height: 270px;
   display: flex;
-  justify-content: center; 
-  align-items: center;     
+  justify-content: center;
+  align-items: center;
 }
 
 .curiosities-grid {
   display: flex;
   justify-content: center;
-  gap: 20px; 
+  gap: 20px;
   transition: transform 0.4s ease;
   will-change: transform;
 }
@@ -125,7 +125,7 @@ html {
 
 .centered-content p span.title-highlight {
   padding-bottom: 20px;
-  display: inline-block; 
+  display: inline-block;
 }
 
 .curiosities:hover {
@@ -161,6 +161,7 @@ html {
   font-size: 26px;
   user-select: none;
 }
+
 .title-highlight-explore {
   font-size: 32px !important;
   font-weight: 700 !important;
@@ -169,7 +170,7 @@ html {
   padding-bottom: 10px !important;
   margin-bottom: 25px !important;
   letter-spacing: 1.2px !important;
-  
+
 }
 
 @media (max-width: 992px) {
@@ -263,68 +264,68 @@ html {
   .video-wrapper iframe {
     height: 200px !important;
   }
-  
+
   .navigation-info {
     font-size: 18px;
   }
 
-@media (max-width: 576px) {
+  @media (max-width: 576px) {
 
-  .curiosities-carousel {
-    flex-direction: column;
-    align-items: center;
-    padding: 15px;
-    background: #FFEFD8;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 62, 107, 0.1);
-  }
+    .curiosities-carousel {
+      flex-direction: column;
+      align-items: center;
+      padding: 15px;
+      background: #FFEFD8;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 62, 107, 0.1);
+    }
 
-  .curiosities-carousel > button {
-    width: 40px;
-    height: 40px;
-    font-size: 24px;
-    padding: 0;
-    margin: 10px 0;
-    border-radius: 50%;
-    background: #1E8B9B;
-    color: white;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    border: none;
-  }
- 
-  .curiosities-wrapper {
-    width: 100%;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+    .curiosities-carousel > button {
+      width: 40px;
+      height: 40px;
+      font-size: 24px;
+      padding: 0;
+      margin: 10px 0;
+      border-radius: 50%;
+      background: #1E8B9B;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      border: none;
+    }
 
-  .curiosities-grid {
-    display: flex;
-    transition: transform 0.4s ease;
-    will-change: transform;
-  }
+    .curiosities-wrapper {
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-  .curiosity {
-    min-width: 100%;
-    max-width: 100%;
-    height: auto;
-    font-size: 16px;
-    margin: 0 auto;
-  }
+    .curiosities-grid {
+      display: flex;
+      transition: transform 0.4s ease;
+      will-change: transform;
+    }
 
-  .curiosity p {
-    font-size: 18px;
-  }
+    .curiosity {
+      min-width: 100%;
+      max-width: 100%;
+      height: auto;
+      font-size: 16px;
+      margin: 0 auto;
+    }
 
-  #provinces img {
-    width: 90%;
-    max-width: 400px; 
-  
-  }
+    .curiosity p {
+      font-size: 18px;
+    }
 
- }
+    #provinces img {
+      width: 90%;
+      max-width: 400px;
+
+    }
+
+  }
 
 }

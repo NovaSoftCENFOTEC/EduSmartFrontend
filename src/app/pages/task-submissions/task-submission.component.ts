@@ -1,10 +1,4 @@
-import {
-    Component,
-    inject,
-    OnInit,
-    ViewChild,
-    WritableSignal,
-} from "@angular/core";
+import {Component, inject, OnInit, ViewChild, WritableSignal,} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {PaginationComponent} from "../../components/pagination/pagination.component";
 import {ModalComponent} from "../../components/modal/modal.component";
@@ -57,15 +51,19 @@ export class TaskSubmissionsComponent implements OnInit {
         assignmentId: [null],
         studentId: [null],
     });
-
+    public assignmentDueDate: Date | null = null;
     private assignmentId: number | null = null;
     private originalSubmission: ITaskSubmission | null = null;
     private pendingEditItem: ITaskSubmission | null = null;
 
-    public assignmentDueDate: Date | null = null;
-
     constructor() {
         this.submissions = this.submissionService.submissions$;
+    }
+
+    public get mySubmissions(): ITaskSubmission[] {
+        const user = this.authService.getUser();
+        if (!user) return [];
+        return this.submissions().filter((sub) => sub.studentId === user.id);
     }
 
     ngOnInit(): void {
@@ -202,12 +200,6 @@ export class TaskSubmissionsComponent implements OnInit {
 
     goBack() {
         window.history.back();
-    }
-
-    public get mySubmissions(): ITaskSubmission[] {
-        const user = this.authService.getUser();
-        if (!user) return [];
-        return this.submissions().filter((sub) => sub.studentId === user.id);
     }
 
     hasSubmissionForAssignment(): boolean {

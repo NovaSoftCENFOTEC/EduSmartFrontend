@@ -19,10 +19,10 @@
             <div class="card-body">
 
                 <app-students-list
-                        [students]="studentList()"
-                        [areActionsAvailable]="areActionsAvailable"
+                        (callDeleteAction)="deleteStudent($event)"
                         (callModalAction)="openEditStudentModal($event)"
-                        (callDeleteAction)="deleteStudent($event)">
+                        [areActionsAvailable]="areActionsAvailable"
+                        [students]="studentList()">
                 </app-students-list>
                 @if (studentList().length) {
                     <app-pagination
@@ -38,8 +38,8 @@
 <ng-template #addStudentModal>
     <app-modal [hideFooter]="true">
         <app-students-form
-                [form]="studentForm"
-                (callSaveMethod)="handleAddStudent($event)">
+                (callSaveMethod)="handleAddStudent($event)"
+                [form]="studentForm">
         </app-students-form>
     </app-modal>
 </ng-template>
@@ -47,8 +47,8 @@
 <ng-template #editStudentModal>
     <app-modal [hideFooter]="true">
         <app-students-form
-                [form]="studentForm"
-                (callUpdateMethod)="confirmEdit($event)">
+                (callUpdateMethod)="confirmEdit($event)"
+                [form]="studentForm">
         </app-students-form>
     </app-modal>
 </ng-template>
@@ -59,8 +59,8 @@
             <h2>Confirmación</h2>
             <p>¿Está seguro que desea modificar al estudiante?</p>
             <div class="d-flex justify-content-center mt-4">
-                <button class="btn btn-secondary me-2" (click)="cancelEdit()">Cancelar</button>
-                <button class="btn btn-primary" (click)="confirmEditFinal()">Sí, modificar</button>
+                <button (click)="cancelEdit()" class="btn btn-secondary me-2">Cancelar</button>
+                <button (click)="confirmEditFinal()" class="btn btn-primary">Sí, modificar</button>
             </div>
         </div>
     </app-modal>
