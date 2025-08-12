@@ -103,8 +103,7 @@ export class GradeService extends BaseService<IGrade> {
             },
         });
     }
-
-    // Nueva función para validar si ya existe una calificación para la entrega
+    
     checkIfGradeExists(submissionId: number) {
         const params = {page: 1, size: 1000};
         return this.findAllWithParamsAndCustomSource(
