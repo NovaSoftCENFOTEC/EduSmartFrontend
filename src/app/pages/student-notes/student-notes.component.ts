@@ -108,29 +108,21 @@ export class StudentNotesComponent implements OnInit {
     }
     if (this.selectedGroupId && this.currentStudent?.id) {
       this.taskSubmissionService.getByStudent(this.currentStudent.id);
-      const submissions = this.taskSubmissionService.submissions$();
-      this.assignments = submissions
-        .filter((sub: ITaskSubmission) => sub.assignmentId === this.selectedGroupId);
-      console.log('Asignaciones filtradas:', this.assignments);
-
-     
-      this.loadAssignments();
-      this.getAssignmentGrade(this.assignments[0]?.assignmentId || 0  );
+      setTimeout(() => {
+        const submissions = this.taskSubmissionService.submissions$();
+        this.assignments = submissions
+          .filter((sub: ITaskSubmission) => sub.assignmentId === this.selectedGroupId);
+        this.loadAssignments();
+        setTimeout(() => {
+          this.loadGradesForAssignments();
+        }, 500); 
+      }, 500);
     }
 
   }
 
 
 
-  getNotesForSelectedGroup() {
-    
-      if (this.selectedGroupId) {
-            this.quizService.getQuizzesByStory(this.selectedGroupId);
-            console.log('data', this.quizService.getQuizzesByStory(this.selectedGroupId));
-        }
-    }
-
-  
 
   goBack() {
     window.history.back();
@@ -141,12 +133,7 @@ export class StudentNotesComponent implements OnInit {
     return assignment?.title ?? 'Sin nombre'; 
   }
 
-  getAssignmentGrade(taskSubmissionId: number): void {
-    this.gradeService.getBySubmission(taskSubmissionId);
-    setTimeout(() => {
-      console.log('Grade:', this.gradeService.grades$());
-    }, 500); 
-  }
+  
 
   loadGradesForAssignments(): void {
     this.assignmentGrades = {};
@@ -155,7 +142,9 @@ export class StudentNotesComponent implements OnInit {
         this.gradeService.getBySubmission(assignment.id);
         setTimeout(() => {
           const grades = this.gradeService.grades$();
-          const gradeObj = grades.find(g => g.submissionId === assignment.id);
+          const gradeObj = Array.isArray(grades)
+            ? grades.find((g: any) => g.submissionId === assignment.id)
+            : grades;
           this.assignmentGrades[assignment.id!] = gradeObj?.grade ?? 'Sin calificación';
         }, 500);
       }

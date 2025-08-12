@@ -53,7 +53,7 @@
                   <td>{{ getAssignmentName(assignment.assignmentId) }}</td>
                   <td>
                     <ng-container *ngIf="assignment.id !== undefined; else noGrade">
-                      {{ assignmentGrades[assignment.id] ?? 'Sin calificación' }}
+                      {{ assignmentGrades[assignment.id] }}
                     </ng-container>
                     <ng-template #noGrade>Sin calificación</ng-template>
                   </td>
@@ -62,7 +62,9 @@
             </table>
           </div>
           <div *ngIf="assignments.length === 0 && selectedGroupId">
-            No hay asignaciones para este grupo.
+            <div class="no-assignments-message">
+              No hay asignaciones para este grupo.
+            </div>
           </div>
         </div>
       </div>
