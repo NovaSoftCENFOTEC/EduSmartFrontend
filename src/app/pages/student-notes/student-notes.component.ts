@@ -51,10 +51,7 @@ export class StudentNotesComponent implements OnInit {
     if (this.currentStudent?.id) {
       this.studentGroupsService.getGroupsByStudent(this.currentStudent.id);
       this.groupList = this.studentGroupsService.groups$();
-      console.log
-       this.groupList.forEach(group => {
       
-    });
     }
   }
 
@@ -72,20 +69,11 @@ export class StudentNotesComponent implements OnInit {
       this.submissionService.getSubmissionsByStudent(this.currentStudent.id).subscribe({
         next: (response) => {
           const submissions = response.data;
-          console.log('Submissions:', submissions);
-          
-          console.log('selectedGroupId:', this.selectedGroupId);
+       
       
           // Filtra solo los submissions del grupo seleccionado
           const filtered = submissions.filter((submission: any) => {
-            console.log(
-              'submission.quiz:', submission.quiz,
-              'submission.quiz?.story:', submission.quiz?.story,
-              'submission.quiz?.story?.course:', submission.quiz?.story?.course,
-              'submission.quiz?.story?.course?.id:', submission.quiz?.story?.course?.id,
-              'selectedGroupId:', this.selectedGroupId,
-              'comparación:', Number(submission.quiz?.story?.course.id) === Number(this.selectedGroupId)
-            );
+            
             return Number(submission.quiz?.story?.course?.id) === Number(this.selectedGroupId);
           });
           
