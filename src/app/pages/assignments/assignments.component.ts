@@ -11,7 +11,6 @@ import { ModalComponent } from "../../components/modal/modal.component";
 import { AssignmentsFormComponent } from "../../components/asignments/assignment-form/assignments-form.component";
 import { AssignmentsListComponent } from "../../components/asignments/assignment-list/assignments-list.component";
 
-// ... (todas las importaciones igual)
 
 @Component({
   selector: "app-assignments",
@@ -73,7 +72,7 @@ export class AssignmentsComponent implements OnInit {
   }
 
   saveAssignment(item: IAssignment) {
-    this.assignmentsService.save(item);
+    this.assignmentsService.saveAssignment(item);
   }
 
   loadAssignments(): void {

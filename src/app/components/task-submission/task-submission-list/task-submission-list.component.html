@@ -1,0 +1,119 @@
+<div class="card">
+    <div class="card-header card-header-indigo">
+        <h2 class="mb-0">Entregas de Tareas</h2>
+    </div>
+
+    <div class="card-body">
+        <p class="text-muted mb-3">
+            Se presenta un espacio donde se muestran las tareas.
+        </p>
+
+        <div class="mb-4 mt-2">
+            <input
+                    [(ngModel)]="searchText"
+                    class="input-txt input-filter"
+                    placeholder="Filtrar por estudiante..."
+                    type="text"
+            />
+        </div>
+
+        <div class="table-container table-responsive">
+            <table class="table custom-full-bordered-table">
+                <thead class="table-header-gray">
+                <tr>
+                    <th scope="col">Estudiante</th>
+                    <th scope="col">Archivo</th>
+                    <th scope="col">Comentario</th>
+                    <th scope="col">Fecha de Entrega</th>
+                    <th class="text-center" scope="col">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <ng-container *ngIf="studentsMap$ | async as studentsMap">
+                    <tr *ngFor="let task of filteredSubmissions; trackBy: trackById">
+                        <td>{{ studentsMap[task.studentId!] || "Sin nombre" }}</td>
+                        <td>
+                            <a
+                                    [href]="task.fileUrl"
+                                    class="d-flex align-items-center link-material"
+                                    rel="noopener noreferrer"
+                                    target="_blank"
+                            >
+                                <i
+                                        [class]="getFileIcon(task.fileUrl)"
+                                        [ngClass]="[getFileColorClass(task.fileUrl) + '-icon', 'me-2']"
+                                        style="font-size: 1.5em"
+                                ></i>
+                                <span>Abrir</span>
+                            </a>
+                        </td>
+                        <td>{{ task.comment }}</td>
+                        <td>{{ task.submittedAt | date: "mediumDate" }}</td>
+                        <td class="text-center">
+                            <button
+                                    (click)="callModalAction.emit(task)"
+                                    *ngIf="!isTeacher && !isExpired(assignmentDueDate)"
+                                    class="btn border-0 me-2 icon-gray-color"
+                                    title="Editar entrega"
+                                    type="button"
+                            >
+                                <i class="fas fa-pen"></i>
+                            </button>
+                            <button
+                                    (click)="openConfirmationModal(task)"
+                                    *ngIf="!isTeacher && !isExpired(assignmentDueDate)"
+                                    class="btn border-0 icon-gray-color"
+                                    title="Eliminar entrega"
+                                    type="button"
+                            >
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <button
+                                    *ngIf="isTeacher"
+                                    [queryParams]="{ taskSubmissionId: task.id }"
+                                    [routerLink]="['/app/grade']"
+                                    class="btn btn-primary px-4 py-2"
+                            >
+                                Calificar
+                            </button>
+
+                            <button
+                                    *ngIf="isStudent"
+                                    [queryParams]="{ taskSubmissionId: task.id }"
+                                    [routerLink]="['/app/grade-readonly']"
+                                    class="btn btn-primary px-4 py-2"
+                            >
+                                Ver Calificación
+                            </button>
+                        </td>
+                    </tr>
+                </ng-container>
+
+                <tr *ngIf="filteredSubmissions.length === 0">
+                    <td colspan="5">
+                        <div class="d-flex justify-content-center align-items-center w-100">
+                            <p class="mb-0" style="color: var(--color-indigo-dye)">
+                                <ng-container
+                                        *ngIf="assignmentDueDate && isExpired(assignmentDueDate); else noSubmissions"
+                                >
+                                    No es posible agregar entregas porque la fecha está expirada.
+                                </ng-container>
+                                <ng-template #noSubmissions>
+                                    No hay entregas registradas.
+                                </ng-template>
+                            </p>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <app-confirm-modal
+            #confirmDeleteModal
+            (confirmed)="deleteConfirmation()"
+            [cancelText]="'Cancelar'"
+            [confirmText]="'Eliminar'"
+            [message]="'¿Estás seguro de que deseas eliminar la entrega seleccionada?'"
+        ></app-confirm-modal>
+    </div>

@@ -163,6 +163,34 @@ export interface IMaterial {
   teacher?: Partial<IUser> | null;
 }
 
+export interface ITaskSubmission {
+  id?: number;
+  fileUrl: string;
+  comment: string;
+  submittedAt: string;
+  assignmentId: number;
+  studentId: number;
+  studentName?: string;
+}
+
+export interface IGrade {
+  id?: number;
+  grade: number;
+  justification: string;
+  gradedAt?: string; 
+  submissionId: number;
+  teacherId: number;
+  submission?: ITaskSubmission; 
+}
+
+export interface IGradePayload {
+  grade: number;
+  justification: string;
+  gradedAt?: string;
+  submission: { id: number };
+  teacher: { id: number };
+}
+
 export interface IAudioTrack {
   id?: number;
   title: string;
