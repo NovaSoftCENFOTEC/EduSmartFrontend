@@ -46,22 +46,15 @@
 
                                 <div class="mt-auto d-grid gap-2">
                                     <button
-                                            *ngIf="student?.id && !isExpired(assignment.dueDate)"
+                                            *ngIf="student?.id"
                                             class="btn btn-primary"
-                                            (click)="SeeDetails(student?.id, assignment.id)"
+                                            (click)="SeeDetails(student?.id, assignment.id, assignment.dueDate)"
                                     >
-                                        <i class="fas fa-tasks me-2"></i> Realizar entrega
-                                    </button>
-
-                                    <button
-                                            *ngIf="isExpired(assignment.dueDate)"
-                                            class="btn btn-secondary"
-                                            disabled
-                                    >
-                                        <i class="fas fa-times-circle me-2"></i>
-                                        No disponible (fecha de entrega expirada)
+                                        <i class="fas fa-tasks me-2"></i>
+                                        {{ isExpired(assignment.dueDate) ? "Ver detalles (Entrega expirada)" : "Realizar entrega" }}
                                     </button>
                                 </div>
+
                             </div>
                         </div>
                     </div>

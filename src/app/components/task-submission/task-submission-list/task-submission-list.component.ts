@@ -128,14 +128,19 @@ export class TaskSubmissionListComponent implements OnInit, OnChanges {
     getFileColorClass(fileUrl: string): string {
         const ext = fileUrl.split('.').pop()?.toLowerCase();
         switch (ext) {
-            case 'pdf': return 'color-pdf';
+            case 'pdf':
+                return 'color-pdf';
             case 'doc':
-            case 'docx': return 'color-word';
+            case 'docx':
+                return 'color-word';
             case 'xls':
-            case 'xlsx': return 'color-excel';
+            case 'xlsx':
+                return 'color-excel';
             case 'ppt':
-            case 'pptx': return 'color-powerpoint';
-            default: return 'color-default';
+            case 'pptx':
+                return 'color-powerpoint';
+            default:
+                return 'color-default';
         }
     }
 
@@ -199,4 +204,12 @@ export class TaskSubmissionListComponent implements OnInit, OnChanges {
             this.studentsMap$ = of({});
         }
     }
+
+    isExpired(date: string | Date): boolean {
+        if (!date) return false;
+        const today = new Date();
+        const due = new Date(date);
+        return due.setHours(0, 0, 0, 0) < today.setHours(0, 0, 0, 0);
+    }
+
 }

@@ -9,14 +9,14 @@
         <i class="fas fa-arrow-left me-2"></i> Volver
       </button>
       <div>
-        <button
-          (click)="openAddSubmissionModal()"
-          class="btn custom-add-full-btn"
-          [disabled]="hasSubmissionForAssignment()"
-          title="Solo se permite una entrega por asignación"
-        >
-          <i class="fas fa-plus me-2"></i> Agregar
-        </button>
+          <button
+                  (click)="openAddSubmissionModal()"
+                  class="btn custom-add-full-btn"
+                  [disabled]="hasSubmissionForAssignment() || isExpired()"
+                  title="Solo se permite una entrega por asignación y no puedes entregar si la fecha está expirada"
+          >
+              <i class="fas fa-plus me-2"></i> Agregar
+          </button>
         <div
           *ngIf="hasSubmissionForAssignment()"
           class="text-danger mt-2"

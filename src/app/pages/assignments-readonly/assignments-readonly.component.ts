@@ -99,11 +99,10 @@ export class AssignmentsReadOnlyComponent implements OnInit {
         return new Date(date).toISOString().split("T")[0];
     }
 
-    SeeDetails(studentId?: number, assignmentId?: number): void {
-        if (!studentId) return;
-        if (!assignmentId) return;
+    SeeDetails(studentId?: number | undefined, assignmentId?: number | undefined, dueDate?: Date): void {
+        if (!studentId || !assignmentId) return;
         this.router.navigate(["app/task-submission"], {
-            queryParams: {studentId, assignmentId},
+            queryParams: {studentId, assignmentId, dueDate},
         });
     }
 

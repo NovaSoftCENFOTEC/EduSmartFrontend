@@ -37,11 +37,13 @@ import {
 })
 export class TaskSubmissionsComponent implements OnInit {
     public submissions!: WritableSignal<ITaskSubmission[]>;
+
     public submissionService = inject(TaskSubmissionService);
     public modalService = inject(ModalService);
     public authService = inject(AuthService);
     public fb = inject(FormBuilder);
     public route = inject(ActivatedRoute);
+
     public students: { id: number; name: string }[] = [];
 
     @ViewChild("editSubmissionModal") public editSubmissionModal: any;
@@ -60,6 +62,8 @@ export class TaskSubmissionsComponent implements OnInit {
     private originalSubmission: ITaskSubmission | null = null;
     private pendingEditItem: ITaskSubmission | null = null;
 
+    public assignmentDueDate: Date | null = null;
+
     constructor() {
         this.submissions = this.submissionService.submissions$;
     }
@@ -67,6 +71,8 @@ export class TaskSubmissionsComponent implements OnInit {
     ngOnInit(): void {
         this.route.queryParams.subscribe((params) => {
             const id = Number(params["assignmentId"]);
+            const dueDateParam = params["dueDate"];
+
             if (id) {
                 this.assignmentId = id;
                 sessionStorage.setItem("assignmentId", id.toString());
@@ -76,7 +82,15 @@ export class TaskSubmissionsComponent implements OnInit {
                 this.assignmentId = storedId ? Number(storedId) : null;
                 this.submissionService.setCurrentAssignmentId(this.assignmentId);
             }
+
+            if (dueDateParam) {
+                this.assignmentDueDate = new Date(dueDateParam);
+            } else {
+                this.assignmentDueDate = null;
+            }
+
             this.loadSubmissions();
+
             this.students = this.submissions().map((s) => ({
                 id: s.studentId,
                 name: `Estudiante ${s.studentId}`,
@@ -93,6 +107,11 @@ export class TaskSubmissionsComponent implements OnInit {
     handleAddSubmission(item: { fileUrl: string; comment: string }) {
         if (this.hasSubmissionForAssignment()) {
             alert("Ya has enviado una entrega para esta asignación.");
+            return;
+        }
+
+        if (this.isExpired()) {
+            alert("La fecha de entrega ha expirado, no se puede realizar la entrega.");
             return;
         }
 
@@ -117,6 +136,11 @@ export class TaskSubmissionsComponent implements OnInit {
 
     updateSubmission() {
         if (!this.originalSubmission) {
+            return;
+        }
+
+        if (this.isExpired()) {
+            alert("La fecha de entrega ha expirado, no se puede modificar la entrega.");
             return;
         }
 
@@ -190,8 +214,13 @@ export class TaskSubmissionsComponent implements OnInit {
         const user = this.authService.getUser();
         if (!user || !this.assignmentId) return false;
         return this.submissions().some(
-            (sub) =>
-                sub.assignmentId === this.assignmentId && sub.studentId === user.id
+            (sub) => sub.assignmentId === this.assignmentId && sub.studentId === user.id
         );
+    }
+
+    isExpired(): boolean {
+        if (!this.assignmentDueDate) return false;
+        const today = new Date();
+        return this.assignmentDueDate.setHours(0, 0, 0, 0) < today.setHours(0, 0, 0, 0);
     }
 }

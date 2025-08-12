@@ -53,7 +53,7 @@
                         <td class="text-center">
                             <button
                                     (click)="callModalAction.emit(task)"
-                                    *ngIf="!isTeacher"
+                                    *ngIf="!isTeacher && !isExpired(task.submittedAt)"
                                     class="btn border-0 me-2 icon-gray-color"
                                     title="Editar entrega"
                                     type="button"
@@ -62,7 +62,7 @@
                             </button>
                             <button
                                     (click)="openConfirmationModal(task)"
-                                    *ngIf="!isTeacher"
+                                    *ngIf="!isTeacher && !isExpired(task.submittedAt)"
                                     class="btn border-0 icon-gray-color"
                                     title="Eliminar entrega"
                                     type="button"
