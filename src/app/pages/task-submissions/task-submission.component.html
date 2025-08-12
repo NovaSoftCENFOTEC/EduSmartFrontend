@@ -28,12 +28,12 @@
   <div class="col-12 mt-3">
     <div class="card">
       <div class="card-body">
-        <app-task-submission-list
-          (callDeleteAction)="deleteSubmission($event)"
-          (callModalAction)="openEditSubmissionModal($event)"
-          [submissions]="mySubmissions"
-        >
-        </app-task-submission-list>
+          <app-task-submission-list
+                  (callDeleteAction)="deleteSubmission($event)"
+                  (callModalAction)="openEditSubmissionModal($event)"
+                  [submissions]="mySubmissions"
+                  [assignmentDueDate]="assignmentDueDate"
+          ></app-task-submission-list>
 
         <app-pagination
           *ngIf="submissions().length > 0"

@@ -48,11 +48,11 @@
                             </a>
                         </td>
                         <td>{{ task.comment }}</td>
-                        <td>{{ task.submittedAt | date : "mediumDate" }}</td>
+                        <td>{{ task.submittedAt | date: "mediumDate" }}</td>
                         <td class="text-center">
                             <button
                                     (click)="callModalAction.emit(task)"
-                                    *ngIf="!isTeacher && !isExpired(task.submittedAt)"
+                                    *ngIf="!isTeacher && !isExpired(assignmentDueDate)"
                                     class="btn border-0 me-2 icon-gray-color"
                                     title="Editar entrega"
                                     type="button"
@@ -61,7 +61,7 @@
                             </button>
                             <button
                                     (click)="openConfirmationModal(task)"
-                                    *ngIf="!isTeacher && !isExpired(task.submittedAt)"
+                                    *ngIf="!isTeacher && !isExpired(assignmentDueDate)"
                                     class="btn border-0 icon-gray-color"
                                     title="Eliminar entrega"
                                     type="button"
@@ -93,7 +93,9 @@
                     <td colspan="5">
                         <div class="d-flex justify-content-center align-items-center w-100">
                             <p class="mb-0" style="color: var(--color-indigo-dye)">
-                                <ng-container *ngIf="assignmentDueDate && isExpired(assignmentDueDate); else noSubmissions">
+                                <ng-container
+                                        *ngIf="assignmentDueDate && isExpired(assignmentDueDate); else noSubmissions"
+                                >
                                     No es posible agregar entregas porque la fecha está expirada.
                                 </ng-container>
                                 <ng-template #noSubmissions>
@@ -106,13 +108,12 @@
                 </tbody>
             </table>
         </div>
-    </div>
 
-    <app-confirm-modal
-        #confirmDeleteModal
-        (confirmed)="deleteConfirmation()"
-        [cancelText]="'Cancelar'"
-        [confirmText]="'Eliminar'"
-        [message]="'¿Estás seguro de que deseas eliminar la entrega seleccionada?'"
-    ></app-confirm-modal>
-</div>
+        <app-confirm-modal
+            #confirmDeleteModal
+            (confirmed)="deleteConfirmation()"
+            [cancelText]="'Cancelar'"
+            [confirmText]="'Eliminar'"
+            [message]="'¿Estás seguro de que deseas eliminar la entrega seleccionada?'"
+        ></app-confirm-modal>
+    </div>
