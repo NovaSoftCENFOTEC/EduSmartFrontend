@@ -61,7 +61,7 @@ export class TaskSubmissionFormComponent {
             id: Number(this.form.controls["id"].value),
             fileUrl: this.form.controls["fileUrl"].value,
             comment: this.form.controls["comment"].value,
-            submittedAt: new Date().toISOString(), // o el original si lo tienes
+            submittedAt: new Date().toISOString(),
             studentId: Number(this.form.controls["studentId"].value),
             assignmentId: Number(this.form.controls["assignmentId"].value)
         };

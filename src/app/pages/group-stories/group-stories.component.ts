@@ -1,20 +1,14 @@
-import { Component, inject, OnInit, effect } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AsyncPipe, NgIf } from '@angular/common';
-import { FooterComponent } from '../../components/app-layout/elements/footer/footer.component';
-import { GroupStoriesService } from '../../services/group-stories.service';
-import { GroupCoursesService } from '../../services/group-courses.service';
-import { AudioTrackService } from '../../services/audio-track.service';
-import { IAudioTrack, VoiceTypeEnum } from '../../interfaces';
+import {Component, effect, inject, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {GroupStoriesService} from '../../services/group-stories.service';
+import {GroupCoursesService} from '../../services/group-courses.service';
+import {AudioTrackService} from '../../services/audio-track.service';
+import {IAudioTrack, VoiceTypeEnum} from '../../interfaces';
 
 @Component({
     selector: 'app-group-stories',
     standalone: true,
-    imports: [
-        NgIf,
-        FooterComponent,
-        AsyncPipe
-    ],
+    imports: [],
     templateUrl: './group-stories.component.html',
     styleUrl: './group-stories.component.scss'
 })

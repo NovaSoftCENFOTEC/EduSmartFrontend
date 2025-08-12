@@ -1,6 +1,6 @@
 import {inject, Injectable, signal} from '@angular/core';
 import {BaseService} from './base-service';
-import {IUser, ISearch, IResponse} from '../interfaces';
+import {IResponse, ISearch, IUser} from '../interfaces';
 import {AlertService} from './alert.service';
 
 
@@ -8,28 +8,21 @@ import {AlertService} from './alert.service';
     providedIn: 'root'
 })
 export class TeacherService extends BaseService<IUser> {
-    protected override source = 'teachers';
-
-
-    private teacherListSignal = signal<IUser[]>([]);
-
-    get teachers$() {
-        return this.teacherListSignal;
-    }
-
-
     public search: ISearch = {
         page: 1,
         size: 5,
         pageNumber: 1,
         totalPages: 1,
     };
-
-
     public totalItems: number[] = [];
+    protected override source = 'teachers';
+    private teacherListSignal = signal<IUser[]>([]);
     private alertService: AlertService = inject(AlertService);
     private currentSchoolId: number | null = null;
 
+    get teachers$() {
+        return this.teacherListSignal;
+    }
 
     setCurrentSchoolId(schoolId: number | null) {
         this.currentSchoolId = schoolId;
@@ -46,8 +39,8 @@ export class TeacherService extends BaseService<IUser> {
         this.findAllWithParamsAndCustomSource(`school/${schoolId}/teachers`, params).subscribe({
             next: (response: IResponse<IUser[]>) => {
                 this.teacherListSignal.set(response.data);
-                this.search = { ...this.search, ...response.meta };
-                this.totalItems = Array.from({ length: this.search.totalPages || 0 }, (_, i) => i + 1);
+                this.search = {...this.search, ...response.meta};
+                this.totalItems = Array.from({length: this.search.totalPages || 0}, (_, i) => i + 1);
             },
             error: (err) => {
                 this.alertService.displayAlert(
@@ -60,7 +53,6 @@ export class TeacherService extends BaseService<IUser> {
             }
         });
     }
-
 
 
     saveTeacher(schoolId: number, teacher: IUser) {

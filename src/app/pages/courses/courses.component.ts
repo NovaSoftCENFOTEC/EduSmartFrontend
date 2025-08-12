@@ -1,17 +1,15 @@
-import { Component, ViewChild, inject } from '@angular/core';
+import {Component, inject, ViewChild} from '@angular/core';
 
-import { PaginationComponent } from '../../components/pagination/pagination.component';
-import { ModalComponent } from '../../components/modal/modal.component';
-import { ICourse } from '../../interfaces';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ModalService } from '../../services/modal.service';
-import { AuthService } from '../../services/auth.service';
-import { ActivatedRoute } from '@angular/router';
-import { NgIf } from '@angular/common';
-import { FooterComponent } from '../../components/app-layout/elements/footer/footer.component';
-import { CoursesFormComponent } from '../../components/courses/course-form/courses-form.component';
-import { CoursesListComponent } from '../../components/courses/course-list/courses-list.component';
-import { CourseService } from '../../services/course.service';
+import {PaginationComponent} from '../../components/pagination/pagination.component';
+import {ModalComponent} from '../../components/modal/modal.component';
+import {ICourse} from '../../interfaces';
+import {FormBuilder, Validators} from '@angular/forms';
+import {ModalService} from '../../services/modal.service';
+import {AuthService} from '../../services/auth.service';
+import {ActivatedRoute} from '@angular/router';
+import {CoursesFormComponent} from '../../components/courses/course-form/courses-form.component';
+import {CoursesListComponent} from '../../components/courses/course-list/courses-list.component';
+import {CourseService} from '../../services/course.service';
 
 @Component({
     selector: 'app-courses',
@@ -21,7 +19,7 @@ import { CourseService } from '../../services/course.service';
         ModalComponent,
         CoursesFormComponent,
         CoursesListComponent,
-        NgIf,
+
     ],
     templateUrl: './courses.component.html',
     styleUrl: './courses.component.scss'

@@ -1,13 +1,13 @@
-
-import { Component, inject, OnInit } from '@angular/core';
-import { PaginationComponent } from '../../components/pagination/pagination.component';
-import { IGroup, IUser } from '../../interfaces';
-import { StudentGroupsService } from '../../services/student-groups.service';
-import { AuthService } from '../../services/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { StudentGroupsListComponent } from "../../components/student-groups/student-groups-list/student-groups-list.component";
-import { AsyncPipe, NgIf } from "@angular/common";
-import { FooterComponent } from "../../components/app-layout/elements/footer/footer.component";
+import {Component, inject, OnInit} from '@angular/core';
+import {PaginationComponent} from '../../components/pagination/pagination.component';
+import {IGroup, IUser} from '../../interfaces';
+import {StudentGroupsService} from '../../services/student-groups.service';
+import {AuthService} from '../../services/auth.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {
+    StudentGroupsListComponent
+} from "../../components/student-groups/student-groups-list/student-groups-list.component";
+import {NgIf} from "@angular/common";
 
 @Component({
     selector: 'app-student-groups',
@@ -15,9 +15,7 @@ import { FooterComponent } from "../../components/app-layout/elements/footer/foo
     imports: [
         PaginationComponent,
         StudentGroupsListComponent,
-        NgIf,
-        FooterComponent,
-        AsyncPipe
+        NgIf
     ],
     templateUrl: './student-groups.component.html',
     styleUrl: './student-groups.component.scss'

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {CommonModule, NgIf} from '@angular/common'; 
+import {CommonModule, NgIf} from '@angular/common';
 import {IMaterial} from '../../../interfaces';
 import {AuthService} from '../../../services/auth.service';
 import {ActivatedRoute} from '@angular/router';

@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
-  selector: 'app-footer',
-  standalone: true,
-  imports: [],
-  templateUrl: './footer.component.html',
-  styleUrl: './footer.component.scss'
+    selector: 'app-footer',
+    standalone: true,
+    imports: [],
+    templateUrl: './footer.component.html',
+    styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
- goToLanding() {
-    window.location.href = '/landing';
-  }
+    goToLanding() {
+        window.location.href = '/landing';
+    }
 }

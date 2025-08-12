@@ -8,9 +8,9 @@
             <div class="message-wrapper">
                 <img
                         *ngIf="message.sender === 'bot'"
+                        alt="Bot"
                         class="avatar"
                         src="assets/img/TicoBot.png"
-                        alt="Bot"
                 />
 
                 <div class="message-content">
@@ -23,9 +23,9 @@
 
                 <img
                         *ngIf="message.sender === 'user'"
+                        alt="User"
                         class="avatar user-avatar"
                         src="assets/img/Avatar.png"
-                        alt="User"
                 />
             </div>
         </div>
@@ -33,7 +33,7 @@
 
         <div *ngIf="isLoading" class="bot loading">
             <div class="message-wrapper">
-                <img class="avatar" src="assets/img/TicoBot.png" alt="Bot"/>
+                <img alt="Bot" class="avatar" src="assets/img/TicoBot.png"/>
                 <div class="typing-indicator">
                     <span></span><span></span><span></span>
                 </div>
@@ -43,10 +43,10 @@
 
     <div class="chat-input">
         <input
-                type="text"
-                [(ngModel)]="newMessage"
                 (keyup.enter)="sendMessage()"
+                [(ngModel)]="newMessage"
                 placeholder="Escribe tu mensaje..."
+                type="text"
         />
         <button (click)="sendMessage()" [disabled]="isLoading">
             ➤

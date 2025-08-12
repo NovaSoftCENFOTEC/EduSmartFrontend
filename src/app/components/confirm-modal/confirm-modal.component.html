@@ -1,4 +1,4 @@
-<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+<div aria-hidden="true" aria-labelledby="confirmModalLabel" class="modal fade" id="confirmModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content text-center">
             <div class="modal-header justify-content-center border-0">
@@ -8,8 +8,8 @@
                 {{ message }}
             </div>
             <div class="modal-footer justify-content-center border-0">
-                <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">{{ cancelText }}</button>
-                <button type="button" class="btn btn-warning" (click)="confirm()">{{ confirmText }}</button>
+                <button class="btn btn-secondary me-2" data-bs-dismiss="modal" type="button">{{ cancelText }}</button>
+                <button (click)="confirm()" class="btn btn-warning" type="button">{{ confirmText }}</button>
             </div>
         </div>
     </div>

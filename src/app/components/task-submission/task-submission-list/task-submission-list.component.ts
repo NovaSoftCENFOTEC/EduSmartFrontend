@@ -57,7 +57,8 @@ export class TaskSubmissionListComponent implements OnInit, OnChanges {
         private router: Router,
         private authService: AuthService,
         private userService: UserService
-    ) {}
+    ) {
+    }
 
     get filteredSubmissions(): ITaskSubmission[] {
         if (!this.searchText) return this.submissions;
@@ -153,6 +154,13 @@ export class TaskSubmissionListComponent implements OnInit, OnChanges {
         }
     }
 
+    isExpired(date: string | Date | null): boolean {
+        if (!date) return false;
+        const today = new Date();
+        const due = new Date(date);
+        return due.setHours(0, 0, 0, 0) < today.setHours(0, 0, 0, 0);
+    }
+
     private computeStudentsMap(): void {
         const user = this.authService.getUser();
 
@@ -203,12 +211,5 @@ export class TaskSubmissionListComponent implements OnInit, OnChanges {
         } else {
             this.studentsMap$ = of({});
         }
-    }
-
-    isExpired(date: string | Date | null): boolean {
-        if (!date) return false;
-        const today = new Date();
-        const due = new Date(date);
-        return due.setHours(0, 0, 0, 0) < today.setHours(0, 0, 0, 0);
     }
 }

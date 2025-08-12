@@ -16,11 +16,11 @@
             Nombre<span class="required-asterisk">*</span>
         </label>
         <input
-                id="name"
-                formControlName="name"
-                type="text"
                 class="form-control normal"
+                formControlName="name"
+                id="name"
                 placeholder="Ej: Juan"
+                type="text"
         />
         @if (userForm.controls['name'].invalid && (userForm.controls['name'].dirty || userForm.controls['name'].touched)) {
             <div class="form-error-message">
@@ -34,11 +34,11 @@
             Apellido<span class="required-asterisk">*</span>
         </label>
         <input
-                id="lastname"
-                formControlName="lastname"
-                type="text"
                 class="form-control normal"
+                formControlName="lastname"
+                id="lastname"
                 placeholder="Ej: Pérez"
+                type="text"
         />
         @if (userForm.controls['lastname'].invalid && (userForm.controls['lastname'].dirty || userForm.controls['lastname'].touched)) {
             <div class="form-error-message">
@@ -52,11 +52,11 @@
             Correo electrónico<span class="required-asterisk">*</span>
         </label>
         <input
-                id="email"
-                formControlName="email"
-                type="email"
                 class="form-control normal"
+                formControlName="email"
+                id="email"
                 placeholder="Ej: correo@ejemplo.com"
+                type="email"
         />
         @if (userForm.controls['email'].invalid && (userForm.controls['email'].dirty || userForm.controls['email'].touched)) {
             <div class="form-error-message">

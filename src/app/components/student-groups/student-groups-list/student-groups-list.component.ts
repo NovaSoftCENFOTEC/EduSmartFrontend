@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IGroup } from '../../../interfaces';
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {IGroup} from '../../../interfaces';
+import {FormsModule} from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-student-groups-list',
@@ -18,7 +18,8 @@ export class StudentGroupsListComponent {
 
     searchText: string = '';
 
-    constructor(private router: Router) {}
+    constructor(private router: Router) {
+    }
 
 
     get filteredGroups(): IGroup[] {
@@ -33,13 +34,13 @@ export class StudentGroupsListComponent {
 
     goToMaterials(courseId: number) {
         this.router.navigate(['/app/materials-readonly'], {
-            queryParams: { courseId }
+            queryParams: {courseId}
         });
     }
 
     goToAssignments(groupId: number) {
         this.router.navigate(['/app/assignments-readonly'], {
-            queryParams: { groupId }
+            queryParams: {groupId}
         });
     }
 }

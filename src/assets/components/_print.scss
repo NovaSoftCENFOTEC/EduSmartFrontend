@@ -6,18 +6,20 @@
     display: none;
   }
 
-   .page-body {
-          margin: 0;
-        }
-.page-wrapper {
+  .page-body {
+    margin: 0;
+  }
+  .page-wrapper {
     .page-title {
       visibility: hidden;
     }
+
     .page-body-wrapper {
       .page-title {
         display: none;
       }
     }
+
     &.compact-wrapper {
       .page-body-wrapper {
         .page-body {
@@ -30,20 +32,24 @@
     display: none;
   }
 }
-.invoice-table{
+
+.invoice-table {
   margin-top: 16px;
   margin-bottom: 16px;
 }
-.invoice{
-  .text-right{
-    input{
+
+.invoice {
+  .text-right {
+    input {
       margin-top: 6px;
     }
   }
+
   .media {
     align-items: center;
   }
 }
+
 /**=====================
     77. Print CSS Ends
 ==========================**/

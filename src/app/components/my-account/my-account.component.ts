@@ -1,4 +1,4 @@
-import {Component, OnInit, inject} from "@angular/core";
+import {Component, inject, OnInit} from "@angular/core";
 import {Router, RouterLink} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
 
@@ -26,12 +26,12 @@ export class MyAccountComponent implements OnInit {
         this.checkCurrentRoute();
     }
 
-    private checkCurrentRoute() {
-        this.isLoginRoute = this.router.url === '/login';
-    }
-
     logout() {
         this.service.logout();
         this.router.navigateByUrl('/login');
+    }
+
+    private checkCurrentRoute() {
+        this.isLoginRoute = this.router.url === '/login';
     }
 }

@@ -1,18 +1,10 @@
-import {
-    Component,
-    inject,
-    OnInit,
-    ViewChild,
-    WritableSignal,
-} from "@angular/core";
+import {Component, inject, OnInit, ViewChild, WritableSignal,} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {ModalComponent} from "../../components/modal/modal.component";
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
 import {ModalService} from "../../services/modal.service";
 import {AuthService} from "../../services/auth.service";
 import {GradeService} from "../../services/grade.service";
-import {GradesFormComponent} from "../../components/grades/grade-form/grade-form.component";
 import {GradesListComponent} from "../../components/grades/grade-list/grade-list.component";
 import {IGrade} from "../../interfaces";
 
@@ -21,8 +13,6 @@ import {IGrade} from "../../interfaces";
     standalone: true,
     imports: [
         CommonModule,
-        ModalComponent,
-        GradesFormComponent,
         GradesListComponent,
         ReactiveFormsModule,
     ],

@@ -8,7 +8,7 @@
             <button (click)="goBack()" class="btn custom-add-full-btn">
                 <i class="fas fa-arrow-left me-2"></i> Volver
             </button>
-            <button disabled class="btn custom-add-full-btn">
+            <button class="btn custom-add-full-btn" disabled>
                 <i class="fas fa-plus me-2"></i> Agregar
             </button>
         </div>
@@ -19,9 +19,9 @@
         <div class="card">
             <div class="card-body">
                 <app-user-list
-                        [users]="userList()"
-                        (callModalAction)="openEditUserModal($event)"
                         (callDeleteAction)="deleteUser($event)"
+                        (callModalAction)="openEditUserModal($event)"
+                        [users]="userList()"
                 ></app-user-list>
 
                 @if (userList().length) {
@@ -38,8 +38,8 @@
 <ng-template #addUsersModal>
     <app-modal [hideFooter]="true">
         <app-user-form
-                [userForm]="userForm"
-                (callSaveMethod)="handleAddUser($event)">
+                (callSaveMethod)="handleAddUser($event)"
+                [userForm]="userForm">
         </app-user-form>
     </app-modal>
 </ng-template>
@@ -47,8 +47,8 @@
 <ng-template #editUsersModal>
     <app-modal [hideFooter]="true">
         <app-user-form
-                [userForm]="userForm"
-                (callUpdateMethod)="confirmEdit($event)">
+                (callUpdateMethod)="confirmEdit($event)"
+                [userForm]="userForm">
         </app-user-form>
     </app-modal>
 </ng-template>
@@ -59,8 +59,8 @@
             <h2>Confirmación</h2>
             <p>¿Está seguro que desea modificar el/la Usuario?</p>
             <div class="d-flex justify-content-center mt-4">
-                <button class="btn btn-secondary me-2" (click)="cancelEdit()">Cancelar</button>
-                <button class="btn btn-primary" (click)="confirmEditFinal()">Sí, modificar</button>
+                <button (click)="cancelEdit()" class="btn btn-secondary me-2">Cancelar</button>
+                <button (click)="confirmEditFinal()" class="btn btn-primary">Sí, modificar</button>
             </div>
         </div>
     </app-modal>

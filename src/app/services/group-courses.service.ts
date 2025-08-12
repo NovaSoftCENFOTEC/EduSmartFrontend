@@ -1,28 +1,26 @@
-import { inject, Injectable, signal } from '@angular/core';
-import { BaseService } from './base-service';
-import { IResponse, ISearch, ICourse } from '../interfaces';
-import { AlertService } from './alert.service';
+import {inject, Injectable, signal} from '@angular/core';
+import {BaseService} from './base-service';
+import {ICourse, IResponse, ISearch} from '../interfaces';
+import {AlertService} from './alert.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class GroupCoursesService extends BaseService<ICourse> {
-    protected override source: string = 'groups';
-    private courseListSignal = signal<ICourse[]>([]);
-
-    get courses$() {
-        return this.courseListSignal;
-    }
-
     public search: ISearch = {
         page: 1,
         size: 10,
         pageNumber: 1,
         totalPages: 1,
     };
-
     public totalItems: number[] = [];
+    protected override source: string = 'groups';
+    private courseListSignal = signal<ICourse[]>([]);
     private alertService: AlertService = inject(AlertService);
+
+    get courses$() {
+        return this.courseListSignal;
+    }
 
     clearCourses(): void {
         this.courseListSignal.set([]);

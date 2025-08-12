@@ -1,8 +1,7 @@
-import { inject, Injectable, signal } from "@angular/core";
-import { BaseService } from "./base-service";
-import { IResponse } from "../interfaces";
-import { AlertService } from "./alert.service";
-import { Observable } from "rxjs";
+import {Injectable, signal} from "@angular/core";
+import {BaseService} from "./base-service";
+import {IResponse} from "../interfaces";
+import {Observable} from "rxjs";
 
 export interface ISubmission {
     id?: number;
@@ -49,8 +48,8 @@ export class SubmissionService extends BaseService<ISubmission> {
 
     createSubmission(quizId: number, studentId: number): Observable<IResponse<ISubmission>> {
         const submission: ISubmission = {
-            quiz: { id: quizId },
-            student: { id: studentId }
+            quiz: {id: quizId},
+            student: {id: studentId}
         };
 
         return this.addCustomSource(`quiz/${quizId}/student/${studentId}`, submission);
@@ -77,7 +76,7 @@ export class SubmissionService extends BaseService<ISubmission> {
     }
 
     updateSubmissionScore(submissionId: number, score: number): Observable<IResponse<ISubmission>> {
-        return this.edit(submissionId, { score });
+        return this.edit(submissionId, {score});
     }
 
     checkExistingSubmission(quizId: number, studentId: number): Observable<IResponse<ISubmission>> {

@@ -7,7 +7,7 @@
 
     <div class="mb-3">
         <label class="mb-1" for="code">Código del curso<span class="required-asterisk">*</span></label>
-        <input id="code" formControlName="code" type="text" class="form-control normal" placeholder="Ej: CRINP" />
+        <input class="form-control normal" formControlName="code" id="code" placeholder="Ej: CRINP" type="text"/>
         @if (form.controls['code'].invalid && (form.controls['code'].dirty || form.controls['code'].touched)) {
             <div class="form-error-message">
                 El código es obligatorio.
@@ -17,7 +17,8 @@
 
     <div class="mb-3">
         <label class="mb-1" for="title">Título<span class="required-asterisk">*</span></label>
-        <input id="title" formControlName="title" type="text" class="form-control normal" placeholder="Ej: Independencia de Costa Rica" />
+        <input class="form-control normal" formControlName="title" id="title" placeholder="Ej: Independencia de Costa Rica"
+               type="text"/>
         @if (form.controls['title'].invalid && (form.controls['title'].dirty || form.controls['title'].touched)) {
             <div class="form-error-message">
                 El nombre es obligatorio.
@@ -27,7 +28,8 @@
 
     <div class="mb-3">
         <label class="mb-1" for="title">Descripción<span class="required-asterisk">*</span></label>
-        <textarea id="description" formControlName="description" rows="4" class="form-control normal" placeholder="Breve descripción del curso"></textarea>
+        <textarea class="form-control normal" formControlName="description" id="description" placeholder="Breve descripción del curso"
+                  rows="4"></textarea>
         @if (form.controls['description'].invalid && (form.controls['description'].dirty || form.controls['description'].touched)) {
             <div class="form-error-message">
                 La descripción no puede exceder el límite de caracteres.

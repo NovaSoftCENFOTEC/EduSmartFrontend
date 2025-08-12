@@ -1,26 +1,22 @@
-import {inject, Injectable, signal, WritableSignal} from '@angular/core';
+import {inject, Injectable, signal} from '@angular/core';
 import {BaseService} from './base-service';
 import {AlertService} from './alert.service';
-import {IMaterial, ISearch, IResponse} from '../interfaces';
+import {IMaterial, IResponse, ISearch} from '../interfaces';
 
 @Injectable({
     providedIn: 'root'
 })
 export class MaterialService extends BaseService<IMaterial> {
-    protected override source = 'materials';
-
-    private alertService = inject(AlertService);
-    private materialListSignal = signal<IMaterial[]>([]);
-
     public search: ISearch = {
         page: 1,
         size: 5,
         pageNumber: 1,
         totalPages: 1,
     };
-
     public totalItems: number[] = [];
-
+    protected override source = 'materials';
+    private alertService = inject(AlertService);
+    private materialListSignal = signal<IMaterial[]>([]);
     private currentCourseId: number | null = null;
     private currentTeacherId: number | null = null;
 

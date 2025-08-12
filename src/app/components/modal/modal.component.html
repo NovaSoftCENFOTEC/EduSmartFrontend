@@ -10,13 +10,16 @@
         </div>
         @if (!hideFooter) {
             <div [class]="modalFooterClass">
-                <button type="button" [disabled]="loadingConfirmationMethod === true" (click)="callCancelMethod.emit()" class="btn btn-danger" data-dismiss="modal">{{cancelAction}}</button>
+                <button type="button" [disabled]="loadingConfirmationMethod === true" (click)="callCancelMethod.emit()"
+                        class="btn btn-danger" data-dismiss="modal">{{ cancelAction }}
+                </button>
                 @if (!hideConfirmAction) {
-                    <button type="button" [disabled]="customValidation || loadingConfirmationMethod === true" (click)="callConfirmationMethod.emit()" class="btn btn-primary">
+                    <button type="button" [disabled]="customValidation || loadingConfirmationMethod === true"
+                            (click)="callConfirmationMethod.emit()" class="btn btn-primary">
                         @if (loadingConfirmationMethod === true) {
                             <app-loader/>
                         } @else {
-                            {{confirmAction}}
+                            {{ confirmAction }}
                         }
                     </button>
                 }
