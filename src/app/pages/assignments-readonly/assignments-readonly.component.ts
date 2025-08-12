@@ -100,14 +100,17 @@ export class AssignmentsReadOnlyComponent implements OnInit {
     }
 
     SeeDetails(studentId?: number, assignmentId?: number): void {
-        if (!studentId) {
-            return;
-        }
-        if (!assignmentId) {
-            return;
-        }
+        if (!studentId) return;
+        if (!assignmentId) return;
         this.router.navigate(["app/task-submission"], {
             queryParams: {studentId, assignmentId},
         });
+    }
+
+    isExpired(dueDate: string | Date): boolean {
+        if (!dueDate) return false;
+        const today = new Date();
+        const due = new Date(dueDate);
+        return due.setHours(0, 0, 0, 0) < today.setHours(0, 0, 0, 0);
     }
 }
