@@ -103,7 +103,7 @@ export class GradeService extends BaseService<IGrade> {
             },
         });
     }
-    
+
     checkIfGradeExists(submissionId: number) {
         const params = {page: 1, size: 1000};
         return this.findAllWithParamsAndCustomSource(
