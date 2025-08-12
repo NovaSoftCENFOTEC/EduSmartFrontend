@@ -38,6 +38,8 @@ import {catchError} from "rxjs/operators";
 })
 export class TaskSubmissionListComponent implements OnInit, OnChanges {
     @Input() submissions: ITaskSubmission[] = [];
+    @Input() assignmentDueDate: string | Date | null = null;  // <-- NUEVO input
+
     @Output() callModalAction = new EventEmitter<ITaskSubmission>();
     @Output() callDeleteAction = new EventEmitter<ITaskSubmission>();
     @Output() verDetallesEvent = new EventEmitter<number>();
@@ -55,8 +57,7 @@ export class TaskSubmissionListComponent implements OnInit, OnChanges {
         private router: Router,
         private authService: AuthService,
         private userService: UserService
-    ) {
-    }
+    ) {}
 
     get filteredSubmissions(): ITaskSubmission[] {
         if (!this.searchText) return this.submissions;
@@ -144,7 +145,6 @@ export class TaskSubmissionListComponent implements OnInit, OnChanges {
         }
     }
 
-
     goToTasksGrades(taskSubmissionId: number | undefined): void {
         if (taskSubmissionId !== undefined) {
             this.router.navigate(["/app/grade"], {
@@ -205,11 +205,10 @@ export class TaskSubmissionListComponent implements OnInit, OnChanges {
         }
     }
 
-    isExpired(date: string | Date): boolean {
+    isExpired(date: string | Date | null): boolean {
         if (!date) return false;
         const today = new Date();
         const due = new Date(date);
         return due.setHours(0, 0, 0, 0) < today.setHours(0, 0, 0, 0);
     }
-
 }

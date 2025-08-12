@@ -46,7 +46,6 @@
                                 ></i>
                                 <span>Abrir</span>
                             </a>
-
                         </td>
                         <td>{{ task.comment }}</td>
                         <td>{{ task.submittedAt | date : "mediumDate" }}</td>
@@ -92,11 +91,14 @@
 
                 <tr *ngIf="filteredSubmissions.length === 0">
                     <td colspan="5">
-                        <div
-                                class="d-flex justify-content-center align-items-center w-100"
-                        >
+                        <div class="d-flex justify-content-center align-items-center w-100">
                             <p class="mb-0" style="color: var(--color-indigo-dye)">
-                                No hay entregas registradas
+                                <ng-container *ngIf="assignmentDueDate && isExpired(assignmentDueDate); else noSubmissions">
+                                    No es posible agregar entregas porque la fecha está expirada.
+                                </ng-container>
+                                <ng-template #noSubmissions>
+                                    No hay entregas registradas.
+                                </ng-template>
                             </p>
                         </div>
                     </td>
