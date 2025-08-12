@@ -1,0 +1,78 @@
+<div class="card">
+    <div class="card-header card-header-indigo">
+        <h2 class="mb-0">Lista de Calificaciones</h2>
+    </div>
+
+    <div class="card-body">
+        <p class="text-muted mb-3">Espacio para ver las calificaciones.</p>
+
+        <div class="mb-4 mt-2">
+            <input
+                    [(ngModel)]="searchText"
+                    class="input-txt w-25"
+                    placeholder="Filtrar calificación por justificación o nota..."
+                    type="text"
+            />
+        </div>
+
+        <div class="table-container table-responsive">
+            <table class="table custom-full-bordered-table">
+                <thead class="table-header-gray">
+                <tr>
+                    <th scope="col">Calificación</th>
+                    <th scope="col">Justificación</th>
+                    <th *ngIf="!isStudent" class="text-center" scope="col">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of filteredGrades; trackBy: trackById">
+                    <td>{{ item.grade }}</td>
+                    <td>{{ item.justification || "-" }}</td>
+
+                    <td *ngIf="!isStudent" class="text-center">
+                        <button
+                                (click)="callModalAction.emit(item)"
+                                class="btn border-0 me-2 icon-gray-color"
+                                title="Editar calificación"
+                                type="button"
+                        >
+                            <i class="fas fa-pen"></i>
+                        </button>
+                        <button
+                                (click)="openConfirmationModal(item)"
+                                class="btn border-0 icon-gray-color"
+                                title="Eliminar calificación"
+                                type="button"
+                        >
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+
+                <tr *ngIf="filteredGrades.length === 0">
+                    <td [attr.colspan]="isStudent ? 2 : 3">
+                        <div
+                                class="d-flex justify-content-center align-items-center w-100"
+                        >
+                            <p class="mb-0">No hay calificaciones registradas</p>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<app-confirm-modal
+    #confirmDeleteModal
+    (confirmed)="deleteConfirmation()"
+    [cancelText]="'Cancelar'"
+    [confirmText]="'Eliminar'"
+    [message]="
+    '¿Estás seguro de que deseas eliminar la calificación con nota ' +
+    deleteGrade?.grade +
+    '?'
+  "
+>
+</app-confirm-modal>

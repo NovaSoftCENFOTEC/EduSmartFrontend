@@ -36,4 +36,10 @@ export class StudentGroupsListComponent {
             queryParams: { courseId }
         });
     }
+
+    goToAssignments(groupId: number) {
+        this.router.navigate(['/app/assignments-readonly'], {
+            queryParams: { groupId }
+        });
+    }
 }

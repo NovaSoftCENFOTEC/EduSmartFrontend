@@ -35,7 +35,13 @@ import { StudentQuizComponent } from "./pages/student-quiz/student-quiz.componen
 import { ChatComponent } from "./pages/chat/chat.component";
 import { MaterialsComponent } from "./pages/materials/materials.component";
 import { MaterialsReadOnlyComponent } from "./pages/materials-readonly/materials-readonly.component";
+import { AssignmentsReadOnlyComponent } from "./pages/assignments-readonly/assignments-readonly.component";
+import { TaskSubmissionsComponent } from "./pages/task-submissions/task-submission.component";
+import { TasksSubmissionsReadOnlyComponent } from "./pages/tasks-submissions-readonly/tasks-submissions-readonly.component";
+import { GradesComponent } from "./pages/grades/grades.component";
+import { GradeReadOnlyComponent } from "./pages/grades-readonly/grades-readonly.component";
 import { MedalComponent } from "./pages/medal/medal.component";
+
 
 export const routes: Routes = [
   {
@@ -212,6 +218,15 @@ export const routes: Routes = [
       },
 
       {
+        path: "assignments-readonly",
+        component: AssignmentsReadOnlyComponent,
+        canActivate: [StudentRoleGuard],
+        data: {
+          authorities: [IRoleType.student],
+          name: "Asignaciones",
+        },
+      },
+      {
         path: "quizzes",
         component: QuizzesComponent,
         canActivate: [AdminTeacherRoleGuard],
@@ -313,6 +328,43 @@ export const routes: Routes = [
           ],
           name: "Explora +",
           showInSidebar: true,
+        },
+      },
+      {
+        path: "task-submission",
+        component: TaskSubmissionsComponent,
+        data: {
+          authorities: [IRoleType.teacher, IRoleType.student],
+          name: "Tareas",
+          showInSidebar: false,
+        },
+      },
+      {
+        path: "tasks-submissions-readonly",
+        component: TasksSubmissionsReadOnlyComponent,
+        data: {
+          authorities: [IRoleType.teacher, IRoleType.student],
+          name: "Tareas",
+          showInSidebar: false,
+        },
+      },
+      {
+        path: "grade",
+        component: GradesComponent,
+        data: {
+          authorities: [IRoleType.teacher, IRoleType.student],
+          name: "Grade",
+          showInSidebar: false,
+        },
+      },
+
+      {
+        path: "grade-readonly",
+        component: GradeReadOnlyComponent,
+        data: {
+          authorities: [IRoleType.student],
+          name: "Grade",
+          showInSidebar: false,
         },
       },
     ],
