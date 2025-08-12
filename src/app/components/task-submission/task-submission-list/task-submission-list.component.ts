@@ -38,7 +38,7 @@ import {catchError} from "rxjs/operators";
 })
 export class TaskSubmissionListComponent implements OnInit, OnChanges {
     @Input() submissions: ITaskSubmission[] = [];
-    @Input() assignmentDueDate: string | Date | null = null;  // <-- NUEVO input
+    @Input() assignmentDueDate: string | Date | null = null;
 
     @Output() callModalAction = new EventEmitter<ITaskSubmission>();
     @Output() callDeleteAction = new EventEmitter<ITaskSubmission>();
