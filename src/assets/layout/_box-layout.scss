@@ -14,6 +14,7 @@
       .md-sidebar-toggle {
         display: block;
       }
+
       .md-sidebar-aside {
         position: absolute;
         top: 40px;
@@ -22,6 +23,7 @@
         visibility: hidden;
         z-index: 3;
         width: 280px;
+
         &.open {
           opacity: 1;
           visibility: visible;
@@ -79,8 +81,10 @@
         margin: -210px auto 0;
         width: 80%;
       }
+
       &.discover {
         margin-top: 90px;
+
         img {
           margin-top: -90px;
           width: 64%;
@@ -102,6 +106,7 @@
         padding-top: 40px;
         margin-top: 0 !important;
       }
+
       &.compact-wrapper {
         margin-top: $box-layout-space;
 
@@ -321,6 +326,7 @@
             .left-header {
               width: 36%;
             }
+
             .nav-right {
               width: 46%;
             }

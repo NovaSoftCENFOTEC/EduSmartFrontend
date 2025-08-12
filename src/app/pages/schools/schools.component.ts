@@ -1,4 +1,4 @@
-import {Component, ViewChild, inject} from '@angular/core';
+import {Component, inject, ViewChild} from '@angular/core';
 
 import {PaginationComponent} from '../../components/pagination/pagination.component';
 import {ModalComponent} from '../../components/modal/modal.component';
@@ -10,8 +10,7 @@ import {AuthService} from '../../services/auth.service';
 import {ActivatedRoute} from '@angular/router';
 import {SchoolsFormComponent} from "../../components/schools/school-form/schools-form.component";
 import {SchoolsListComponent} from "../../components/schools/school-list/schools-list.component";
-import {AsyncPipe, NgIf} from "@angular/common";
-import {FooterComponent} from "../../components/app-layout/elements/footer/footer.component";
+import {NgIf} from "@angular/common";
 
 @Component({
     selector: 'app-schools',
@@ -22,9 +21,7 @@ import {FooterComponent} from "../../components/app-layout/elements/footer/foote
         ModalComponent,
         SchoolsFormComponent,
         SchoolsListComponent,
-        NgIf,
-        FooterComponent,
-        AsyncPipe
+        NgIf
     ],
     templateUrl: './schools.component.html',
     styleUrl: './schools.component.scss'
@@ -52,16 +49,16 @@ export class SchoolsComponent {
 
     private pendingEditItem: ISchool | null = null;
 
+    constructor() {
+        this.schoolService.getAll();
+    }
+
     ngOnInit(): void {
         this.authService.getUserAuthorities();
         this.route.data.subscribe(data => {
             this.areActionsAvailable = this.authService.areActionsAvailable(data['authorities'] ?? []);
         });
 
-        this.schoolService.getAll();
-    }
-
-    constructor() {
         this.schoolService.getAll();
     }
 

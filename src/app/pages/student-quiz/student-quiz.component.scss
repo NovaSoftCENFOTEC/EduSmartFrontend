@@ -271,7 +271,7 @@
 .completed-state {
   text-align: center;
   padding: 3rem 2rem;
-  
+
   .completed-icon {
     width: 80px;
     height: 80px;
@@ -281,20 +281,20 @@
     align-items: center;
     justify-content: center;
     margin: 0 auto 1.5rem;
-    
+
     i {
       font-size: 2rem;
       color: white;
     }
   }
-  
+
   h3 {
     color: var(--color-indigo-dye);
     font-size: 1.5rem;
     font-weight: 600;
     margin: 0 0 0.5rem 0;
   }
-  
+
   p {
     color: #6c757d;
     font-size: 1rem;
@@ -305,7 +305,7 @@
 .initializing-state {
   text-align: center;
   padding: 3rem 2rem;
-  
+
   p {
     color: #6c757d;
     font-size: 1rem;
@@ -316,7 +316,7 @@
 .error-container {
   text-align: center;
   padding: 3rem 2rem;
-  
+
   .error-icon {
     width: 80px;
     height: 80px;
@@ -326,20 +326,20 @@
     align-items: center;
     justify-content: center;
     margin: 0 auto 1.5rem;
-    
+
     i {
       font-size: 2rem;
       color: white;
     }
   }
-  
+
   h3 {
     color: var(--color-indigo-dye);
     font-size: 1.5rem;
     font-weight: 600;
     margin: 0 0 0.5rem 0;
   }
-  
+
   p {
     color: #6c757d;
     font-size: 1rem;
@@ -350,7 +350,7 @@
 .incomplete-state {
   text-align: center;
   padding: 3rem 2rem;
-  
+
   .incomplete-icon {
     width: 80px;
     height: 80px;
@@ -360,30 +360,30 @@
     align-items: center;
     justify-content: center;
     margin: 0 auto 1.5rem;
-    
+
     i {
       font-size: 2rem;
       color: white;
     }
   }
-  
+
   h3 {
     color: var(--color-indigo-dye);
     font-size: 1.5rem;
     font-weight: 600;
     margin: 0 0 0.5rem 0;
   }
-  
+
   p {
     color: #6c757d;
     font-size: 1rem;
     margin: 0 0 1.5rem 0;
   }
-  
+
   .alert {
     border-radius: 8px;
     border: none;
-    
+
     &.alert-warning {
       background-color: rgba(255, 193, 7, 0.1);
       color: #856404;
@@ -393,22 +393,22 @@
 
 .results-footer {
   margin-top: 2rem;
-  
+
   .alert {
     border-radius: 8px;
     border: none;
-    
+
     &.alert-info {
       background-color: rgba(13, 202, 240, 0.1);
       color: #0c5460;
     }
   }
 }
-    
+
 .loading-container {
   text-align: center;
   padding: 4rem 2rem;
-  
+
   p {
     color: #6c757d;
     font-size: 1rem;

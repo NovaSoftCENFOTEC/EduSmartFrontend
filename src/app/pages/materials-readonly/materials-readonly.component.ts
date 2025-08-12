@@ -1,4 +1,4 @@
-import {Component, OnInit, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CommonModule, Location} from '@angular/common';
 import {MaterialService} from '../../services/material.service';
@@ -13,11 +13,11 @@ import {FormsModule} from "@angular/forms";
     styleUrls: ['./materials-readonly.component.scss']
 })
 export class MaterialsReadOnlyComponent implements OnInit {
+    public searchText = '';
     private route = inject(ActivatedRoute);
     private materialService = inject(MaterialService);
-    private location = inject(Location);
     public materials = this.materialService.materials$;
-    public searchText = '';
+    private location = inject(Location);
     private courseId: number | null = null;
 
     ngOnInit(): void {

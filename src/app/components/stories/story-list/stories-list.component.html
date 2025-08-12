@@ -1,100 +1,102 @@
 <div class="card">
-  <div class="card-header card-header-indigo">
-    <h2 class="mb-0">Lista de Historias</h2>
-  </div>
-  <div class="card-body">
-    <p class="text-muted mb-3">
-      Historias registradas para el curso seleccionado.
-    </p>
-
-    <div class="mb-4 mt-2">
-      <input
-        type="text"
-        class="input-txt input-filter"
-        placeholder="Filtrar por título o contenido..."
-        [(ngModel)]="searchText"
-      />
+    <div class="card-header card-header-indigo">
+        <h2 class="mb-0">Lista de Historias</h2>
     </div>
+    <div class="card-body">
+        <p class="text-muted mb-3">
+            Historias registradas para el curso seleccionado.
+        </p>
 
-    <div class="table-container table-responsive">
-      <table class="table custom-full-bordered-table">
-        <thead class="table-header-gray">
-          <tr>
-            <th scope="col">Título</th>
-            <th scope="col">Contenido</th>
-            <th scope="col">Fecha de creación</th>
-            <th class="text-center" scope="col">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          @if (filteredStories.length > 0) { @for (item of filteredStories;
-          track item.id) {
-          <tr>
-            <td>{{ item.title }}</td>
-            <td>
+        <div class="mb-4 mt-2">
+            <input
+                    [(ngModel)]="searchText"
+                    class="input-txt input-filter"
+                    placeholder="Filtrar por título o contenido..."
+                    type="text"
+            />
+        </div>
+
+        <div class="table-container table-responsive">
+            <table class="table custom-full-bordered-table">
+                <thead class="table-header-gray">
+                <tr>
+                    <th scope="col">Título</th>
+                    <th scope="col">Contenido</th>
+                    <th scope="col">Fecha de creación</th>
+                    <th class="text-center" scope="col">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                    @if (filteredStories.length > 0) {
+                        @for (item of filteredStories;
+                            track item.id) {
+                            <tr>
+                                <td>{{ item.title }}</td>
+                                <td>
               <span
-                class="story-content"
-                [class.expanded]="expandedStoryId === item.id"
-                (click)="toggleContent(item.id!)"
-                title="Haz clic para ver más"
+                      class="story-content"
+                      [class.expanded]="expandedStoryId === item.id"
+                      (click)="toggleContent(item.id!)"
+                      title="Haz clic para ver más"
               >
                 {{
-                  expandedStoryId === item.id
-                    ? item.content
-                    : (item.content | slice : 0 : 100) +
-                      (item.content.length > 100 ? "..." : "")
-                }}
+                      expandedStoryId === item.id
+                          ? item.content
+                          : (item.content | slice : 0 : 100) +
+                          (item.content.length > 100 ? "..." : "")
+                  }}
               </span>
-            </td>
-            <td>{{ item.createdAt | date : "mediumDate" }}</td>
-            <td class="text-center">
-              <button
-                (click)="callModalAction.emit(item)"
-                class="btn border-0 me-2 icon-gray-color"
-                type="button"
-              >
-                <i class="fas fa-pen"></i>
-              </button>
-              <button
-                (click)="openConfirmationModal(item)"
-                class="btn border-0 icon-gray-color"
-                type="button"
-              >
-                <i class="fas fa-trash"></i>
-              </button>
-              <button
-                (click)="goToQuizStories(item.id)"
-                class="btn btn-primary px-4 py-2"
-              >
-                Ver Quices
-              </button>
-            </td>
-          </tr>
-          } } @else {
-          <tr>
-            <td colspan="4">
-              <div
-                class="d-flex justify-content-center align-items-center w-100"
-              >
-                <p class="mb-0">No hay historias registradas</p>
-              </div>
-            </td>
-          </tr>
-          }
-        </tbody>
-      </table>
+                                </td>
+                                <td>{{ item.createdAt | date : "mediumDate" }}</td>
+                                <td class="text-center">
+                                    <button
+                                            (click)="callModalAction.emit(item)"
+                                            class="btn border-0 me-2 icon-gray-color"
+                                            type="button"
+                                    >
+                                        <i class="fas fa-pen"></i>
+                                    </button>
+                                    <button
+                                            (click)="openConfirmationModal(item)"
+                                            class="btn border-0 icon-gray-color"
+                                            type="button"
+                                    >
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                    <button
+                                            (click)="goToQuizStories(item.id)"
+                                            class="btn btn-primary px-4 py-2"
+                                    >
+                                        Ver Quices
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    } @else {
+                        <tr>
+                            <td colspan="4">
+                                <div
+                                        class="d-flex justify-content-center align-items-center w-100"
+                                >
+                                    <p class="mb-0">No hay historias registradas</p>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
-  </div>
 
-  <app-confirm-modal
-    #confirmDeleteModal
-    [message]="
+    <app-confirm-modal
+        #confirmDeleteModal
+        (confirmed)="deleteConfirmation()"
+        [cancelText]="'Cancelar'"
+        [confirmText]="'Eliminar'"
+        [message]="
       '¿Estás seguro(a) de que deseas eliminar la historia ' +
       deleteStory?.title +
       '?'
     "
-    [confirmText]="'Eliminar'"
-    [cancelText]="'Cancelar'"
-    (confirmed)="deleteConfirmation()"
-  ></app-confirm-modal>
+    ></app-confirm-modal>
 </div>

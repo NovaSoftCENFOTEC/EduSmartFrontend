@@ -5,10 +5,12 @@
   ul {
     li {
       display: inline-block;
+
       .search-form {
         position: absolute;
         bottom: 53px;
         z-index: 1;
+
         .form-control-search {
           top: 65px;
           position: absolute;
@@ -17,11 +19,13 @@
           transform: translateY(-35px) scaleY(0);
           opacity: 0;
           visibility: hidden;
+
           input {
             width: 240px;
             background-color: $white;
             box-shadow: 0 5px 21px rgba(0, 0, 0, 0.1);
           }
+
           &.open {
             transform: translateY(0px) scaleY(1);
             opacity: 1;
@@ -29,11 +33,13 @@
             transition: all linear 0.3s;
             z-index: 100;
           }
+
           &:after {
             top: 12px;
             left: 20px;
             z-index: 1;
           }
+
           &:before {
             left: 50px;
             top: 9px;
@@ -41,22 +47,28 @@
           }
         }
       }
+
       a {
         position: relative;
         color: $theme-body-font-color;
+
         svg {
           vertical-align: middle;
           height: 20px;
           width: 20px;
         }
       }
+
       + li {
         margin-left: 10px;
       }
+
       &:last-child {
         padding-right: 0;
+
         a {
           border-radius: 5px;
+
           svg {
             color: #ff9f40;
           }
@@ -65,6 +77,7 @@
     }
   }
 }
+
 .offcanvas-bookmark {
   &.page-wrapper.horizontal-wrapper {
     .page-body-wrapper {
@@ -82,6 +95,7 @@
       }
     }
   }
+
   &:before {
     position: fixed;
     content: "";
@@ -93,10 +107,12 @@
     left: 0;
   }
 }
+
 body.modal-open {
   .select2-container--open {
     width: unset !important;
     display: block;
+
     .select2-dropdown {
       z-index: 1076;
     }
@@ -112,6 +128,7 @@ body.modal-open {
     }
   }
 }
+
 .flip-card {
   .flip-card-inner {
     .flip-btn {
@@ -121,12 +138,14 @@ body.modal-open {
       left: 0;
       bottom: 15px;
     }
+
     .front {
       .bookmark-dropdown {
         li {
           .bookmark-scroll {
             overflow: auto;
             max-height: 180px;
+
             div {
               margin-bottom: 8px;
             }
@@ -134,6 +153,7 @@ body.modal-open {
         }
       }
     }
+
     .back {
       ul {
         li {
@@ -147,6 +167,7 @@ body.modal-open {
                         i {
                           color: rgba($theme-body-font-color, 0.6);
                         }
+
                         .starred {
                           color: $primary-color;
                         }

@@ -1,7 +1,7 @@
 .chatbot-btn {
   position: fixed;
   bottom: 20px; /* más natural en la esquina inferior */
-  right: 20px;  /* pegado a la derecha */
+  right: 20px; /* pegado a la derecha */
   background: #fff;
   border: 2px solid var(--color-blue-munsell);
   border-radius: 50%;
@@ -32,6 +32,12 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

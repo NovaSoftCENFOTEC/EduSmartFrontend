@@ -1,8 +1,8 @@
-import { inject, Injectable, signal } from "@angular/core";
-import { BaseService } from "./base-service";
-import { IResponse, IAudioTrack, VoiceTypeEnum } from "../interfaces";
-import { AlertService } from "./alert.service";
-import { Observable } from "rxjs";
+import {inject, Injectable, signal} from "@angular/core";
+import {BaseService} from "./base-service";
+import {IAudioTrack, IResponse, VoiceTypeEnum} from "../interfaces";
+import {AlertService} from "./alert.service";
+import {Observable} from "rxjs";
 
 @Injectable({
     providedIn: "root",

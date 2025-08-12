@@ -1,5 +1,5 @@
 <div class="d-flex align-items-center justify-content-between my-3">
-    
+
     <nav aria-label="pagination-prev" class="ms-0">
         <ul class="pagination custom-pagination-buttons mb-0">
             <li class="page-item">
@@ -20,18 +20,18 @@
         </div>
 
         <div class="go-to-page-container d-flex align-items-center">
-            <label for="pageInput" class="me-2 mb-0">Ir a página:</label>
+            <label class="me-2 mb-0" for="pageInput">Ir a página:</label>
             <input
-                    id="pageInput"
-                    type="number"
-                    min="1"
-                    [max]="service?.totalPages || 1"
-                    [(ngModel)]="pageInput"
-                    class="form-control form-control-sm"
-                    style="width: 70px;"
                     (keyup.enter)="goToPage()"
+                    [(ngModel)]="pageInput"
+                    [max]="service?.totalPages || 1"
+                    class="form-control form-control-sm"
+                    id="pageInput"
+                    min="1"
+                    style="width: 70px;"
+                    type="number"
             />
-            <button class="btn btn-sm btn-primary ms-2" (click)="goToPage()">Ir</button>
+            <button (click)="goToPage()" class="btn btn-sm btn-primary ms-2">Ir</button>
         </div>
 
     </div>

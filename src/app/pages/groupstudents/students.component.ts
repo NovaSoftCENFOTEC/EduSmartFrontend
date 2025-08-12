@@ -1,18 +1,16 @@
-import { Component, inject, OnInit, ViewChild, WritableSignal, signal } from '@angular/core';
-import { PaginationComponent } from '../../components/pagination/pagination.component';
-import { ModalComponent } from '../../components/modal/modal.component';
-import { IUser, IGroup, ISearch } from '../../interfaces';
-import { FormBuilder, Validators } from '@angular/forms';
-import { StudentService } from '../../services/groupstudent.service';
-import { GroupsService } from '../../services/groups.service';
-import { ModalService } from '../../services/modal.service';
-import { AuthService } from '../../services/auth.service';
-import { ActivatedRoute } from '@angular/router';
-import { StudentsFormComponent } from '../../components/groupstudents/student-form/students-form.component';
-import { StudentsListComponent } from '../../components/groupstudents/student-list/students-list.component';
-import { NgIf } from '@angular/common';
-import { UserService } from '../../services/user.service';
-import { FooterComponent } from "../../components/app-layout/elements/footer/footer.component";
+import {Component, inject, OnInit, signal, ViewChild, WritableSignal} from '@angular/core';
+import {PaginationComponent} from '../../components/pagination/pagination.component';
+import {ModalComponent} from '../../components/modal/modal.component';
+import {IGroup, ISearch, IUser} from '../../interfaces';
+import {FormBuilder, Validators} from '@angular/forms';
+import {StudentService} from '../../services/groupstudent.service';
+import {GroupsService} from '../../services/groups.service';
+import {ModalService} from '../../services/modal.service';
+import {AuthService} from '../../services/auth.service';
+import {ActivatedRoute} from '@angular/router';
+import {StudentsFormComponent} from '../../components/groupstudents/student-form/students-form.component';
+import {StudentsListComponent} from '../../components/groupstudents/student-list/students-list.component';
+import {UserService} from '../../services/user.service';
 
 @Component({
     selector: 'app-students',
@@ -21,17 +19,13 @@ import { FooterComponent } from "../../components/app-layout/elements/footer/foo
         PaginationComponent,
         ModalComponent,
         StudentsFormComponent,
-        StudentsListComponent,
-        NgIf,
-        FooterComponent
+        StudentsListComponent
     ],
     templateUrl: './students.component.html',
     styleUrls: ['./students.component.scss']
 })
 export class GroupStudentsComponent implements OnInit {
     public studentList!: WritableSignal<IUser[]>;
-    private studentListSignal = signal<IUser[]>([]);
-
     public studentService: StudentService = inject(StudentService);
     public groupsService: GroupsService = inject(GroupsService);
     public userService: UserService = inject(UserService);
@@ -40,24 +34,16 @@ export class GroupStudentsComponent implements OnInit {
     public authService: AuthService = inject(AuthService);
     public route: ActivatedRoute = inject(ActivatedRoute);
     public schoolName: string | null = null;
-
     @ViewChild('editStudentModal') public editStudentModal: any;
     @ViewChild('addStudentModal') public addStudentModal: any;
     @ViewChild('editConfirmationModal') public editConfirmationModal: any;
-
     public areActionsAvailable: boolean = false;
-    private originalStudent: IUser | null = null;
-    private pendingEditItem: IUser | null = null;
-    private groupId: number | null = null;
-    private currentGroup: IGroup | null = null;
-    
     public search: ISearch = {
         page: 1,
         size: 5,
         pageNumber: 1,
         totalPages: 1
     };
-
     studentForm = this.fb.group({
         id: [''],
         name: [''],
@@ -66,6 +52,11 @@ export class GroupStudentsComponent implements OnInit {
         student: ['', Validators.required],
         createdAt: ['']
     });
+    private studentListSignal = signal<IUser[]>([]);
+    private originalStudent: IUser | null = null;
+    private pendingEditItem: IUser | null = null;
+    private groupId: number | null = null;
+    private currentGroup: IGroup | null = null;
 
     constructor() {
         this.studentList = this.studentListSignal;
@@ -174,7 +165,7 @@ export class GroupStudentsComponent implements OnInit {
 
     openAddStudentModal() {
         this.studentForm.reset();
-        this.studentForm.patchValue({ student: '' });
+        this.studentForm.patchValue({student: ''});
         this.modalService.displayModal('md', this.addStudentModal);
     }
 

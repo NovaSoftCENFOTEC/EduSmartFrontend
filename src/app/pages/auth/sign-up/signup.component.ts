@@ -9,130 +9,131 @@ import {TopbarComponent} from '../../../components/app-layout/elements/topbar/to
 
 const MAX_FILE_SIZE_MB = 5;
 const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
+
 @Component({
-  selector: 'app-signup',
-  standalone: true,
-  imports: [CommonModule, FormsModule, TopbarComponent, FooterComponent],
-  templateUrl: './signup.component.html',
-  styleUrl: './signup.component.scss'
+    selector: 'app-signup',
+    standalone: true,
+    imports: [CommonModule, FormsModule, TopbarComponent, FooterComponent],
+    templateUrl: './signup.component.html',
+    styleUrl: './signup.component.scss'
 })
 export class SigUpComponent {
-  public signUpError!: String;
-  public validSignup!: boolean;
-  public profilePhotoError: string = '';
-  public profilePhotoTouched: boolean = false;
+    public signUpError!: String;
+    public validSignup!: boolean;
+    public profilePhotoError: string = '';
+    public profilePhotoTouched: boolean = false;
 
-  @ViewChild('name') nameModel!: NgModel;
-  @ViewChild('lastname') lastnameModel!: NgModel;
-  @ViewChild('email') emailModel!: NgModel;
-  @ViewChild('password') passwordModel!: NgModel;
+    @ViewChild('name') nameModel!: NgModel;
+    @ViewChild('lastname') lastnameModel!: NgModel;
+    @ViewChild('email') emailModel!: NgModel;
+    @ViewChild('password') passwordModel!: NgModel;
 
-  public showPassword = false;
-  public profilePhotoPreview: string | ArrayBuffer | null = null;
-  public selectedFile: File | null = null;
+    public showPassword = false;
+    public profilePhotoPreview: string | ArrayBuffer | null = null;
+    public selectedFile: File | null = null;
 
 
+    public user: IUser = {
+        name: '',
+        lastname: '',
+        email: '',
+        password: '',
+        profilePicture: ''
+    };
 
-  public user: IUser = {
-    name: '',
-    lastname: '',
-    email: '',
-    password: '',
-    profilePicture: ''
-  };
-
-  constructor(private router: Router,
-    private authService: AuthService
-  ) { }
-
-  public handleSignup(event: Event) {
-    event.preventDefault();
-
-    // Validar todos los campos
-    if (!this.nameModel.valid) {
-      this.nameModel.control.markAsTouched();
-    }
-    if (!this.lastnameModel.valid) {
-      this.lastnameModel.control.markAsTouched();
-    }
-    if (!this.emailModel.valid) {
-      this.emailModel.control.markAsTouched();
-    }
-    if (!this.passwordModel.valid) {
-      this.passwordModel.control.markAsTouched();
+    constructor(private router: Router,
+                private authService: AuthService
+    ) {
     }
 
-    // Validar foto de perfil
-    if (!this.selectedFile) {
-      this.profilePhotoTouched = true;
-      this.profilePhotoError = 'La foto de perfil es obligatoria.';
-      return;
+    public handleSignup(event: Event) {
+        event.preventDefault();
+
+        // Validar todos los campos
+        if (!this.nameModel.valid) {
+            this.nameModel.control.markAsTouched();
+        }
+        if (!this.lastnameModel.valid) {
+            this.lastnameModel.control.markAsTouched();
+        }
+        if (!this.emailModel.valid) {
+            this.emailModel.control.markAsTouched();
+        }
+        if (!this.passwordModel.valid) {
+            this.passwordModel.control.markAsTouched();
+        }
+
+        // Validar foto de perfil
+        if (!this.selectedFile) {
+            this.profilePhotoTouched = true;
+            this.profilePhotoError = 'La foto de perfil es obligatoria.';
+            return;
+        }
+
+        // Si todos los campos son válidos, proceder con el registro
+        if (this.emailModel.valid && this.passwordModel.valid && this.nameModel.valid &&
+            this.lastnameModel.valid && this.selectedFile && !this.profilePhotoError) {
+            this.authService.signup(this.user).subscribe({
+                next: () => this.validSignup = true,
+                error: (err: any) => (this.signUpError = err.description),
+            });
+        }
     }
 
-    // Si todos los campos son válidos, proceder con el registro
-    if (this.emailModel.valid && this.passwordModel.valid && this.nameModel.valid &&
-      this.lastnameModel.valid && this.selectedFile && !this.profilePhotoError) {
-      this.authService.signup(this.user).subscribe({
-        next: () => this.validSignup = true,
-        error: (err: any) => (this.signUpError = err.description),
-      });
+    onFileChange(event: Event): void {
+        const input = event.target as HTMLInputElement;
+        this.profilePhotoError = '';
+        this.profilePhotoTouched = true;
+
+        if (input.files && input.files.length > 0) {
+            const file = input.files[0];
+
+            // Validar tipo de archivo
+            const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+            if (!allowedTypes.includes(file.type)) {
+                this.profilePhotoError = 'Solo se permiten imágenes PNG, JPG o JPEG.';
+                this.selectedFile = null;
+                this.profilePhotoPreview = null;
+                return;
+            }
+
+            // Validar tamaño (opcional, máximo 5MB)
+            if (file.size > MAX_FILE_SIZE_BYTES) {
+                this.profilePhotoError = `La imagen debe ser menor a ${MAX_FILE_SIZE_MB}MB.`;
+                this.selectedFile = null;
+                this.profilePhotoPreview = null;
+                return;
+            }
+
+            this.selectedFile = file;
+
+            // Crear preview
+            const reader = new FileReader();
+            reader.onload = e => {
+                this.profilePhotoPreview = reader.result;
+            };
+            reader.readAsDataURL(file);
+
+            // Actualizar el usuario con la foto
+            this.user.profilePicture = file.name;
+        } else {
+            this.selectedFile = null;
+            this.profilePhotoPreview = null;
+            this.user.profilePicture = '';
+        }
     }
-  }
 
-  onFileChange(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    this.profilePhotoError = '';
-    this.profilePhotoTouched = true;
-
-    if (input.files && input.files.length > 0) {
-      const file = input.files[0];
-
-      // Validar tipo de archivo
-      const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg'];
-      if (!allowedTypes.includes(file.type)) {
-        this.profilePhotoError = 'Solo se permiten imágenes PNG, JPG o JPEG.';
+    removeProfilePhoto(): void {
         this.selectedFile = null;
         this.profilePhotoPreview = null;
-        return;
-      }
+        this.user.profilePicture = '';
+        this.profilePhotoError = '';
+        this.profilePhotoTouched = false;
 
-      // Validar tamaño (opcional, máximo 5MB)
-      if (file.size > MAX_FILE_SIZE_BYTES) {
-        this.profilePhotoError = `La imagen debe ser menor a ${MAX_FILE_SIZE_MB}MB.`;
-        this.selectedFile = null;
-        this.profilePhotoPreview = null;
-        return;
-      }
-
-      this.selectedFile = file;
-
-      // Crear preview
-      const reader = new FileReader();
-      reader.onload = e => {
-        this.profilePhotoPreview = reader.result;
-      };
-      reader.readAsDataURL(file);
-
-      // Actualizar el usuario con la foto
-      this.user.profilePicture = file.name;
-    } else {
-      this.selectedFile = null;
-      this.profilePhotoPreview = null;
-      this.user.profilePicture = '';
+        // Limpiar el input file
+        const fileInput = document.getElementById('profilePhoto') as HTMLInputElement;
+        if (fileInput) {
+            fileInput.value = '';
+        }
     }
-  }
-
-  removeProfilePhoto(): void {
-    this.selectedFile = null;
-    this.profilePhotoPreview = null;
-    this.user.profilePicture = '';
-    this.profilePhotoError = '';
-    this.profilePhotoTouched = false;
-
-    // Limpiar el input file
-    const fileInput = document.getElementById('profilePhoto') as HTMLInputElement;
-    if (fileInput) {
-      fileInput.value = '';
-    }
-  }
 }

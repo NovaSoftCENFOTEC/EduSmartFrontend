@@ -1,11 +1,9 @@
-import {Component, OnInit, inject} from "@angular/core";
+import {Component, inject, OnInit} from "@angular/core";
 import {CommonModule, Location} from "@angular/common";
 import {ActivatedRoute, Router, RouterModule} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {AssignmentsService} from "../../services/assignment.service";
 import {IAssignment} from "../../interfaces";
-import {PaginationComponent} from "../../components/pagination/pagination.component";
-import {AssignmentsListComponent} from "../../components/asignments/assignment-list/assignments-list.component";
 import {AuthService} from "../../services/auth.service";
 
 @Component({
@@ -17,23 +15,21 @@ import {AuthService} from "../../services/auth.service";
         CommonModule,
         FormsModule,
         RouterModule,
-        PaginationComponent,
-        AssignmentsListComponent,
+
     ],
 })
 export class AssignmentsReadOnlyComponent implements OnInit {
+    public searchText = "";
+    public student: { id: number } | null = null;
+    public isStudent: boolean = false;
+    public isTeacher: boolean = false;
     private route = inject(ActivatedRoute);
     private location = inject(Location);
     private router = inject(Router);
     private assignmentsService = inject(AssignmentsService);
-    private authService = inject(AuthService);
-
     public assignments = this.assignmentsService.assignments$;
-    public searchText = "";
+    private authService = inject(AuthService);
     private groupId: number | null = null;
-    public student: { id: number } | null = null;
-    public isStudent: boolean = false;
-    public isTeacher: boolean = false;
 
     ngOnInit(): void {
         const user = this.authService.getUser();
@@ -66,12 +62,6 @@ export class AssignmentsReadOnlyComponent implements OnInit {
         });
     }
 
-    private setGroupId(id: number) {
-        this.groupId = id;
-        this.assignmentsService.setCurrentGroupId(id);
-        this.assignmentsService.getAssignmentsByGroup(id);
-    }
-
     goBack(): void {
         this.location.back();
     }
@@ -93,12 +83,6 @@ export class AssignmentsReadOnlyComponent implements OnInit {
         });
     }
 
-    private convertDateToString(date: Date | string | null): string {
-        if (!date) return "";
-        if (typeof date === "string") return date;
-        return new Date(date).toISOString().split("T")[0];
-    }
-
     SeeDetails(studentId?: number | undefined, assignmentId?: number | undefined, dueDate?: Date): void {
         if (!studentId || !assignmentId) return;
         this.router.navigate(["app/task-submission"], {
@@ -111,5 +95,17 @@ export class AssignmentsReadOnlyComponent implements OnInit {
         const today = new Date();
         const due = new Date(dueDate);
         return due.setHours(0, 0, 0, 0) < today.setHours(0, 0, 0, 0);
+    }
+
+    private setGroupId(id: number) {
+        this.groupId = id;
+        this.assignmentsService.setCurrentGroupId(id);
+        this.assignmentsService.getAssignmentsByGroup(id);
+    }
+
+    private convertDateToString(date: Date | string | null): string {
+        if (!date) return "";
+        if (typeof date === "string") return date;
+        return new Date(date).toISOString().split("T")[0];
     }
 }

@@ -1,152 +1,147 @@
-import { inject, Injectable } from "@angular/core";
-import {
-  IAuthority,
-  ILoginResponse,
-  IResponse,
-  IRoleType,
-  IUser,
-} from "../interfaces";
-import { Observable, tap } from "rxjs";
-import { HttpClient } from "@angular/common/http";
-import { SocialAuthService } from "@abacritt/angularx-social-login";
+import {inject, Injectable} from "@angular/core";
+import {IAuthority, ILoginResponse, IRoleType, IUser,} from "../interfaces";
+import {Observable, tap} from "rxjs";
+import {HttpClient} from "@angular/common/http";
+import {SocialAuthService} from "@abacritt/angularx-social-login";
 
 @Injectable({
-  providedIn: "root",
+    providedIn: "root",
 })
 export class AuthService {
-  getUserRoles() {
-    throw new Error("Method not implemented.");
-  }
-  private accessToken!: string;
-  private expiresIn!: number;
-  private user: IUser = { email: "", authorities: [] };
-  private http: HttpClient = inject(HttpClient);
-  private socialAuthService = inject(SocialAuthService);
+    private accessToken!: string;
+    private expiresIn!: number;
+    private user: IUser = {email: "", authorities: []};
+    private http: HttpClient = inject(HttpClient);
+    private socialAuthService = inject(SocialAuthService);
 
-  constructor() {
-    this.load();
-  }
-
-  public save(): void {
-    if (this.user) localStorage.setItem("auth_user", JSON.stringify(this.user));
-
-    if (this.accessToken)
-      localStorage.setItem("access_token", JSON.stringify(this.accessToken));
-
-    if (this.expiresIn)
-      localStorage.setItem("expiresIn", JSON.stringify(this.expiresIn));
-  }
-
-  private load(): void {
-    let token = localStorage.getItem("access_token");
-    if (token) this.accessToken = token;
-    let exp = localStorage.getItem("expiresIn");
-    if (exp) this.expiresIn = JSON.parse(exp);
-    const user = localStorage.getItem("auth_user");
-    if (user) this.user = JSON.parse(user);
-  }
-
-  public getUser(): IUser | undefined {
-    return this.user;
-  }
-
-  public getAccessToken(): string | null {
-    return this.accessToken;
-  }
-
-  public check(): boolean {
-    if (!this.accessToken) {
-      return false;
-    } else {
-      return true;
+    constructor() {
+        this.load();
     }
-  }
 
-  public login(credentials: {
-    email: string;
-    password: string;
-  }): Observable<ILoginResponse> {
-    return this.http.post<ILoginResponse>("auth/login", credentials).pipe(
-      tap((response: any) => {
-        this.accessToken = response.token;
-        this.user.email = credentials.email;
-        this.expiresIn = response.expiresIn;
-        this.user = response.authUser;
-        this.save();
-      })
-    );
-  }
+    getUserRoles() {
+        throw new Error("Method not implemented.");
+    }
 
-  public googleLogin(idToken: string): Observable<ILoginResponse> {
-    return this.http
-      .post<ILoginResponse>("auth/google-login", { idToken })
-      .pipe(
-        tap((response: any) => {
-          this.accessToken = response.token;
-          this.expiresIn = response.expiresIn;
-          this.user = response.authUser;
-          this.save();
-        })
-      );
-  }
+    public save(): void {
+        if (this.user) localStorage.setItem("auth_user", JSON.stringify(this.user));
 
-  public hasRole(role: string): boolean {
-    return this.user.authorities
-      ? this.user?.authorities.some((authority) => authority.authority == role)
-      : false;
-  }
+        if (this.accessToken)
+            localStorage.setItem("access_token", JSON.stringify(this.accessToken));
 
-  public isSuperAdmin(): boolean {
-    return this.user.authorities
-      ? this.user?.authorities.some(
-          (authority) => authority.authority == IRoleType.superAdmin
-        )
-      : false;
-  }
+        if (this.expiresIn)
+            localStorage.setItem("expiresIn", JSON.stringify(this.expiresIn));
+    }
 
-  public hasAnyRole(roles: any[]): boolean {
-    return roles.some((role) => this.hasRole(role));
-  }
+    public getUser(): IUser | undefined {
+        return this.user;
+    }
 
-  public getPermittedRoutes(routes: any[]): any[] {
-    let permittedRoutes: any[] = [];
-    for (const route of routes) {
-      if (route.data && route.data.authorities) {
-        if (this.hasAnyRole(route.data.authorities)) {
-          permittedRoutes.unshift(route);
+    public getAccessToken(): string | null {
+        return this.accessToken;
+    }
+
+    public check(): boolean {
+        if (!this.accessToken) {
+            return false;
+        } else {
+            return true;
         }
-      }
-    }
-    return permittedRoutes;
-  }
-
-  public signup(user: IUser): Observable<ILoginResponse> {
-    return this.http.post<ILoginResponse>("auth/signup", user);
-  }
-
-  public logout() {
-    this.accessToken = "";
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("expiresIn");
-    localStorage.removeItem("auth_user");
-    this.socialAuthService.signOut();
-  }
-
-  public getUserAuthorities(): IAuthority[] | undefined {
-    return this.getUser()?.authorities ? this.getUser()?.authorities : [];
-  }
-
-  public areActionsAvailable(routeAuthorities: string[]): boolean {
-    let allowedUser = false;
-    let userAuthorities = this.getUserAuthorities();
-
-    for (const authority of routeAuthorities) {
-      if (userAuthorities?.some((item) => item.authority == authority)) {
-        allowedUser = true;
-        break;
-      }
     }
 
-    return allowedUser;
-  }
+    public login(credentials: {
+        email: string;
+        password: string;
+    }): Observable<ILoginResponse> {
+        return this.http.post<ILoginResponse>("auth/login", credentials).pipe(
+            tap((response: any) => {
+                this.accessToken = response.token;
+                this.user.email = credentials.email;
+                this.expiresIn = response.expiresIn;
+                this.user = response.authUser;
+                this.save();
+            })
+        );
+    }
+
+    public googleLogin(idToken: string): Observable<ILoginResponse> {
+        return this.http
+            .post<ILoginResponse>("auth/google-login", {idToken})
+            .pipe(
+                tap((response: any) => {
+                    this.accessToken = response.token;
+                    this.expiresIn = response.expiresIn;
+                    this.user = response.authUser;
+                    this.save();
+                })
+            );
+    }
+
+    public hasRole(role: string): boolean {
+        return this.user.authorities
+            ? this.user?.authorities.some((authority) => authority.authority == role)
+            : false;
+    }
+
+    public isSuperAdmin(): boolean {
+        return this.user.authorities
+            ? this.user?.authorities.some(
+                (authority) => authority.authority == IRoleType.superAdmin
+            )
+            : false;
+    }
+
+    public hasAnyRole(roles: any[]): boolean {
+        return roles.some((role) => this.hasRole(role));
+    }
+
+    public getPermittedRoutes(routes: any[]): any[] {
+        let permittedRoutes: any[] = [];
+        for (const route of routes) {
+            if (route.data && route.data.authorities) {
+                if (this.hasAnyRole(route.data.authorities)) {
+                    permittedRoutes.unshift(route);
+                }
+            }
+        }
+        return permittedRoutes;
+    }
+
+    public signup(user: IUser): Observable<ILoginResponse> {
+        return this.http.post<ILoginResponse>("auth/signup", user);
+    }
+
+    public logout() {
+        this.accessToken = "";
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("expiresIn");
+        localStorage.removeItem("auth_user");
+        this.socialAuthService.signOut();
+    }
+
+    public getUserAuthorities(): IAuthority[] | undefined {
+        return this.getUser()?.authorities ? this.getUser()?.authorities : [];
+    }
+
+    public areActionsAvailable(routeAuthorities: string[]): boolean {
+        let allowedUser = false;
+        let userAuthorities = this.getUserAuthorities();
+
+        for (const authority of routeAuthorities) {
+            if (userAuthorities?.some((item) => item.authority == authority)) {
+                allowedUser = true;
+                break;
+            }
+        }
+
+        return allowedUser;
+    }
+
+    private load(): void {
+        let token = localStorage.getItem("access_token");
+        if (token) this.accessToken = token;
+        let exp = localStorage.getItem("expiresIn");
+        if (exp) this.expiresIn = JSON.parse(exp);
+        const user = localStorage.getItem("auth_user");
+        if (user) this.user = JSON.parse(user);
+    }
 }

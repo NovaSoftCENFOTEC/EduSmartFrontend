@@ -4,10 +4,10 @@
     </div>
     <div class="col-12">
         <div class="d-flex justify-content-between align-items-center">
-            <button (click)="goBack()" type="button" class="btn custom-add-full-btn">
+            <button (click)="goBack()" class="btn custom-add-full-btn" type="button">
                 <i class="fas fa-arrow-left me-2"></i> Volver
             </button>
-            <button (click)="openAddSchoolModal()" type="button" class="btn custom-add-full-btn">
+            <button (click)="openAddSchoolModal()" class="btn custom-add-full-btn" type="button">
                 <i class="fas fa-plus me-2"></i> Agregar
             </button>
         </div>
@@ -17,15 +17,15 @@
         <div class="card">
             <div class="card-body">
                 <app-schools-list
-                        [schools]="schoolService.schools$()"
+                        (callDeleteAction)="deleteSchool($event)"
                         (callModalAction)="openEditSchoolModal($event)"
-                        (callDeleteAction)="deleteSchool($event)">
+                        [schools]="schoolService.schools$()">
                 </app-schools-list>
 
                 <app-pagination
                         *ngIf="schoolService.schools$().length > 0"
-                        [service]="schoolService.search"
-                        [loadFunction]="schoolService.getAll.bind(schoolService)">
+                        [loadFunction]="schoolService.getAll.bind(schoolService)"
+                        [service]="schoolService.search">
                 </app-pagination>
             </div>
         </div>
@@ -35,8 +35,8 @@
 <ng-template #addSchoolModal>
     <app-modal [hideFooter]="true">
         <app-schools-form
-                [form]="schoolForm"
-                (callSaveMethod)="handleAddSchool($event)">
+                (callSaveMethod)="handleAddSchool($event)"
+                [form]="schoolForm">
         </app-schools-form>
     </app-modal>
 </ng-template>
@@ -44,8 +44,8 @@
 <ng-template #editSchoolModal>
     <app-modal [hideFooter]="true">
         <app-schools-form
-                [form]="schoolForm"
-                (callUpdateMethod)="confirmEdit($event)">
+                (callUpdateMethod)="confirmEdit($event)"
+                [form]="schoolForm">
         </app-schools-form>
     </app-modal>
 </ng-template>
@@ -56,8 +56,8 @@
             <h2>Confirmación</h2>
             <p>¿Está seguro que desea modificar la escuela?</p>
             <div class="d-flex justify-content-center mt-4">
-                <button class="btn btn-secondary me-2" (click)="cancelEdit()">Cancelar</button>
-                <button class="btn btn-primary" (click)="confirmEditFinal()">Sí, modificar</button>
+                <button (click)="cancelEdit()" class="btn btn-secondary me-2">Cancelar</button>
+                <button (click)="confirmEditFinal()" class="btn btn-primary">Sí, modificar</button>
             </div>
         </div>
     </app-modal>

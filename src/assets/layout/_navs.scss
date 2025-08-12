@@ -6,6 +6,7 @@
   #collapseicon1 {
     padding-top: 0px;
   }
+
   li {
     button {
       display: flex;
@@ -13,41 +14,51 @@
     }
   }
 }
+
 .navs-icon.default-according.style-1 {
   li {
     button {
       position: relative;
+
       &:hover {
         color: var(--theme-default) !important;
       }
     }
+
     button[aria-expanded="true"] {
       &:before {
         right: 2px;
         top: 6px;
       }
     }
+
     button[aria-expanded="false"]:before {
       right: 2px;
       top: 6px;
     }
   }
 }
+
 .navs-icon {
   padding: 30px;
+
   li {
     padding: 9px 0;
+
     a {
       color: $theme-body-font-color;
+
       &:hover {
         color: var(--theme-default);
       }
     }
+
     ul {
       padding-top: 9px;
     }
   }
 }
+
 .onhover-dropdown {
   &.navs-dropdown {
     &:hover {
@@ -61,17 +72,21 @@
     }
   }
 }
+
 .icon-lists {
   font-family: $font-rubik, $font-serif;
 }
+
 .pl-navs-inline {
   padding-left: 30px !important;
 }
+
 .inline-nav {
   li {
     line-height: 1.3;
   }
 }
+
 /**=====================
      36. NAV CSS Ends
 ==========================**/

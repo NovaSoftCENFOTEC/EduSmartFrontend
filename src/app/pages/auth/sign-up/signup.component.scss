@@ -5,6 +5,7 @@
   background-repeat: no-repeat;
   padding: 20px 20%;
   position: relative;
+
   &::before {
     content: "";
     position: absolute;
@@ -15,6 +16,7 @@
     background: rgba(0, 0, 0, 0.5);
     z-index: 1;
   }
+
   .login-card {
     position: relative;
     z-index: 2;
@@ -25,14 +27,17 @@
     margin: 0 auto;
     background-color: #fff;
   }
+
   .invalid-feedback {
     position: absolute;
     margin-top: 0px;
   }
+
   @media screen and (min-width: 801px) and (max-width: 1500px) {
     padding: 20px 5%;
     .login-card {
       width: 60%;
+
       .login-main {
         padding: 0px;
       }
@@ -42,6 +47,7 @@
     padding: 20px 5%;
     .login-card {
       width: 100%;
+
       .login-main {
         padding: 0px;
       }

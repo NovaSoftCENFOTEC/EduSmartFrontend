@@ -5,7 +5,7 @@
 
     <div class="col-12 mb-4 d-flex justify-content-start">
         <div class="d-flex justify-content-between align-items-center">
-            <button (click)="goBack()" type="button" class="btn custom-add-full-btn">
+            <button (click)="goBack()" class="btn custom-add-full-btn" type="button">
                 <i class="fas fa-arrow-left me-2"></i> Volver
             </button>
         </div>
@@ -14,12 +14,12 @@
     <div class="col-12">
         <div class="card shadow-sm rounded-4">
             <div class="card-body">
-                <app-student-groups-list [groups]="studentGroupsService.groups$()"
-                    (groupClick)="goToGroupStories($event)">
+                <app-student-groups-list (groupClick)="goToGroupStories($event)"
+                                         [groups]="studentGroupsService.groups$()">
                 </app-student-groups-list>
 
                 <app-pagination *ngIf="studentGroupsService.groups$().length > 0"
-                    [service]="studentGroupsService.search" [loadFunction]="loadGroups.bind(this)">
+                                [loadFunction]="loadGroups.bind(this)" [service]="studentGroupsService.search">
                 </app-pagination>
             </div>
         </div>

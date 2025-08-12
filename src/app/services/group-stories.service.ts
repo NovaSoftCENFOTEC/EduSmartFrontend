@@ -1,28 +1,26 @@
-import { inject, Injectable, signal } from '@angular/core';
-import { BaseService } from './base-service';
-import { IResponse, ISearch, IStory } from '../interfaces';
-import { AlertService } from './alert.service';
+import {inject, Injectable, signal} from '@angular/core';
+import {BaseService} from './base-service';
+import {IResponse, ISearch, IStory} from '../interfaces';
+import {AlertService} from './alert.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class GroupStoriesService extends BaseService<IStory> {
-    protected override source: string = 'stories';
-    private storyListSignal = signal<IStory[]>([]);
-
-    get stories$() {
-        return this.storyListSignal;
-    }
-
     public search: ISearch = {
         page: 1,
         size: 10,
         totalPages: 1,
         pageNumber: 1,
     };
-
     public totalItems: number[] = [];
+    protected override source: string = 'stories';
+    private storyListSignal = signal<IStory[]>([]);
     private alertService: AlertService = inject(AlertService);
+
+    get stories$() {
+        return this.storyListSignal;
+    }
 
     clearStories(): void {
         this.storyListSignal.set([]);

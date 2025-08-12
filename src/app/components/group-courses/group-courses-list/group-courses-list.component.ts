@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ICourse } from '../../../interfaces';
-import { FormsModule } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {ICourse} from '../../../interfaces';
+import {FormsModule} from '@angular/forms';
+import {DatePipe} from '@angular/common';
 
 @Component({
     selector: 'app-group-courses-list',

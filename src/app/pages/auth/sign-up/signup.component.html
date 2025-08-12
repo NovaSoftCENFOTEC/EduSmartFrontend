@@ -1,98 +1,101 @@
 <app-topbar></app-topbar>
 
 <main class="d-flex flex-column min-vh-100">
-  <div class="flex-grow-1 d-flex align-items-center justify-content-center">
-    <div class="login-card p-4 shadow rounded-4" style="max-width: 430px; width: 100%; background: #fff;">
-      <form (ngSubmit)="handleSignup($event)" autocomplete="off" #frm="ngForm">
-        <h2 class="fw-bold mb-2 text-center" style="font-size: 2.2rem;">Crea cuenta de estudiante</h2>
-        <p class="mb-4 text-center" style="color: #555; font-size: 1.1rem;">
-          Complete el formulario para crear la cuenta de estudiante en EduSmart.
-        </p>
+    <div class="flex-grow-1 d-flex align-items-center justify-content-center">
+        <div class="login-card p-4 shadow rounded-4" style="max-width: 430px; width: 100%; background: #fff;">
+            <form #frm="ngForm" (ngSubmit)="handleSignup($event)" autocomplete="off">
+                <h2 class="fw-bold mb-2 text-center" style="font-size: 2.2rem;">Crea cuenta de estudiante</h2>
+                <p class="mb-4 text-center" style="color: #555; font-size: 1.1rem;">
+                    Complete el formulario para crear la cuenta de estudiante en EduSmart.
+                </p>
 
-        <div class="d-flex align-items-center my-3">
-          <hr class="flex-grow-1" />
-          <span class="mx-2 text-muted">o</span>
-          <hr class="flex-grow-1" />
-        </div>
+                <div class="d-flex align-items-center my-3">
+                    <hr class="flex-grow-1"/>
+                    <span class="mx-2 text-muted">o</span>
+                    <hr class="flex-grow-1"/>
+                </div>
 
-        <button type="button"
-          class="btn btn-outline-dark w-100 py-2 mb-3 d-flex align-items-center justify-content-center"
-          style="font-size: 1.1rem;">
-          <i class="bi bi-google me-2"></i>
-          Continuar con Google
-        </button>
+                <button class="btn btn-outline-dark w-100 py-2 mb-3 d-flex align-items-center justify-content-center"
+                        style="font-size: 1.1rem;"
+                        type="button">
+                    <i class="bi bi-google me-2"></i>
+                    Continuar con Google
+                </button>
 
-        <div class="mb-3">
-          <label for="name" class="form-label fw-semibold">Nombre</label>
-          <input #name="ngModel" type="text" class="form-control" id="name" name="name" placeholder="Ingrese su nombre"
-            [(ngModel)]="user.name" required minlength="2" style="font-size: 1.15rem;" />
-          @if (name.invalid && (name.dirty || name.touched)) {
-          <div class="text-danger mt-1" style="font-size: 0.95rem;">
-            @if (name.errors?.['required']) {
-            <div>El nombre es obligatorio.</div>
-            }
-            @if (name.errors?.['minlength']) {
-            <div>El nombre debe tener al menos 2 caracteres.</div>
-            }
-          </div>
-          }
-        </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold" for="name">Nombre</label>
+                    <input #name="ngModel" [(ngModel)]="user.name" class="form-control" id="name" minlength="2"
+                           name="name"
+                           placeholder="Ingrese su nombre" required style="font-size: 1.15rem;" type="text"/>
+                    @if (name.invalid && (name.dirty || name.touched)) {
+                        <div class="text-danger mt-1" style="font-size: 0.95rem;">
+                            @if (name.errors?.['required']) {
+                                <div>El nombre es obligatorio.</div>
+                            }
+                            @if (name.errors?.['minlength']) {
+                                <div>El nombre debe tener al menos 2 caracteres.</div>
+                            }
+                        </div>
+                    }
+                </div>
 
-        <div class="mb-3">
-          <label for="lastname" class="form-label fw-semibold">Apellido</label>
-          <input #lastname="ngModel" type="text" class="form-control" id="lastname" name="lastname"
-            placeholder="Ingrese su apellido" [(ngModel)]="user.lastname" required minlength="2"
-            style="font-size: 1.15rem;" />
-          @if (lastname.invalid && (lastname.dirty || lastname.touched)) {
-          <div class="text-danger mt-1" style="font-size: 0.95rem;">
-            @if (lastname.errors?.['required']) {
-            <div>El apellido es obligatorio.</div>
-            }
-            @if (lastname.errors?.['minlength']) {
-            <div>El apellido debe tener al menos 2 caracteres.</div>
-            }
-          </div>
-          }
-        </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold" for="lastname">Apellido</label>
+                    <input #lastname="ngModel" [(ngModel)]="user.lastname" class="form-control" id="lastname" minlength="2"
+                           name="lastname" placeholder="Ingrese su apellido" required style="font-size: 1.15rem;"
+                           type="text"/>
+                    @if (lastname.invalid && (lastname.dirty || lastname.touched)) {
+                        <div class="text-danger mt-1" style="font-size: 0.95rem;">
+                            @if (lastname.errors?.['required']) {
+                                <div>El apellido es obligatorio.</div>
+                            }
+                            @if (lastname.errors?.['minlength']) {
+                                <div>El apellido debe tener al menos 2 caracteres.</div>
+                            }
+                        </div>
+                    }
+                </div>
 
-        <div class="mb-3">
-          <label for="email" class="form-label fw-semibold">Correo Electrónico</label>
-          <div class="input-group">
+                <div class="mb-3">
+                    <label class="form-label fw-semibold" for="email">Correo Electrónico</label>
+                    <div class="input-group">
             <span class="input-group-text bg-white border-end-0">
               <i class="bi bi-envelope"></i>
             </span>
-            <input #email="ngModel" type="email" class="form-control border-start-0" id="email" name="email"
-              placeholder="email@address.com" [(ngModel)]="user.email" required email style="font-size: 1.15rem;" />
-          </div>
-          @if (email.invalid && (email.dirty || email.touched)) {
-          <div class="text-danger mt-1" style="font-size: 0.95rem;">
-            @if (email.errors?.['required']) {
-            <div>El correo electrónico es obligatorio.</div>
-            }
-            @if (email.errors?.['email']) {
-            <div>El correo electrónico no es válido.</div>
-            }
-          </div>
-          }
-        </div>
+                        <input #email="ngModel" [(ngModel)]="user.email" class="form-control border-start-0" email id="email"
+                               name="email" placeholder="email@address.com" required style="font-size: 1.15rem;"
+                               type="email"/>
+                    </div>
+                    @if (email.invalid && (email.dirty || email.touched)) {
+                        <div class="text-danger mt-1" style="font-size: 0.95rem;">
+                            @if (email.errors?.['required']) {
+                                <div>El correo electrónico es obligatorio.</div>
+                            }
+                            @if (email.errors?.['email']) {
+                                <div>El correo electrónico no es válido.</div>
+                            }
+                        </div>
+                    }
+                </div>
 
-        <button class="btn btn-primary w-100 py-2 mb-3" style="font-size: 1.2rem; font-weight: 700;" type="submit"
-          [disabled]="frm.invalid || profilePhotoError">
-          Crear cuenta
-        </button>
+                <button [disabled]="frm.invalid || profilePhotoError" class="btn btn-primary w-100 py-2 mb-3"
+                        style="font-size: 1.2rem; font-weight: 700;"
+                        type="submit">
+                    Crear cuenta
+                </button>
 
-        @if(signUpError) {
-        <div class="alert alert-danger" style="font-size: 0.95rem;">
-          {{signUpError}}
+                @if (signUpError) {
+                    <div class="alert alert-danger" style="font-size: 0.95rem;">
+                        {{ signUpError }}
+                    </div>
+                }
+                @if (validSignup) {
+                    <div class="alert alert-success" style="font-size: 0.95rem;">
+                        Usuario registrado exitosamente, por favor inicia sesión
+                    </div>
+                }
+            </form>
         </div>
-        }
-        @if (validSignup){
-        <div class="alert alert-success" style="font-size: 0.95rem;">
-          Usuario registrado exitosamente, por favor inicia sesión
-        </div>
-        }
-      </form>
     </div>
-  </div>
-  <app-footer></app-footer>
+    <app-footer></app-footer>
 </main>

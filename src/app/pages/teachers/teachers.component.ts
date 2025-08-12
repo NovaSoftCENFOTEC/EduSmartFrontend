@@ -9,9 +9,7 @@ import {AuthService} from '../../services/auth.service';
 import {ActivatedRoute} from '@angular/router';
 import {TeachersFormComponent} from '../../components/teachers/teacher-form/teachers-form.component';
 import {TeachersListComponent} from '../../components/teachers/teacher-list/teachers-list.component';
-import {NgIf} from '@angular/common';
 import {UserService} from '../../services/user.service';
-import {FooterComponent} from "../../components/app-layout/elements/footer/footer.component";
 
 @Component({
     selector: 'app-teachers',
@@ -20,9 +18,7 @@ import {FooterComponent} from "../../components/app-layout/elements/footer/foote
         PaginationComponent,
         ModalComponent,
         TeachersFormComponent,
-        TeachersListComponent,
-        NgIf,
-        FooterComponent
+        TeachersListComponent
     ],
     templateUrl: './teachers.component.html',
     styleUrls: ['./teachers.component.scss']
@@ -42,10 +38,6 @@ export class TeachersComponent implements OnInit {
     @ViewChild('editConfirmationModal') public editConfirmationModal: any;
 
     public areActionsAvailable: boolean = false;
-    private schoolId: number | null = null;
-    private originalTeacher: IUser | null = null;
-    private pendingEditItem: IUser | null = null;
-
     teacherForm = this.fb.group({
         id: [''],
         name: ['', Validators.required],
@@ -53,6 +45,9 @@ export class TeachersComponent implements OnInit {
         email: ['', [Validators.required, Validators.email]],
         createdAt: ['']
     });
+    private schoolId: number | null = null;
+    private originalTeacher: IUser | null = null;
+    private pendingEditItem: IUser | null = null;
 
     constructor() {
         this.teacherList = this.userService.users$;
