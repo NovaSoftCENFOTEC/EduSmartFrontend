@@ -18,7 +18,7 @@ export interface IUser {
   password?: string;
   createdAt?: string;
   updatedAt?: string;
-  profilePicture?: string;
+  profilePic?: string;
   authorities?: IAuthority[];
   role?: IRole;
   school?: ISchool;
@@ -119,7 +119,7 @@ export interface IStudent {
 }
 
 export interface IAssignment {
-  group: { id: number; };
+  group: { id: number };
   id?: number;
   title: string;
   description: string;
@@ -127,11 +127,10 @@ export interface IAssignment {
   dueDate: Date;
   createdAt?: Date;
   groupId?: number;
-
 }
 
 export interface IQuiz {
-  story: { id: number; };
+  story: { id: number };
   id?: number;
   title: string;
   description: string;
@@ -153,4 +152,56 @@ export interface IOption {
   text: string;
   correct: boolean;
   question?: IQuestion;
+}
+
+export interface IMaterial {
+  id?: number;
+  name: string;
+  fileUrl: string;
+  uploadedAt?: string;
+  course?: Partial<ICourse> | null;
+  teacher?: Partial<IUser> | null;
+}
+
+export interface ITaskSubmission {
+  id?: number;
+  fileUrl: string;
+  comment: string;
+  submittedAt: string;
+  assignmentId: number;
+  studentId: number;
+  studentName?: string;
+}
+
+export interface IGrade {
+  id?: number;
+  grade: number;
+  justification: string;
+  gradedAt?: string; 
+  submissionId: number;
+  teacherId: number;
+  submission?: ITaskSubmission; 
+}
+
+export interface IGradePayload {
+  grade: number;
+  justification: string;
+  gradedAt?: string;
+  submission: { id: number };
+  teacher: { id: number };
+}
+
+export interface IAudioTrack {
+  id?: number;
+  title: string;
+  voiceType: VoiceTypeEnum;
+  url: string;
+  createdAt?: string;
+  story?: IStory;
+}
+
+export enum VoiceTypeEnum {
+  MALE = 'MALE',
+  FEMALE = 'FEMALE',
+  NEUTRAL = 'NEUTRAL'
 }

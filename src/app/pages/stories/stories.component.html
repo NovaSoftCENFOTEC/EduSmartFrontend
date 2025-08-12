@@ -20,14 +20,16 @@
         <app-story-list
           [stories]="storyList()"
           (callModalAction)="openEditStoryModal($event)"
-          (callDeleteAction)="deleteStory($event)">
+          (callDeleteAction)="deleteStory($event)"
+        >
         </app-story-list>
 
         @if (storyList().length) {
-          <app-pagination
-            [service]="storyService.search"
-            [loadFunction]="loadStories.bind(this)">
-          </app-pagination>
+        <app-pagination
+          [service]="storyService.search"
+          [loadFunction]="loadStories.bind(this)"
+        >
+        </app-pagination>
         }
       </div>
     </div>
@@ -38,7 +40,9 @@
   <app-modal [hideFooter]="true">
     <app-stories-form
       [form]="storyForm"
-      (callSaveMethod)="handleAddStory($event)">
+      (callSaveMethod)="handleAddStory($event)"
+      [isLoading]="isLoading"
+    >
     </app-stories-form>
   </app-modal>
 </ng-template>
@@ -47,19 +51,25 @@
   <app-modal [hideFooter]="true">
     <app-stories-form
       [form]="storyForm"
-      (callUpdateMethod)="confirmEdit($event)">
+      (callUpdateMethod)="confirmEdit($event)"
+      [isLoading]="isLoading"
+    >
     </app-stories-form>
   </app-modal>
 </ng-template>
 
 <ng-template #editConfirmationModal>
-  <app-modal [hideFooter]="true">
+  <app-modal [hideFooter]="true" [isLoading]="isLoading">
     <div class="text-center p-4">
       <h2>Confirmación</h2>
       <p>¿Está seguro que desea modificar la historia?</p>
       <div class="d-flex justify-content-center mt-4">
-        <button class="btn btn-secondary me-2" (click)="cancelEdit()">Cancelar</button>
-        <button class="btn btn-primary" (click)="confirmEditFinal()">Sí, modificar</button>
+        <button class="btn btn-secondary me-2" (click)="cancelEdit()">
+          Cancelar
+        </button>
+        <button class="btn btn-primary" (click)="confirmEditFinal()">
+          Sí, modificar
+        </button>
       </div>
     </div>
   </app-modal>

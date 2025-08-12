@@ -13,4 +13,7 @@ import { FooterComponent } from '../../components/app-layout/elements/footer/foo
 })
 export class LandingPageComponent {
 
+  goToLanding() {
+    window.location.href = '/landing';
+  }
 }

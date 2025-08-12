@@ -1,0 +1,106 @@
+<div class="row p-4">
+    <div class="col-12 mb-3">
+        <h2 class="title-highlight">Historias del Curso</h2>
+    </div>
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center">
+            <button (click)="goBack()" type="button" class="btn custom-add-full-btn">
+                <i class="fas fa-arrow-left me-2"></i> Volver
+            </button>
+        </div>
+    </div>
+
+    <div class="col-12 mt-3">
+        <div class="stories-dashboard">
+            @for (story of groupStoriesService.stories$(); track story.id; let i = $index) {
+            <div class="story-section" [class.active]="story.id" [class.locked]="!story.id"
+                [class.expanded]="expandedStories[i]">
+                <div class="section-header" (click)="toggleStory(i)">
+                    <div class="story-header-content">
+                        <div class="audio-controls">
+                            @if (story.id) {
+                            <div class="audio-buttons">
+                                @if (getAudioTrackByVoiceType(story.id, VoiceTypeEnum.MALE)) {
+                                <button class="btn audio-btn male-voice"
+                                    (click)="playAudio(story.id, VoiceTypeEnum.MALE); $event.stopPropagation()"
+                                    title="Escuchar con voz masculina">
+                                    <i class="fas fa-volume-up"></i>
+                                    <span class="voice-label">Hombre</span>
+                                </button>
+                                }
+                                @if (getAudioTrackByVoiceType(story.id, VoiceTypeEnum.FEMALE)) {
+                                <button class="btn audio-btn female-voice"
+                                    (click)="playAudio(story.id, VoiceTypeEnum.FEMALE); $event.stopPropagation()"
+                                    title="Escuchar con voz femenina">
+                                    <i class="fas fa-volume-up"></i>
+                                    <span class="voice-label">Mujer</span>
+                                </button>
+                                }
+                                @if (!hasAudioTracks(story.id)) {
+                                <span class="no-audio">
+                                    <i class="fas fa-volume-mute"></i>
+                                    <span class="voice-label">Sin audio</span>
+                                </span>
+                                }
+                            </div>
+                            }
+                        </div>
+                        <h3>{{ story.title || 'Historia ' + (i + 1) }}</h3>
+                    </div>
+                    <div class="header-actions">
+                        @if (story.id) {
+                        <i class="fas" [class.fa-chevron-down]="!expandedStories[i]"
+                            [class.fa-chevron-up]="expandedStories[i]"></i>
+                        } @else {
+                        <i class="fas fa-eye-slash"></i>
+                        }
+                    </div>
+                </div>
+                <div class="section-content" [class.locked-content]="!story.id"
+                    [class.expanded-content]="expandedStories[i]">
+                    @if (story.id) {
+                    <div class="story-content-scroll">
+                        <div class="story-text">
+                            <p>{{ story.content || 'Contenido de la historia' }}</p>
+                        </div>
+                    </div>
+                    <div class="chapter-actions">
+                        <button class="btn quiz-btn" (click)="viewQuizzes(story.id)"
+                            title="Ver quices de esta historia">
+                            <i class="fas fa-question-circle me-2"></i>
+                            Ver Quices
+                        </button>
+                    </div>
+                    } @else {
+                    <i class="fas fa-lock lock-icon"></i>
+                    <p>¡Seguí aprendiendo para desbloquear niveles!</p>
+                    }
+                </div>
+            </div>
+            } @empty {
+            <div class="col-12 text-center py-5">
+                <p class="text-muted">No hay historias disponibles para este curso</p>
+            </div>
+            }
+        </div>
+    </div>
+</div>
+
+@if (currentAudio) {
+<div class="audio-player-modal" [class.show]="showAudioPlayer">
+    <div class="audio-player-content">
+        <div class="audio-player-header">
+            <h4>Reproduciendo: {{ currentAudio.title }}</h4>
+            <button class="btn-close" (click)="stopAudio()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="audio-player-body">
+            <audio #audioPlayer controls autoplay>
+                <source [src]="currentAudio.url" type="audio/mpeg">
+                Tu navegador no soporta el elemento de audio.
+            </audio>
+        </div>
+    </div>
+</div>
+}

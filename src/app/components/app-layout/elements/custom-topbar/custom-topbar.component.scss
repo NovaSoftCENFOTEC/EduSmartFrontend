@@ -1,0 +1,40 @@
+.nav-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: black;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.nav-content {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 5px 25px;
+}
+
+.logo-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #3b82f6;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Inter', sans-serif;
+}
+
+.logo-img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  
+}
+
+body {
+  padding-top: 70px; 
+}

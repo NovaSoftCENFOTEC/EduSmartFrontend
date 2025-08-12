@@ -1,0 +1,73 @@
+<div class="card card-with-grid">
+  <div class="card-header card-header-indigo">
+    <h2 class="mb-0 title-highlight">Mis Grupos</h2>
+  </div>
+
+  <div class="card-body">
+    <p class="text-muted mb-3 fs-5">
+      Aquí puedes ver todos los grupos a los que perteneces. En cada tarjeta
+      encontrarás detalles del curso y el docente a cargo, además de enlaces
+      directos a sus materiales e historias.
+    </p>
+
+    <div class="mb-4 mt-2">
+      <input
+        type="text"
+        class="input-txt input-filter"
+        placeholder="Filtrar grupos por nombre, curso o docente..."
+        [(ngModel)]="searchText"
+      />
+    </div>
+
+    <div class="groups-grid">
+      @for (item of filteredGroups; track item.id) {
+      <div class="group-card" role="button" tabindex="0">
+        <div class="group-card-header">
+          <h3 class="group-title mb-1">{{ item.name }}</h3>
+          <span class="badge-course">{{ item.course?.title }}</span>
+        </div>
+
+        <div class="group-card-body">
+          <div class="group-detail">
+            <i class="fas fa-user-tie me-2"></i>
+            <span
+              ><strong>Docente:</strong> {{ item.teacher?.name }}
+              {{ item.teacher?.lastname }}</span
+            >
+          </div>
+        </div>
+
+        <div class="group-card-footer">
+          <button
+            class="btn btn-link-action"
+            (click)="groupClick.emit(item.id!)"
+            title="Ver Historias"
+          >
+            <i class="fas fa-book-open me-2"></i>Historias
+          </button>
+          <button
+            class="btn btn-link-action"
+            (click)="goToMaterials(item.course?.id!)"
+            title="Ver Materiales"
+          >
+            <i class="fas fa-folder-open me-2"></i>Materiales
+          </button>
+          <button
+            class="btn btn-link-action"
+            (click)="goToAssignments(item.id!)"
+            title="Ver Tareas"
+          >
+            <i class="fas fa-folder-open me-2"></i>Tareas
+          </button>
+        </div>
+      </div>
+      } @empty {
+      <div class="empty-state">
+        <p class="mb-0">
+          No hay grupos asignados aún. ¡Explora y únete cuando estés listo!
+        </p>
+      </div>
+      }
+    </div>
+  </div>
+</div>

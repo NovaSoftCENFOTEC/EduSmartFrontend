@@ -1,0 +1,61 @@
+<div class="row p-4">
+  <div class="col-12 mb-3">
+    <h2 class="title-highlight">Entregas</h2>
+  </div>
+
+  <div class="col-12">
+    <div class="d-flex justify-content-between align-items-center">
+      <button (click)="goBack()" class="btn custom-add-full-btn">
+        <i class="fas fa-arrow-left me-2"></i> Volver
+      </button>
+    </div>
+  </div>
+
+  <div class="col-12 mt-3">
+    <div class="card">
+      <div class="card-body">
+        <app-task-submission-list
+          (callDeleteAction)="deleteSubmission($event)"
+          (callModalAction)="openEditSubmissionModal($event)"
+          [submissions]="submissions()"
+        >
+        </app-task-submission-list>
+
+        @if (submissions().length) {
+        <app-pagination
+          [service]="submissionService.search"
+          [loadFunction]="loadSubmissions.bind(this)"
+        >
+        </app-pagination>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #editSubmissionModal>
+  <app-modal [hideFooter]="true">
+    <app-task-submission-form
+      [form]="submissionForm"
+      (callUpdateMethod)="confirmEdit($event)"
+    >
+    </app-task-submission-form>
+  </app-modal>
+</ng-template>
+
+<ng-template #editConfirmationModal>
+  <app-modal [hideFooter]="true">
+    <div class="text-center p-4">
+      <h2>Confirmación</h2>
+      <p>¿Está seguro que desea modificar la entrega?</p>
+      <div class="d-flex justify-content-center mt-4">
+        <button (click)="cancelEdit()" class="btn btn-secondary me-2">
+          Cancelar
+        </button>
+        <button (click)="confirmEditFinal()" class="btn btn-primary">
+          Sí, modificar
+        </button>
+      </div>
+    </div>
+  </app-modal>
+</ng-template>

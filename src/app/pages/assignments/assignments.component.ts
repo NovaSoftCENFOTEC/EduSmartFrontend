@@ -11,6 +11,7 @@ import { ModalComponent } from "../../components/modal/modal.component";
 import { AssignmentsFormComponent } from "../../components/asignments/assignment-form/assignments-form.component";
 import { AssignmentsListComponent } from "../../components/asignments/assignment-list/assignments-list.component";
 
+
 @Component({
   selector: "app-assignments",
   standalone: true,
@@ -61,16 +62,17 @@ export class AssignmentsComponent implements OnInit {
 
     this.route.data.subscribe((data) => {
       this.areActionsAvailable = this.authService.areActionsAvailable(
-        data["authorities"] ?? []
+          data["authorities"] ?? []
       );
     });
   }
+
   get assignmentList() {
     return this.assignmentsService.assignments$();
   }
 
   saveAssignment(item: IAssignment) {
-    this.assignmentsService.save(item);
+    this.assignmentsService.saveAssignment(item);
   }
 
   loadAssignments(): void {
@@ -90,10 +92,9 @@ export class AssignmentsComponent implements OnInit {
       this.modalService.closeAll();
       this.assignmentForm.reset();
       this.loadAssignments();
-    } catch (error) {
-      console.error("Error al registrar la asignación:", error);
-    }
+    } catch {}
   }
+
   async updateAssignment(item: IAssignment) {
     if (this.groupId) {
       item.group = { id: this.groupId };
@@ -104,18 +105,14 @@ export class AssignmentsComponent implements OnInit {
       this.modalService.closeAll();
       this.assignmentForm.reset();
       this.loadAssignments();
-    } catch (error) {
-      console.error("Error al actualizar la asignación:", error);
-    }
+    } catch {}
   }
 
   async deleteAssignment(item: IAssignment) {
     try {
       await this.assignmentsService.delete(item, this.groupId ?? undefined);
       this.loadAssignments();
-    } catch (error) {
-      console.error("Error al eliminar la asignación:", error);
-    }
+    } catch {}
   }
 
   openEditAssignmentModal(assignment: IAssignment) {
@@ -126,10 +123,10 @@ export class AssignmentsComponent implements OnInit {
       type: assignment.type,
       due_date: this.convertDateToString(assignment.dueDate ?? null),
       group_id: assignment.groupId
-        ? String(assignment.groupId)
-        : this.groupId !== null
-          ? String(this.groupId)
-          : "",
+          ? String(assignment.groupId)
+          : this.groupId !== null
+              ? String(this.groupId)
+              : "",
       created_at: this.convertDateToString(assignment.createdAt ?? null),
     });
     this.modalService.displayModal("lg", this.editAssignmentModal);
@@ -172,3 +169,4 @@ export class AssignmentsComponent implements OnInit {
     return date.toISOString().split("T")[0];
   }
 }
+

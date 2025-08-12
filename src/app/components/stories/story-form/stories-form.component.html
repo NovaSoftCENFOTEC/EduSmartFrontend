@@ -1,68 +1,83 @@
-<form [formGroup]="form" class="mb-4" style="max-width: 400px; margin: 0 auto">
-  <div class="mb-3 text-center">
-    <h2
-      style="
-        font-size: var(--font-h2-size);
-        font-weight: var(--font-h2-weight);
-        color: var(--color-indigo-dye);
-      "
-    >
-      Registrar Historia
-    </h2>
-  </div>
-
-  <div class="mb-3">
-    <label class="mb-1" for="title">
-      Título<span class="required-asterisk">*</span>
-    </label>
-    <input
-      id="title"
-      formControlName="title"
-      type="text"
-      class="form-control normal"
-      placeholder="Ej: La llegada de los españoles al Nuevo Mundo"
-    />
-    <div
-      class="form-error-message"
-      *ngIf="
-        form.controls['title'].invalid &&
-        (form.controls['title'].dirty || form.controls['title'].touched)
-      "
-    >
-      El título es obligatorio.
+<div class="position-relative">
+  <form
+    [formGroup]="form"
+    class="mb-4"
+    style="max-width: 400px; margin: 0 auto"
+  >
+    <div class="mb-3 text-center">
+      <h2
+        style="
+          font-size: var(--font-h2-size);
+          font-weight: var(--font-h2-weight);
+          color: var(--color-indigo-dye);
+        "
+      >
+        Registrar Historia
+      </h2>
     </div>
-  </div>
 
-  <div class="mb-3">
-    <label class="mb-1" for="content">
-      Contenido<span class="required-asterisk">*</span>
-    </label>
-    <textarea
-      id="content"
-      formControlName="content"
-      class="form-control normal"
-      rows="10"
-      placeholder="Escribe aquí el contenido de la historia"
-    ></textarea>
-    <div
-      class="form-error-message"
-      *ngIf="
-        form.controls['content'].invalid &&
-        (form.controls['content'].dirty || form.controls['content'].touched)
-      "
-    >
-      El contenido es obligatorio.
+    <div class="mb-3">
+      <label class="mb-1" for="title">
+        Título<span class="required-asterisk">*</span>
+      </label>
+      <input
+        id="title"
+        formControlName="title"
+        type="text"
+        class="form-control normal"
+        placeholder="Ej: La llegada de los españoles al Nuevo Mundo"
+      />
+      <div
+        class="form-error-message"
+        *ngIf="
+          form.controls['title'].invalid &&
+          (form.controls['title'].dirty || form.controls['title'].touched)
+        "
+      >
+        El título es obligatorio.
+      </div>
     </div>
-  </div>
 
-  <div class="text-center mt-4">
-    <button
-      (click)="callSave()"
-      [disabled]="form.invalid"
-      class="btn btn-primary"
-      type="button"
-    >
-      Guardar
-    </button>
+    <div class="mb-3">
+      <label class="mb-1" for="content">
+        Contenido<span class="required-asterisk">*</span>
+      </label>
+      <textarea
+        id="content"
+        formControlName="content"
+        class="form-control normal"
+        rows="10"
+        placeholder="Escribe aquí el contenido de la historia"
+      ></textarea>
+      <div
+        class="form-error-message"
+        *ngIf="
+          form.controls['content'].invalid &&
+          (form.controls['content'].dirty || form.controls['content'].touched)
+        "
+      >
+        El contenido es obligatorio.
+      </div>
+    </div>
+
+    <div class="text-center mt-4">
+      <button
+        (click)="callSave()"
+        [disabled]="form.invalid || isLoading"
+        class="btn btn-primary"
+        type="button"
+      >
+        @if (!isLoading) {
+        <span>Guardar</span>
+        } @if (isLoading) {
+        <span>Procesando...</span>
+        }
+      </button>
+    </div>
+  </form>
+  @if (isLoading) {
+  <div class="loader-overlay">
+    <app-loader></app-loader>
   </div>
-</form>
+  }
+</div>

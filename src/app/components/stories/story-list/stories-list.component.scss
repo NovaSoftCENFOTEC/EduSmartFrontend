@@ -1,0 +1,24 @@
+.story-content {
+  display: inline-block;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.story-content.expanded {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+}
+
+td {
+  max-width: 500px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
